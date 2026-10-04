@@ -29,7 +29,7 @@ from xml.etree import ElementTree as ET
 
 import requests
 from pyproj import Transformer
-from shapely.geometry import Point, shape, mapping
+from shapely.geometry import Point, Polygon, shape, mapping
 from shapely.ops import transform, unary_union
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,6 +39,7 @@ GEO_PATH = OUT_DIR / "geography.geojson"
 
 ATOM_URL = "https://opendata-download-lightning.smhi.se/api/version/latest.atom"
 SCB_WFS = "https://geodata.scb.se/geoserver/stat/wfs"
+MUNICIPALITY_ARCGIS = "https://services-eu1.arcgis.com/Ek4rv9ndj9nQOpV3/arcgis/rest/services/Region_kommun/FeatureServer/1/query"
 MUNICIPALITY_CODE = "2580"
 COAST_UNCERTAINTY_M = 500.0
 MAINLAND_MIN_AREA_KM2 = 100.0
@@ -57,19 +58,71 @@ def get(url: str) -> requests.Response:
     return r
 
 
-def discover_feature_types() -> tuple[str, str]:
+def discover_deso_feature_type() -> str:
     r = get(f"{SCB_WFS}?service=WFS&version=1.1.0&request=GetCapabilities")
     root = ET.fromstring(r.content)
     names = [e.text or "" for e in root.iter() if e.tag.endswith("Name")]
     deso = next((n for n in names if "deso" in n.lower() and "2025" in n.lower()), None)
     if not deso:
         deso = next((n for n in names if "deso" in n.lower()), None)
-    kommun = next((n for n in names if "kommun" in n.lower() and "202" in n.lower()), None)
-    if not kommun:
-        kommun = next((n for n in names if "kommun" in n.lower()), None)
-    if not deso or not kommun:
-        raise RuntimeError(f"Could not discover SCB WFS feature types (DeSO={deso}, kommun={kommun})")
-    return deso, kommun
+    if not deso:
+        raise RuntimeError("Could not discover SCB DeSO feature type")
+    return deso
+
+
+def fetch_municipality_geometry():
+    # Administrative municipality polygon including municipal water.
+    # Source: Region Norrbotten / ArcGIS FeatureServer, layer Kommungränser.
+    params = {
+        "where": "1=1",
+        "outFields": "*",
+        "returnGeometry": "true",
+        "outSR": "4326",
+        "f": "geojson",
+    }
+    r = SESSION.get(MUNICIPALITY_ARCGIS, params=params, timeout=TIMEOUT)
+    if r.ok:
+        try:
+            data = r.json()
+            matches = []
+            for feat in data.get("features", []):
+                props = feat.get("properties") or {}
+                values = [str(v).lower() for v in props.values() if v is not None]
+                if any(v == "2580" or "luleå" in v or "lulea" in v for v in values):
+                    matches.append(shape(feat["geometry"]))
+            if matches:
+                return unary_union(matches)
+        except Exception:
+            pass
+
+    # Fallback to ArcGIS JSON if GeoJSON output is unavailable.
+    params["f"] = "json"
+    params["outSR"] = "3006"
+    r = SESSION.get(MUNICIPALITY_ARCGIS, params=params, timeout=TIMEOUT)
+    r.raise_for_status()
+    data = r.json()
+    geoms = []
+    for feat in data.get("features", []):
+        attrs = feat.get("attributes") or {}
+        values = [str(v).lower() for v in attrs.values() if v is not None]
+        if not any(v == "2580" or "luleå" in v or "lulea" in v for v in values):
+            continue
+        rings = (feat.get("geometry") or {}).get("rings") or []
+        ring_polys = []
+        for ring in rings:
+            if len(ring) >= 4:
+                try:
+                    p = Polygon(ring)
+                    if p.is_valid and not p.is_empty:
+                        ring_polys.append(p)
+                except Exception:
+                    pass
+        if ring_polys:
+            geoms.append(unary_union(ring_polys))
+    if not geoms:
+        raise RuntimeError("Could not find Luleå municipality in ArcGIS municipality layer")
+    # Already EPSG:3006 in fallback branch.
+    return transform(TO_4326, unary_union(geoms))
 
 
 def wfs_geojson(type_name: str, filter_field_candidates: list[str]) -> dict:
@@ -97,12 +150,11 @@ def wfs_geojson(type_name: str, filter_field_candidates: list[str]) -> dict:
 
 
 def build_geography():
-    deso_type, kommun_type = discover_feature_types()
+    deso_type = discover_deso_feature_type()
     deso = wfs_geojson(deso_type, ["kommunkod", "KOMMUNKOD", "kommun_kod", "KnKod"])
-    kommun = wfs_geojson(kommun_type, ["kommunkod", "KOMMUNKOD", "kommun_kod", "KnKod"])
 
     land_wgs = unary_union([shape(f["geometry"]) for f in deso["features"]])
-    municipality_wgs = unary_union([shape(f["geometry"]) for f in kommun["features"]])
+    municipality_wgs = fetch_municipality_geometry()
 
     land = transform(TO_3006, land_wgs)
     municipality = transform(TO_3006, municipality_wgs)
@@ -149,7 +201,7 @@ def build_geography():
         "coast_boundary": coast_boundary,
         "bounds": bounds,
         "deso_type": deso_type,
-        "kommun_type": kommun_type,
+        "kommun_type": "Region_kommun/FeatureServer/1",
     }
 
 
@@ -354,7 +406,7 @@ def build_summary(rows, geo):
         "method_break": "2014",
         "coast_uncertainty_m": COAST_UNCERTAINTY_M,
         "mainland_component_min_km2": MAINLAND_MIN_AREA_KM2,
-        "geography_source": "SCB DeSO 2025 + SCB kommungeometri via WFS",
+        "geography_source": "SCB DeSO 2025 landmask + Region Norrbotten ArcGIS kommungräns",
         "geography_note": "SCB-geometrin används som analysunderlag i denna första version; byt till Lantmäteriets exakta geometri när sådan finns tillgänglig.",
         "annual": annual_rows,
         "monthly": monthly_rows,
@@ -370,7 +422,7 @@ def main():
         geo = build_geography()
     except Exception as exc:
         print(f"Lightning geography unavailable: {exc}", file=sys.stderr)
-        return 0
+        return 2
 
     existing = load_existing_rows()
     try:
