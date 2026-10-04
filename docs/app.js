@@ -308,24 +308,35 @@ function render(){
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>Math.round(c.parsed.y)+' timmar'}}},
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'timmar'},ticks:{precision:0,callback:v=>Math.round(v)+' timmar'}}}}});
 
-  const snowA=selectedAnnualRows(DATA.snow.annual_mean,DATA.snow.monthly,f),
-        snowMax=selectedAnnualRows(DATA.snow.annual_max,DATA.snow.monthly_max,f);
-  const snowMeanYears=snowA.map(r=>r.year),snowMeanVals=snowA.map(r=>r.avg);
-  lineChart('snowMeanAnnual',snowMeanYears,[
-    {label:f.month?months[f.month-1]+' medel':'Årsmedel',data:snowMeanVals},
-    {label:'Linjär trend',data:linearTrend(snowMeanYears,snowMeanVals),pointRadius:0,borderDash:[6,4]}
-  ],'cm');
-  el('snowMeanTrendText').textContent=trendRateText(snowMeanYears,snowMeanVals,'cm');
+  const snowA=DATA.snow.annual_mean.filter(r=>r.year>=f.from&&r.year<=f.to),
+        snowMax=DATA.snow.annual_max.filter(r=>r.year>=f.from&&r.year<=f.to);
+  const snowMeanYears=snowA.map(r=>r.year),snowMeanVals=snowA.map(r=>r.avg),snowMeanLabels=snowA.map(r=>r.label||String(r.year));
+  destroyChart('snowMeanAnnual');
+  charts.snowMeanAnnual=new Chart(el('snowMeanAnnual'),{
+    type:'line',
+    data:{labels:snowMeanLabels,datasets:[
+      {label:'Medelsnödjup',data:snowMeanVals,borderWidth:2,pointRadius:1,tension:.15},
+      {label:'Linjär trend',data:linearTrend(snowMeanYears,snowMeanVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:true}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'cm'}}}}
+  });
+  el('snowMeanTrendText').textContent=trendRateText(snowMeanYears,snowMeanVals,'cm',snowMeanLabels[0]??null,snowMeanLabels[snowMeanLabels.length-1]??null);
 
-  const snowMaxYears=snowMax.map(r=>r.year),snowMaxVals=snowMax.map(r=>r.max);
-  lineChart('snowMaxAnnual',snowMaxYears,[
-    {label:f.month?months[f.month-1]+' största snödjup':'Årets största snödjup',data:snowMaxVals},
-    {label:'Linjär trend',data:linearTrend(snowMaxYears,snowMaxVals),pointRadius:0,borderDash:[6,4]}
-  ],'cm');
-  el('snowMaxTrendText').textContent=trendRateText(snowMaxYears,snowMaxVals,'cm');
+  const snowMaxYears=snowMax.map(r=>r.year),snowMaxVals=snowMax.map(r=>r.max),snowMaxLabels=snowMax.map(r=>r.label||String(r.year));
+  destroyChart('snowMaxAnnual');
+  charts.snowMaxAnnual=new Chart(el('snowMaxAnnual'),{
+    type:'line',
+    data:{labels:snowMaxLabels,datasets:[
+      {label:'Största snödjup',data:snowMaxVals,borderWidth:2,pointRadius:1,tension:.15},
+      {label:'Linjär trend',data:linearTrend(snowMaxYears,snowMaxVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:true}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'cm'}}}}
+  });
+  el('snowMaxTrendText').textContent=trendRateText(snowMaxYears,snowMaxVals,'cm',snowMaxLabels[0]??null,snowMaxLabels[snowMaxLabels.length-1]??null);
 
-  let snowM=DATA.snow.monthly.filter(r=>inYears(r,f));barChart('snowMonthly',months,aggregateMonthlyMean(snowM),'cm',MONTH_GREEN);
-  const snowSeasons=DATA.snow.seasons.filter(s=>s.start_year>=f.from&&s.end_year<=f.to);
+  let snowM=DATA.snow.monthly.filter(r=>r.year>=f.from&&r.year<=f.to);
+  barChart('snowMonthly',months,aggregateMonthlyMean(snowM),'cm',MONTH_GREEN);
+  const snowSeasons=DATA.snow.seasons.filter(s=>s.start_year>=f.from&&s.start_year<=f.to);
   const seasonLabels=snowSeasons.map(s=>s.label),seasonVals=snowSeasons.map(s=>s.length_days);
   const seasonYears=snowSeasons.map(s=>s.start_year);
   const seasonTrend=linearTrend(seasonYears,seasonVals);
