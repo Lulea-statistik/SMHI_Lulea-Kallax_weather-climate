@@ -118,10 +118,11 @@
   </section>
 
   <section id="page-snow" class="page">
-    <div class="chart-card"><h2>Årsmedel snödjup</h2><p id="snowMeanTrendText" class="hint"></p><canvas id="snowMeanAnnual"></canvas></div>
-    <div class="chart-card"><h2>Genomsnittligt snödjup per månad</h2><canvas id="snowMonthly"></canvas></div>
-    <div class="chart-card"><h2>Årets största snödjup</h2><p id="snowMaxTrendText" class="hint"></p><canvas id="snowMaxAnnual"></canvas></div>
-    <div class="chart-card"><h2>Snötäckessäsongens längd</h2><p class="hint">Snöår definieras augusti–juli. Start och slut kräver 5 efterföljande observationer med snödjup över 0 cm, med högst 3 dagars lucka mellan observationerna. Streckad linje visar linjär trend för valda säsonger.</p><p id="snowSeasonTrendText" class="hint"></p><canvas id="snowSeason"></canvas></div>
+    <div class="source-note"><b>Metod för snötäcke:</b> Snöåret definieras augusti–juli. En stabil snötäcksäsong börjar och slutar först när minst 7 efterföljande tillgängliga observationer visar minst 1 cm snödjup, med högst 3 dagars lucka mellan observationerna. Medelsnödjup och största snödjup beräknas därefter endast inom denna sammanhängande säsong. Tillfälliga töperioder inne i säsongen ingår i medelvärdet, även om snödjupet då tillfälligt går under 1 cm.</div>
+    <div class="chart-card"><h2>Medelsnödjup under snötäcksäsongen</h2><p class="hint">Genomsnitt av alla tillgängliga snödjupsobservationer mellan säsongens stabila start och slut. Det är alltså inte ett medel av bara dagar med snö.</p><p id="snowMeanTrendText" class="hint"></p><canvas id="snowMeanAnnual"></canvas></div>
+    <div class="chart-card"><h2>Genomsnittligt snödjup per månad inom snötäcksäsongen</h2><p class="hint">Månadsmedel beräknas bara från observationer som ligger inom den definierade sammanhängande snötäcksäsongen.</p><canvas id="snowMonthly"></canvas></div>
+    <div class="chart-card"><h2>Största snödjup under snötäcksäsongen</h2><p id="snowMaxTrendText" class="hint"></p><canvas id="snowMaxAnnual"></canvas></div>
+    <div class="chart-card"><h2>Snötäckessäsongens längd</h2><p class="hint">Antal kalenderdygn från den stabila säsongens första till sista dag enligt samma 1 cm / 7-observationersregel som används för snödjupsmåtten ovan.</p><p id="snowSeasonTrendText" class="hint"></p><canvas id="snowSeason"></canvas></div>
   </section>
 
   <section id="page-zerocross" class="page">
@@ -153,5 +154,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=27"></script>
+<script src="app.js?v=28"></script>
 </body></html>
