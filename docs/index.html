@@ -117,7 +117,8 @@
     <div class="chart-card"><h2>Solskenstid per år</h2><p id="sunAnnualTrendText" class="hint"></p><canvas id="sunAnnual"></canvas></div>
     <div class="chart-card"><h2>Genomsnittlig solskenstid per månad</h2><canvas id="sunMonthly"></canvas></div>
     <div class="chart-card"><h2>Global solinstrålning per år</h2><p class="hint">Ackumulerad solenergi vid markytan, beräknad från SMHI:s timvisa globala irradians.</p><p id="irradianceAnnualTrendText" class="hint"></p><canvas id="irradianceAnnual"></canvas></div>
-    <div class="chart-card"><h2>Globalstrålning under dagsljus per månad</h2><p class="hint">Medel för vald period. Månadens uppmätta solenergi divideras med det beräknade antalet timmar då solen är över horisonten vid Kallax. På så sätt jämförs månader med olika dagslängd på ett mer rättvisande sätt. Samma soluppgångs-/solnedgångsberäkning används som på sidan Väder efter datum.</p><canvas id="irradianceDaylightMonthly"></canvas></div>
+    <div class="chart-card"><h2>Genomsnittlig global irradians under dagsljus per månad</h2><p class="hint">Visar genomsnittlig strålningseffekt i W/m² under de timmar solen är över horisonten. Detta är ett effektmått och ska inte jämföras direkt med den årliga solenergin i kWh/m². Samma soluppgångs-/solnedgångsberäkning används som på sidan Väder efter datum.</p><canvas id="irradianceDaylightMonthly"></canvas></div>
+    <div class="chart-card"><h2>Global solenergi per månad</h2><p class="hint">Medel för vald period i kWh/m² per månad. Månadsvärdena är ackumulerad energi och kan därför jämföras direkt med årsdiagrammet; summan av årets månader motsvarar ungefär årets total när datatäckningen är komplett.</p><canvas id="irradianceEnergyMonthly"></canvas></div>
   </section>
 
   <section id="page-snow" class="page">
@@ -157,5 +158,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=30"></script>
+<script src="app.js?v=31"></script>
 </body></html>
