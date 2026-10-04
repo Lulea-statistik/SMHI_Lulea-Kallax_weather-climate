@@ -319,6 +319,7 @@ def build_summary(rows, geo):
     monthly = defaultdict(lambda: defaultdict(int))
     monthly_by_year = defaultdict(lambda: defaultdict(int))
     days = defaultdict(set)
+    days_by_month = defaultdict(set)
     current = defaultdict(list)
     for r in rows.values():
         cls = r["surface_class"]
@@ -327,6 +328,7 @@ def build_summary(rows, geo):
         monthly[m][cls] += 1
         monthly_by_year[(y, m)][cls] += 1
         days[y].add(r["datetime_utc"][:10])
+        days_by_month[(y, m)].add(r["datetime_utc"][:10])
         try:
             current[y].append(abs(float(r["current_ka"])))
         except (TypeError, ValueError):
@@ -344,7 +346,7 @@ def build_summary(rows, geo):
         monthly_rows.append({"month": m, **{c: monthly[m].get(c, 0) for c in classes}})
     monthly_year_rows = []
     for (y, m), vals in sorted(monthly_by_year.items()):
-        monthly_year_rows.append({"year": y, "month": m, **{c: vals.get(c, 0) for c in classes}})
+        monthly_year_rows.append({"year": y, "month": m, "lightning_days": len(days_by_month[(y, m)]), **{c: vals.get(c, 0) for c in classes}})
     summary = {
         "source": "SMHI Blixtdata - historiska arkivdata",
         "source_url": "https://www.smhi.se/data/sok-oppna-data-i-utforskaren/blixtdata-historiska-arkivdata",
