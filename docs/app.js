@@ -200,6 +200,26 @@ function renderVegetation(f){
 
 }
 
+function daylightHoursForDate(dateStr){
+  const s=solarTimes(dateStr);
+  if(s.polarDay)return 24;
+  if(s.polarNight)return 0;
+  if(s.sunriseMinutes==null||s.sunsetMinutes==null)return null;
+  let mins=s.sunsetMinutes-s.sunriseMinutes;
+  if(mins<0)mins+=1440;
+  return mins/60;
+}
+function daylightHoursInMonth(year,month){
+  const days=new Date(Date.UTC(year,month,0)).getUTCDate();
+  let total=0,valid=0;
+  for(let d=1;d<=days;d++){
+    const dateStr=year+'-'+String(month).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const h=daylightHoursForDate(dateStr);
+    if(h!=null&&Number.isFinite(h)){total+=h;valid++;}
+  }
+  return valid===days?total:null;
+}
+
 function render(){
   const f=currentFilters(),m=temperatureMetric(),name=metricName(m);
   const ta=selectedAnnualRows(DATA.temperature.annual,DATA.temperature.monthly,f);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r[m]);
@@ -323,6 +343,25 @@ function render(){
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'kWh/m²'}}}}
   });
   el('irradianceAnnualTrendText').textContent=trendRateText(irrYears,irrVals,'kWh/m²');
+
+  const irrMonthlyRows=(DATA.sunshine.irradiance_monthly||[])
+    .filter(r=>inYears(r,f)&&r.kwh_m2!=null);
+  const daylightAdjusted=months.map((_,i)=>{
+    const month=i+1;
+    const vals=irrMonthlyRows.filter(r=>r.month===month).map(r=>{
+      const daylightHours=daylightHoursInMonth(r.year,month);
+      return daylightHours&&daylightHours>0 ? (r.kwh_m2*1000/daylightHours) : null;
+    }).filter(v=>v!=null&&Number.isFinite(v));
+    return vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null;
+  });
+  destroyChart('irradianceDaylightMonthly');
+  charts.irradianceDaylightMonthly=new Chart(el('irradianceDaylightMonthly'),{
+    type:'bar',
+    data:{labels:months,datasets:[{label:'Globalstrålning under dagsljus',data:daylightAdjusted,borderWidth:0,backgroundColor:'rgba(242,201,76,0.55)'}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y==null?'–':Math.round(c.parsed.y)+' W/m²'}}},
+      scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'W/m² under sol över horisonten'},ticks:{precision:0}}}}
+  });
 
   const snowA=DATA.snow.annual_mean.filter(r=>r.year>=f.from&&r.year<=f.to),
         snowMax=DATA.snow.annual_max.filter(r=>r.year>=f.from&&r.year<=f.to);
