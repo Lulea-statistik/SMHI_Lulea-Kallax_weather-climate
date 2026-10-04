@@ -6633,3 +6633,4 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162860,Luleå-Kallax Flygplats,6,Relativ Luftfuktighet,"momentanvärde, 1 gång/tim",procent,2026-10-04T16:00:00Z,2026-10-04T18:00:00+02:00,1791129600000,,84,84,Y,,latest-months
 162860,Luleå-Kallax Flygplats,6,Relativ Luftfuktighet,"momentanvärde, 1 gång/tim",procent,2026-10-04T17:00:00Z,2026-10-04T19:00:00+02:00,1791133200000,,82,82,Y,,latest-months
 162860,Luleå-Kallax Flygplats,6,Relativ Luftfuktighet,"momentanvärde, 1 gång/tim",procent,2026-10-04T18:00:00Z,2026-10-04T20:00:00+02:00,1791136800000,,77,77,Y,,latest-months
+162860,Luleå-Kallax Flygplats,6,Relativ Luftfuktighet,"momentanvärde, 1 gång/tim",procent,2026-10-04T19:00:00Z,2026-10-04T21:00:00+02:00,1791140400000,,78,78,Y,,latest-months

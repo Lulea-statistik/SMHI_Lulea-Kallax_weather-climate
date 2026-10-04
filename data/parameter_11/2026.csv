@@ -6641,3 +6641,4 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162015,Luleå Sol,11,Global Irradians (svenska stationer),"medelvärde 1 timma, varje timme",watt per kvadratmeter,2026-10-04T15:00:00Z,2026-10-04T17:00:00+02:00,1791126000000,,58.54,58.54,Y,,latest-months
 162015,Luleå Sol,11,Global Irradians (svenska stationer),"medelvärde 1 timma, varje timme",watt per kvadratmeter,2026-10-04T16:00:00Z,2026-10-04T18:00:00+02:00,1791129600000,,12.45,12.45,Y,,latest-months
 162015,Luleå Sol,11,Global Irradians (svenska stationer),"medelvärde 1 timma, varje timme",watt per kvadratmeter,2026-10-04T17:00:00Z,2026-10-04T19:00:00+02:00,1791133200000,,0.23,0.23,Y,,latest-months
+162015,Luleå Sol,11,Global Irradians (svenska stationer),"medelvärde 1 timma, varje timme",watt per kvadratmeter,2026-10-04T18:00:00Z,2026-10-04T20:00:00+02:00,1791136800000,,-0.19,-0.19,Y,,latest-months

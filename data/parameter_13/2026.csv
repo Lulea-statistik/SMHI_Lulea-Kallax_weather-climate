@@ -6580,3 +6580,4 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162860,Luleå-Kallax Flygplats,13,Rådande väder,"momentanvärde, 1 gång/tim resp 8 gånger/dygn",kod,2026-10-04T16:00:00Z,2026-10-04T18:00:00+02:00,1791129600000,,100,100,G,,latest-months
 162860,Luleå-Kallax Flygplats,13,Rådande väder,"momentanvärde, 1 gång/tim resp 8 gånger/dygn",kod,2026-10-04T17:00:00Z,2026-10-04T19:00:00+02:00,1791133200000,,100,100,G,,latest-months
 162860,Luleå-Kallax Flygplats,13,Rådande väder,"momentanvärde, 1 gång/tim resp 8 gånger/dygn",kod,2026-10-04T18:00:00Z,2026-10-04T20:00:00+02:00,1791136800000,,100,100,G,,latest-months
+162860,Luleå-Kallax Flygplats,13,Rådande väder,"momentanvärde, 1 gång/tim resp 8 gånger/dygn",kod,2026-10-04T19:00:00Z,2026-10-04T21:00:00+02:00,1791140400000,,100,100,G,,latest-months
