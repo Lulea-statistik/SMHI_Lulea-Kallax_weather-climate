@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Luleå statistik</title>
+  <desc id="desc">Fyra stigande blå och turkosa staplar ovanför två vågor.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fbfd"/><stop offset="1" stop-color="#eef6fa"/></linearGradient>
+    <linearGradient id="b1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#09549b"/><stop offset="1" stop-color="#1179be"/></linearGradient>
+    <linearGradient id="b2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#238ec4"/><stop offset="1" stop-color="#50b0d3"/></linearGradient>
+    <linearGradient id="b3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0878bd"/><stop offset="1" stop-color="#2998c5"/></linearGradient>
+    <linearGradient id="b4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00a6aa"/><stop offset="1" stop-color="#14b9b4"/></linearGradient>
+    <linearGradient id="wave1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2e9dce"/><stop offset="0.55" stop-color="#4eadd2"/><stop offset="1" stop-color="#3d9fd0"/></linearGradient>
+    <linearGradient id="wave2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#075391"/><stop offset="0.55" stop-color="#0b75b8"/><stop offset="1" stop-color="#0868aa"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="9" flood-color="#0b5d8c" flood-opacity=".12"/></filter>
+  </defs>
+  <rect x="44" y="48" width="424" height="416" rx="76" fill="url(#bg)" filter="url(#shadow)"/>
+  <path d="M92 298V210q0-10 10-10h54q10 0 10 10v84c-28-8-50-7-74 4z" fill="url(#b1)"/>
+  <path d="M184 296V166q0-10 10-10h54q10 0 10 10v139c-27 4-51-1-74-9z" fill="url(#b2)"/>
+  <path d="M276 293V110q0-10 10-10h54q10 0 10 10v151c-25 7-49 18-74 32z" fill="url(#b3)"/>
+  <path d="M368 258V66q0-10 10-10h54q10 0 10 10v191c-26-5-49-5-74 1z" fill="url(#b4)"/>
+  <path d="M44 334c55-47 104-49 151-32 52 19 79 22 126 2 57-25 96-37 147-13v31c-51-23-91-12-147 13-48 21-78 18-128-1-48-17-95-14-149 31z" fill="url(#wave1)"/>
+  <path d="M48 374c57-33 106-38 154-18 54 22 91 33 139 18 56-18 91-30 123-17l-5 23c-29-10-61 0-111 16-55 18-98 7-154-16-43-18-88-13-138 15z" fill="url(#wave2)"/>
+</svg>
