@@ -206,14 +206,12 @@ def build_geography():
 
 
 def crawl_atom(url: str, seen: set[str], out: list[str], depth: int = 0):
-    if depth > 5 or url in seen:
+    if depth > 8 or url in seen:
         return
     seen.add(url)
     try:
         r = get(url)
     except Exception as exc:
-        # Some links in SMHI's root feed are catalogue/navigation Atom links that
-        # are not downloadable archive feeds. Skip those without aborting the root crawl.
         if depth == 0:
             raise
         print(f"Warning: skipping Atom subfeed {url}: {exc}", file=sys.stderr)
@@ -229,12 +227,23 @@ def crawl_atom(url: str, seen: set[str], out: list[str], depth: int = 0):
         rel = (link.attrib.get("rel") or "").lower()
         typ = (link.attrib.get("type") or "").lower()
 
-        # Prefer actual downloadable archive resources. Some feeds expose files
-        # without a conventional extension, so also accept enclosure links.
-        if any(x in low for x in [".json", ".txt", ".csv", ".ualf", ".gz", ".zip"]) or rel == "enclosure":
-            out.append(href)
-        elif low.endswith(".atom") or "atom" in typ:
+        # Atom links are navigation/catalogue feeds and must be followed first.
+        # In the previous version rel="enclosure" caused year-level Atom metadata
+        # to be mistaken for downloadable lightning data.
+        if low.endswith(".atom") or "atom" in typ:
             crawl_atom(href, seen, out, depth + 1)
+            continue
+
+        # JSON/XML at year/month/day catalogue levels are metadata. Actual lightning
+        # resources appear at the leaf level and are normally exposed as data/text,
+        # CSV/UALF, compressed files, or links whose rel explicitly says data.
+        is_catalogue = bool(re.search(r"/year/\d{4}(?:/month/\d{1,2})?(?:/day/\d{1,2})?\.(?:json|xml)$", low))
+        is_data_rel = rel in {"data", "download", "enclosure"} and not is_catalogue
+        is_data_ext = any(x in low for x in [".txt", ".csv", ".ualf", ".gz", ".zip"])
+        is_leaf_json = (low.endswith(".json") or low.endswith(".xml")) and ("/data" in low or "/lightning" in low or "/stroke" in low)
+
+        if is_data_rel or is_data_ext or is_leaf_json:
+            out.append(href)
 
 
 def date_from_url(url: str):
@@ -443,7 +452,7 @@ def main():
         crawl_atom(ATOM_URL, set(), urls)
         urls = sorted(set(urls))
         print(f"Lightning archive links discovered: {len(urls):,}")
-        for sample_url in urls[:60]:
+        for sample_url in urls[:20]:
             print(f"  archive link: {sample_url}")
         if not urls:
             raise RuntimeError("SMHI Atom feed contained no downloadable archive links")
