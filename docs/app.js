@@ -282,14 +282,14 @@ function render(){
   const windShareYears=[...new Set(wds.map(r=>r.year))].sort((a,b)=>a-b);
   const windDirs=['N','NO','O','SO','S','SV','V','NV'];
   const WIND_DIR_COLORS={
-    N:'#F3EA2A',
-    NO:'#EEB12C',
-    O:'#D9251F',
-    SO:'#8E2A73',
-    S:'#463A97',
-    SV:'#78ADD6',
-    V:'#7DBB61',
-    NV:'#B8CF37'
+    N:'rgba(243,234,42,0.80)',
+    NO:'rgba(238,177,44,0.80)',
+    O:'rgba(217,37,31,0.80)',
+    SO:'rgba(142,42,115,0.80)',
+    S:'rgba(70,58,151,0.80)',
+    SV:'rgba(120,173,214,0.80)',
+    V:'rgba(125,187,97,0.80)',
+    NV:'rgba(184,207,55,0.80)'
   };
   const windTotals={};wds.forEach(r=>windTotals[r.year]=(windTotals[r.year]||0)+r.count);
   destroyChart('windDirectionShares');
