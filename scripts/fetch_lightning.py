@@ -317,6 +317,7 @@ def save_rows(rows):
 def build_summary(rows, geo):
     annual = defaultdict(lambda: defaultdict(int))
     monthly = defaultdict(lambda: defaultdict(int))
+    monthly_by_year = defaultdict(lambda: defaultdict(int))
     days = defaultdict(set)
     current = defaultdict(list)
     for r in rows.values():
@@ -324,6 +325,7 @@ def build_summary(rows, geo):
         y, m = int(r["year"]), int(r["month"])
         annual[y][cls] += 1
         monthly[m][cls] += 1
+        monthly_by_year[(y, m)][cls] += 1
         days[y].add(r["datetime_utc"][:10])
         try:
             current[y].append(abs(float(r["current_ka"])))
@@ -340,6 +342,9 @@ def build_summary(rows, geo):
     monthly_rows = []
     for m in range(1, 13):
         monthly_rows.append({"month": m, **{c: monthly[m].get(c, 0) for c in classes}})
+    monthly_year_rows = []
+    for (y, m), vals in sorted(monthly_by_year.items()):
+        monthly_year_rows.append({"year": y, "month": m, **{c: vals.get(c, 0) for c in classes}})
     summary = {
         "source": "SMHI Blixtdata - historiska arkivdata",
         "source_url": "https://www.smhi.se/data/sok-oppna-data-i-utforskaren/blixtdata-historiska-arkivdata",
@@ -351,6 +356,7 @@ def build_summary(rows, geo):
         "geography_note": "SCB-geometrin används som analysunderlag i denna första version; byt till Lantmäteriets exakta geometri när sådan finns tillgänglig.",
         "annual": annual_rows,
         "monthly": monthly_rows,
+        "monthly_by_year": monthly_year_rows,
         "records": len(rows),
     }
     SUMMARY_PATH.write_text(json.dumps(summary, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
