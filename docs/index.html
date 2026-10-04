@@ -6,7 +6,7 @@
 
   <link rel="icon" type="image/png" href="favicon.png?v=3">
 
-  <link rel="stylesheet" href="style.css?v=24">
+  <link rel="stylesheet" href="style.css?v=25">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -28,6 +28,7 @@
   <button data-page="sunshine">Solskenstid</button>
   <button data-page="snow">Snödjup</button>
   <button data-page="zerocross">Nollgenomgångar</button>
+  <button data-page="vegetation">Vegetationsperiod</button>
   <button data-page="dateweather">Väder efter datum</button>
   <button data-page="data">Data</button>
 </nav>
@@ -130,6 +131,14 @@
     <div class="chart-card full"><h2>Vilka dygn hade nollgenomgång?</h2><p class="hint"><b>Observationer</b> = antal temperaturmätningar från Kallax under dygnet som användes för att avgöra om temperaturen passerade 0 °C. Det är alltså inte antal nollgenomgångar.</p><div id="zeroTable" class="table-scroll"></div></div>
   </section>
 
+  <section id="page-vegetation" class="page">
+    <div class="source-note">SMHI använder +5 °C som gräns för vegetationsperiodens klimatindikator. Eftersom enskilda år kan pendla mycket kring gränsen används här, i linje med SMHI:s metodbeskrivning, ett 10-årsmedel av dygnsmedeltemperaturen för start, slut och längd.</div>
+    <div class="chart-card"><h2>Vegetationsperiodens längd</h2><p id="vegetationLengthTrendText" class="hint"></p><canvas id="vegetationLength"></canvas></div>
+    <div class="chart-card"><h2>Vegetationsperiodens start</h2><p class="hint">Tidigare datum innebär en tidigare vårstart.</p><canvas id="vegetationStart"></canvas></div>
+    <div class="chart-card"><h2>Vegetationsperiodens slut</h2><p class="hint">Senare datum innebär en senare höstavslutning.</p><canvas id="vegetationEnd"></canvas></div>
+    <div class="chart-card"><h2>Dygn över +5 °C per år</h2><p class="hint">Rå år-till-år-variation från Kallax. Detta är ett komplement och inte samma sak som SMHI:s 10-åriga klimatindikator.</p><canvas id="vegetationObserved"></canvas></div>
+  </section>
+
   <section id="page-dateweather" class="page">
     <div class="page-tools">
       <label>Datum<input id="dateWeatherPicker" type="date"></label>
@@ -144,5 +153,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=23"></script>
+<script src="app.js?v=24"></script>
 </body></html>
