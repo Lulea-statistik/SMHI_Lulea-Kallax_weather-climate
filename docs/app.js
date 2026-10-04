@@ -530,12 +530,12 @@ async function loadDateWeather(dateStr){
 
     const sun=solarTimes(dateStr),sunFractions=sunHourFractions(sun);
     destroyChart('dateSun');
-    charts.dateSun=new Chart(el('dateSun'),{type:'bar',data:{labels:hours,datasets:[{data:sunFractions,borderWidth:0,categoryPercentage:1,barPercentage:1,backgroundColor:SUN_YELLOW}]},
+    charts.dateSun=new Chart(el('dateSun'),{type:'bar',data:{labels:hours,datasets:[{data:sunFractions,borderWidth:1.5,borderColor:SUN_YELLOW,categoryPercentage:1,barPercentage:1,backgroundColor:'rgba(242,201,76,0.58)'}]},
       options:alignedHourlyOptions('%',100,c=>c.parsed.y+' % av timmen')});
 
     const precipHourly=hourlySum(day.precipitation_hourly||[]);
     destroyChart('datePrecip');
-    charts.datePrecip=new Chart(el('datePrecip'),{type:'bar',data:{labels:hours,datasets:[{data:precipHourly,borderWidth:0,categoryPercentage:1,barPercentage:1,backgroundColor:PRECIP_DARK_BLUE}]},
+    charts.datePrecip=new Chart(el('datePrecip'),{type:'bar',data:{labels:hours,datasets:[{data:precipHourly,borderWidth:1.5,borderColor:PRECIP_DARK_BLUE,categoryPercentage:1,barPercentage:1,backgroundColor:'rgba(22,58,95,0.52)'}]},
       options:alignedHourlyOptions('mm',null,c=>(c.parsed.y??0).toLocaleString('sv-SE')+' mm')});
 
     el('dateSummary').innerHTML='<table><tbody>'+
@@ -551,10 +551,25 @@ async function loadDateWeather(dateStr){
     const weatherByHour=hourlyWeather(day.weather||[]);
     const codes=[...new Set(weatherByHour.filter(Boolean))];
     destroyChart('dateWeather');
-    const datasets=codes.map(code=>({label:weatherPhenomenon(code)+' (kod '+code+')',data:weatherByHour.map(c=>c===code?100:null),borderWidth:0,categoryPercentage:1,barPercentage:1}));
+    const datasets=codes.map(code=>({label:weatherPhenomenon(code),data:weatherByHour.map(c=>c===code?100:null),borderWidth:0,categoryPercentage:1,barPercentage:1}));
     charts.dateWeather=new Chart(el('dateWeather'),{type:'bar',data:{labels:hours,datasets},options:{
       ...alignedHourlyOptions('registrerat väder',100),
-      plugins:{legend:{display:codes.length<=10},tooltip:{callbacks:{label:c=>c.dataset.label}}},
+      interaction:{mode:'nearest',intersect:true},
+      plugins:{
+        legend:{display:codes.length<=10},
+        tooltip:{
+          mode:'nearest',
+          intersect:true,
+          filter:item=>item.raw!=null,
+          callbacks:{
+            title:items=>{
+              const h=String(items[0]?.label??'').padStart(2,'0');
+              return 'Timme: '+h+':00-'+h+':59';
+            },
+            label:c=>c.dataset.label
+          }
+        }
+      },
       scales:{
         x:{stacked:true,grid:{display:false},offset:false,ticks:{autoSkip:false,maxRotation:0,minRotation:0,callback:(v,i)=>i%2===0?hours[i]:''}},
         y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+' %'},title:{display:true,text:'registrerat väder'},afterFit:s=>{s.width=72;}}
