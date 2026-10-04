@@ -144,7 +144,6 @@ function dayOfYearLabel(doy){
 function renderVegetation(f){
   if(!DATA.vegetation)return;
   const climate=(DATA.vegetation.climate_10y||[]).filter(r=>r.window_end>=f.from&&r.window_end<=f.to);
-  const observed=(DATA.vegetation.annual_observed||[]).filter(r=>r.year>=f.from&&r.year<=f.to&&r.days_above_5!=null);
   const labels=climate.map(r=>r.window_end);
   const lengthVals=climate.map(r=>r.length_days);
 
@@ -199,14 +198,6 @@ function renderVegetation(f){
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'dygn'}}}}
   });
 
-  el('vegetationObservedTrendText').textContent=trendRateText(observed.map(r=>r.year),observed.map(r=>r.days_above_5),'dygn');
-  destroyChart('vegetationObserved');
-  charts.vegetationObserved=new Chart(el('vegetationObserved'),{
-    type:'bar',
-    data:{labels:observed.map(r=>r.year),datasets:[{label:'Dygn över +5 °C',data:observed.map(r=>r.days_above_5),borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' dygn'}}},
-      scales:{x:{grid:{display:false}},y:{beginAtZero:false,title:{display:true,text:'dygn'}}}}
-  });
 }
 
 function render(){
