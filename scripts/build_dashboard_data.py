@@ -439,6 +439,16 @@ def coverage(rows,name):
     if not rows:return {'name':name,'min_date':'-','max_date':'-','rows':0}
     dates=[d for d,_ in rows];return {'name':name,'min_date':min(dates).date().isoformat(),'max_date':max(dates).date().isoformat(),'rows':len(rows)}
 
+def load_lightning_summary():
+    path=DATA/'lightning'/'summary.json'
+    if not path.exists():
+        return {'annual':[],'monthly':[],'records':0,'source':'SMHI Blixtdata - historiska arkivdata'}
+    try:
+        return json.loads(path.read_text(encoding='utf-8'))
+    except Exception as e:
+        print(f'Warning: could not read lightning summary: {e}')
+        return {'annual':[],'monthly':[],'records':0,'source':'SMHI Blixtdata - historiska arkivdata'}
+
 temp=read_param(1);wind_dir=read_param(3);wind_speed=read_param(4);prec=read_param(5);humidity=read_param(6);prec_hourly=read_param(7);snow=read_param(8);sunshine=read_param(10);irradiance=read_param(11);visibility=read_param(12);weather=read_param(13);precip_type_12=read_param_raw(17);precip_type_24=read_param_raw(18);gust=read_param(21)
 temp_a,temp_m=aggregate_temp(temp);wind_s_a,wind_s_m=aggregate_mean(wind_speed);wind_d_a,wind_d_m=aggregate_direction(wind_dir);prec_a,prec_m=aggregate_precip(prec);hum_a,hum_m=aggregate_mean(humidity);vis_a,vis_m=aggregate_mean(visibility);snow_cm=[(d,v*100.0) for d,v in snow];snow_season_rows=snow_seasons(snow_cm);snow_a=[{'year':s['start_year'],'label':s['label'],'avg':s['mean_depth_cm']} for s in snow_season_rows];snow_max_a=[{'year':s['start_year'],'label':s['label'],'max':s['max_depth_cm']} for s in snow_season_rows];snow_m=[{'year':s['start_year'],'month':int(m),'avg':v} for s in snow_season_rows for m,v in s['monthly_mean_cm'].items()];snow_max_m=[{'year':s['start_year'],'month':int(m),'max':v} for s in snow_season_rows for m,v in s['monthly_max_cm'].items()];gust_max_a,gust_max_m=aggregate_max(gust);wind_max_a,wind_max_m=aggregate_max(wind_speed);sun_a,sun_m=aggregate_sum_hours(sunshine);irr_a,irr_m=aggregate_irradiance_energy(irradiance)
 weather_rows=aggregate_weather(weather);used=sorted({r['code'] for r in weather_rows},key=lambda x:float(x));all_labels=fetch_weather_labels();labels={c:all_labels.get(c,f'Kod {c}') for c in used};write_daily_detail(temp,prec,prec_hourly,snow,weather)
@@ -452,5 +462,6 @@ payload={'generated_at':datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'
  'sunshine':{'station':{'id':'162015','name':'Luleå Sol'},'annual':sun_a,'monthly_total':sun_m,'irradiance_annual':irr_a,'irradiance_monthly':irr_m},
  'zero_crossings':zero_crossings(temp),
  'vegetation':vegetation_period(temp),
+ 'lightning':load_lightning_summary(),
  'coverage':[coverage(temp,PARAMS[1]),coverage(prec,PARAMS[5]),coverage(prec_hourly,PARAMS[7]),coverage(weather,PARAMS[13]),coverage(wind_speed,PARAMS[4]),coverage(wind_dir,PARAMS[3]),coverage(gust,PARAMS[21]),coverage(visibility,PARAMS[12]),coverage(humidity,PARAMS[6]),coverage(snow,PARAMS[8]),coverage(sunshine,PARAMS[10]),coverage(irradiance,PARAMS[11]),coverage([(d,0) for d,_,_ in precip_type_12],PARAMS[17]),coverage([(d,0) for d,_,_ in precip_type_24],PARAMS[18])]}
 DOCS.mkdir(exist_ok=True);(DOCS/'dashboard_data.json').write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':')),encoding='utf-8');print(f"Wrote {DOCS/'dashboard_data.json'} with {len(labels)} weather labels and {len(payload['zero_crossings'])} zero-crossing days")
