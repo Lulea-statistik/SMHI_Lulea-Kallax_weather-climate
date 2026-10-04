@@ -6,7 +6,7 @@
 
   <link rel="icon" type="image/png" href="favicon.png?v=3">
 
-  <link rel="stylesheet" href="style.css?v=28">
+  <link rel="stylesheet" href="style.css?v=29">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -146,10 +146,8 @@
 
   <section id="page-dateweather" class="page">
     <div class="page-tools date-weather-tools">
-      <label>Datum<select id="dateWeatherPicker"></select></label>
-      <button id="dateWeatherEarliest" class="small-button" type="button">Tidigaste datum</button>
-      <button id="dateWeatherLatest" class="small-button" type="button">Senaste datum</button>
-      <span id="dateWeatherStatus" class="hint"></span>
+      <label>Datum<input id="dateWeatherPicker" type="date"></label>
+      <span id="dateWeatherStatus" class="hint selected-date-text"></span>
     </div>
     <div class="chart-card date-aligned date-summary"><h2>Dygnsvärden</h2><div id="dateSummary"></div></div>
     <div class="chart-card date-aligned date-chart date-temp-chart"><h2>Temperatur under dygnet</h2><canvas id="dateTemp"></canvas></div>
@@ -160,5 +158,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=38"></script>
+<script src="app.js?v=39"></script>
 </body></html>
