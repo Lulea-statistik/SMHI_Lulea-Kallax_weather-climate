@@ -209,7 +209,15 @@ def crawl_atom(url: str, seen: set[str], out: list[str], depth: int = 0):
     if depth > 5 or url in seen:
         return
     seen.add(url)
-    r = get(url)
+    try:
+        r = get(url)
+    except Exception as exc:
+        # Some links in SMHI's root feed are catalogue/navigation Atom links that
+        # are not downloadable archive feeds. Skip those without aborting the root crawl.
+        if depth == 0:
+            raise
+        print(f"Warning: skipping Atom subfeed {url}: {exc}", file=sys.stderr)
+        return
     root = ET.fromstring(r.content)
     ns = {"a": "http://www.w3.org/2005/Atom"}
     for link in root.findall(".//a:link", ns):
@@ -218,10 +226,15 @@ def crawl_atom(url: str, seen: set[str], out: list[str], depth: int = 0):
             continue
         href = urljoin(url, href)
         low = href.lower()
-        if low.endswith(".atom"):
-            crawl_atom(href, seen, out, depth + 1)
-        elif any(x in low for x in [".json", ".txt", ".csv", ".ualf", ".gz", ".zip"]):
+        rel = (link.attrib.get("rel") or "").lower()
+        typ = (link.attrib.get("type") or "").lower()
+
+        # Prefer actual downloadable archive resources. Some feeds expose files
+        # without a conventional extension, so also accept enclosure links.
+        if any(x in low for x in [".json", ".txt", ".csv", ".ualf", ".gz", ".zip"]) or rel == "enclosure":
             out.append(href)
+        elif low.endswith(".atom") or "atom" in typ:
+            crawl_atom(href, seen, out, depth + 1)
 
 
 def date_from_url(url: str):
@@ -429,6 +442,9 @@ def main():
         urls = []
         crawl_atom(ATOM_URL, set(), urls)
         urls = sorted(set(urls))
+        print(f"Lightning archive links discovered: {len(urls):,}")
+        if not urls:
+            raise RuntimeError("SMHI Atom feed contained no downloadable archive links")
     except Exception as exc:
         print(f"Lightning Atom feed unavailable: {exc}", file=sys.stderr)
         if existing:
