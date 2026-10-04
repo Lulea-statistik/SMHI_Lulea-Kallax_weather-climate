@@ -163,19 +163,37 @@ function renderVegetation(f){
   const startVals=climate.map(r=>r.start_doy);
   destroyChart('vegetationStart');
   charts.vegetationStart=new Chart(el('vegetationStart'),{
-    type:'line',data:{labels,datasets:[{label:'Start',data:startVals,borderWidth:2,pointRadius:2,tension:.15}]},
+    data:{labels,datasets:[
+      {type:'bar',label:'Start',data:startVals,backgroundColor:'#e67e22',borderWidth:0},
+      {type:'line',label:'Linjär trend',data:linearTrend(labels,startVals),borderColor:'#8a4b08',backgroundColor:'#8a4b08',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+    ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-      plugins:{legend:{display:false},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>'Start: '+dayOfYearLabel(c.parsed.y)}}},
+      plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label==='Start'?'Start: '+dayOfYearLabel(c.parsed.y):'Trend: '+dayOfYearLabel(c.parsed.y)}}},
       scales:{x:{grid:{display:false}},y:{title:{display:true,text:'datum'},ticks:{callback:v=>dayOfYearLabel(v)}}}}
   });
 
   const endVals=climate.map(r=>r.end_doy);
   destroyChart('vegetationEnd');
   charts.vegetationEnd=new Chart(el('vegetationEnd'),{
-    type:'line',data:{labels,datasets:[{label:'Slut',data:endVals,borderWidth:2,pointRadius:2,tension:.15}]},
+    data:{labels,datasets:[
+      {type:'bar',label:'Slut',data:endVals,backgroundColor:'#2e8b57',borderWidth:0},
+      {type:'line',label:'Linjär trend',data:linearTrend(labels,endVals),borderColor:'#1f5f3c',backgroundColor:'#1f5f3c',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+    ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-      plugins:{legend:{display:false},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>'Slut: '+dayOfYearLabel(c.parsed.y)}}},
+      plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label==='Slut'?'Slut: '+dayOfYearLabel(c.parsed.y):'Trend: '+dayOfYearLabel(c.parsed.y)}}},
       scales:{x:{grid:{display:false}},y:{title:{display:true,text:'datum'},ticks:{callback:v=>dayOfYearLabel(v)}}}}
+  });
+
+  const frost=climate.filter(r=>r.frost_days!=null);
+  destroyChart('vegetationFrost');
+  charts.vegetationFrost=new Chart(el('vegetationFrost'),{
+    data:{labels:frost.map(r=>r.window_end),datasets:[
+      {type:'bar',label:'Frostnätter',data:frost.map(r=>r.frost_days),backgroundColor:'#6b8fb3',borderWidth:0},
+      {type:'line',label:'Linjär trend',data:linearTrend(frost.map(r=>r.window_end),frost.map(r=>r.frost_days)),borderColor:'#334e68',backgroundColor:'#334e68',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'År '+items[0].label,label:c=>c.dataset.label+': '+Math.round(c.parsed.y)+' dygn'}}},
+      scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'dygn'}}}}
   });
 
   destroyChart('vegetationObserved');
