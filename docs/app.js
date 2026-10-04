@@ -135,6 +135,58 @@ function renderPrecipTypeChart(id,labels,rows){
     plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1).replace('.',',')+' %'}}},
     scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}});
 }
+
+function dayOfYearLabel(doy){
+  const d=new Date(Date.UTC(2001,0,1));
+  d.setUTCDate(doy);
+  return d.toLocaleDateString('sv-SE',{day:'numeric',month:'short',timeZone:'UTC'}).replace('.','');
+}
+function renderVegetation(f){
+  if(!DATA.vegetation)return;
+  const climate=(DATA.vegetation.climate_10y||[]).filter(r=>r.window_end>=f.from&&r.window_end<=f.to);
+  const observed=(DATA.vegetation.annual_observed||[]).filter(r=>r.year>=f.from&&r.year<=f.to&&r.days_above_5!=null);
+  const labels=climate.map(r=>r.window_end);
+  const lengthVals=climate.map(r=>r.length_days);
+
+  destroyChart('vegetationLength');
+  charts.vegetationLength=new Chart(el('vegetationLength'),{
+    data:{labels,datasets:[
+      {type:'bar',label:'Längd',data:lengthVals,borderWidth:0},
+      {type:'line',label:'Linjär trend',data:linearTrend(labels,lengthVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label+': '+Math.round(c.parsed.y)+' dygn'}}},
+      scales:{x:{grid:{display:false}},y:{beginAtZero:false,title:{display:true,text:'dygn'}}}}
+  });
+  el('vegetationLengthTrendText').textContent=trendRateText(labels,lengthVals,'dygn');
+
+  const startVals=climate.map(r=>r.start_doy);
+  destroyChart('vegetationStart');
+  charts.vegetationStart=new Chart(el('vegetationStart'),{
+    type:'line',data:{labels,datasets:[{label:'Start',data:startVals,borderWidth:2,pointRadius:2,tension:.15}]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>'Start: '+dayOfYearLabel(c.parsed.y)}}},
+      scales:{x:{grid:{display:false}},y:{title:{display:true,text:'datum'},ticks:{callback:v=>dayOfYearLabel(v)}}}}
+  });
+
+  const endVals=climate.map(r=>r.end_doy);
+  destroyChart('vegetationEnd');
+  charts.vegetationEnd=new Chart(el('vegetationEnd'),{
+    type:'line',data:{labels,datasets:[{label:'Slut',data:endVals,borderWidth:2,pointRadius:2,tension:.15}]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>'Slut: '+dayOfYearLabel(c.parsed.y)}}},
+      scales:{x:{grid:{display:false}},y:{title:{display:true,text:'datum'},ticks:{callback:v=>dayOfYearLabel(v)}}}}
+  });
+
+  destroyChart('vegetationObserved');
+  charts.vegetationObserved=new Chart(el('vegetationObserved'),{
+    type:'bar',
+    data:{labels:observed.map(r=>r.year),datasets:[{label:'Dygn över +5 °C',data:observed.map(r=>r.days_above_5),borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' dygn'}}},
+      scales:{x:{grid:{display:false}},y:{beginAtZero:false,title:{display:true,text:'dygn'}}}}
+  });
+}
+
 function render(){
   const f=currentFilters(),m=temperatureMetric(),name=metricName(m);
   const ta=selectedAnnualRows(DATA.temperature.annual,DATA.temperature.monthly,f);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r[m]);
@@ -150,6 +202,7 @@ function render(){
     return vals.length?vals.reduce((s,v)=>s+v,0)/vals.length:null;
   });lineChart('tempMonthly',months,[{label:'°C',data:tMonthAgg,borderColor:MONTH_GREEN,backgroundColor:MONTH_GREEN}],'°C');el('tempMonthlyTitle').textContent=name+' lufttemperatur per månad';
   renderTemp2();
+  renderVegetation(f);
 
   const pa=selectedAnnualRows(DATA.precipitation.annual,DATA.precipitation.monthly_total,f);const paYears=pa.map(r=>r.year),paVals=pa.map(r=>r.sum);
   destroyChart('precipAnnual');
