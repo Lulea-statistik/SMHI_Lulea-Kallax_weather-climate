@@ -443,6 +443,8 @@ def main():
         crawl_atom(ATOM_URL, set(), urls)
         urls = sorted(set(urls))
         print(f"Lightning archive links discovered: {len(urls):,}")
+        for sample_url in urls[:60]:
+            print(f"  archive link: {sample_url}")
         if not urls:
             raise RuntimeError("SMHI Atom feed contained no downloadable archive links")
     except Exception as exc:
@@ -460,10 +462,15 @@ def main():
 
     minx, miny, maxx, maxy = geo["bounds"]
     n_new = 0
+    parsed_total = 0
+    diagnostic_samples = 0
     for i, url in enumerate(urls, 1):
         try:
             for text in iter_payload_text(url):
+                parsed_here = 0
                 for rec in parse_payload(text):
+                    parsed_here += 1
+                    parsed_total += 1
                     if not (minx <= rec["lon"] <= maxx and miny <= rec["lat"] <= maxy):
                         continue
                     cls = classify(rec, geo)
@@ -487,14 +494,25 @@ def main():
                     if key not in existing:
                         n_new += 1
                     existing[key] = row
+                if parsed_here == 0 and diagnostic_samples < 5:
+                    one_line = re.sub(r"\s+", " ", text[:1200]).strip()
+                    print(f"Diagnostic no UALF records from {url}: {one_line}", file=sys.stderr)
+                    diagnostic_samples += 1
         except Exception as exc:
             print(f"Warning: lightning file failed {url}: {exc}", file=sys.stderr)
         if i % 100 == 0:
             print(f"Processed {i}/{len(urls)} archive files; local records {len(existing):,}")
 
+    print(f"Lightning parsed source records before geographic filtering: {parsed_total:,}")
     save_rows(existing)
     build_summary(existing, geo)
     print(f"Lightning: {len(existing):,} Lulea records, {n_new:,} new; summary written to {SUMMARY_PATH}")
+    if parsed_total == 0:
+        print("ERROR: no lightning observations could be parsed from discovered SMHI archive resources.", file=sys.stderr)
+        return 3
+    if len(existing) == 0:
+        print("ERROR: lightning observations were parsed but none fell inside the Lulea municipality geometry.", file=sys.stderr)
+        return 4
     return 0
 
 
