@@ -588,11 +588,30 @@ async function loadDateWeather(dateStr){
     ['dateTemp','dateSun','datePrecip','dateWeather'].forEach(destroyChart);
   }
 }
+function dateWeatherCoverage(){
+  return DATA.coverage.find(r=>r.name==='Lufttemperatur')||DATA.coverage[0];
+}
+function updateDateWeatherBounds(loadIfChanged=false){
+  const picker=el('dateWeatherPicker');
+  if(!picker)return;
+  const cov=dateWeatherCoverage();
+  if(!cov||!cov.min_date||cov.min_date==='-'||!cov.max_date||cov.max_date==='-')return;
+  const fromYear=+el('yearFrom').value,toYear=+el('yearTo').value;
+  const minCandidate=String(fromYear)+'-01-01';
+  const maxCandidate=String(toYear)+'-12-31';
+  const minDate=minCandidate>cov.min_date?minCandidate:cov.min_date;
+  const maxDate=maxCandidate<cov.max_date?maxCandidate:cov.max_date;
+  picker.min=minDate;picker.max=maxDate;
+  let changed=false;
+  if(!picker.value||picker.value<minDate){picker.value=minDate;changed=true;}
+  if(picker.value>maxDate){picker.value=maxDate;changed=true;}
+  if(loadIfChanged&&changed&&picker.value)loadDateWeather(picker.value);
+}
 function setupDateWeather(){
   const picker=el('dateWeatherPicker');
-  const cov=DATA.coverage.find(r=>r.name==='Lufttemperatur')||DATA.coverage[0];
-  if(cov&&cov.min_date&&cov.min_date!=='-')picker.min=cov.min_date;
-  if(cov&&cov.max_date&&cov.max_date!=='-'){picker.max=cov.max_date;picker.value=cov.max_date;}
+  const cov=dateWeatherCoverage();
+  if(cov&&cov.max_date&&cov.max_date!=='-')picker.value=cov.max_date;
+  updateDateWeatherBounds(false);
   picker.addEventListener('change',()=>loadDateWeather(picker.value));
   if(picker.value)loadDateWeather(picker.value);
 }
@@ -609,9 +628,10 @@ function syncYear(source,value,renderNow=true){
   el('rangeFrom').value=a;el('rangeTo').value=b;
   el('rangeFromLabel').textContent=a;el('rangeToLabel').textContent=b;
   updateRangeTrack();
+  updateDateWeatherBounds(renderNow);
   if(renderNow)render();
 }
-function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');setTimeout(()=>Object.values(charts).forEach(c=>c.resize()),50);}));}
+function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');if(btn.dataset.page==='dateweather')updateDateWeatherBounds(false);setTimeout(()=>Object.values(charts).forEach(c=>c.resize()),50);}));}
 function setupFilters(){const years=DATA.years,min=years[0],max=years[years.length-1];['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=years.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));el('yearFrom').value=min;el('yearTo').value=max;['rangeFrom','rangeTo'].forEach(id=>{el(id).min=min;el(id).max=max;el(id).step=1;});el('rangeFrom').value=min;el('rangeTo').value=max;el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;updateRangeTrack();el('yearFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
 el('yearTo').addEventListener('change',e=>syncYear('to',e.target.value,true));
 el('rangeFrom').addEventListener('input',e=>syncYear('from',e.target.value,false));
