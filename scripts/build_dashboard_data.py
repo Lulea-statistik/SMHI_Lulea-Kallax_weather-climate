@@ -193,6 +193,90 @@ def precipitation_types(weather_rows,temp_rows):
         if cat:counts[(d.year,d.month,cat)]+=1
     return [{'year':y,'month':m,'type':cat,'count':n} for (y,m,cat),n in sorted(counts.items())]
 
+def vegetation_period(rows):
+    # SMHI uses +5 C as threshold for the vegetation-period climate indicator.
+    # Start/end are based on a 10-year mean daily-temperature profile because
+    # individual years can oscillate around the threshold.
+    daily=defaultdict(list)
+    for d,v in rows:
+        daily[d.date()].append(v)
+    daily_mean={day:mean(vals) for day,vals in daily.items() if vals}
+
+    # Raw annual context: number of observed days with daily mean > 5 C.
+    annual=[]
+    by_year=defaultdict(dict)
+    for day,val in daily_mean.items():
+        by_year[day.year][day]=val
+    for year,daymap in sorted(by_year.items()):
+        total=len(daymap)
+        above=sum(1 for val in daymap.values() if val>5)
+        annual.append({
+            'year':year,
+            'observed_days':total,
+            'days_above_5':above if total>=329 else None,
+            'coverage_pct':r2(100*total/(366 if year%4==0 and (year%100!=0 or year%400==0) else 365))
+        })
+
+    years=sorted(by_year)
+    climate=[]
+    month_days=[(m,d) for m in range(1,13) for d in range(1,32)
+                if not (m==2 and d==29)
+                and (m,d) not in {(2,30),(2,31),(4,31),(6,31),(9,31),(11,31)}]
+
+    for end_year in years:
+        start_year=end_year-9
+        window=[y for y in years if start_year<=y<=end_year]
+        if len(window)<10:
+            continue
+
+        profile=[]
+        for md in month_days:
+            vals=[]
+            for y in window:
+                try:
+                    day=datetime(y,md[0],md[1]).date()
+                except ValueError:
+                    continue
+                if day in daily_mean:
+                    vals.append(daily_mean[day])
+            profile.append(mean(vals) if len(vals)>=7 else None)
+
+        # Longest contiguous run above +5 C defines the period.
+        best_start=best_end=None
+        best_len=0
+        run_start=None
+        for i,val in enumerate(profile+[None]):
+            if val is not None and val>5:
+                if run_start is None:
+                    run_start=i
+            elif run_start is not None:
+                run_len=i-run_start
+                if run_len>best_len:
+                    best_len=run_len
+                    best_start=run_start
+                    best_end=i-1
+                run_start=None
+
+        if best_start is None:
+            continue
+
+        sm,sd=month_days[best_start]
+        em,ed=month_days[best_end]
+        climate.append({
+            'window_start':start_year,
+            'window_end':end_year,
+            'label':f'{start_year}-{end_year}',
+            'start_month':sm,'start_day':sd,
+            'end_month':em,'end_day':ed,
+            'start_doy':best_start+1,
+            'end_doy':best_end+1,
+            'length_days':best_len,
+            'threshold_c':5,
+            'definition':'10-year mean daily temperature, longest continuous period > 5 C'
+        })
+
+    return {'annual_observed':annual,'climate_10y':climate}
+
 def zero_crossings(rows):
     byday=defaultdict(list)
     for d,v in rows:byday[d.date()].append((d,v))
@@ -259,5 +343,6 @@ payload={'generated_at':datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'
  'snow':{'annual_mean':snow_a,'annual_max':snow_max_a,'monthly':snow_m,'monthly_max':snow_max_m,'seasons':snow_seasons(snow)},
  'sunshine':{'station':{'id':'162015','name':'Luleå Sol'},'annual':sun_a,'monthly_total':sun_m},
  'zero_crossings':zero_crossings(temp),
+ 'vegetation':vegetation_period(temp),
  'coverage':[coverage(temp,PARAMS[1]),coverage(prec,PARAMS[5]),coverage(prec_hourly,PARAMS[7]),coverage(weather,PARAMS[13]),coverage(wind_speed,PARAMS[4]),coverage(wind_dir,PARAMS[3]),coverage(gust,PARAMS[21]),coverage(visibility,PARAMS[12]),coverage(humidity,PARAMS[6]),coverage(snow,PARAMS[8]),coverage(sunshine,PARAMS[10])]}
 DOCS.mkdir(exist_ok=True);(DOCS/'dashboard_data.json').write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':')),encoding='utf-8');print(f"Wrote {DOCS/'dashboard_data.json'} with {len(labels)} weather labels and {len(payload['zero_crossings'])} zero-crossing days")
