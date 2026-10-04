@@ -113,10 +113,11 @@
   </section>
 
   <section id="page-sunshine" class="page">
-    <div class="source-note">Källa: SMHI Luleå Sol, station 162015. Global irradians mäts som timmedel i W/m². För diagrammet över energi summeras timmedelvärdena över året till kWh/m²; år med mindre än 90 % timtäckning visas inte.</div>
+    <div class="source-note">Källa: SMHI Luleå Sol, station 162015, samt <a href="https://www.smhi.se/kunskapsbanken/meteorologi/stralning/solstralning-i-sverige" target="_blank" rel="noopener">SMHI:s kunskapsbank om solstrålning i Sverige</a>. Globalstrålning är den inkommande solstrålningen mot en horisontell yta. SMHI beskriver att årsvariationen främst styrs av hur länge solen är över horisonten och hur högt den står. Global irradians mäts som timmedel i W/m².</div>
     <div class="chart-card"><h2>Solskenstid per år</h2><p id="sunAnnualTrendText" class="hint"></p><canvas id="sunAnnual"></canvas></div>
     <div class="chart-card"><h2>Genomsnittlig solskenstid per månad</h2><canvas id="sunMonthly"></canvas></div>
     <div class="chart-card"><h2>Global solinstrålning per år</h2><p class="hint">Ackumulerad solenergi vid markytan, beräknad från SMHI:s timvisa globala irradians.</p><p id="irradianceAnnualTrendText" class="hint"></p><canvas id="irradianceAnnual"></canvas></div>
+    <div class="chart-card"><h2>Globalstrålning under dagsljus per månad</h2><p class="hint">Medel för vald period. Månadens uppmätta solenergi divideras med det beräknade antalet timmar då solen är över horisonten vid Kallax. På så sätt jämförs månader med olika dagslängd på ett mer rättvisande sätt. Samma soluppgångs-/solnedgångsberäkning används som på sidan Väder efter datum.</p><canvas id="irradianceDaylightMonthly"></canvas></div>
   </section>
 
   <section id="page-snow" class="page">
@@ -156,5 +157,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=29"></script>
+<script src="app.js?v=30"></script>
 </body></html>
