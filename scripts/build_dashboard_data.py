@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.request import Request,urlopen
 ROOT=Path(__file__).resolve().parents[1];DATA=ROOT/'data';DOCS=ROOT/'docs'
 WEATHER_CODES_URL='https://www.smhi.se/data/hitta-data-for-en-plats/ladda-ner-vaderobservationer/presentWeather'
-PARAMS={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',5:'Nederbörd 1 dygn',6:'Relativ luftfuktighet',7:'Nederbörd 1 timme',8:'Snödjup',10:'Solskenstid',12:'Sikt',13:'Rådande väder',21:'Byvind'}
+PARAMS={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',5:'Nederbörd 1 dygn',6:'Relativ luftfuktighet',7:'Nederbörd 1 timme',8:'Snödjup',10:'Solskenstid',11:'Global irradians',12:'Sikt',13:'Rådande väder',21:'Byvind'}
 
 def read_param(pid:int):
     rows=[];folder=DATA/f'parameter_{pid}'
@@ -113,6 +113,41 @@ def aggregate_sum_hours(rows):
     y=defaultdict(float);ym=defaultdict(float)
     for d,v in rows:y[d.year]+=v;ym[(d.year,d.month)]+=v
     return ([{'year':k,'hours':r2(v/3600.0)} for k,v in sorted(y.items())],[{'year':k[0],'month':k[1],'hours':r2(v/3600.0)} for k,v in sorted(ym.items())])
+def aggregate_irradiance_energy(rows):
+    # SMHI parameter 11 is hourly mean global irradiance in W/m2.
+    # One hourly mean value integrated over one hour equals Wh/m2.
+    y=defaultdict(lambda:{'sum_wh':0.0,'n':0})
+    ym=defaultdict(lambda:{'sum_wh':0.0,'n':0})
+    for d,v in rows:
+        y[d.year]['sum_wh']+=v;y[d.year]['n']+=1
+        ym[(d.year,d.month)]['sum_wh']+=v;ym[(d.year,d.month)]['n']+=1
+
+    annual=[]
+    for year,g in sorted(y.items()):
+        expected=8784 if year%4==0 and (year%100!=0 or year%400==0) else 8760
+        coverage=100*g['n']/expected
+        annual.append({
+            'year':year,
+            'kwh_m2':r2(g['sum_wh']/1000.0) if coverage>=90 else None,
+            'mean_w_m2':r2(g['sum_wh']/g['n']) if g['n'] else None,
+            'observations':g['n'],
+            'coverage_pct':r2(coverage)
+        })
+
+    monthly=[]
+    import calendar
+    for (year,month),g in sorted(ym.items()):
+        expected=calendar.monthrange(year,month)[1]*24
+        coverage=100*g['n']/expected
+        monthly.append({
+            'year':year,'month':month,
+            'kwh_m2':r2(g['sum_wh']/1000.0) if coverage>=90 else None,
+            'mean_w_m2':r2(g['sum_wh']/g['n']) if g['n'] else None,
+            'observations':g['n'],
+            'coverage_pct':r2(coverage)
+        })
+    return annual,monthly
+
 def snow_seasons(rows_cm):
     # Project definition for a stable snow-cover season at Kallax:
     # season year = August-July; start/end require 7 consecutive available
@@ -367,18 +402,18 @@ def coverage(rows,name):
     if not rows:return {'name':name,'min_date':'-','max_date':'-','rows':0}
     dates=[d for d,_ in rows];return {'name':name,'min_date':min(dates).date().isoformat(),'max_date':max(dates).date().isoformat(),'rows':len(rows)}
 
-temp=read_param(1);wind_dir=read_param(3);wind_speed=read_param(4);prec=read_param(5);humidity=read_param(6);prec_hourly=read_param(7);snow=read_param(8);sunshine=read_param(10);visibility=read_param(12);weather=read_param(13);gust=read_param(21)
-temp_a,temp_m=aggregate_temp(temp);wind_s_a,wind_s_m=aggregate_mean(wind_speed);wind_d_a,wind_d_m=aggregate_direction(wind_dir);prec_a,prec_m=aggregate_precip(prec);hum_a,hum_m=aggregate_mean(humidity);vis_a,vis_m=aggregate_mean(visibility);snow_cm=[(d,v*100.0) for d,v in snow];snow_season_rows=snow_seasons(snow_cm);snow_a=[{'year':s['start_year'],'label':s['label'],'avg':s['mean_depth_cm']} for s in snow_season_rows];snow_max_a=[{'year':s['start_year'],'label':s['label'],'max':s['max_depth_cm']} for s in snow_season_rows];snow_m=[{'year':s['start_year'],'month':int(m),'avg':v} for s in snow_season_rows for m,v in s['monthly_mean_cm'].items()];snow_max_m=[{'year':s['start_year'],'month':int(m),'max':v} for s in snow_season_rows for m,v in s['monthly_max_cm'].items()];gust_max_a,gust_max_m=aggregate_max(gust);wind_max_a,wind_max_m=aggregate_max(wind_speed);sun_a,sun_m=aggregate_sum_hours(sunshine)
+temp=read_param(1);wind_dir=read_param(3);wind_speed=read_param(4);prec=read_param(5);humidity=read_param(6);prec_hourly=read_param(7);snow=read_param(8);sunshine=read_param(10);irradiance=read_param(11);visibility=read_param(12);weather=read_param(13);gust=read_param(21)
+temp_a,temp_m=aggregate_temp(temp);wind_s_a,wind_s_m=aggregate_mean(wind_speed);wind_d_a,wind_d_m=aggregate_direction(wind_dir);prec_a,prec_m=aggregate_precip(prec);hum_a,hum_m=aggregate_mean(humidity);vis_a,vis_m=aggregate_mean(visibility);snow_cm=[(d,v*100.0) for d,v in snow];snow_season_rows=snow_seasons(snow_cm);snow_a=[{'year':s['start_year'],'label':s['label'],'avg':s['mean_depth_cm']} for s in snow_season_rows];snow_max_a=[{'year':s['start_year'],'label':s['label'],'max':s['max_depth_cm']} for s in snow_season_rows];snow_m=[{'year':s['start_year'],'month':int(m),'avg':v} for s in snow_season_rows for m,v in s['monthly_mean_cm'].items()];snow_max_m=[{'year':s['start_year'],'month':int(m),'max':v} for s in snow_season_rows for m,v in s['monthly_max_cm'].items()];gust_max_a,gust_max_m=aggregate_max(gust);wind_max_a,wind_max_m=aggregate_max(wind_speed);sun_a,sun_m=aggregate_sum_hours(sunshine);irr_a,irr_m=aggregate_irradiance_energy(irradiance)
 weather_rows=aggregate_weather(weather);used=sorted({r['code'] for r in weather_rows},key=lambda x:float(x));all_labels=fetch_weather_labels();labels={c:all_labels.get(c,f'Kod {c}') for c in used};write_daily_detail(temp,prec,prec_hourly,snow,weather)
-all_years=sorted({d.year for rows in [temp,wind_dir,wind_speed,prec,humidity,snow,sunshine,visibility,weather,gust] for d,_ in rows})
+all_years=sorted({d.year for rows in [temp,wind_dir,wind_speed,prec,humidity,snow,sunshine,irradiance,visibility,weather,gust] for d,_ in rows})
 payload={'generated_at':datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'),'station':{'id':'162860','name':'Luleå-Kallax Flygplats'},'years':all_years,
  'temperature':{'annual':temp_a,'monthly':temp_m},'precipitation':{'annual':prec_a,'monthly_total':prec_m,'types':precipitation_types(weather,temp)},
  'weather':{'codes':weather_rows,'labels':labels,'source_url':WEATHER_CODES_URL},
  'wind':{'speed_annual':wind_s_a,'speed_monthly':wind_s_m,'daily_max_annual':aggregate_daily_max_annual(wind_speed),'max_annual':wind_max_a,'max_monthly':wind_max_m,'gust_max_annual':gust_max_a,'gust_max_monthly':gust_max_m,'direction_annual':wind_d_a,'direction_monthly':wind_d_m,'direction_sectors':aggregate_direction_sectors(wind_dir)},
  'visibility':{'annual':vis_a,'monthly':vis_m},'humidity':{'annual':hum_a,'monthly':hum_m},
  'snow':{'annual_mean':snow_a,'annual_max':snow_max_a,'monthly':snow_m,'monthly_max':snow_max_m,'seasons':snow_season_rows},
- 'sunshine':{'station':{'id':'162015','name':'Luleå Sol'},'annual':sun_a,'monthly_total':sun_m},
+ 'sunshine':{'station':{'id':'162015','name':'Luleå Sol'},'annual':sun_a,'monthly_total':sun_m,'irradiance_annual':irr_a,'irradiance_monthly':irr_m},
  'zero_crossings':zero_crossings(temp),
  'vegetation':vegetation_period(temp),
- 'coverage':[coverage(temp,PARAMS[1]),coverage(prec,PARAMS[5]),coverage(prec_hourly,PARAMS[7]),coverage(weather,PARAMS[13]),coverage(wind_speed,PARAMS[4]),coverage(wind_dir,PARAMS[3]),coverage(gust,PARAMS[21]),coverage(visibility,PARAMS[12]),coverage(humidity,PARAMS[6]),coverage(snow,PARAMS[8]),coverage(sunshine,PARAMS[10])]}
+ 'coverage':[coverage(temp,PARAMS[1]),coverage(prec,PARAMS[5]),coverage(prec_hourly,PARAMS[7]),coverage(weather,PARAMS[13]),coverage(wind_speed,PARAMS[4]),coverage(wind_dir,PARAMS[3]),coverage(gust,PARAMS[21]),coverage(visibility,PARAMS[12]),coverage(humidity,PARAMS[6]),coverage(snow,PARAMS[8]),coverage(sunshine,PARAMS[10]),coverage(irradiance,PARAMS[11])]}
 DOCS.mkdir(exist_ok=True);(DOCS/'dashboard_data.json').write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':')),encoding='utf-8');print(f"Wrote {DOCS/'dashboard_data.json'} with {len(labels)} weather labels and {len(payload['zero_crossings'])} zero-crossing days")
