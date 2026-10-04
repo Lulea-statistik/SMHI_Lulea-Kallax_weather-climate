@@ -501,8 +501,15 @@ function sunHourFractions(sun){
   });
 }
 function alignedHourlyOptions(yTitle,max=null,tooltipLabel=null){
+  const tooltipCallbacks={
+    title:items=>{
+      const h=String(items[0]?.label??'').padStart(2,'0');
+      return 'Timme: '+h+':00-'+h+':59';
+    },
+    ...(tooltipLabel?{label:tooltipLabel}:{})
+  };
   return {responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-    plugins:{legend:{display:false},tooltip:tooltipLabel?{callbacks:{label:tooltipLabel}}:undefined},
+    plugins:{legend:{display:false},tooltip:{callbacks:tooltipCallbacks}},
     scales:{
       x:{grid:{display:false},offset:false,ticks:{autoSkip:false,maxRotation:0,minRotation:0,callback:(v,i)=>i%2===0?hours[i]:''}},
       y:{beginAtZero:max!=null,...(max!=null?{max}:{}),title:{display:true,text:yTitle},afterFit:s=>{s.width=72;}}
