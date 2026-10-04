@@ -6,7 +6,7 @@
 
   <link rel="icon" type="image/png" href="favicon.png?v=3">
 
-  <link rel="stylesheet" href="style.css?v=29">
+  <link rel="stylesheet" href="style.css?v=30">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -97,7 +97,7 @@
     <div class="chart-card"><h2>Andel vindriktning per år</h2><p class="hint">Åtta sektorer à 45°. N omfattar 337,5°–360° och 0°–22,5°. Observationer med vindriktning 0 (lugnt/stiltje) exkluderas.</p><canvas id="windDirectionShares"></canvas></div>
     <div class="chart-card compass-card">
       <h2>Så läses vindriktning</h2>
-      <div class="compass"><span class="n">N<br><small>0°/360°</small></span><span class="e">O<br><small>90°</small></span><span class="s">S<br><small>180°</small></span><span class="w">V<br><small>270°</small></span><div class="compass-ring"></div><div class="wind-arrow" id="windArrow"></div><div class="compass-dot"></div></div>
+      <div class="compass"><span class="n">N<br><small>0°/360°</small></span><span class="ne">NO<br><small>45°</small></span><span class="e">O<br><small>90°</small></span><span class="se">SO<br><small>135°</small></span><span class="s">S<br><small>180°</small></span><span class="sw">SV<br><small>225°</small></span><span class="w">V<br><small>270°</small></span><span class="nw">NV<br><small>315°</small></span><div class="compass-ring"></div><div class="wind-arrow" id="windArrow"></div><div class="compass-dot"></div></div>
       <div id="windCompassText" class="compass-text">170° = vind från nästan syd</div><p class="hint">SMHI anger den riktning vinden kommer <b>från</b>.</p>
     </div>
     <div class="chart-card"><h2>Andel vindriktning per månad</h2><p class="hint">Genomsnittlig fördelning för valt årsintervall. Åtta sektorer à 45°. N omfattar 337,5°–360° och 0°–22,5°. Observationer med vindriktning 0 (lugnt/stiltje) exkluderas.</p><canvas id="windDirectionSharesMonthly"></canvas></div>
@@ -159,5 +159,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=42"></script>
+<script src="app.js?v=43"></script>
 </body></html>
