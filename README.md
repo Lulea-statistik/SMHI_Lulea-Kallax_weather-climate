@@ -73,3 +73,14 @@ SMHI:s `corrected-archive` beter sig annorlunda än de aktuella JSON-perioderna.
 - intervallobservationer: `Från Datum Tid (UTC)` + `Till Datum Tid (UTC)`
 
 Historiskt arkiv hämtas endast vid `bootstrap` och `refresh-all`, samt automatiskt den första dagen i varje månad när körläget är `auto`.
+
+
+## Blixtdata
+
+Rapporten har ett separat flöde för SMHI:s historiska blixtarkiv. `scripts/fetch_lightning.py` läser Atomflödet för historiska urladdningar från 2012 och framåt och sparar endast observationer inom Luleå kommun.
+
+Geografin byggs från SCB:s öppna WFS-data. DeSO 2025 används som landmask och kommungeometrin som yttre analysområde. Landytor klassificeras som fastland eller öar och kommunens vattenyta delas i hav respektive inlandsvatten. Observationer inom 500 meter från land-/vattenkant klassas separat som `coast_uncertain` för att hantera SMHI:s positionsosäkerhet.
+
+Detta är en första analysgeometri. SCB:s geometri är användbar för rapporten men bör senare ersättas med Lantmäteriets mer exakta geometri om sådan görs tillgänglig i projektet.
+
+SMHI anger också ett metodbrott i blixtlokaliseringssystemet under 2014, vilket måste beaktas vid trendtolkning.
