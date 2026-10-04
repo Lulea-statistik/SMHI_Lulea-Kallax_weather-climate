@@ -134,10 +134,10 @@
   <section id="page-vegetation" class="page">
     <div class="source-note">SMHI använder +5 °C som gräns för vegetationsperiodens klimatindikator. Eftersom enskilda år kan pendla mycket kring gränsen används här, i linje med SMHI:s metodbeskrivning, ett 10-årsmedel av dygnsmedeltemperaturen för start, slut och längd.</div>
     <div class="chart-card"><h2>Vegetationsperiodens längd</h2><p id="vegetationLengthTrendText" class="hint"></p><canvas id="vegetationLength"></canvas></div>
-    <div class="chart-card"><h2>Vegetationsperiodens start</h2><p class="hint">Tidigare datum innebär en tidigare vårstart.</p><canvas id="vegetationStart"></canvas></div>
-    <div class="chart-card"><h2>Vegetationsperiodens slut</h2><p class="hint">Senare datum innebär en senare höstavslutning.</p><canvas id="vegetationEnd"></canvas></div>
-    <div class="chart-card"><h2>Frostnätter under vegetationsperioden</h2><p class="hint">Ett dygn räknas när dygnets lägsta observerade temperatur är under 0 °C, inom den beräknade vegetationsperioden.</p><canvas id="vegetationFrost"></canvas></div>
-    <div class="chart-card"><h2>Dygn över +5 °C per år</h2><p class="hint">Rå år-till-år-variation från Kallax. Detta är ett komplement och inte samma sak som SMHI:s 10-åriga klimatindikator.</p><canvas id="vegetationObserved"></canvas></div>
+    <div class="chart-card"><h2>Vegetationsperiodens start</h2><p class="hint">Tidigare datum innebär en tidigare vårstart.</p><p id="vegetationStartTrendText" class="hint"></p><canvas id="vegetationStart"></canvas></div>
+    <div class="chart-card"><h2>Vegetationsperiodens slut</h2><p class="hint">Senare datum innebär en senare höstavslutning.</p><p id="vegetationEndTrendText" class="hint"></p><canvas id="vegetationEnd"></canvas></div>
+    <div class="chart-card"><h2>Frostnätter under vegetationsperioden</h2><p class="hint">Ett dygn räknas när dygnets lägsta observerade temperatur är under 0 °C, inom den beräknade vegetationsperioden.</p><p id="vegetationFrostTrendText" class="hint"></p><canvas id="vegetationFrost"></canvas></div>
+    <div class="chart-card"><h2>Dygn över +5 °C per år</h2><p class="hint">Rå år-till-år-variation från Kallax. Detta är ett komplement och inte samma sak som SMHI:s 10-åriga klimatindikator.</p><p id="vegetationObservedTrendText" class="hint"></p><canvas id="vegetationObserved"></canvas></div>
   </section>
 
   <section id="page-dateweather" class="page">
@@ -154,5 +154,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=25"></script>
+<script src="app.js?v=26"></script>
 </body></html>
