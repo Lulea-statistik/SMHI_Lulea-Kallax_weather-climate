@@ -308,6 +308,22 @@ function render(){
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>Math.round(c.parsed.y)+' timmar'}}},
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'timmar'},ticks:{precision:0,callback:v=>Math.round(v)+' timmar'}}}}});
 
+  const irrSource=f.month
+    ? (DATA.sunshine.irradiance_monthly||[]).filter(r=>inYears(r,f)&&r.month===f.month)
+    : (DATA.sunshine.irradiance_annual||[]).filter(r=>inYears(r,f));
+  const irrYears=irrSource.map(r=>r.year),irrVals=irrSource.map(r=>r.kwh_m2);
+  destroyChart('irradianceAnnual');
+  charts.irradianceAnnual=new Chart(el('irradianceAnnual'),{
+    data:{labels:irrYears,datasets:[
+      {type:'bar',label:f.month?months[f.month-1]+' solinstrålning':'Årlig solinstrålning',data:irrVals,borderWidth:0,backgroundColor:'rgba(242,201,76,0.55)'},
+      {type:'line',label:'Linjär trend',data:linearTrend(irrYears,irrVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.parsed.y==null?c.dataset.label+': –':c.dataset.label+': '+Math.round(c.parsed.y)+' kWh/m²'}}},
+      scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'kWh/m²'}}}}
+  });
+  el('irradianceAnnualTrendText').textContent=trendRateText(irrYears,irrVals,'kWh/m²');
+
   const snowA=DATA.snow.annual_mean.filter(r=>r.year>=f.from&&r.year<=f.to),
         snowMax=DATA.snow.annual_max.filter(r=>r.year>=f.from&&r.year<=f.to);
   const snowMeanYears=snowA.map(r=>r.year),snowMeanVals=snowA.map(r=>r.avg),snowMeanLabels=snowA.map(r=>r.label||String(r.year));
