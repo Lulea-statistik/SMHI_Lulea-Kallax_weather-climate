@@ -125,13 +125,22 @@ function precipTypeShares(rows,groupKey){
     return {key:k,rain:tot?100*g.rain/tot:0,mixed:tot?100*g.mixed/tot:0,snow:tot?100*g.snow/tot:0};
   });
 }
-function renderPrecipTypeChart(id,labels,rows){
+function renderPrecipTypeChart(id,labels,rows,showTrends=false){
   destroyChart(id);
-  charts[id]=new Chart(el(id),{type:'bar',data:{labels,datasets:[
-    {label:'Regn',data:rows.map(r=>r.rain),stack:'type'},
-    {label:'Snöblandat regn',data:rows.map(r=>r.mixed),stack:'type'},
-    {label:'Snö',data:rows.map(r=>r.snow),stack:'type'}
-  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+  const datasets=[
+    {label:'Regn',data:rows.map(r=>r.rain),stack:'type',backgroundColor:'rgba(54,162,235,0.55)',borderWidth:0},
+    {label:'Snöblandat regn',data:rows.map(r=>r.mixed),stack:'type',backgroundColor:'rgba(255,99,132,0.45)',borderWidth:0},
+    {label:'Snö',data:rows.map(r=>r.snow),stack:'type',backgroundColor:'rgba(255,159,64,0.55)',borderWidth:0}
+  ];
+  if(showTrends){
+    const x=labels.map(Number);
+    const rain=rows.map(r=>r.rain),snow=rows.map(r=>r.snow);
+    datasets.push(
+      {type:'line',label:'Trend regn',data:linearTrend(x,rain),borderColor:'#2b83ba',backgroundColor:'rgba(43,131,186,0.18)',borderWidth:2,pointRadius:0,borderDash:[6,4],order:0},
+      {type:'line',label:'Trend snö',data:linearTrend(x,snow),borderColor:'#d97706',backgroundColor:'rgba(217,119,6,0.18)',borderWidth:2,pointRadius:0,borderDash:[6,4],order:0}
+    );
+  }
+  charts[id]=new Chart(el(id),{type:'bar',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
     plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1).replace('.',',')+' %'}}},
     scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}});
 }
@@ -259,7 +268,11 @@ function render(){
   let pt=DATA.precipitation.types.filter(r=>inYears(r,f));
   let ptAnnual=pt;if(f.month)ptAnnual=ptAnnual.filter(r=>r.month===f.month);
   const pta=precipTypeShares(ptAnnual,r=>r.year);
-  renderPrecipTypeChart('precipTypeAnnual',pta.map(r=>r.key),pta);
+  const ptaLabels=pta.map(r=>r.key);
+  renderPrecipTypeChart('precipTypeAnnual',ptaLabels,pta,true);
+  const ptaYears=ptaLabels.map(Number),ptaRain=pta.map(r=>r.rain),ptaSnow=pta.map(r=>r.snow);
+  el('precipRainTrendText').textContent='Regn – '+trendRateText(ptaYears,ptaRain,'procentenheter');
+  el('precipSnowTrendText').textContent='Snö – '+trendRateText(ptaYears,ptaSnow,'procentenheter');
   const ptm=precipTypeShares(pt,r=>r.month);
   const ptmByMonth=months.map((_,i)=>ptm.find(r=>+r.key===i+1)||{key:i+1,rain:0,mixed:0,snow:0});
   renderPrecipTypeChart('precipTypeMonthly',months,ptmByMonth);
