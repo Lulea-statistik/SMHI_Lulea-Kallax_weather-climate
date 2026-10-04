@@ -125,6 +125,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 10,Solskenstid,2024,data/parameter_10/2024.csv,8784,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 10,Solskenstid,2025,data/parameter_10/2025.csv,8760,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
 10,Solskenstid,2026,data/parameter_10/2026.csv,6637,2026-01-01T00:00:00Z,2026-10-04T12:00:00Z
+11,Global Irradians (svenska stationer),2026,data/parameter_11/2026.csv,3132,2026-05-27T01:00:00Z,2026-10-04T12:00:00Z
 12,Sikt,1942,data/parameter_12/1942.csv,1360,1942-01-09T13:00:00Z,1942-12-31T18:00:00Z
 12,Sikt,1943,data/parameter_12/1943.csv,1433,1943-01-01T01:00:00Z,1943-12-31T18:00:00Z
 12,Sikt,1944,data/parameter_12/1944.csv,226,1944-03-05T13:00:00Z,1944-12-31T18:00:00Z

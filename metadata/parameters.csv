@@ -8,6 +8,7 @@ parameter_id,configured_name,parameter_name,parameter_summary,unit,status,period
 8,Snödjup,Snödjup,"momentanvärde, 1 gång/dygn, kl 06",meter,ok,latest-months,
 9,Lufttryck,Lufttryck reducerat havsytans nivå,"vid havsytans nivå, momentanvärde, 1 gång/tim",hektopascal,ok,latest-months,
 10,Solskenstid,Solskenstid,"summa 1 timme, 1 gång/tim",sekund,ok,latest-months,
+11,Global irradians,Global Irradians (svenska stationer),"medelvärde 1 timma, varje timme",watt per kvadratmeter,ok,latest-months,
 12,Sikt,Sikt,"momentanvärde, 1 gång/tim",meter,ok,latest-months,
 13,Rådande väder,Rådande väder,"momentanvärde, 1 gång/tim resp 8 gånger/dygn",kod,ok,latest-months,
 16,Total molnmängd,Total molnmängd,"momentanvärde, 1 gång/tim",procent,ok,latest-months,
