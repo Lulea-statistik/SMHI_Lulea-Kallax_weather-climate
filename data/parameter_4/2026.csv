@@ -6626,3 +6626,4 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162860,Luleå-Kallax Flygplats,4,Vindhastighet,"medelvärde 10 min, 1 gång/tim",meter per sekund,2026-10-04T10:00:00Z,2026-10-04T12:00:00+02:00,1791108000000,,2.0,2.0,G,,latest-months
 162860,Luleå-Kallax Flygplats,4,Vindhastighet,"medelvärde 10 min, 1 gång/tim",meter per sekund,2026-10-04T11:00:00Z,2026-10-04T13:00:00+02:00,1791111600000,,4.0,4.0,G,,latest-months
 162860,Luleå-Kallax Flygplats,4,Vindhastighet,"medelvärde 10 min, 1 gång/tim",meter per sekund,2026-10-04T12:00:00Z,2026-10-04T14:00:00+02:00,1791115200000,,5.0,5.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,4,Vindhastighet,"medelvärde 10 min, 1 gång/tim",meter per sekund,2026-10-04T13:00:00Z,2026-10-04T15:00:00+02:00,1791118800000,,3.0,3.0,G,,latest-months
