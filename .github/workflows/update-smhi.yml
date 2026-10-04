@@ -48,6 +48,11 @@ jobs:
           RUN_MODE: ${{ github.event.inputs.mode || 'auto' }}
         run: python scripts/fetch_smhi.py --mode "$RUN_MODE"
 
+      - name: Update SMHI lightning archive
+        env:
+          RUN_MODE: ${{ github.event.inputs.mode || 'auto' }}
+        run: python scripts/fetch_lightning.py
+
       - name: Build GitHub Pages report data
         run: python scripts/build_dashboard_data.py
 
