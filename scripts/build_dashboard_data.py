@@ -113,43 +113,59 @@ def aggregate_sum_hours(rows):
     y=defaultdict(float);ym=defaultdict(float)
     for d,v in rows:y[d.year]+=v;ym[(d.year,d.month)]+=v
     return ([{'year':k,'hours':r2(v/3600.0)} for k,v in sorted(y.items())],[{'year':k[0],'month':k[1],'hours':r2(v/3600.0)} for k,v in sorted(ym.items())])
-def snow_seasons(rows):
-    # Kallax snow-depth observations can omit weekends. Define stable snow cover
-    # as 5 consecutive available observations > 0 with no gap > 3 calendar days.
+def snow_seasons(rows_cm):
+    # Project definition for a stable snow-cover season at Kallax:
+    # season year = August-July; start/end require 7 consecutive available
+    # observations with snow depth >= 1 cm and no observation gap > 3 days.
+    # Mean and maximum snow depth are then calculated from all available
+    # observations inside the resulting continuous season, including temporary
+    # thaws below 1 cm.
     by_season=defaultdict(dict)
-    for d,v in rows:
+    for d,v in rows_cm:
         season_start=d.year if d.month>=8 else d.year-1
-        by_season[season_start][d.date()]=max(v,by_season[season_start].get(d.date(),float('-inf')))
+        day=d.date()
+        by_season[season_start][day]=max(v,by_season[season_start].get(day,float('-inf')))
 
-    def stable_start(obs,window=5,max_gap_days=3):
-        positives=[day for day,val in obs if val>0]
-        for i in range(0,len(positives)-window+1):
-            seq=positives[i:i+window]
-            if all((seq[j]-seq[j-1]).days<=max_gap_days for j in range(1,len(seq))):
-                return seq[0]
+    def stable_start(obs,window=7,threshold_cm=1.0,max_gap_days=3):
+        for i in range(0,len(obs)-window+1):
+            seq=obs[i:i+window]
+            if all(val>=threshold_cm for _,val in seq) and all((seq[j][0]-seq[j-1][0]).days<=max_gap_days for j in range(1,len(seq))):
+                return seq[0][0]
         return None
 
-    def stable_end(obs,window=5,max_gap_days=3):
-        positives=[day for day,val in obs if val>0]
-        for i in range(len(positives)-1,window-2,-1):
-            seq=positives[i-window+1:i+1]
-            if all((seq[j]-seq[j-1]).days<=max_gap_days for j in range(1,len(seq))):
-                return seq[-1]
+    def stable_end(obs,window=7,threshold_cm=1.0,max_gap_days=3):
+        for i in range(len(obs)-window,-1,-1):
+            seq=obs[i:i+window]
+            if all(val>=threshold_cm for _,val in seq) and all((seq[j][0]-seq[j-1][0]).days<=max_gap_days for j in range(1,len(seq))):
+                return seq[-1][0]
         return None
 
     out=[]
-    for start,daymap in sorted(by_season.items()):
+    for start_year,daymap in sorted(by_season.items()):
         obs=sorted(daymap.items())
-        first=stable_start(obs);last=stable_end(obs)
-        if not first or not last or last<first:continue
-        snow_days=sum(1 for day,val in obs if first<=day<=last and val>0)
+        first=stable_start(obs)
+        last=stable_end(obs)
+        if not first or not last or last<first:
+            continue
+        in_season=[(day,val) for day,val in obs if first<=day<=last]
+        if not in_season:
+            continue
+        vals=[val for _,val in in_season]
         out.append({
-            'start_year':start,'end_year':start+1,'label':f'{start}/{str(start+1)[-2:]}',
-            'first_snow':first.isoformat(),'last_snow':last.isoformat(),
-            'length_days':(last-first).days+1,'snow_days_observed':snow_days,
-            'definition':'5 consecutive observations > 0 cm, max 3-day gap'
+            'start_year':start_year,
+            'end_year':start_year+1,
+            'label':f'{start_year}/{str(start_year+1)[-2:]}',
+            'first_snow':first.isoformat(),
+            'last_snow':last.isoformat(),
+            'length_days':(last-first).days+1,
+            'observed_days':len(vals),
+            'snow_days_observed':sum(1 for val in vals if val>=1.0),
+            'mean_depth_cm':r2(mean(vals)),
+            'max_depth_cm':r2(max(vals)),
+            'definition':'7 consecutive available observations >= 1 cm, max 3-day gap; mean/max within continuous season'
         })
     return out
+
 def aggregate_weather(rows):
     c=defaultdict(int)
     for d,v in rows:
@@ -345,7 +361,7 @@ def coverage(rows,name):
     dates=[d for d,_ in rows];return {'name':name,'min_date':min(dates).date().isoformat(),'max_date':max(dates).date().isoformat(),'rows':len(rows)}
 
 temp=read_param(1);wind_dir=read_param(3);wind_speed=read_param(4);prec=read_param(5);humidity=read_param(6);prec_hourly=read_param(7);snow=read_param(8);sunshine=read_param(10);visibility=read_param(12);weather=read_param(13);gust=read_param(21)
-temp_a,temp_m=aggregate_temp(temp);wind_s_a,wind_s_m=aggregate_mean(wind_speed);wind_d_a,wind_d_m=aggregate_direction(wind_dir);prec_a,prec_m=aggregate_precip(prec);hum_a,hum_m=aggregate_mean(humidity);vis_a,vis_m=aggregate_mean(visibility);snow_cm=[(d,v*100.0) for d,v in snow];snow_a,snow_m=aggregate_mean(snow_cm);snow_max_a,snow_max_m=aggregate_max(snow_cm);gust_max_a,gust_max_m=aggregate_max(gust);wind_max_a,wind_max_m=aggregate_max(wind_speed);sun_a,sun_m=aggregate_sum_hours(sunshine)
+temp_a,temp_m=aggregate_temp(temp);wind_s_a,wind_s_m=aggregate_mean(wind_speed);wind_d_a,wind_d_m=aggregate_direction(wind_dir);prec_a,prec_m=aggregate_precip(prec);hum_a,hum_m=aggregate_mean(humidity);vis_a,vis_m=aggregate_mean(visibility);snow_cm=[(d,v*100.0) for d,v in snow];snow_m=aggregate_mean(snow_cm)[1];snow_max_m=aggregate_max(snow_cm)[1];snow_season_rows=snow_seasons(snow_cm);snow_a=[{'year':s['start_year'],'label':s['label'],'avg':s['mean_depth_cm']} for s in snow_season_rows];snow_max_a=[{'year':s['start_year'],'label':s['label'],'max':s['max_depth_cm']} for s in snow_season_rows];gust_max_a,gust_max_m=aggregate_max(gust);wind_max_a,wind_max_m=aggregate_max(wind_speed);sun_a,sun_m=aggregate_sum_hours(sunshine)
 weather_rows=aggregate_weather(weather);used=sorted({r['code'] for r in weather_rows},key=lambda x:float(x));all_labels=fetch_weather_labels();labels={c:all_labels.get(c,f'Kod {c}') for c in used};write_daily_detail(temp,prec,prec_hourly,snow,weather)
 all_years=sorted({d.year for rows in [temp,wind_dir,wind_speed,prec,humidity,snow,sunshine,visibility,weather,gust] for d,_ in rows})
 payload={'generated_at':datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'),'station':{'id':'162860','name':'Luleå-Kallax Flygplats'},'years':all_years,
@@ -353,7 +369,7 @@ payload={'generated_at':datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'
  'weather':{'codes':weather_rows,'labels':labels,'source_url':WEATHER_CODES_URL},
  'wind':{'speed_annual':wind_s_a,'speed_monthly':wind_s_m,'daily_max_annual':aggregate_daily_max_annual(wind_speed),'max_annual':wind_max_a,'max_monthly':wind_max_m,'gust_max_annual':gust_max_a,'gust_max_monthly':gust_max_m,'direction_annual':wind_d_a,'direction_monthly':wind_d_m,'direction_sectors':aggregate_direction_sectors(wind_dir)},
  'visibility':{'annual':vis_a,'monthly':vis_m},'humidity':{'annual':hum_a,'monthly':hum_m},
- 'snow':{'annual_mean':snow_a,'annual_max':snow_max_a,'monthly':snow_m,'monthly_max':snow_max_m,'seasons':snow_seasons(snow)},
+ 'snow':{'annual_mean':snow_a,'annual_max':snow_max_a,'monthly':snow_m,'monthly_max':snow_max_m,'seasons':snow_season_rows},
  'sunshine':{'station':{'id':'162015','name':'Luleå Sol'},'annual':sun_a,'monthly_total':sun_m},
  'zero_crossings':zero_crossings(temp),
  'vegetation':vegetation_period(temp),
