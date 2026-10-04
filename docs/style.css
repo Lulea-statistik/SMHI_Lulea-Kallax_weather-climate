@@ -13,7 +13,8 @@ main{padding:18px}.filters{display:flex;gap:12px;align-items:end;flex-wrap:wrap;
 #coverage table,#zeroTable table,#dateSummary table{border-collapse:collapse;width:100%;font-size:14px}#coverage th,#coverage td,#zeroTable th,#zeroTable td,#dateSummary th,#dateSummary td{text-align:left;border-bottom:1px solid var(--line);padding:8px}.table-scroll{max-height:520px;overflow:auto}
 .compass-card{display:flex;flex-direction:column;align-items:center}.compass-card h2{align-self:flex-start}.compass{position:relative;width:220px;height:220px;margin:12px auto 8px}.compass-ring{position:absolute;inset:28px;border:2px solid #9ca3af;border-radius:50%;background:radial-gradient(circle,#fff 0 65%,#f7f9fb 66%)}.compass span{position:absolute;font-weight:700;text-align:center;z-index:3}.compass small{font-weight:400;color:var(--muted);font-size:10px}.compass .n{top:0;left:50%;transform:translateX(-50%)}.compass .s{bottom:0;left:50%;transform:translateX(-50%)}.compass .e{right:0;top:50%;transform:translateY(-50%)}.compass .w{left:0;top:50%;transform:translateY(-50%)}.wind-arrow{position:absolute;left:50%;top:50%;width:3px;height:72px;background:var(--accent);transform-origin:50% 100%;transform:translate(-50%,-100%) rotate(170deg);z-index:4}.wind-arrow:before{content:"";position:absolute;top:-3px;left:50%;transform:translateX(-50%);border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:14px solid var(--accent)}.compass-dot{position:absolute;left:50%;top:50%;width:10px;height:10px;background:#111827;border-radius:50%;transform:translate(-50%,-50%);z-index:5}.compass-text{font-size:16px;font-weight:600;margin:6px 0 2px}
 @media(min-width:1050px){#page-temp1.active,#page-precip.active,#page-visibility.active,#page-humidity.active,#page-sunshine.active,#page-snow.active,#page-zerocross.active,#page-vegetation.active,#page-dateweather.active,.wind-grid.active{grid-template-columns:1fr 1fr}}
-#dateWeatherPicker{height:36px;border:1px solid var(--line);background:#fff;border-radius:6px;padding:0 10px;font:inherit}
+#dateWeatherPicker{height:36px;min-width:210px;border:1px solid var(--line);background:#fff;border-radius:6px;padding:0 10px;font:inherit}
+.date-weather-tools{flex-wrap:wrap}.date-weather-tools .small-button{align-self:flex-end}
 
 .temp2-window input[type=range]::-webkit-slider-thumb{width:20px;height:20px;border-radius:50%;cursor:grab}
 .temp2-window input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;cursor:grab}
@@ -36,3 +37,5 @@ main{padding:18px}.filters{display:flex;gap:12px;align-items:end;flex-wrap:wrap;
 body.dateweather-active #globalFilters .filter-select{display:none}
 body.dateweather-active #globalFilters{grid-template-columns:1fr}
 body.dateweather-active #globalFilters .year-sliders{grid-column:1/-1}
+
+body.dateweather-active #globalFilters > .filter-select{display:none!important}
