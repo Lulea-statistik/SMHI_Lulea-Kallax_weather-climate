@@ -290,6 +290,25 @@ function render(){
     plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1).replace('.',',')+' %'}}},
     scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}});
 
+  const wdsMonthly=DATA.wind.direction_sectors.filter(r=>inYears(r,f));
+  const monthlyTotals={};
+  wdsMonthly.forEach(r=>monthlyTotals[r.month]=(monthlyTotals[r.month]||0)+r.count);
+  destroyChart('windDirectionSharesMonthly');
+  charts.windDirectionSharesMonthly=new Chart(el('windDirectionSharesMonthly'),{
+    type:'bar',
+    data:{labels:months,datasets:windDirs.map(dir=>({
+      label:dir,stack:'dir',borderWidth:0,
+      data:months.map((_,i)=>{
+        const month=i+1;
+        const n=wdsMonthly.filter(r=>r.month===month&&r.direction===dir).reduce((s,r)=>s+r.count,0);
+        return monthlyTotals[month]?100*n/monthlyTotals[month]:0;
+      })
+    }))},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1).replace('.',',')+' %'}}},
+      scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}
+  });
+
   const va=selectedAnnualRows(DATA.visibility.annual,DATA.visibility.monthly,f);
   const vaVals=va.map(r=>Math.round(r.avg));
   destroyChart('visibilityAnnual');
