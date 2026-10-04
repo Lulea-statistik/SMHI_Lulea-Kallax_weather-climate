@@ -591,28 +591,58 @@ async function loadDateWeather(dateStr){
 function dateWeatherCoverage(){
   return DATA.coverage.find(r=>r.name==='Lufttemperatur')||DATA.coverage[0];
 }
-function updateDateWeatherBounds(loadIfChanged=false){
-  const picker=el('dateWeatherPicker');
-  if(!picker)return;
+function isoDateUTC(y,m,d){
+  return y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+}
+function formatDateOption(dateStr){
+  const [y,m,d]=dateStr.split('-').map(Number);
+  return String(d).padStart(2,'0')+' '+months[m-1].toLowerCase()+' '+y;
+}
+function dateWeatherRange(){
   const cov=dateWeatherCoverage();
-  if(!cov||!cov.min_date||cov.min_date==='-'||!cov.max_date||cov.max_date==='-')return;
+  if(!cov||!cov.min_date||cov.min_date==='-'||!cov.max_date||cov.max_date==='-')return null;
   const fromYear=+el('yearFrom').value,toYear=+el('yearTo').value;
   const minCandidate=String(fromYear)+'-01-01';
   const maxCandidate=String(toYear)+'-12-31';
-  const minDate=minCandidate>cov.min_date?minCandidate:cov.min_date;
-  const maxDate=maxCandidate<cov.max_date?maxCandidate:cov.max_date;
-  picker.min=minDate;picker.max=maxDate;
-  let changed=false;
-  if(!picker.value||picker.value<minDate){picker.value=minDate;changed=true;}
-  if(picker.value>maxDate){picker.value=maxDate;changed=true;}
-  if(loadIfChanged&&changed&&picker.value)loadDateWeather(picker.value);
+  return {
+    minDate:minCandidate>cov.min_date?minCandidate:cov.min_date,
+    maxDate:maxCandidate<cov.max_date?maxCandidate:cov.max_date
+  };
+}
+function rebuildDateWeatherOptions(loadIfChanged=false,prefer='keep'){
+  const picker=el('dateWeatherPicker');
+  if(!picker)return;
+  const range=dateWeatherRange();
+  if(!range)return;
+  const previous=picker.value;
+  const start=new Date(range.minDate+'T00:00:00Z');
+  const end=new Date(range.maxDate+'T00:00:00Z');
+  const opts=[];
+  for(let dt=new Date(start);dt<=end;dt.setUTCDate(dt.getUTCDate()+1)){
+    const iso=isoDateUTC(dt.getUTCFullYear(),dt.getUTCMonth()+1,dt.getUTCDate());
+    opts.push('<option value="'+iso+'">'+formatDateOption(iso)+'</option>');
+  }
+  picker.innerHTML=opts.join('');
+  let next=previous;
+  if(prefer==='earliest')next=range.minDate;
+  else if(prefer==='latest')next=range.maxDate;
+  else if(!next||next<range.minDate)next=range.minDate;
+  else if(next>range.maxDate)next=range.maxDate;
+  picker.value=next;
+  const changed=next!==previous;
+  if((loadIfChanged&&changed)||prefer!=='keep'){
+    if(picker.value)loadDateWeather(picker.value);
+  }
+}
+function updateDateWeatherBounds(loadIfChanged=false){
+  rebuildDateWeatherOptions(loadIfChanged,'keep');
 }
 function setupDateWeather(){
   const picker=el('dateWeatherPicker');
-  const cov=dateWeatherCoverage();
-  if(cov&&cov.max_date&&cov.max_date!=='-')picker.value=cov.max_date;
-  updateDateWeatherBounds(false);
+  rebuildDateWeatherOptions(false,'latest');
   picker.addEventListener('change',()=>loadDateWeather(picker.value));
+  el('dateWeatherEarliest').addEventListener('click',()=>rebuildDateWeatherOptions(true,'earliest'));
+  el('dateWeatherLatest').addEventListener('click',()=>rebuildDateWeatherOptions(true,'latest'));
   if(picker.value)loadDateWeather(picker.value);
 }
 function updateRangeTrack(){
@@ -645,7 +675,7 @@ el('resetFilters').addEventListener('click',()=>{
   el('yearFrom').value=min;el('yearTo').value=max;
   el('rangeFrom').value=min;el('rangeTo').value=max;
   el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;
-  el('month').value='0';updateRangeTrack();render();
+  el('month').value='0';updateRangeTrack();updateDateWeatherBounds(true);render();
 });}
 function setupWeatherCodes(){
   const types=[...new Set(DATA.weather.codes.map(r=>normalizedWeatherPhenomenon(r.code,r.year)))].sort((a,b)=>a.localeCompare(b,'sv'));
