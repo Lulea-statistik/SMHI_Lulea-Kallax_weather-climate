@@ -281,10 +281,20 @@ function render(){
   let wds=DATA.wind.direction_sectors.filter(r=>inYears(r,f));if(f.month)wds=wds.filter(r=>r.month===f.month);
   const windShareYears=[...new Set(wds.map(r=>r.year))].sort((a,b)=>a-b);
   const windDirs=['N','NO','O','SO','S','SV','V','NV'];
+  const WIND_DIR_COLORS={
+    N:'#F3EA2A',
+    NO:'#EEB12C',
+    O:'#D9251F',
+    SO:'#8E2A73',
+    S:'#463A97',
+    SV:'#78ADD6',
+    V:'#7DBB61',
+    NV:'#B8CF37'
+  };
   const windTotals={};wds.forEach(r=>windTotals[r.year]=(windTotals[r.year]||0)+r.count);
   destroyChart('windDirectionShares');
   charts.windDirectionShares=new Chart(el('windDirectionShares'),{type:'bar',data:{labels:windShareYears,datasets:windDirs.map(dir=>({
-    label:dir,stack:'dir',borderWidth:0,
+    label:dir,stack:'dir',borderWidth:0,backgroundColor:WIND_DIR_COLORS[dir],
     data:windShareYears.map(y=>{const n=wds.filter(r=>r.year===y&&r.direction===dir).reduce((s,r)=>s+r.count,0);return windTotals[y]?100*n/windTotals[y]:0;})
   }))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
     plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1).replace('.',',')+' %'}}},
@@ -297,7 +307,7 @@ function render(){
   charts.windDirectionSharesMonthly=new Chart(el('windDirectionSharesMonthly'),{
     type:'bar',
     data:{labels:months,datasets:windDirs.map(dir=>({
-      label:dir,stack:'dir',borderWidth:0,
+      label:dir,stack:'dir',borderWidth:0,backgroundColor:WIND_DIR_COLORS[dir],
       data:months.map((_,i)=>{
         const month=i+1;
         const n=wdsMonthly.filter(r=>r.month===month&&r.direction===dir).reduce((s,r)=>s+r.count,0);
