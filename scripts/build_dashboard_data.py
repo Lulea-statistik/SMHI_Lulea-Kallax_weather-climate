@@ -151,6 +151,11 @@ def snow_seasons(rows_cm):
         if not in_season:
             continue
         vals=[val for _,val in in_season]
+        month_vals=defaultdict(list)
+        for day,val in in_season:
+            month_vals[day.month].append(val)
+        monthly_mean={str(m):r2(mean(vs)) for m,vs in sorted(month_vals.items())}
+        monthly_max={str(m):r2(max(vs)) for m,vs in sorted(month_vals.items())}
         out.append({
             'start_year':start_year,
             'end_year':start_year+1,
@@ -162,6 +167,8 @@ def snow_seasons(rows_cm):
             'snow_days_observed':sum(1 for val in vals if val>=1.0),
             'mean_depth_cm':r2(mean(vals)),
             'max_depth_cm':r2(max(vals)),
+            'monthly_mean_cm':monthly_mean,
+            'monthly_max_cm':monthly_max,
             'definition':'7 consecutive available observations >= 1 cm, max 3-day gap; mean/max within continuous season'
         })
     return out
@@ -361,7 +368,7 @@ def coverage(rows,name):
     dates=[d for d,_ in rows];return {'name':name,'min_date':min(dates).date().isoformat(),'max_date':max(dates).date().isoformat(),'rows':len(rows)}
 
 temp=read_param(1);wind_dir=read_param(3);wind_speed=read_param(4);prec=read_param(5);humidity=read_param(6);prec_hourly=read_param(7);snow=read_param(8);sunshine=read_param(10);visibility=read_param(12);weather=read_param(13);gust=read_param(21)
-temp_a,temp_m=aggregate_temp(temp);wind_s_a,wind_s_m=aggregate_mean(wind_speed);wind_d_a,wind_d_m=aggregate_direction(wind_dir);prec_a,prec_m=aggregate_precip(prec);hum_a,hum_m=aggregate_mean(humidity);vis_a,vis_m=aggregate_mean(visibility);snow_cm=[(d,v*100.0) for d,v in snow];snow_m=aggregate_mean(snow_cm)[1];snow_max_m=aggregate_max(snow_cm)[1];snow_season_rows=snow_seasons(snow_cm);snow_a=[{'year':s['start_year'],'label':s['label'],'avg':s['mean_depth_cm']} for s in snow_season_rows];snow_max_a=[{'year':s['start_year'],'label':s['label'],'max':s['max_depth_cm']} for s in snow_season_rows];gust_max_a,gust_max_m=aggregate_max(gust);wind_max_a,wind_max_m=aggregate_max(wind_speed);sun_a,sun_m=aggregate_sum_hours(sunshine)
+temp_a,temp_m=aggregate_temp(temp);wind_s_a,wind_s_m=aggregate_mean(wind_speed);wind_d_a,wind_d_m=aggregate_direction(wind_dir);prec_a,prec_m=aggregate_precip(prec);hum_a,hum_m=aggregate_mean(humidity);vis_a,vis_m=aggregate_mean(visibility);snow_cm=[(d,v*100.0) for d,v in snow];snow_season_rows=snow_seasons(snow_cm);snow_a=[{'year':s['start_year'],'label':s['label'],'avg':s['mean_depth_cm']} for s in snow_season_rows];snow_max_a=[{'year':s['start_year'],'label':s['label'],'max':s['max_depth_cm']} for s in snow_season_rows];snow_m=[{'year':s['start_year'],'month':int(m),'avg':v} for s in snow_season_rows for m,v in s['monthly_mean_cm'].items()];snow_max_m=[{'year':s['start_year'],'month':int(m),'max':v} for s in snow_season_rows for m,v in s['monthly_max_cm'].items()];gust_max_a,gust_max_m=aggregate_max(gust);wind_max_a,wind_max_m=aggregate_max(wind_speed);sun_a,sun_m=aggregate_sum_hours(sunshine)
 weather_rows=aggregate_weather(weather);used=sorted({r['code'] for r in weather_rows},key=lambda x:float(x));all_labels=fetch_weather_labels();labels={c:all_labels.get(c,f'Kod {c}') for c in used};write_daily_detail(temp,prec,prec_hourly,snow,weather)
 all_years=sorted({d.year for rows in [temp,wind_dir,wind_speed,prec,humidity,snow,sunshine,visibility,weather,gust] for d,_ in rows})
 payload={'generated_at':datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'),'station':{'id':'162860','name':'Luleå-Kallax Flygplats'},'years':all_years,
