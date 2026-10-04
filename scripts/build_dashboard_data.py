@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.request import Request,urlopen
 ROOT=Path(__file__).resolve().parents[1];DATA=ROOT/'data';DOCS=ROOT/'docs'
 WEATHER_CODES_URL='https://www.smhi.se/data/hitta-data-for-en-plats/ladda-ner-vaderobservationer/presentWeather'
-PARAMS={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',5:'Nederbörd 1 dygn',6:'Relativ luftfuktighet',7:'Nederbörd 1 timme',8:'Snödjup',10:'Solskenstid',11:'Global irradians',12:'Sikt',13:'Rådande väder',21:'Byvind'}
+PARAMS={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',5:'Nederbörd 1 dygn',6:'Relativ luftfuktighet',7:'Nederbörd 1 timme',8:'Snödjup',10:'Solskenstid',11:'Global irradians',12:'Sikt',13:'Rådande väder',17:'Nederbördstyp 12 timmar',18:'Nederbördstyp 24 timmar',21:'Byvind'}
 
 def read_param(pid:int):
     rows=[];folder=DATA/f'parameter_{pid}'
@@ -22,6 +22,20 @@ def read_param(pid:int):
                 try:num=float(str(val).replace(',','.'))
                 except Exception:continue
                 rows.append((d,num))
+    return rows
+
+def read_param_raw(pid:int):
+    rows=[];folder=DATA/f'parameter_{pid}'
+    if not folder.exists():return rows
+    for path in sorted(folder.glob('*.csv')):
+        with path.open('r',encoding='utf-8-sig',newline='') as f:
+            for r in csv.DictReader(f):
+                dt=r.get('datetime_local') or r.get('datetime_utc') or ''
+                try:d=datetime.fromisoformat(dt.replace('Z','+00:00'))
+                except Exception:continue
+                value=(r.get('value') or '').strip()
+                reference=(r.get('reference') or '').strip()
+                rows.append((d,value,reference))
     return rows
 
 def mean(v):return sum(v)/len(v) if v else None
@@ -213,6 +227,29 @@ def aggregate_weather(rows):
     for d,v in rows:
         code=str(int(v)) if float(v).is_integer() else str(v);c[(d.year,d.month,code)]+=1
     return [{'year':k[0],'month':k[1],'code':k[2],'count':v} for k,v in sorted(c.items())]
+def precipitation_types_direct(rows):
+    # SMHI direct precipitation-type observations (parameter 17/18).
+    # Values may be supplied as translated text; classify conservatively.
+    counts=defaultdict(int)
+    for d,value,reference in rows:
+        text=(' '.join([value,reference])).strip().lower()
+        if not text:
+            continue
+        cat=None
+        # Mixed must be tested before rain/snow because descriptions may contain both words.
+        if ('regn' in text and 'snö' in text) or 'snöbland' in text or 'bland' in text:
+            cat='mixed'
+        elif 'snö' in text or 'kornsnö' in text or 'snöfall' in text or 'snöby' in text:
+            cat='snow'
+        elif 'regn' in text or 'duggregn' in text or 'underkyld' in text:
+            cat='rain'
+        elif 'hagel' in text:
+            # Keep hail outside the three-way rain/snow comparison.
+            cat=None
+        if cat:
+            counts[(d.year,d.month,cat)]+=1
+    return [{'year':y,'month':m,'type':cat,'count':n} for (y,m,cat),n in sorted(counts.items())]
+
 def precipitation_types(weather_rows,temp_rows):
     # Classify precipitation observations from SMHI present-weather codes.
     # Explicit rain/snow/mixed codes win. Only ambiguous precipitation codes
@@ -402,12 +439,12 @@ def coverage(rows,name):
     if not rows:return {'name':name,'min_date':'-','max_date':'-','rows':0}
     dates=[d for d,_ in rows];return {'name':name,'min_date':min(dates).date().isoformat(),'max_date':max(dates).date().isoformat(),'rows':len(rows)}
 
-temp=read_param(1);wind_dir=read_param(3);wind_speed=read_param(4);prec=read_param(5);humidity=read_param(6);prec_hourly=read_param(7);snow=read_param(8);sunshine=read_param(10);irradiance=read_param(11);visibility=read_param(12);weather=read_param(13);gust=read_param(21)
+temp=read_param(1);wind_dir=read_param(3);wind_speed=read_param(4);prec=read_param(5);humidity=read_param(6);prec_hourly=read_param(7);snow=read_param(8);sunshine=read_param(10);irradiance=read_param(11);visibility=read_param(12);weather=read_param(13);precip_type_12=read_param_raw(17);precip_type_24=read_param_raw(18);gust=read_param(21)
 temp_a,temp_m=aggregate_temp(temp);wind_s_a,wind_s_m=aggregate_mean(wind_speed);wind_d_a,wind_d_m=aggregate_direction(wind_dir);prec_a,prec_m=aggregate_precip(prec);hum_a,hum_m=aggregate_mean(humidity);vis_a,vis_m=aggregate_mean(visibility);snow_cm=[(d,v*100.0) for d,v in snow];snow_season_rows=snow_seasons(snow_cm);snow_a=[{'year':s['start_year'],'label':s['label'],'avg':s['mean_depth_cm']} for s in snow_season_rows];snow_max_a=[{'year':s['start_year'],'label':s['label'],'max':s['max_depth_cm']} for s in snow_season_rows];snow_m=[{'year':s['start_year'],'month':int(m),'avg':v} for s in snow_season_rows for m,v in s['monthly_mean_cm'].items()];snow_max_m=[{'year':s['start_year'],'month':int(m),'max':v} for s in snow_season_rows for m,v in s['monthly_max_cm'].items()];gust_max_a,gust_max_m=aggregate_max(gust);wind_max_a,wind_max_m=aggregate_max(wind_speed);sun_a,sun_m=aggregate_sum_hours(sunshine);irr_a,irr_m=aggregate_irradiance_energy(irradiance)
 weather_rows=aggregate_weather(weather);used=sorted({r['code'] for r in weather_rows},key=lambda x:float(x));all_labels=fetch_weather_labels();labels={c:all_labels.get(c,f'Kod {c}') for c in used};write_daily_detail(temp,prec,prec_hourly,snow,weather)
 all_years=sorted({d.year for rows in [temp,wind_dir,wind_speed,prec,humidity,snow,sunshine,irradiance,visibility,weather,gust] for d,_ in rows})
 payload={'generated_at':datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'),'station':{'id':'162860','name':'Luleå-Kallax Flygplats'},'years':all_years,
- 'temperature':{'annual':temp_a,'monthly':temp_m},'precipitation':{'annual':prec_a,'monthly_total':prec_m,'types':precipitation_types(weather,temp)},
+ 'temperature':{'annual':temp_a,'monthly':temp_m},'precipitation':{'annual':prec_a,'monthly_total':prec_m,'types':(precipitation_types_direct(precip_type_24) or precipitation_types_direct(precip_type_12) or precipitation_types(weather,temp)),'type_source':('SMHI nederbördstyp 24 timmar' if precipitation_types_direct(precip_type_24) else ('SMHI nederbördstyp 12 timmar' if precipitation_types_direct(precip_type_12) else 'Härledd från rådande väder och temperatur'))},
  'weather':{'codes':weather_rows,'labels':labels,'source_url':WEATHER_CODES_URL},
  'wind':{'speed_annual':wind_s_a,'speed_monthly':wind_s_m,'daily_max_annual':aggregate_daily_max_annual(wind_speed),'max_annual':wind_max_a,'max_monthly':wind_max_m,'gust_max_annual':gust_max_a,'gust_max_monthly':gust_max_m,'direction_annual':wind_d_a,'direction_monthly':wind_d_m,'direction_sectors':aggregate_direction_sectors(wind_dir)},
  'visibility':{'annual':vis_a,'monthly':vis_m},'humidity':{'annual':hum_a,'monthly':hum_m},
@@ -415,5 +452,5 @@ payload={'generated_at':datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'
  'sunshine':{'station':{'id':'162015','name':'Luleå Sol'},'annual':sun_a,'monthly_total':sun_m,'irradiance_annual':irr_a,'irradiance_monthly':irr_m},
  'zero_crossings':zero_crossings(temp),
  'vegetation':vegetation_period(temp),
- 'coverage':[coverage(temp,PARAMS[1]),coverage(prec,PARAMS[5]),coverage(prec_hourly,PARAMS[7]),coverage(weather,PARAMS[13]),coverage(wind_speed,PARAMS[4]),coverage(wind_dir,PARAMS[3]),coverage(gust,PARAMS[21]),coverage(visibility,PARAMS[12]),coverage(humidity,PARAMS[6]),coverage(snow,PARAMS[8]),coverage(sunshine,PARAMS[10]),coverage(irradiance,PARAMS[11])]}
+ 'coverage':[coverage(temp,PARAMS[1]),coverage(prec,PARAMS[5]),coverage(prec_hourly,PARAMS[7]),coverage(weather,PARAMS[13]),coverage(wind_speed,PARAMS[4]),coverage(wind_dir,PARAMS[3]),coverage(gust,PARAMS[21]),coverage(visibility,PARAMS[12]),coverage(humidity,PARAMS[6]),coverage(snow,PARAMS[8]),coverage(sunshine,PARAMS[10]),coverage(irradiance,PARAMS[11]),coverage([(d,0) for d,_,_ in precip_type_12],PARAMS[17]),coverage([(d,0) for d,_,_ in precip_type_24],PARAMS[18])]}
 DOCS.mkdir(exist_ok=True);(DOCS/'dashboard_data.json').write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':')),encoding='utf-8');print(f"Wrote {DOCS/'dashboard_data.json'} with {len(labels)} weather labels and {len(payload['zero_crossings'])} zero-crossing days")
