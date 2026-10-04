@@ -357,10 +357,23 @@ function render(){
   destroyChart('irradianceDaylightMonthly');
   charts.irradianceDaylightMonthly=new Chart(el('irradianceDaylightMonthly'),{
     type:'bar',
-    data:{labels:months,datasets:[{label:'Globalstrålning under dagsljus',data:daylightAdjusted,borderWidth:0,backgroundColor:'rgba(242,201,76,0.55)'}]},
+    data:{labels:months,datasets:[{label:'Genomsnittlig global irradians under dagsljus',data:daylightAdjusted,borderWidth:0,backgroundColor:'rgba(242,201,76,0.55)'}]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y==null?'–':Math.round(c.parsed.y)+' W/m²'}}},
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'W/m² under sol över horisonten'},ticks:{precision:0}}}}
+  });
+
+  const monthlyEnergy=months.map((_,i)=>{
+    const vals=irrMonthlyRows.filter(r=>r.month===i+1).map(r=>r.kwh_m2).filter(v=>v!=null&&Number.isFinite(v));
+    return vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null;
+  });
+  destroyChart('irradianceEnergyMonthly');
+  charts.irradianceEnergyMonthly=new Chart(el('irradianceEnergyMonthly'),{
+    type:'bar',
+    data:{labels:months,datasets:[{label:'Global solenergi',data:monthlyEnergy,borderWidth:0,backgroundColor:'rgba(242,201,76,0.55)'}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y==null?'–':Math.round(c.parsed.y)+' kWh/m²'}}},
+      scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'kWh/m² per månad'},ticks:{precision:0}}}}
   });
 
   const snowA=DATA.snow.annual_mean.filter(r=>r.year>=f.from&&r.year<=f.to),
