@@ -161,10 +161,11 @@ function renderVegetation(f){
   el('vegetationLengthTrendText').textContent=trendRateText(labels,lengthVals,'dygn');
 
   const startVals=climate.map(r=>r.start_doy);
+  el('vegetationStartTrendText').textContent=trendRateText(labels,startVals,'dygn');
   destroyChart('vegetationStart');
   charts.vegetationStart=new Chart(el('vegetationStart'),{
     data:{labels,datasets:[
-      {type:'bar',label:'Start',data:startVals,backgroundColor:'#e67e22',borderWidth:0},
+      {type:'bar',label:'Start',data:startVals,backgroundColor:'rgba(230,126,34,0.42)',borderWidth:0},
       {type:'line',label:'Linjär trend',data:linearTrend(labels,startVals),borderColor:'#8a4b08',backgroundColor:'#8a4b08',borderWidth:2,pointRadius:0,borderDash:[6,4]}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
@@ -173,10 +174,11 @@ function renderVegetation(f){
   });
 
   const endVals=climate.map(r=>r.end_doy);
+  el('vegetationEndTrendText').textContent=trendRateText(labels,endVals,'dygn');
   destroyChart('vegetationEnd');
   charts.vegetationEnd=new Chart(el('vegetationEnd'),{
     data:{labels,datasets:[
-      {type:'bar',label:'Slut',data:endVals,backgroundColor:'#2e8b57',borderWidth:0},
+      {type:'bar',label:'Slut',data:endVals,backgroundColor:'rgba(46,139,87,0.40)',borderWidth:0},
       {type:'line',label:'Linjär trend',data:linearTrend(labels,endVals),borderColor:'#1f5f3c',backgroundColor:'#1f5f3c',borderWidth:2,pointRadius:0,borderDash:[6,4]}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
@@ -185,6 +187,7 @@ function renderVegetation(f){
   });
 
   const frost=climate.filter(r=>r.frost_days!=null);
+  el('vegetationFrostTrendText').textContent=trendRateText(frost.map(r=>r.window_end),frost.map(r=>r.frost_days),'dygn');
   destroyChart('vegetationFrost');
   charts.vegetationFrost=new Chart(el('vegetationFrost'),{
     data:{labels:frost.map(r=>r.window_end),datasets:[
@@ -196,6 +199,7 @@ function renderVegetation(f){
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'dygn'}}}}
   });
 
+  el('vegetationObservedTrendText').textContent=trendRateText(observed.map(r=>r.year),observed.map(r=>r.days_above_5),'dygn');
   destroyChart('vegetationObserved');
   charts.vegetationObserved=new Chart(el('vegetationObserved'),{
     type:'bar',
