@@ -151,7 +151,7 @@ function renderVegetation(f){
   charts.vegetationLength=new Chart(el('vegetationLength'),{
     data:{labels,datasets:[
       {type:'bar',label:'Längd',data:lengthVals,borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(labels,lengthVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(labels,lengthVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label+': '+Math.round(c.parsed.y)+' dygn'}}},
@@ -165,7 +165,7 @@ function renderVegetation(f){
   charts.vegetationStart=new Chart(el('vegetationStart'),{
     data:{labels,datasets:[
       {type:'bar',label:'Start',data:startVals,backgroundColor:'rgba(230,126,34,0.42)',borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(labels,startVals),borderColor:'#8a4b08',backgroundColor:'#8a4b08',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(labels,startVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label==='Start'?'Start: '+dayOfYearLabel(c.parsed.y):'Trend: '+dayOfYearLabel(c.parsed.y)}}},
@@ -178,7 +178,7 @@ function renderVegetation(f){
   charts.vegetationEnd=new Chart(el('vegetationEnd'),{
     data:{labels,datasets:[
       {type:'bar',label:'Slut',data:endVals,backgroundColor:'rgba(46,139,87,0.40)',borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(labels,endVals),borderColor:'#1f5f3c',backgroundColor:'#1f5f3c',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(labels,endVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label==='Slut'?'Slut: '+dayOfYearLabel(c.parsed.y):'Trend: '+dayOfYearLabel(c.parsed.y)}}},
@@ -191,7 +191,7 @@ function renderVegetation(f){
   charts.vegetationFrost=new Chart(el('vegetationFrost'),{
     data:{labels:frost.map(r=>r.window_end),datasets:[
       {type:'bar',label:'Frostnätter',data:frost.map(r=>r.frost_days),backgroundColor:'#6b8fb3',borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(frost.map(r=>r.window_end),frost.map(r=>r.frost_days)),borderColor:'#334e68',backgroundColor:'#334e68',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(frost.map(r=>r.window_end),frost.map(r=>r.frost_days)),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'År '+items[0].label,label:c=>c.dataset.label+': '+Math.round(c.parsed.y)+' dygn'}}},
