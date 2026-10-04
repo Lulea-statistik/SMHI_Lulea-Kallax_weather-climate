@@ -239,6 +239,63 @@ function daylightHoursInMonth(year,month){
   return valid===days?total:null;
 }
 
+function renderLightning(f){
+  const L=DATA.lightning||{};
+  const has=(L.annual||[]).length>0;
+  const noData=el('lightningNoData');
+  if(noData)noData.style.display=has?'none':'block';
+  ['lightningAnnual','lightningDays','lightningMonthly','lightningUncertain'].forEach(id=>{
+    const canvas=el(id);if(canvas)canvas.parentElement.style.display=has?'block':'none';
+    if(!has)destroyChart(id);
+  });
+  if(!has)return;
+
+  const classes=[
+    {key:'mainland',label:'Fastland',color:'rgba(79,157,105,0.68)'},
+    {key:'islands',label:'Öar',color:'rgba(242,201,76,0.68)'},
+    {key:'sea',label:'Hav',color:'rgba(54,162,235,0.62)'},
+    {key:'coast_uncertain',label:'Kust/osäker',color:'rgba(156,163,175,0.60)'}
+  ];
+  const annualSource=f.month?(L.monthly_by_year||[]).filter(r=>r.month===f.month):(L.annual||[]);
+  const rows=annualSource.filter(r=>r.year>=f.from&&r.year<=f.to).sort((a,b)=>a.year-b.year);
+  const years=rows.map(r=>r.year);
+
+  destroyChart('lightningAnnual');
+  charts.lightningAnnual=new Chart(el('lightningAnnual'),{
+    type:'bar',
+    data:{labels:years,datasets:classes.map(x=>({label:x.label,stack:'surface',backgroundColor:x.color,borderWidth:0,data:rows.map(r=>r[x.key]||0)}))},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Math.round(c.parsed.y)}}},
+      scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,title:{display:true,text:'urladdningar'},ticks:{precision:0}}}}
+  });
+
+  const dayVals=rows.map(r=>r.lightning_days||0);
+  barChart('lightningDays',years,dayVals,'dygn','rgba(99,102,241,0.58)');
+
+  const monthRows=(L.monthly_by_year||[]).filter(r=>r.year>=f.from&&r.year<=f.to);
+  const monthAgg=months.map((_,i)=>{
+    const rr=monthRows.filter(r=>r.month===i+1);
+    const yearsN=new Set(rr.map(r=>r.year)).size||1;
+    const out={};
+    classes.forEach(x=>out[x.key]=rr.reduce((s,r)=>s+(r[x.key]||0),0)/yearsN);
+    return out;
+  });
+  destroyChart('lightningMonthly');
+  charts.lightningMonthly=new Chart(el('lightningMonthly'),{
+    type:'bar',
+    data:{labels:months,datasets:classes.map(x=>({label:x.label,stack:'surface',backgroundColor:x.color,borderWidth:0,data:monthAgg.map(r=>r[x.key]||0)}))},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1).replace('.',',')}}},
+      scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,title:{display:true,text:'genomsnitt per år'}}}}
+  });
+
+  const uncertain=rows.map(r=>{
+    const total=(r.mainland||0)+(r.islands||0)+(r.sea||0)+(r.coast_uncertain||0);
+    return total?100*(r.coast_uncertain||0)/total:0;
+  });
+  lineChart('lightningUncertain',years,[{label:'Kust/osäker',data:uncertain,borderColor:'#6b7280',backgroundColor:'rgba(107,114,128,0.20)'}],'%');
+}
+
 function render(){
   const f=currentFilters(),m=temperatureMetric(),name=metricName(m);
   const ta=selectedAnnualRows(DATA.temperature.annual,DATA.temperature.monthly,f);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r[m]);
@@ -255,6 +312,8 @@ function render(){
   });lineChart('tempMonthly',months,[{label:'°C',data:tMonthAgg,borderColor:MONTH_GREEN,backgroundColor:MONTH_GREEN}],'°C');el('tempMonthlyTitle').textContent=name+' lufttemperatur per månad';
   renderTemp2();
   renderVegetation(f);
+
+  renderLightning(f);
 
   const pa=selectedAnnualRows(DATA.precipitation.annual,DATA.precipitation.monthly_total,f);const paYears=pa.map(r=>r.year),paVals=pa.map(r=>r.sum);
   destroyChart('precipAnnual');
