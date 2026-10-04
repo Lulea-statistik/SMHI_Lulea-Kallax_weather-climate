@@ -336,7 +336,7 @@ function render(){
   charts.irradianceAnnual=new Chart(el('irradianceAnnual'),{
     data:{labels:irrYears,datasets:[
       {type:'bar',label:f.month?months[f.month-1]+' solinstrålning':'Årlig solinstrålning',data:irrVals,borderWidth:0,backgroundColor:'rgba(230,126,34,0.55)'},
-      {type:'line',label:'Linjär trend',data:linearTrend(irrYears,irrVals),borderColor:'#d62728',backgroundColor:'#d62728',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(irrYears,irrVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.parsed.y==null?c.dataset.label+': –':c.dataset.label+': '+Math.round(c.parsed.y)+' kWh/m²'}}},
