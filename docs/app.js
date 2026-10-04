@@ -40,16 +40,34 @@ function normalizedWeatherPhenomenon(code,year){
 function setupTemp2Slider(){
   const years=[...DATA.years].sort((a,b)=>a-b);
   const minStart=years[0],maxStart=years[years.length-1]-9;
+  const minCenter=minStart+4.5,maxCenter=maxStart+4.5;
   temp2Start=maxStart;
-  const s=el('temp2Start');s.min=minStart;s.max=maxStart;s.step=1;s.value=temp2Start;
-  s.addEventListener('input',e=>{temp2Start=+e.target.value;renderTemp2();});
+  const s=el('temp2Start');
+  s.min=minCenter;s.max=maxCenter;s.step=1;s.value=temp2Start+4.5;
+  s.addEventListener('input',e=>{temp2Start=Math.round((+e.target.value)-4.5);renderTemp2();});
   renderTemp2();
 }
 function renderTemp2(){
   const start=temp2Start??([...DATA.years].sort((a,b)=>a-b).slice(-10)[0]);
   const years=Array.from({length:10},(_,i)=>start+i).filter(y=>DATA.years.includes(y));
   el('temp2PeriodLabel').textContent=start+'–'+(start+9);
-  lineChart('tempProfiles',months,years.map(y=>({label:String(y),data:[...Array(12)].map((_,i)=>{const r=DATA.temperature.monthly.find(x=>x.year===y&&x.month===i+1);return r?r.avg:null;})})),'°C');
+
+  const selectedMonth=+(el('month')?.value||0);
+  if(selectedMonth){
+    const vals=years.map(y=>{
+      const r=DATA.temperature.monthly.find(x=>x.year===y&&x.month===selectedMonth);
+      return r?r.avg:null;
+    });
+    lineChart('tempProfiles',years,[{label:months[selectedMonth-1],data:vals,borderColor:MONTH_GREEN,backgroundColor:MONTH_GREEN}],'°C');
+  }else{
+    lineChart('tempProfiles',months,years.map(y=>({
+      label:String(y),
+      data:[...Array(12)].map((_,i)=>{
+        const r=DATA.temperature.monthly.find(x=>x.year===y&&x.month===i+1);
+        return r?r.avg:null;
+      })
+    })),'°C');
+  }
 }
 function weatherChart(rows){
   destroyChart('weatherCodes');
