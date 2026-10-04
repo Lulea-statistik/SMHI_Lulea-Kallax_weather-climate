@@ -17,6 +17,8 @@
     {"id": "12", "name": "Sikt"},
     {"id": "13", "name": "Rådande väder"},
     {"id": "16", "name": "Total molnmängd"},
+    {"id": "17", "name": "Nederbördstyp 12 timmar"},
+    {"id": "18", "name": "Nederbördstyp 24 timmar"},
     {"id": "21", "name": "Byvind"},
     {"id": "39", "name": "Daggpunktstemperatur"}
   ]
