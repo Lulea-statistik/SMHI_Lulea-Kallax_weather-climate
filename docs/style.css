@@ -1,6 +1,7 @@
 :root{--bg:#f5f7fa;--card:#fff;--text:#1f2937;--muted:#6b7280;--line:#d9dee7;--accent:#1f5f8b}
 *{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
-.topbar{display:flex;justify-content:space-between;align-items:flex-end;padding:20px 28px;background:#fff;border-bottom:1px solid var(--line)}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;background:#fff;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:16px;min-width:0}.brandLogo{width:64px;height:64px;flex:0 0 64px;display:block;object-fit:contain}.brandText{min-width:0}
 .topbar h1{margin:0;font-size:26px;font-weight:600}.topbar p{margin:4px 0 0;color:var(--muted)}.updated{font-size:13px;color:var(--muted)}
 .tabs{display:flex;gap:6px;padding:10px 18px;background:#fff;border-bottom:1px solid var(--line);overflow:auto}.tabs button{border:0;background:transparent;padding:10px 14px;border-radius:6px;cursor:pointer;font-weight:600;white-space:nowrap}.tabs button.active{background:var(--accent);color:#fff}
 main{padding:18px}.filters{display:flex;gap:12px;align-items:end;flex-wrap:wrap;margin-bottom:16px}.filters label,.page-tools label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
@@ -25,3 +26,5 @@ main{padding:18px}.filters{display:flex;gap:12px;align-items:end;flex-wrap:wrap;
   #page-dateweather .date-temp-chart{grid-row:2}
   #page-dateweather .date-summary{grid-column:2;grid-row:2}
 }
+
+@media(max-width:760px){.brand{gap:12px}.brandLogo{width:52px;height:52px;flex-basis:52px}.topbar{align-items:flex-start}.topbar h1{font-size:24px}.topbar p{font-size:12px}}
