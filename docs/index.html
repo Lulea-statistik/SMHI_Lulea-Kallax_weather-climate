@@ -6,7 +6,7 @@
 
   <link rel="icon" type="image/png" href="favicon.png?v=3">
 
-  <link rel="stylesheet" href="style.css?v=31">
+  <link rel="stylesheet" href="style.css?v=32">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -29,6 +29,7 @@
   <button data-page="snow">Snödjup</button>
   <button data-page="zerocross">Nollgenomgångar</button>
   <button data-page="vegetation">Vegetationsperiod</button>
+  <button data-page="lightning">Blixt</button>
   <button data-page="dateweather">Väder efter datum</button>
   <button data-page="data">Data</button>
 </nav>
@@ -145,6 +146,15 @@
     <div class="chart-card"><h2>Frostnätter under vegetationsperioden</h2><p class="hint">Ett dygn räknas när dygnets lägsta observerade temperatur är under 0 °C, inom den beräknade vegetationsperioden.</p><p id="vegetationFrostTrendText" class="hint"></p><canvas id="vegetationFrost"></canvas></div>
   </section>
 
+  <section id="page-lightning" class="page">
+    <div class="source-note"><b>Blixtdata:</b> SMHI:s historiska arkiv över registrerade urladdningar används från 2012 och framåt. Klassningen görs geografiskt inom Luleå kommun som fastland, öar, hav och kust/osäker. Punkter inom 500 meter från land-/vattenkant redovisas som osäkra. SMHI anger att medianfelet vid normal drift ska vara mindre än cirka 500 meter, men enskilda avvikelser kan vara större. Det finns dessutom ett metodbrott i blixtlokaliseringssystemet under 2014, vilket gör äldre och nyare nivåer mindre direkt jämförbara.</div>
+    <div id="lightningNoData" class="chart-card full" style="display:none"><h2>Blixtdata väntar på första hämtningen</h2><p class="hint">Kör workflowet med refresh-all för att hämta historiken och bygga klassningen.</p></div>
+    <div class="chart-card"><h2>Blixturladdningar per år</h2><p class="hint">Fastland, öar och hav redovisas separat. Kustnära observationer inom osäkerhetszonen visas som en egen kategori.</p><canvas id="lightningAnnual"></canvas></div>
+    <div class="chart-card"><h2>Blixtdygn per år</h2><p class="hint">Antal dygn med minst en registrerad urladdning inom Luleå kommun.</p><canvas id="lightningDays"></canvas></div>
+    <div class="chart-card"><h2>Genomsnittlig månadsfördelning</h2><p class="hint">Fördelning av registrerade urladdningar per månad inom valt årsintervall.</p><canvas id="lightningMonthly"></canvas></div>
+    <div class="chart-card"><h2>Andel kust/osäkra observationer</h2><p class="hint">Andel av fastland, öar, hav och kust/osäker som hamnar inom 500 meter från strand-/vattenkant.</p><canvas id="lightningUncertain"></canvas></div>
+  </section>
+
   <section id="page-dateweather" class="page">
     <div class="page-tools date-weather-tools">
       <label>Datum<input id="dateWeatherPicker" type="date"></label>
@@ -159,5 +169,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=46"></script>
+<script src="app.js?v=47"></script>
 </body></html>
