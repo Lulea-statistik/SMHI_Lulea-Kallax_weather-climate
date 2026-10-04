@@ -32,3 +32,7 @@ main{padding:18px}.filters{display:flex;gap:12px;align-items:end;flex-wrap:wrap;
 .source-note{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;color:var(--muted);font-size:13px;line-height:1.45;grid-column:1/-1}
 
 @media(min-width:1050px){#page-sunshine .sun-energy-right{grid-column:2}}
+
+body.dateweather-active #globalFilters .filter-select{display:none}
+body.dateweather-active #globalFilters{grid-template-columns:1fr}
+body.dateweather-active #globalFilters .year-sliders{grid-column:1/-1}
