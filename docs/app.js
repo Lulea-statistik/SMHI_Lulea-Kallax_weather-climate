@@ -335,7 +335,7 @@ function render(){
   destroyChart('irradianceAnnual');
   charts.irradianceAnnual=new Chart(el('irradianceAnnual'),{
     data:{labels:irrYears,datasets:[
-      {type:'bar',label:f.month?months[f.month-1]+' solinstrålning':'Årlig solinstrålning',data:irrVals,borderWidth:0,backgroundColor:'rgba(242,201,76,0.55)'},
+      {type:'bar',label:f.month?months[f.month-1]+' solinstrålning':'Årlig solinstrålning',data:irrVals,borderWidth:0,backgroundColor:'rgba(230,126,34,0.55)'},
       {type:'line',label:'Linjär trend',data:linearTrend(irrYears,irrVals),borderColor:'#d62728',backgroundColor:'#d62728',borderWidth:2,pointRadius:0,borderDash:[6,4]}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
