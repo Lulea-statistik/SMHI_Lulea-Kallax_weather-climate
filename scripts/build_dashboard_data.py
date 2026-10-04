@@ -201,6 +201,7 @@ def vegetation_period(rows):
     for d,v in rows:
         daily[d.date()].append(v)
     daily_mean={day:mean(vals) for day,vals in daily.items() if vals}
+    daily_min={day:min(vals) for day,vals in daily.items() if vals}
 
     # Raw annual context: number of observed days with daily mean > 5 C.
     annual=[]
@@ -262,6 +263,16 @@ def vegetation_period(rows):
 
         sm,sd=month_days[best_start]
         em,ed=month_days[best_end]
+        # Count frost days in the calendar year represented by this climate window.
+        # User-facing definition: a frost night/day is a day whose observed minimum
+        # temperature falls below 0 C, restricted to the derived vegetation period.
+        period_start=datetime(end_year,sm,sd).date()
+        period_end=datetime(end_year,em,ed).date()
+        period_days=[day for day in daily_min if period_start<=day<=period_end]
+        frost_days=sum(1 for day in period_days if daily_min[day]<0)
+        expected_days=(period_end-period_start).days+1
+        frost_coverage=100*len(period_days)/expected_days if expected_days else 0
+
         climate.append({
             'window_start':start_year,
             'window_end':end_year,
@@ -271,6 +282,8 @@ def vegetation_period(rows):
             'start_doy':best_start+1,
             'end_doy':best_end+1,
             'length_days':best_len,
+            'frost_days':frost_days if frost_coverage>=90 else None,
+            'frost_coverage_pct':r2(frost_coverage),
             'threshold_c':5,
             'definition':'10-year mean daily temperature, longest continuous period > 5 C'
         })
