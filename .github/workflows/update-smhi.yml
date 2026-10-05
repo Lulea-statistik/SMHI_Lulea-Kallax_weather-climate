@@ -48,6 +48,11 @@ jobs:
           RUN_MODE: ${{ github.event.inputs.mode || 'auto' }}
         run: python scripts/fetch_smhi.py --mode "$RUN_MODE"
 
+      - name: Build static lightning geography
+        env:
+          RUN_MODE: ${{ github.event.inputs.mode || 'auto' }}
+        run: python scripts/build_lightning_geography.py
+
       - name: Update SMHI lightning archive
         env:
           RUN_MODE: ${{ github.event.inputs.mode || 'auto' }}
