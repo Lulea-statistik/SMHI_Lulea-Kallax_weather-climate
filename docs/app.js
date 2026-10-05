@@ -1,4 +1,4 @@
-let DATA=null;const charts={};const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;const charts={};let seaIceLeafletMap=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function lineChart(id,labels,datasets,yTitle,extra={}){destroyChart(id);charts[id]=new Chart(el(id),{type:'line',data:{labels,datasets:datasets.map(d=>({borderWidth:2,pointRadius:0,tension:.15,...d}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:datasets.length>1}},scales:{x:{grid:{display:false}},y:{title:{display:!!yTitle,text:yTitle}}},...extra}});}
@@ -327,6 +327,59 @@ function renderLightning(f){
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Math.round(c.parsed.y)}}},
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'urladdningar'},ticks:{precision:0}}}}
   });
+}
+
+async function initSeaIceMap(){
+  const mapEl=el('seaIceMap');
+  if(!mapEl||typeof L==='undefined')return;
+  const status=el('seaIceMapStatus');
+  if(seaIceLeafletMap){
+    setTimeout(()=>seaIceLeafletMap.invalidateSize(),50);
+    return;
+  }
+  if(status)status.textContent='Laddar kartgeometri…';
+  try{
+    const r=await fetch('seaice_analysis_area.geojson?v=1',{cache:'no-store'});
+    if(!r.ok)throw new Error('Kartgeometrin är ännu inte genererad. Kör havsishämtningen i refresh-all-läge en gång.');
+    const geo=await r.json();
+
+    seaIceLeafletMap=L.map(mapEl,{zoomControl:true});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      maxZoom:18,
+      attribution:'&copy; OpenStreetMap contributors'
+    }).addTo(seaIceLeafletMap);
+
+    const analysis=L.geoJSON(geo,{
+      filter:f=>f?.properties?.kind==='smhi_analysis',
+      style:{color:'#1f5f8b',weight:2,fillColor:'#67b7e1',fillOpacity:.40}
+    }).addTo(seaIceLeafletMap);
+
+    const municipal=L.geoJSON(geo,{
+      filter:f=>f?.properties?.kind==='municipal_sea',
+      style:{color:'#dc2626',weight:2.5,fill:false,fillOpacity:0}
+    }).addTo(seaIceLeafletMap);
+
+    const bounds=L.featureGroup([analysis,municipal]).getBounds();
+    if(bounds.isValid())seaIceLeafletMap.fitBounds(bounds.pad(.03));
+
+    const legend=L.control({position:'topright'});
+    legend.onAdd=()=>{
+      const div=L.DomUtil.create('div','seaice-map-legend');
+      div.innerHTML=
+        '<div><i style="background:rgba(103,183,225,.55);border:2px solid #1f5f8b"></i>SMHI analyserad havsyta</div>'+
+        '<div><i style="background:transparent;border:2px solid #dc2626"></i>Kommunal havsyta</div>';
+      return div;
+    };
+    legend.addTo(seaIceLeafletMap);
+
+    const analysisFeature=(geo.features||[]).find(f=>f?.properties?.kind==='smhi_analysis');
+    const sourceDate=analysisFeature?.properties?.source_date;
+    if(status)status.textContent=sourceDate
+      ? 'Kartgeometri från SMHI:s analys '+sourceDate+'. Bakgrundskarta: OpenStreetMap.'
+      : 'Bakgrundskarta: OpenStreetMap.';
+  }catch(err){
+    if(status)status.textContent=err.message;
+  }
 }
 
 function seaIceSeasonDateRange(startYear){
@@ -865,7 +918,7 @@ function syncYear(source,value,renderNow=true){
   updateRangeTrack();
   if(renderNow)render();
 }
-function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');setTimeout(()=>Object.values(charts).forEach(c=>c.resize()),50);}));}
+function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');if(btn.dataset.page==='seaice')initSeaIceMap();setTimeout(()=>{Object.values(charts).forEach(c=>c.resize());if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();},80);}));}
 function setupFilters(){const years=DATA.years,min=years[0],max=years[years.length-1];['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=years.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));el('yearFrom').value=min;el('yearTo').value=max;['rangeFrom','rangeTo'].forEach(id=>{el(id).min=min;el(id).max=max;el(id).step=1;});el('rangeFrom').value=min;el('rangeTo').value=max;el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;updateRangeTrack();el('yearFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
 el('yearTo').addEventListener('change',e=>syncYear('to',e.target.value,true));
 el('rangeFrom').addEventListener('input',e=>syncYear('from',e.target.value,false));
