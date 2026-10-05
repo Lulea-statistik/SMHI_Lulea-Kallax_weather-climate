@@ -22,7 +22,7 @@ import re
 import sys
 import zipfile
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from urllib.parse import urljoin
 from xml.etree import ElementTree as ET
@@ -238,12 +238,29 @@ def crawl_atom(url: str, seen: set[str], out: list[str], depth: int = 0):
         # resources appear at the leaf level and are normally exposed as data/text,
         # CSV/UALF, compressed files, or links whose rel explicitly says data.
         is_catalogue = bool(re.search(r"/year/\d{4}(?:/month/\d{1,2})?(?:/day/\d{1,2})?\.(?:json|xml)$", low))
-        is_data_rel = rel in {"data", "download", "enclosure"} and not is_catalogue
-        is_data_ext = any(x in low for x in [".txt", ".csv", ".ualf", ".gz", ".zip"])
-        is_leaf_json = (low.endswith(".json") or low.endswith(".xml")) and ("/data" in low or "/lightning" in low or "/stroke" in low)
-
-        if is_data_rel or is_data_ext or is_leaf_json:
+        # One representation is enough. Prefer CSV so a full refresh does not
+        # download the same day again as JSON and XML.
+        is_csv_data = low.endswith("/data.csv") or low.endswith(".csv")
+        if is_csv_data:
             out.append(href)
+
+
+def recent_daily_urls(days: int = 14) -> list[str]:
+    """Direct daily CSV resources for incremental updates.
+
+    Historical lightning files are already stored in the repository after bootstrap.
+    Normal auto/update runs therefore only revisit a short recent window to catch
+    late or corrected observations and never traverse the full 2012-present archive.
+    """
+    today = datetime.now(timezone.utc).date()
+    urls = []
+    for offset in range(days - 1, -1, -1):
+        day = today - timedelta(days=offset)
+        urls.append(
+            "https://opendata-download-lightning.smhi.se/api/version/latest/"
+            f"year/{day.year}/month/{day.month}/day/{day.day}/data.csv"
+        )
+    return urls
 
 
 def date_from_url(url: str):
@@ -447,27 +464,30 @@ def main():
         return 2
 
     existing = load_existing_rows()
-    try:
-        urls = []
-        crawl_atom(ATOM_URL, set(), urls)
-        urls = sorted(set(urls))
-        print(f"Lightning archive links discovered: {len(urls):,}")
-        for sample_url in urls[:20]:
-            print(f"  archive link: {sample_url}")
-        if not urls:
-            raise RuntimeError("SMHI Atom feed contained no downloadable archive links")
-    except Exception as exc:
-        print(f"Lightning Atom feed unavailable: {exc}", file=sys.stderr)
-        if existing:
-            build_summary(existing, geo)
-        return 0
-
     mode = os.environ.get("RUN_MODE", "auto")
-    if mode in {"auto", "update"} and existing:
-        cutoff = datetime.now(timezone.utc).date().replace(day=1)
-        recent = [u for u in urls if date_from_url(u) is None or date_from_url(u) >= cutoff]
-        if recent:
-            urls = recent
+
+    # Once the historical baseline exists, ordinary runs must not traverse or
+    # redownload the historical archive. Revisit only the last 14 days directly.
+    full_history = mode in {"bootstrap", "refresh-all"} or not existing
+    if not full_history:
+        urls = recent_daily_urls(14)
+        print(f"Lightning incremental mode: {len(urls)} recent daily CSV resources; historical archive is not queried.")
+    else:
+        try:
+            urls = []
+            crawl_atom(ATOM_URL, set(), urls)
+            urls = sorted(set(urls))
+            print(f"Lightning full-history CSV links discovered: {len(urls):,}")
+            for sample_url in urls[:10]:
+                print(f"  archive link: {sample_url}")
+            if not urls:
+                raise RuntimeError("SMHI Atom feed contained no downloadable CSV archive links")
+        except Exception as exc:
+            print(f"Lightning Atom feed unavailable: {exc}", file=sys.stderr)
+            if existing:
+                build_summary(existing, geo)
+                return 0
+            return 2
 
     minx, miny, maxx, maxy = geo["bounds"]
     n_new = 0
@@ -508,7 +528,10 @@ def main():
                     print(f"Diagnostic no UALF records from {url}: {one_line}", file=sys.stderr)
                     diagnostic_samples += 1
         except Exception as exc:
-            print(f"Warning: lightning file failed {url}: {exc}", file=sys.stderr)
+            if full_history:
+                print(f"Warning: lightning file failed {url}: {exc}", file=sys.stderr)
+            else:
+                print(f"Lightning recent resource unavailable/empty: {url}: {exc}", file=sys.stderr)
         if i % 100 == 0:
             print(f"Processed {i}/{len(urls)} archive files; local records {len(existing):,}")
 
@@ -516,10 +539,10 @@ def main():
     save_rows(existing)
     build_summary(existing, geo)
     print(f"Lightning: {len(existing):,} Lulea records, {n_new:,} new; summary written to {SUMMARY_PATH}")
-    if parsed_total == 0:
+    if full_history and parsed_total == 0:
         print("ERROR: no lightning observations could be parsed from discovered SMHI archive resources.", file=sys.stderr)
         return 3
-    if len(existing) == 0:
+    if full_history and len(existing) == 0:
         print("ERROR: lightning observations were parsed but none fell inside the Lulea municipality geometry.", file=sys.stderr)
         return 4
     return 0
