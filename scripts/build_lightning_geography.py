@@ -171,7 +171,7 @@ def main():
     islands = unary_union(island_parts).buffer(0)
 
     water = unary_union([sea, inland_water]).buffer(0)
-    shoreline = land.boundary.intersection(water.boundary.buffer(PIXEL_SIZE_M * 2)).buffer(0)
+    shoreline = land.boundary.intersection(water.boundary.buffer(PIXEL_SIZE_M * 2))
 
     features = []
     for name, geom in [
