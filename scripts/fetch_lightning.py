@@ -36,6 +36,8 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "data" / "lightning"
 SUMMARY_PATH = OUT_DIR / "summary.json"
 GEO_PATH = OUT_DIR / "geography.geojson"
+NMD_GEO_PATH = OUT_DIR / "geography_nmd.geojson"
+GEOGRAPHY_VERSION = "nmd2023-v1"
 
 ATOM_URL = "https://opendata-download-lightning.smhi.se/api/version/latest.atom"
 SCB_WFS = "https://geodata.scb.se/geoserver/stat/wfs"
@@ -203,6 +205,63 @@ def build_geography():
         "deso_type": deso_type,
         "kommun_type": "Region_kommun/FeatureServer/1",
     }
+
+
+def load_analysis_geography():
+    if not NMD_GEO_PATH.exists():
+        raise RuntimeError(f"Static NMD geography is missing: {NMD_GEO_PATH}")
+    data = json.loads(NMD_GEO_PATH.read_text(encoding="utf-8"))
+    by_class = {}
+    for feat in data.get("features", []):
+        cls = (feat.get("properties") or {}).get("class")
+        if cls and feat.get("geometry"):
+            by_class[cls] = shape(feat["geometry"])
+    required = ["municipality", "mainland", "islands", "sea", "inland_water", "shoreline"]
+    missing = [x for x in required if x not in by_class]
+    if missing:
+        raise RuntimeError(f"NMD geography missing classes: {missing}")
+
+    municipality_wgs = by_class["municipality"]
+    return {
+        "municipality": transform(TO_3006, municipality_wgs),
+        "mainland": transform(TO_3006, by_class["mainland"]),
+        "islands": transform(TO_3006, by_class["islands"]),
+        "sea": transform(TO_3006, by_class["sea"]),
+        "inland_water": transform(TO_3006, by_class["inland_water"]),
+        "coast_boundary": transform(TO_3006, by_class["shoreline"]),
+        "bounds": municipality_wgs.bounds,
+        "source": "NMD2023, Naturvardsverket",
+    }
+
+
+def summary_geography_version():
+    if not SUMMARY_PATH.exists():
+        return None
+    try:
+        return json.loads(SUMMARY_PATH.read_text(encoding="utf-8")).get("geography_version")
+    except Exception:
+        return None
+
+
+def reclassify_existing_rows(rows, geo):
+    changed = 0
+    removed = 0
+    for key in list(rows):
+        r = rows[key]
+        try:
+            rec = {"lat": float(r["lat"]), "lon": float(r["lon"])}
+        except Exception:
+            continue
+        cls = classify(rec, geo)
+        if cls is None:
+            rows.pop(key, None)
+            removed += 1
+            continue
+        if r.get("surface_class") != cls:
+            r["surface_class"] = cls
+            changed += 1
+    print(f"Lightning geography reclassification: {changed:,} changed, {removed:,} outside geometry")
+    return rows
 
 
 def crawl_atom(url: str, seen: set[str], out: list[str], depth: int = 0):
@@ -445,8 +504,9 @@ def build_summary(rows, geo):
         "method_break": "2014",
         "coast_uncertainty_m": COAST_UNCERTAINTY_M,
         "mainland_component_min_km2": MAINLAND_MIN_AREA_KM2,
-        "geography_source": "SCB DeSO 2025 landmask + Region Norrbotten ArcGIS kommungräns",
-        "geography_note": "SCB-geometrin används som analysunderlag i denna första version; byt till Lantmäteriets exakta geometri när sådan finns tillgänglig.",
+        "geography_source": "Nationella Marktackedata 2023 (NMD2023), Naturvardsverket + Region Norrbotten kommungrans",
+        "geography_note": "NMD2023 klass 61 används för inlandsvatten och klass 62 för hav. Mindre marina landkomponenter redovisas som oar. Geografin lagras statiskt och ateranvands vid dagliga korningar.",
+        "geography_version": GEOGRAPHY_VERSION,
         "annual": annual_rows,
         "monthly": monthly_rows,
         "monthly_by_year": monthly_year_rows,
@@ -458,12 +518,15 @@ def build_summary(rows, geo):
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     try:
-        geo = build_geography()
+        geo = load_analysis_geography()
     except Exception as exc:
         print(f"Lightning geography unavailable: {exc}", file=sys.stderr)
         return 2
 
     existing = load_existing_rows()
+    if existing and summary_geography_version() != GEOGRAPHY_VERSION:
+        existing = reclassify_existing_rows(existing, geo)
+        save_rows(existing)
     mode = os.environ.get("RUN_MODE", "auto")
 
     # Once the historical baseline exists, ordinary runs must not traverse or
