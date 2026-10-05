@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a static Lulea land/island/sea mask from Naturvardsverket NMD2023.
+"""Build a static Lulea land/island/sea mask from Naturvardsverket NMD.
 
 The mask is created once and then committed to the repository. Normal lightning
 updates reuse the static mask and do not redownload land-cover history.
@@ -87,8 +87,9 @@ def discover_nmd_layer():
         and "produktiv" not in n.lower()
         and "fjallskog" not in n.lower()
     ]
-    # Prefer explicit base/bas layer when present, otherwise first land-cover raster.
-    candidates.sort(key=lambda n: (0 if "bas" in n.lower() else 1, len(n)))
+    # Prefer explicit base/bas layer. The public WMS currently exposes the stable
+    # NMD2018 base layer; land/water boundaries are sufficient for this analysis.
+    candidates.sort(key=lambda n: (0 if "bas" in n.lower() else 1, 0 if "2018" in n.lower() else 1, len(n)))
     if not candidates:
         raise RuntimeError(f"Could not discover NMD base layer from WMS capabilities; sample names={names[:80]}")
     chosen = candidates[0]
@@ -126,17 +127,50 @@ def polygons_from_tile(raw):
             transform_affine = ds.transform
             nodata = ds.nodata
             vals = np.unique(band)
-            # WMS GeoTIFF is expected to preserve NMD class values. Fail loudly if not.
-            if not np.any(vals == 61) and not np.any(vals == 62):
-                raise RuntimeError(f"NMD GeoTIFF lacks class 61/62; unique sample={vals[:40].tolist()}")
+
+            # Naturvardsverket's WMS returns a paletted GeoTIFF. Pixel values are
+            # palette indexes (typically 1..25), not the original NMD GRID_CODE.
+            # Resolve inland/marine water from the documented NMD colours:
+            # 61 inland water = RGB 102,153,205
+            # 62 marine water = RGB 138,204,250
+            inland_indexes = set()
+            marine_indexes = set()
+            try:
+                cmap = ds.colormap(1)
+            except Exception:
+                cmap = {}
+
+            for idx, rgba in (cmap or {}).items():
+                rgb = tuple(rgba[:3])
+                if rgb == (102, 153, 205):
+                    inland_indexes.add(int(idx))
+                elif rgb == (138, 204, 250):
+                    marine_indexes.add(int(idx))
+
+            # Some WMS variants may preserve the original class codes directly.
+            if 61 in vals:
+                inland_indexes.add(61)
+            if 62 in vals:
+                marine_indexes.add(62)
+
+            if not inland_indexes or not marine_indexes:
+                sample_cmap = list((cmap or {}).items())[:40]
+                raise RuntimeError(
+                    "Could not identify NMD inland/marine water in GeoTIFF palette; "
+                    f"unique sample={vals[:40].tolist()}, colormap sample={sample_cmap}"
+                )
+
             cls = np.ones(band.shape, dtype=np.uint8)
-            cls[band == 61] = 61
-            cls[band == 62] = 62
+            for idx in inland_indexes:
+                cls[band == idx] = 61
+            for idx in marine_indexes:
+                cls[band == idx] = 62
+
             mask = np.ones(band.shape, dtype=bool)
             if nodata is not None:
                 mask &= band != nodata
-            # common background/nodata values
             mask &= band != 0
+
             for geom, value in shapes(cls, mask=mask, transform=transform_affine):
                 iv = int(value)
                 if iv in out:
@@ -216,7 +250,7 @@ def main():
             "type": "Feature",
             "properties": {
                 "class": name,
-                "source": "NMD2023",
+                "source": "NMD",
                 "pixel_size_m": PIXEL_SIZE_M,
             },
             "geometry": mapping(transform(TO_4326, simple)),
@@ -226,7 +260,7 @@ def main():
         "type": "FeatureCollection",
         "name": "Lulea lightning analysis geography",
         "properties": {
-            "source": "Nationella Marktackedata 2023, Naturvardsverket",
+            "source": "Nationella Marktackedata, Naturvardsverket public WMS",
             "license": "CC0",
             "water_classes": {"61": "inland_water", "62": "sea"},
             "pixel_size_m": PIXEL_SIZE_M,
