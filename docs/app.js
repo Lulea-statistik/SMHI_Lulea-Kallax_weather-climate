@@ -1,4 +1,4 @@
-let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceTestLayer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function lineChart(id,labels,datasets,yTitle,extra={}){destroyChart(id);charts[id]=new Chart(el(id),{type:'line',data:{labels,datasets:datasets.map(d=>({borderWidth:2,pointRadius:0,tension:.15,...d}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:datasets.length>1}},scales:{x:{grid:{display:false}},y:{title:{display:!!yTitle,text:yTitle}}},...extra}});}
@@ -329,31 +329,88 @@ function renderLightning(f){
   });
 }
 
-async function toggleSeaIceTestPolygons(){
-  if(!seaIceLeafletMap)return;
-  const btn=el('seaIceTestPolygons');
-  const status=el('seaIceTestStatus');
-  if(seaIceTestLayer){
-    seaIceLeafletMap.removeLayer(seaIceTestLayer);
-    seaIceTestLayer=null;
-    if(btn)btn.textContent='Visa test: ispolygoner 14 dec 2023';
-    if(status)status.textContent='';
-    return;
-  }
-  if(status)status.textContent='Laddar testpolygoner…';
-  const started=performance.now();
+function seaIceTypeColor(t){
+  if(t===8)return '#a78bfa';
+  if(t>=6)return '#60a5fa';
+  if(t>=4)return '#93c5fd';
+  return '#bfdbfe';
+}
+
+function formatSeaIceMapDate(iso){
+  const d=new Date(iso+'T12:00:00Z');
+  return d.toLocaleDateString('sv-SE',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+}
+
+async function loadSeaIceSeasonManifest(){
+  if(seaIceSeasonManifest)return seaIceSeasonManifest;
+  const status=el('seaIceSeasonStatus');
   try{
-    const r=await fetch('seaice_test_2023-12-14.geojson?v=1',{cache:'no-store'});
-    if(!r.ok)throw new Error('Testfilen är ännu inte genererad. Kör workflowet i auto-läge en gång.');
-    const textData=await r.text();
-    const bytes=new Blob([textData]).size;
-    const geo=JSON.parse(textData);
-    seaIceTestLayer=L.geoJSON(geo,{
-      style:f=>{
-        const t=Number(f?.properties?.ice_type);
-        const fill=t===8?'#a78bfa':t>=6?'#60a5fa':t>=4?'#93c5fd':'#bfdbfe';
-        return {color:'#334155',weight:1,fillColor:fill,fillOpacity:.58};
-      },
+    const r=await fetch('seaice/2023-24/manifest.json?v=1',{cache:'no-store'});
+    if(!r.ok)throw new Error('Säsongskartan är ännu inte genererad. Kör workflowet i auto-läge en gång.');
+    seaIceSeasonManifest=await r.json();
+    const dates=seaIceSeasonManifest.dates||[];
+    const slider=el('seaIceSeasonSlider');
+    if(!slider||!dates.length)throw new Error('Inga kartdatum hittades för issäsong 2023/24.');
+    slider.min=0;
+    slider.max=String(dates.length-1);
+    const preferred=Math.max(0,dates.findIndex(x=>x.date==='2023-12-14'));
+    slider.value=String(preferred>=0?preferred:0);
+    slider.disabled=false;
+    el('seaIcePrevDate').disabled=false;
+    el('seaIceNextDate').disabled=false;
+    updateSeaIceSeasonDateLabel();
+    if(status)status.textContent='Välj datum med reglaget. Endast den valda dagens ispolygoner laddas.';
+    return seaIceSeasonManifest;
+  }catch(err){
+    if(status)status.textContent=err.message;
+    throw err;
+  }
+}
+
+function updateSeaIceSeasonDateLabel(){
+  const dates=seaIceSeasonManifest?.dates||[];
+  const slider=el('seaIceSeasonSlider');
+  if(!slider||!dates.length)return;
+  const item=dates[Number(slider.value)];
+  if(!item)return;
+  const label=el('seaIceSeasonDateLabel');
+  if(label)label.textContent=formatSeaIceMapDate(item.date);
+}
+
+async function showSeaIceSeasonDate(index){
+  if(!seaIceLeafletMap)return;
+  const manifest=await loadSeaIceSeasonManifest();
+  const dates=manifest.dates||[];
+  if(!dates.length)return;
+  const safe=Math.max(0,Math.min(dates.length-1,Number(index)||0));
+  const slider=el('seaIceSeasonSlider');
+  slider.value=String(safe);
+  updateSeaIceSeasonDateLabel();
+  const item=dates[safe];
+  const status=el('seaIceSeasonStatus');
+  if(status)status.textContent='Laddar '+formatSeaIceMapDate(item.date)+'…';
+  const started=performance.now();
+
+  try{
+    let geo=seaIceSeasonCache.get(item.date);
+    let kb=null;
+    if(!geo){
+      const r=await fetch('seaice/2023-24/'+item.file+'?v=1',{cache:'no-store'});
+      if(!r.ok)throw new Error('Kartfil saknas för '+item.date+'.');
+      const textData=await r.text();
+      kb=Math.round(new Blob([textData]).size/1024);
+      geo=JSON.parse(textData);
+      seaIceSeasonCache.set(item.date,geo);
+    }
+
+    if(seaIceSeasonLayer)seaIceLeafletMap.removeLayer(seaIceSeasonLayer);
+    seaIceSeasonLayer=L.geoJSON(geo,{
+      style:f=>({
+        color:'#334155',
+        weight:1,
+        fillColor:seaIceTypeColor(Number(f?.properties?.ice_type)),
+        fillOpacity:.62
+      }),
       onEachFeature:(f,layer)=>{
         const p=f.properties||{};
         const rows=[
@@ -365,13 +422,33 @@ async function toggleSeaIceTestPolygons(){
         if(rows.length)layer.bindPopup(rows.join('<br>'));
       }
     }).addTo(seaIceLeafletMap);
-    if(btn)btn.textContent='Dölj testpolygoner';
+
     const ms=Math.round(performance.now()-started);
-    const kb=Math.round(bytes/1024);
-    if(status)status.textContent='Test 2023-12-14: '+(geo.features||[]).length+' ispolygoner, '+kb+' kB överförd GeoJSON, laddad på cirka '+ms+' ms.';
+    const count=(geo.features||[]).length;
+    const bits=[
+      formatSeaIceMapDate(item.date)+': '+count+' ispolygoner',
+      item.ice_share_pct!=null?'isutbredning '+Number(item.ice_share_pct).toLocaleString('sv-SE',{maximumFractionDigits:4})+' %':null,
+      item.mean_ice_thickness_cm!=null?'medeltjocklek '+Number(item.mean_ice_thickness_cm).toLocaleString('sv-SE')+' cm':null,
+      item.max_ice_thickness_cm!=null?'max '+Number(item.max_ice_thickness_cm).toLocaleString('sv-SE')+' cm':null,
+      kb!=null?kb+' kB':null,
+      ms+' ms'
+    ].filter(Boolean);
+    if(status)status.textContent=bits.join(' · ');
   }catch(err){
     if(status)status.textContent=err.message;
   }
+}
+
+function setupSeaIceSeasonControls(){
+  const slider=el('seaIceSeasonSlider');
+  if(!slider)return;
+  slider.addEventListener('input',()=>{
+    updateSeaIceSeasonDateLabel();
+    clearTimeout(seaIceSeasonTimer);
+    seaIceSeasonTimer=setTimeout(()=>showSeaIceSeasonDate(slider.value),180);
+  });
+  el('seaIcePrevDate')?.addEventListener('click',()=>showSeaIceSeasonDate(Number(slider.value)-1));
+  el('seaIceNextDate')?.addEventListener('click',()=>showSeaIceSeasonDate(Number(slider.value)+1));
 }
 
 async function initSeaIceMap(){
@@ -422,6 +499,8 @@ async function initSeaIceMap(){
     if(status)status.textContent=sourceDate
       ? 'Kartgeometri från SMHI:s analys '+sourceDate+'. Bakgrundskarta: OpenStreetMap.'
       : 'Bakgrundskarta: OpenStreetMap.';
+    await loadSeaIceSeasonManifest();
+    await showSeaIceSeasonDate(el('seaIceSeasonSlider')?.value||0);
   }catch(err){
     if(status)status.textContent=err.message;
   }
@@ -963,9 +1042,6 @@ function syncYear(source,value,renderNow=true){
   updateRangeTrack();
   if(renderNow)render();
 }
-function setupSeaIceTest(){
-  el('seaIceTestPolygons')?.addEventListener('click',toggleSeaIceTestPolygons);
-}
 function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');if(btn.dataset.page==='seaice')initSeaIceMap();setTimeout(()=>{Object.values(charts).forEach(c=>c.resize());if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();},80);}));}
 function setupFilters(){const years=DATA.years,min=years[0],max=years[years.length-1];['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=years.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));el('yearFrom').value=min;el('yearTo').value=max;['rangeFrom','rangeTo'].forEach(id=>{el(id).min=min;el(id).max=max;el(id).step=1;});el('rangeFrom').value=min;el('rangeTo').value=max;el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;updateRangeTrack();el('yearFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
 el('yearTo').addEventListener('change',e=>syncYear('to',e.target.value,true));
@@ -987,4 +1063,4 @@ function setupWeatherCodes(){
   el('weatherCode').innerHTML='<option value="all">Alla vädertyper</option>'+types.map(t=>'<option value="'+t+'">'+t+'</option>').join('');
   el('weatherCode').value='all';
 }
-fetch('dashboard_data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas');return r.json();}).then(d=>{DATA=d;el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');el('weatherSource').href=d.weather.source_url;setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceTest();setupFilters();setupDateWeather();render();}).catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';});
+fetch('dashboard_data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas');return r.json();}).then(d=>{DATA=d;el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');el('weatherSource').href=d.weather.source_url;setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupFilters();setupDateWeather();render();}).catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';});
