@@ -483,6 +483,16 @@ def main():
         candidates = [d for d in daterange(start, today) if is_ice_season_date(d)]
         if not candidates:
             print("Sea-ice incremental scan skipped: today is outside the 15 October-6 June update window.")
+            if not MAP_GEOJSON_PATH.exists() and rows:
+                latest_date = date.fromisoformat(sorted(rows)[-1])
+                package = daily_package_url(latest_date)
+                if package:
+                    r = get(package)
+                    if r is not None:
+                        _, coverage_geom = aggregate_day(latest_date, r.content, sea_geom)
+                        if coverage_geom is not None and not coverage_geom.is_empty:
+                            save_map_geojson(sea_geom, coverage_geom, latest_date.isoformat())
+                            print(f"Sea ice map geometry backfilled from {latest_date.isoformat()}.")
             build_summary(rows)
             return 0
         print(f"Sea-ice incremental scan: {len(candidates)} recent dates within the 15 October-6 June update window.")
