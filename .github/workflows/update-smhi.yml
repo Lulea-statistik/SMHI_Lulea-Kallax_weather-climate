@@ -77,6 +77,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data metadata docs/dashboard_data.json docs/daily docs/seaice_analysis_area.geojson
+          if [ -f docs/seaice_test_2023-12-14.geojson ]; then
+            git add docs/seaice_test_2023-12-14.geojson
+          fi
           git commit -m "Update SMHI Kallax observations"
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
