@@ -49,7 +49,7 @@ TO_3006 = Transformer.from_crs("EPSG:4326", "EPSG:3006", always_xy=True).transfo
 TO_4326 = Transformer.from_crs("EPSG:3006", "EPSG:4326", always_xy=True).transform
 
 
-def fetch_municipality_wgs84():
+def fetch_municipalities_wgs84():
     params = {
         "where": "1=1",
         "outFields": "*",
@@ -59,9 +59,12 @@ def fetch_municipality_wgs84():
     }
     r = SESSION.get(MUNICIPALITY_ARCGIS, params=params, timeout=TIMEOUT)
     r.raise_for_status()
-    data = r.json()
+    return r.json().get("features", [])
+
+
+def fetch_municipality_wgs84():
     geoms = []
-    for feat in data.get("features", []):
+    for feat in fetch_municipalities_wgs84():
         props = feat.get("properties") or {}
         vals = [str(v).lower() for v in props.values() if v is not None]
         if any(v == "2580" or "luleå" in v or "lulea" in v for v in vals):
@@ -69,6 +72,73 @@ def fetch_municipality_wgs84():
     if not geoms:
         raise RuntimeError("Could not find Lulea municipality geometry")
     return unary_union(geoms)
+
+
+def build_neighbor_boundary(municipality):
+    """Return only the administrative boundary shared with other municipalities."""
+    shared = []
+    for feat in fetch_municipalities_wgs84():
+        props = feat.get("properties") or {}
+        vals = [str(v).lower() for v in props.values() if v is not None]
+        if any(v == "2580" or "luleå" in v or "lulea" in v for v in vals):
+            continue
+        try:
+            other = transform(TO_3006, shape(feat["geometry"]))
+        except Exception:
+            continue
+        # A small tolerance handles minor topology differences between polygons.
+        part = municipality.boundary.intersection(other.boundary.buffer(25))
+        if not part.is_empty:
+            shared.append(part)
+    if not shared:
+        raise RuntimeError("Could not derive Lulea boundary shared with neighbouring municipalities")
+    return unary_union(shared)
+
+
+def refresh_derived_boundaries(path: Path):
+    """Update marine shoreline and neighbour boundary from already saved static polygons.
+
+    This avoids redownloading NMD tiles when only uncertainty geometry changes.
+    """
+    data = json.loads(path.read_text(encoding="utf-8"))
+    feats = data.get("features", [])
+    by_class = {
+        (f.get("properties") or {}).get("class"): shape(f["geometry"])
+        for f in feats if f.get("geometry")
+    }
+    required = ["municipality", "mainland", "islands", "sea"]
+    if any(k not in by_class for k in required):
+        return False
+
+    municipality = transform(TO_3006, by_class["municipality"])
+    land = unary_union([
+        transform(TO_3006, by_class["mainland"]),
+        transform(TO_3006, by_class["islands"]),
+    ]).buffer(0)
+    sea = transform(TO_3006, by_class["sea"]).buffer(0)
+
+    # Only marine coastline: mainland/sea and island/sea. Inland water is excluded.
+    shoreline = land.boundary.intersection(sea.boundary.buffer(PIXEL_SIZE_M * 2))
+    neighbor_boundary = build_neighbor_boundary(municipality)
+
+    feats = [f for f in feats if (f.get("properties") or {}).get("class") not in {"shoreline", "neighbor_boundary"}]
+    for name, geom, source in [
+        ("shoreline", shoreline, "NMD marine shoreline"),
+        ("neighbor_boundary", neighbor_boundary, "Region Norrbotten municipality boundaries"),
+    ]:
+        simple = geom.simplify(20, preserve_topology=True)
+        feats.append({
+            "type": "Feature",
+            "properties": {"class": name, "source": source, "pixel_size_m": PIXEL_SIZE_M},
+            "geometry": mapping(transform(TO_4326, simple)),
+        })
+    data["features"] = feats
+    props = data.setdefault("properties", {})
+    props["shoreline_definition"] = "marine only: mainland/sea and islands/sea"
+    props["neighbor_boundary_definition"] = "shared administrative boundary with other municipalities"
+    path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print("Refreshed marine shoreline and neighbouring-municipality boundary without rebuilding NMD tiles")
+    return True
 
 
 def discover_nmd_layer():
@@ -181,8 +251,10 @@ def polygons_from_tile(raw):
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     if OUT_PATH.exists() and os.environ.get("REBUILD_LIGHTNING_GEOGRAPHY") != "1":
-        print(f"Using existing static NMD geography: {OUT_PATH}")
-        return 0
+        if refresh_derived_boundaries(OUT_PATH):
+            print(f"Using existing static NMD geography: {OUT_PATH}")
+            return 0
+        print("Existing NMD geography could not be augmented; rebuilding it")
 
     municipality_wgs = fetch_municipality_wgs84()
     municipality = transform(TO_3006, municipality_wgs)
@@ -231,8 +303,9 @@ def main():
     mainland = unary_union(main_parts).buffer(0)
     islands = unary_union(island_parts).buffer(0)
 
-    water = unary_union([sea, inland_water]).buffer(0)
-    shoreline = land.boundary.intersection(water.boundary.buffer(PIXEL_SIZE_M * 2))
+    # Marine shoreline only. Inland lakes/rivers must not create coast uncertainty.
+    shoreline = land.boundary.intersection(sea.boundary.buffer(PIXEL_SIZE_M * 2))
+    neighbor_boundary = build_neighbor_boundary(municipality)
 
     features = []
     for name, geom in [
@@ -242,6 +315,7 @@ def main():
         ("sea", sea),
         ("inland_water", inland_water),
         ("shoreline", shoreline),
+        ("neighbor_boundary", neighbor_boundary),
     ]:
         if geom.is_empty:
             continue
@@ -265,6 +339,8 @@ def main():
             "water_classes": {"61": "inland_water", "62": "sea"},
             "pixel_size_m": PIXEL_SIZE_M,
             "mainland_component_min_km2": MAINLAND_MIN_AREA_KM2,
+            "shoreline_definition": "marine only: mainland/sea and islands/sea",
+            "neighbor_boundary_definition": "shared administrative boundary with other municipalities",
         },
         "features": features,
     }
