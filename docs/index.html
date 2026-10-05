@@ -6,8 +6,10 @@
 
   <link rel="icon" type="image/png" href="favicon.png?v=3">
 
-  <link rel="stylesheet" href="style.css?v=36">
+  <link rel="stylesheet" href="style.css?v=37">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -159,10 +161,11 @@
   <section id="page-seaice" class="page">
     <div class="source-note"><b>Havsis:</b> SMHI:s SE.SR Analyskarta havsis klipps mot Luleå kommuns havsyta. Källans koordinatsystem läses från shapefilens PRJ-fil och geometrierna transformeras till EPSG:3006 innan arealer beräknas. Fastland och inlandsvatten ingår inte i beräkningsytan. Andelar beräknas mot den del av Luleås havsyta som faktiskt täcks av dagens SMHI-analys; kommunens totala havsyta och täckningsgrad sparas separat för kvalitetskontroll. Isanalysen bygger på satellitdata och observationer och är en tolkad lägesbild, inte en exakt lokal isbeskrivning.</div>
     <div id="seaIceNoData" class="chart-card full" style="display:none"><h2>Havsisdata väntar på första hämtningen</h2><p class="hint">Kör workflowet i bootstrap- eller refresh-all-läge för att bygga den historiska serien.</p></div>
-    <div class="chart-card full seaice-reference-card">
+    <div class="chart-card full seaice-map-card">
       <h2>Vad betyder 100 % isutbredning?</h2>
-      <p class="hint">Referensbilden visar den havsyta som används som 100 %-nivå i havsisstatistiken. När hela den blå analyserade ytan är klassad som havsis visas 100 %.</p>
-      <img class="seaice-reference-image" src="assets/seaice_reference.jpg?v=4" alt="Referenskarta över SMHI:s analyserade havsyta i Luleå">
+      <p class="hint">Den interaktiva kartan visar den faktiska geometri som används i havsisstatistiken. Den blå polygonen är SMHI:s analyserade havsyta inom Luleå; när hela den ytan är klassad som havsis visas 100 %. Den röda linjen visar Luleås kommunala havsyta.</p>
+      <div id="seaIceMap" class="seaice-map" aria-label="Interaktiv karta över SMHI:s analyserade havsyta i Luleå"></div>
+      <p id="seaIceMapStatus" class="hint"></p>
     </div>
     <div class="chart-card"><h2>Isutbredning inom analyserad Luleå-havsyta</h2><p class="hint">Andel av den del av kommunens havsyta som täcks av dagens SMHI-analys och som klassas som havsis. Varje issäsong visas med samma tidsfönster: 15 oktober–6 juni. Om en säsong saknar observationer i slutet visas en grå streckad linje med sista kända värdet fram till 6 juni.</p><p id="seaIceLatest" class="hint"></p><canvas id="seaIceDaily"></canvas></div>
     <div class="chart-card"><h2>Istjocklek</h2><p class="hint">Areaviktad medeltjocklek och högsta rapporterade tjocklek i de ispolygoner som överlappar Luleås havsyta. Varje issäsong börjar 15 oktober och slutar 6 juni. Om data saknas efter sista observationen visas sista kända värdet vidare som en grå streckad linje.</p><canvas id="seaIceThickness"></canvas></div>
@@ -184,5 +187,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=56"></script>
+<script src="app.js?v=57"></script>
 </body></html>
