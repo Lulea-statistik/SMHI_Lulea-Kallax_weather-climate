@@ -329,6 +329,53 @@ function renderLightning(f){
   });
 }
 
+function renderSeaIce(f){
+  const S=DATA.sea_ice||{};
+  const daily=(S.daily||[]).filter(r=>{
+    const y=Number(String(r.date||'').slice(0,4));
+    return y>=f.from&&y<=f.to;
+  }).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const seasonal=(S.seasonal||[]).filter(r=>r.start_year>=f.from&&r.start_year<=f.to).sort((a,b)=>a.start_year-b.start_year);
+  const noData=el('seaIceNoData');
+  const has=daily.length>0||seasonal.length>0;
+  if(noData)noData.style.display=has?'none':'block';
+  ['seaIceDaily','seaIceSeasonMax','seaIceThickness','seaIceFast','seaIceLength'].forEach(id=>{
+    const canvas=el(id);
+    if(canvas)canvas.parentElement.style.display=has?'block':'none';
+    if(!has)destroyChart(id);
+  });
+  if(!has)return;
+
+  if(daily.length){
+    lineChart('seaIceDaily',daily.map(r=>r.date),[
+      {label:'Isutbredning',data:daily.map(r=>r.ice_share_pct),borderWidth:2,pointRadius:0}
+    ],'%');
+
+    lineChart('seaIceThickness',daily.map(r=>r.date),[
+      {label:'Medeltjocklek',data:daily.map(r=>r.mean_ice_thickness_cm),borderWidth:2,pointRadius:0},
+      {label:'Maximal tjocklek',data:daily.map(r=>r.max_ice_thickness_cm),borderWidth:2,pointRadius:0}
+    ],'cm');
+  }else{
+    destroyChart('seaIceDaily');
+    destroyChart('seaIceThickness');
+  }
+
+  const labels=seasonal.map(r=>r.season);
+  barChart('seaIceSeasonMax',labels,seasonal.map(r=>r.max_ice_share_pct),'%');
+  barChart('seaIceFast',labels,seasonal.map(r=>r.max_fast_ice_share_pct),'%');
+  barChart('seaIceLength',labels,seasonal.map(r=>r.season_length_days),'dygn');
+
+  const latest=seasonal.length?seasonal[seasonal.length-1]:null;
+  const note=el('seaIceLatest');
+  if(note){
+    note.textContent=latest
+      ? 'Senaste kompletta/partiella säsong i datat: '+latest.season+
+        '. Maximal isutbredning '+Number(latest.max_ice_share_pct||0).toFixed(1).replace('.',',')+
+        ' % den '+(latest.max_ice_date||'–')+'.'
+      : '';
+  }
+}
+
 function render(){
   const f=currentFilters(),m=temperatureMetric(),name=metricName(m);
   const ta=selectedAnnualRows(DATA.temperature.annual,DATA.temperature.monthly,f);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r[m]);
@@ -347,6 +394,7 @@ function render(){
   renderVegetation(f);
 
   renderLightning(f);
+  renderSeaIce(f);
 
   const pa=selectedAnnualRows(DATA.precipitation.annual,DATA.precipitation.monthly_total,f);const paYears=pa.map(r=>r.year),paVals=pa.map(r=>r.sum);
   destroyChart('precipAnnual');
