@@ -1,4 +1,4 @@
-let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;const algaeSeasonCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function lineChart(id,labels,datasets,yTitle,extra={}){destroyChart(id);charts[id]=new Chart(el(id),{type:'line',data:{labels,datasets:datasets.map(d=>({borderWidth:2,pointRadius:0,tension:.15,...d}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:datasets.length>1}},scales:{x:{grid:{display:false}},y:{title:{display:!!yTitle,text:yTitle}}},...extra}});}
@@ -434,6 +434,171 @@ async function showSeaIceSeasonDate(index){
       ms+' ms'
     ].filter(Boolean);
     if(status)status.textContent=bits.join(' · ');
+  }catch(err){
+    if(status)status.textContent=err.message;
+  }
+}
+
+function algaeClassColor(name){
+  if(name==='surface')return '#16a34a';
+  if(name==='risk')return '#facc15';
+  if(name==='cloud')return '#9ca3af';
+  if(name==='no_data')return '#111827';
+  return '#60a5fa';
+}
+
+async function loadAlgaeSeasonManifest(){
+  if(algaeSeasonManifest)return algaeSeasonManifest;
+  const status=el('algaeSeasonStatus');
+  try{
+    const year=new Date().getUTCMonth()+1>=6?new Date().getUTCFullYear():new Date().getUTCFullYear()-1;
+    const r=await fetch('algae/'+year+'/manifest.json?v=1',{cache:'no-store'});
+    if(!r.ok)throw new Error('Algkartan är ännu inte genererad. Kör workflowet i bootstrap-läge en gång.');
+    algaeSeasonManifest=await r.json();
+    const dates=algaeSeasonManifest.dates||[];
+    const slider=el('algaeSeasonSlider');
+    if(!slider||!dates.length)throw new Error('Inga algkartdatum hittades för '+year+'.');
+    slider.min=0;
+    slider.max=String(dates.length-1);
+    slider.value=String(dates.length-1);
+    slider.disabled=false;
+    el('algaePrevDate').disabled=false;
+    el('algaeNextDate').disabled=false;
+    if(el('algaeSeasonLabel'))el('algaeSeasonLabel').textContent='Algsäsong '+year;
+    updateAlgaeSeasonDateLabel();
+    if(status)status.textContent='Välj datum med reglaget. Endast vald dags polygoner laddas.';
+    return algaeSeasonManifest;
+  }catch(err){
+    if(status)status.textContent=err.message;
+    throw err;
+  }
+}
+
+function updateAlgaeSeasonDateLabel(){
+  const dates=algaeSeasonManifest?.dates||[];
+  const slider=el('algaeSeasonSlider');
+  if(!slider||!dates.length)return;
+  const item=dates[Number(slider.value)];
+  if(!item)return;
+  const label=el('algaeSeasonDateLabel');
+  if(label)label.textContent=formatSeaIceMapDate(item.date);
+}
+
+async function showAlgaeSeasonDate(index){
+  if(!algaeLeafletMap)return;
+  const manifest=await loadAlgaeSeasonManifest();
+  const dates=manifest.dates||[];
+  if(!dates.length)return;
+  const safe=Math.max(0,Math.min(dates.length-1,Number(index)||0));
+  const slider=el('algaeSeasonSlider');
+  slider.value=String(safe);
+  updateAlgaeSeasonDateLabel();
+  const item=dates[safe];
+  const status=el('algaeSeasonStatus');
+  if(status)status.textContent='Laddar '+formatSeaIceMapDate(item.date)+'…';
+  const started=performance.now();
+
+  try{
+    let geo=algaeSeasonCache.get(item.date);
+    let kb=null;
+    if(!geo){
+      const r=await fetch('algae/'+manifest.year+'/'+item.file+'?v=1',{cache:'no-store'});
+      if(!r.ok)throw new Error('Kartfil saknas för '+item.date+'.');
+      const textData=await r.text();
+      kb=Math.round(new Blob([textData]).size/1024);
+      geo=JSON.parse(textData);
+      algaeSeasonCache.set(item.date,geo);
+    }
+
+    if(algaeSeasonLayer)algaeLeafletMap.removeLayer(algaeSeasonLayer);
+    algaeSeasonLayer=L.geoJSON(geo,{
+      style:f=>({
+        color:'#334155',
+        weight:.7,
+        fillColor:algaeClassColor(f?.properties?.algae_class),
+        fillOpacity:.62
+      }),
+      onEachFeature:(f,layer)=>{
+        const p=f.properties||{};
+        const names={surface:'Ytansamling',risk:'Risk för ytansamling',cloud:'Moln',no_data:'Data saknas'};
+        const rows=[
+          'Klass: '+(names[p.algae_class]||p.algae_class||'Övrigt'),
+          p.date?'Datum: '+p.date:null
+        ].filter(Boolean);
+        layer.bindPopup(rows.join('<br>'));
+      }
+    }).addTo(algaeLeafletMap);
+
+    const ms=Math.round(performance.now()-started);
+    const bits=[
+      formatSeaIceMapDate(item.date)+': '+(geo.features||[]).length+' polygoner',
+      item.surface_pct_sea!=null?'ytansamling '+Number(item.surface_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
+      item.risk_pct_sea!=null?'risk '+Number(item.risk_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
+      item.cloud_pct_sea!=null?'moln '+Number(item.cloud_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
+      kb!=null?kb+' kB':null,
+      ms+' ms'
+    ].filter(Boolean);
+    if(status)status.textContent=bits.join(' · ');
+  }catch(err){
+    if(status)status.textContent=err.message;
+  }
+}
+
+function setupAlgaeSeasonControls(){
+  const slider=el('algaeSeasonSlider');
+  if(!slider)return;
+  slider.addEventListener('input',()=>{
+    updateAlgaeSeasonDateLabel();
+    clearTimeout(algaeSeasonTimer);
+    algaeSeasonTimer=setTimeout(()=>showAlgaeSeasonDate(slider.value),180);
+  });
+  el('algaePrevDate')?.addEventListener('click',()=>showAlgaeSeasonDate(Number(slider.value)-1));
+  el('algaeNextDate')?.addEventListener('click',()=>showAlgaeSeasonDate(Number(slider.value)+1));
+}
+
+async function initAlgaeMap(){
+  const mapEl=el('algaeMap');
+  if(!mapEl||typeof L==='undefined')return;
+  const status=el('algaeMapStatus');
+  if(algaeLeafletMap){
+    setTimeout(()=>algaeLeafletMap.invalidateSize(),50);
+    return;
+  }
+  if(status)status.textContent='Laddar Luleås havsgeometri…';
+  try{
+    const r=await fetch('seaice_analysis_area.geojson?v=1',{cache:'no-store'});
+    if(!r.ok)throw new Error('Luleås havsgeometri saknas.');
+    const geo=await r.json();
+
+    algaeLeafletMap=L.map(mapEl,{zoomControl:true});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      maxZoom:18,
+      attribution:'&copy; OpenStreetMap contributors'
+    }).addTo(algaeLeafletMap);
+
+    const municipal=L.geoJSON(geo,{
+      filter:f=>f?.properties?.kind==='municipal_sea',
+      style:{color:'#dc2626',weight:2.5,fill:false,fillOpacity:0}
+    }).addTo(algaeLeafletMap);
+    const bounds=municipal.getBounds();
+    if(bounds.isValid())algaeLeafletMap.fitBounds(bounds.pad(.03));
+
+    const legend=L.control({position:'topright'});
+    legend.onAdd=()=>{
+      const div=L.DomUtil.create('div','seaice-map-legend');
+      div.innerHTML=
+        '<div><i style="background:#16a34a"></i>Ytansamling</div>'+
+        '<div><i style="background:#facc15"></i>Risk för ytansamling</div>'+
+        '<div><i style="background:#9ca3af"></i>Moln</div>'+
+        '<div><i style="background:#111827"></i>Data saknas</div>'+
+        '<div><i style="background:transparent;border:2px solid #dc2626"></i>Kommunal havsyta</div>';
+      return div;
+    };
+    legend.addTo(algaeLeafletMap);
+
+    if(status)status.textContent='SMHI:s alganalys klipps mot Luleås kommunala havsyta. Bakgrundskarta: OpenStreetMap.';
+    await loadAlgaeSeasonManifest();
+    await showAlgaeSeasonDate(el('algaeSeasonSlider')?.value||0);
   }catch(err){
     if(status)status.textContent=err.message;
   }
@@ -1042,7 +1207,7 @@ function syncYear(source,value,renderNow=true){
   updateRangeTrack();
   if(renderNow)render();
 }
-function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');if(btn.dataset.page==='seaice')initSeaIceMap();setTimeout(()=>{Object.values(charts).forEach(c=>c.resize());if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();},80);}));}
+function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');if(btn.dataset.page==='seaice')initSeaIceMap();if(btn.dataset.page==='algae')initAlgaeMap();setTimeout(()=>{Object.values(charts).forEach(c=>c.resize());if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();if(algaeLeafletMap)algaeLeafletMap.invalidateSize();},80);}));}
 function setupFilters(){const years=DATA.years,min=years[0],max=years[years.length-1];['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=years.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));el('yearFrom').value=min;el('yearTo').value=max;['rangeFrom','rangeTo'].forEach(id=>{el(id).min=min;el(id).max=max;el(id).step=1;});el('rangeFrom').value=min;el('rangeTo').value=max;el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;updateRangeTrack();el('yearFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
 el('yearTo').addEventListener('change',e=>syncYear('to',e.target.value,true));
 el('rangeFrom').addEventListener('input',e=>syncYear('from',e.target.value,false));
@@ -1063,4 +1228,4 @@ function setupWeatherCodes(){
   el('weatherCode').innerHTML='<option value="all">Alla vädertyper</option>'+types.map(t=>'<option value="'+t+'">'+t+'</option>').join('');
   el('weatherCode').value='all';
 }
-fetch('dashboard_data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas');return r.json();}).then(d=>{DATA=d;el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');el('weatherSource').href=d.weather.source_url;setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupFilters();setupDateWeather();render();}).catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';});
+fetch('dashboard_data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas');return r.json();}).then(d=>{DATA=d;el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');el('weatherSource').href=d.weather.source_url;setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupFilters();setupDateWeather();render();}).catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';});
