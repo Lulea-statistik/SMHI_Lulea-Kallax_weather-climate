@@ -80,6 +80,9 @@ jobs:
           if [ -f docs/seaice_test_2023-12-14.geojson ]; then
             git add docs/seaice_test_2023-12-14.geojson
           fi
+          if [ -d docs/seaice/2023-24 ]; then
+            git add docs/seaice/2023-24
+          fi
           git commit -m "Update SMHI Kallax observations"
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
