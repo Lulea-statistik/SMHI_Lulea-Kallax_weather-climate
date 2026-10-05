@@ -566,6 +566,9 @@ def build_summary(rows, geo):
             annual[y]["uncertain_area_500"] += 1
             monthly[m]["uncertain_area_500"] += 1
             monthly_by_year[(y, m)]["uncertain_area_500"] += 1
+            annual[y][f"uncertain_surface__{cls}"] += 1
+            monthly[m][f"uncertain_surface__{cls}"] += 1
+            monthly_by_year[(y, m)][f"uncertain_surface__{cls}"] += 1
 
         for flag in flag_names:
             try:
@@ -587,6 +590,11 @@ def build_summary(rows, geo):
 
     def add_uncertainty_fields(item, vals, total):
         item["uncertain_area_500"] = vals.get("uncertain_area_500", 0)
+        item["uncertain_by_surface"] = {
+            cl: vals.get(f"uncertain_surface__{cl}", 0)
+            for cl in classes
+            if vals.get(f"uncertain_surface__{cl}", 0)
+        }
         pair_keys = [
             "inland_water__mainland",
             "inland_water__islands",
