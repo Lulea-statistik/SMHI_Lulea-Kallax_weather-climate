@@ -157,10 +157,10 @@
   </section>
 
   <section id="page-seaice" class="page">
-    <div class="source-note"><b>Havsis:</b> SMHI:s SE.SR Analyskarta havsis klipps mot Luleå kommuns havsyta. Källans koordinatsystem läses från shapefilens PRJ-fil och geometrierna transformeras till EPSG:3006 innan arealer beräknas. Fastland och inlandsvatten ingår inte i beräkningsytan. Isanalysen bygger på satellitdata och observationer och är en tolkad lägesbild, inte en exakt lokal isbeskrivning.</div>
+    <div class="source-note"><b>Havsis:</b> SMHI:s SE.SR Analyskarta havsis klipps mot Luleå kommuns havsyta. Källans koordinatsystem läses från shapefilens PRJ-fil och geometrierna transformeras till EPSG:3006 innan arealer beräknas. Fastland och inlandsvatten ingår inte i beräkningsytan. Andelar beräknas mot den del av Luleås havsyta som faktiskt täcks av dagens SMHI-analys; kommunens totala havsyta och täckningsgrad sparas separat för kvalitetskontroll. Isanalysen bygger på satellitdata och observationer och är en tolkad lägesbild, inte en exakt lokal isbeskrivning.</div>
     <div id="seaIceNoData" class="chart-card full" style="display:none"><h2>Havsisdata väntar på första hämtningen</h2><p class="hint">Kör workflowet i bootstrap- eller refresh-all-läge för att bygga den historiska serien.</p></div>
-    <div class="chart-card"><h2>Isutbredning inom Luleås havsyta</h2><p class="hint">Andel av kommunens havsyta som täcks av analyserad havsis per kartdatum.</p><p id="seaIceLatest" class="hint"></p><canvas id="seaIceDaily"></canvas></div>
-    <div class="chart-card"><h2>Maximal isutbredning per issäsong</h2><p class="hint">Största observerade andelen is inom Luleås havsyta under respektive säsong.</p><canvas id="seaIceSeasonMax"></canvas></div>
+    <div class="chart-card"><h2>Isutbredning inom analyserad Luleå-havsyta</h2><p class="hint">Andel av den del av kommunens havsyta som täcks av dagens SMHI-analys och som klassas som havsis.</p><p id="seaIceLatest" class="hint"></p><canvas id="seaIceDaily"></canvas></div>
+    <div class="chart-card"><h2>Maximal isutbredning per issäsong</h2><p class="hint">Största observerade andelen is inom den analyserade delen av Luleås havsyta under respektive säsong.</p><canvas id="seaIceSeasonMax"></canvas></div>
     <div class="chart-card"><h2>Istjocklek</h2><p class="hint">Areaviktad medeltjocklek och högsta rapporterade tjocklek i de ispolygoner som överlappar Luleås havsyta.</p><canvas id="seaIceThickness"></canvas></div>
     <div class="chart-card"><h2>Maximal andel fast is per issäsong</h2><p class="hint">Fast is motsvarar istyp 8 i SMHI:s analyskarta.</p><canvas id="seaIceFast"></canvas></div>
     <div class="chart-card"><h2>Issäsongens längd</h2><p class="hint">Antal kalenderdygn mellan första och sista kartdatum med is inom Luleås havsyta. Måttet påverkas av datatäckningen i arkivet.</p><canvas id="seaIceLength"></canvas></div>
@@ -180,5 +180,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=52"></script>
+<script src="app.js?v=53"></script>
 </body></html>
