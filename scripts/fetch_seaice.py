@@ -33,6 +33,8 @@ DATA_DIR = ROOT / "data" / "seaice"
 DAILY_PATH = DATA_DIR / "daily.csv"
 SUMMARY_PATH = DATA_DIR / "summary.json"
 MAP_GEOJSON_PATH = ROOT / "docs" / "seaice_analysis_area.geojson"
+TEST_ICE_DATE = date(2023, 12, 14)
+TEST_ICE_GEOJSON_PATH = ROOT / "docs" / "seaice_test_2023-12-14.geojson"
 NMD_GEO_PATH = ROOT / "data" / "lightning" / "geography_nmd.geojson"
 
 API_BASE = "https://opendata-download-icemap.smhi.se/api/version/1.0"
@@ -345,6 +347,62 @@ def save_map_geojson(sea_geom, coverage_geom, source_date):
     )
 
 
+
+def save_test_ice_geojson(raw: bytes, sea_geom, source_date: str):
+    """Export one representative winter map for a lightweight web-map test.
+
+    Only polygons classified as ice are included. Geometry is clipped to
+    Lulea's sea area and simplified by 20 metres in EPSG:3006 before export.
+    """
+    features = []
+    to_4326 = Transformer.from_crs(TARGET_CRS, "EPSG:4326", always_xy=True).transform
+
+    for geom, props, _ in read_shapefile_zip(raw):
+        if geom.is_empty:
+            continue
+        clipped = geom.intersection(sea_geom)
+        if clipped.is_empty or clipped.area <= 0:
+            continue
+
+        ice_type = as_int(props.get("type"))
+        if ice_type is None or ice_type < 2:
+            continue
+
+        simplified = clipped.simplify(20, preserve_topology=True)
+        if simplified.is_empty:
+            continue
+
+        features.append({
+            "type": "Feature",
+            "properties": {
+                "ice_type": ice_type,
+                "ice_type_name": ICE_TYPES.get(ice_type, f"type_{ice_type}"),
+                "iceact": normalize_iceact(props.get("iceact")),
+                "mean_thickness_cm": as_number(props.get("icetck")),
+                "max_thickness_cm": as_number(props.get("icemax")),
+                "min_thickness_cm": as_number(props.get("icemin")),
+                "source_date": source_date,
+            },
+            "geometry": mapping(transform(to_4326, simplified)),
+        })
+
+    fc = {
+        "type": "FeatureCollection",
+        "properties": {
+            "source": "SMHI SE.SR Analyskarta havsis",
+            "source_date": source_date,
+            "note": "Performance test: ice polygons clipped to Lulea sea area and simplified 20 m in EPSG:3006 before EPSG:4326 export.",
+        },
+        "features": features,
+    }
+    TEST_ICE_GEOJSON_PATH.parent.mkdir(parents=True, exist_ok=True)
+    TEST_ICE_GEOJSON_PATH.write_text(
+        json.dumps(fc, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8",
+    )
+    print(f"Sea ice test polygons: {len(features)} features written for {source_date}.")
+
+
 def load_daily():
     rows = {}
     if not DAILY_PATH.exists():
@@ -499,6 +557,12 @@ def main():
                         if coverage_geom is not None and not coverage_geom.is_empty:
                             save_map_geojson(sea_geom, coverage_geom, latest_date.isoformat())
                             print(f"Sea ice map geometry backfilled from {latest_date.isoformat()}.")
+            if not TEST_ICE_GEOJSON_PATH.exists():
+                package = daily_package_url(TEST_ICE_DATE)
+                if package:
+                    r = get(package)
+                    if r is not None:
+                        save_test_ice_geojson(r.content, sea_geom, TEST_ICE_DATE.isoformat())
             build_summary(rows)
             return 0
         print(f"Sea-ice incremental scan: {len(candidates)} recent dates within the 15 October-6 June update window.")
@@ -533,6 +597,13 @@ def main():
     if latest_coverage_geom is not None:
         save_map_geojson(sea_geom, latest_coverage_geom, latest_coverage_date)
         print(f"Sea ice map geometry updated from {latest_coverage_date}.")
+
+    if not TEST_ICE_GEOJSON_PATH.exists():
+        package = daily_package_url(TEST_ICE_DATE)
+        if package:
+            r = get(package)
+            if r is not None:
+                save_test_ice_geojson(r.content, sea_geom, TEST_ICE_DATE.isoformat())
     save_daily(rows)
     build_summary(rows)
     print(f"Sea ice: {len(rows):,} daily Lulea summaries stored; {updated} maps processed this run.")
