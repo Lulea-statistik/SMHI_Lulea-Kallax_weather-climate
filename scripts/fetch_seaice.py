@@ -269,7 +269,8 @@ def aggregate_day(d: date, raw: bytes, sea_geom):
             if feature_min is not None:
                 min_t = feature_min if min_t is None else min(min_t, feature_min)
 
-    coverage_area = unary_union(coverage_geoms).area if coverage_geoms else 0.0
+    coverage_geom = unary_union(coverage_geoms).buffer(0) if coverage_geoms else None
+    coverage_area = coverage_geom.area if coverage_geom is not None else 0.0
     ice_area = unary_union(ice_geoms).area if ice_geoms else 0.0
     fast_area = unary_union(fast_geoms).area if fast_geoms else 0.0
     concentration = {
@@ -300,7 +301,7 @@ def aggregate_day(d: date, raw: bytes, sea_geom):
         "ice_type_area_km2": types,
         "source_crs": source_crs,
     }
-    return row, coverage_area and unary_union(coverage_geoms).buffer(0)
+    return row, coverage_geom
 
 
 def save_map_geojson(sea_geom, coverage_geom, source_date):
