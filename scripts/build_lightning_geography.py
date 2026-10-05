@@ -19,6 +19,7 @@ import json
 import math
 import os
 from pathlib import Path
+from xml.etree import ElementTree as ET
 
 import numpy as np
 import rasterio
@@ -35,7 +36,7 @@ OUT_PATH = OUT_DIR / "geography_nmd.geojson"
 
 MUNICIPALITY_ARCGIS = "https://services-eu1.arcgis.com/Ek4rv9ndj9nQOpV3/arcgis/rest/services/Region_kommun/FeatureServer/1/query"
 NMD_WMS = "https://geodata.naturvardsverket.se/inspire/lc-nmd/ows"
-NMD_LAYER = "LC.LandCoverRaster"
+NMD_LAYER = None
 PIXEL_SIZE_M = 20.0
 TILE_SIZE = 1536
 MAINLAND_MIN_AREA_KM2 = 100.0
@@ -70,13 +71,38 @@ def fetch_municipality_wgs84():
     return unary_union(geoms)
 
 
-def fetch_tile(bounds, width, height):
+def discover_nmd_layer():
+    """Read GetCapabilities and choose the current NMD base land-cover raster layer."""
+    params = {"service": "WMS", "request": "GetCapabilities"}
+    r = SESSION.get(NMD_WMS, params=params, timeout=TIMEOUT)
+    r.raise_for_status()
+    root = ET.fromstring(r.content)
+    names = []
+    for elem in root.iter():
+        if elem.tag.endswith("Name") and elem.text:
+            names.append(elem.text.strip())
+    candidates = [
+        n for n in names
+        if "landcoverraster" in n.lower()
+        and "produktiv" not in n.lower()
+        and "fjallskog" not in n.lower()
+    ]
+    # Prefer explicit base/bas layer when present, otherwise first land-cover raster.
+    candidates.sort(key=lambda n: (0 if "bas" in n.lower() else 1, len(n)))
+    if not candidates:
+        raise RuntimeError(f"Could not discover NMD base layer from WMS capabilities; sample names={names[:80]}")
+    chosen = candidates[0]
+    print(f"NMD WMS layer discovered: {chosen}")
+    return chosen
+
+
+def fetch_tile(bounds, width, height, layer_name):
     minx, miny, maxx, maxy = bounds
     params = {
         "service": "WMS",
         "version": "1.1.1",
         "request": "GetMap",
-        "layers": NMD_LAYER,
+        "layers": layer_name,
         "styles": "",
         "srs": "EPSG:3006",
         "bbox": f"{minx},{miny},{maxx},{maxy}",
@@ -126,6 +152,7 @@ def main():
 
     municipality_wgs = fetch_municipality_wgs84()
     municipality = transform(TO_3006, municipality_wgs)
+    nmd_layer = discover_nmd_layer()
     minx, miny, maxx, maxy = municipality.bounds
 
     tile_span = TILE_SIZE * PIXEL_SIZE_M
@@ -143,7 +170,7 @@ def main():
             y1 = min(y0 + tile_span, maxy)
             width = max(1, round((x1 - x0) / PIXEL_SIZE_M))
             height = max(1, round((y1 - y0) / PIXEL_SIZE_M))
-            raw = fetch_tile((x0, y0, x1, y1), width, height)
+            raw = fetch_tile((x0, y0, x1, y1), width, height, nmd_layer)
             parts = polygons_from_tile(raw)
             for k in acc:
                 acc[k].extend(parts[k])
