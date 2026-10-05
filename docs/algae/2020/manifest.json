@@ -1,0 +1,1711 @@
+{
+  "source": "SMHI SE.SR Ytansamling av alger",
+  "source_url": "https://www.smhi.se/data/sok-oppna-data-i-utforskaren/se-sr-ytansamling-av-alger",
+  "wfs": "https://opendata-view.smhi.se/algae/wfs",
+  "year": 2020,
+  "legacy_classification": false,
+  "dates": [
+    {
+      "date": "2020-06-03",
+      "file": "2020-06-03.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2694.801,
+      "other_pct_sea": 99.684,
+      "classes_area_km2": {
+        "class_1": 2694.801
+      },
+      "classes_pct_sea": {
+        "class_1": 99.684
+      },
+      "classified_area_km2": 2694.801
+    },
+    {
+      "date": "2020-06-04",
+      "file": "2020-06-04.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 437.763,
+      "other_pct_sea": 16.193,
+      "classes_area_km2": {
+        "class_1": 437.763
+      },
+      "classes_pct_sea": {
+        "class_1": 16.193
+      },
+      "classified_area_km2": 437.763
+    },
+    {
+      "date": "2020-06-05",
+      "file": "2020-06-05.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2703.339,
+      "other_pct_sea": 100.0,
+      "classes_area_km2": {
+        "class_1": 2703.339
+      },
+      "classes_pct_sea": {
+        "class_1": 100.0
+      },
+      "classified_area_km2": 2703.339
+    },
+    {
+      "date": "2020-06-06",
+      "file": "2020-06-06.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2538.253,
+      "other_pct_sea": 93.893,
+      "classes_area_km2": {
+        "class_1": 2538.253
+      },
+      "classes_pct_sea": {
+        "class_1": 93.893
+      },
+      "classified_area_km2": 2538.253
+    },
+    {
+      "date": "2020-06-07",
+      "file": "2020-06-07.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2703.339,
+      "other_pct_sea": 100.0,
+      "classes_area_km2": {
+        "class_1": 2703.339
+      },
+      "classes_pct_sea": {
+        "class_1": 100.0
+      },
+      "classified_area_km2": 2703.339
+    },
+    {
+      "date": "2020-06-08",
+      "file": "2020-06-08.geojson",
+      "features": 2,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 74.994,
+      "other_pct_sea": 2.774,
+      "classes_area_km2": {
+        "class_1": 74.994
+      },
+      "classes_pct_sea": {
+        "class_1": 2.774
+      },
+      "classified_area_km2": 74.994
+    },
+    {
+      "date": "2020-06-09",
+      "file": "2020-06-09.geojson",
+      "features": 2,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 480.495,
+      "other_pct_sea": 17.774,
+      "classes_area_km2": {
+        "class_1": 480.495
+      },
+      "classes_pct_sea": {
+        "class_1": 17.774
+      },
+      "classified_area_km2": 480.495
+    },
+    {
+      "date": "2020-06-10",
+      "file": "2020-06-10.geojson",
+      "features": 3,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 109.557,
+      "other_pct_sea": 4.053,
+      "classes_area_km2": {
+        "class_1": 109.557
+      },
+      "classes_pct_sea": {
+        "class_1": 4.053
+      },
+      "classified_area_km2": 109.557
+    },
+    {
+      "date": "2020-06-11",
+      "file": "2020-06-11.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 68.22,
+      "other_pct_sea": 2.524,
+      "classes_area_km2": {
+        "class_1": 68.22
+      },
+      "classes_pct_sea": {
+        "class_1": 2.524
+      },
+      "classified_area_km2": 68.22
+    },
+    {
+      "date": "2020-06-12",
+      "file": "2020-06-12.geojson",
+      "features": 2,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 146.3,
+      "other_pct_sea": 5.412,
+      "classes_area_km2": {
+        "class_1": 146.3
+      },
+      "classes_pct_sea": {
+        "class_1": 5.412
+      },
+      "classified_area_km2": 146.3
+    },
+    {
+      "date": "2020-06-15",
+      "file": "2020-06-15.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2596.06,
+      "other_pct_sea": 96.032,
+      "classes_area_km2": {
+        "class_1": 2596.06
+      },
+      "classes_pct_sea": {
+        "class_1": 96.032
+      },
+      "classified_area_km2": 2596.06
+    },
+    {
+      "date": "2020-06-18",
+      "file": "2020-06-18.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2624.883,
+      "other_pct_sea": 97.098,
+      "classes_area_km2": {
+        "class_1": 2624.883
+      },
+      "classes_pct_sea": {
+        "class_1": 97.098
+      },
+      "classified_area_km2": 2624.883
+    },
+    {
+      "date": "2020-06-19",
+      "file": "2020-06-19.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 9.157,
+      "other_pct_sea": 0.339,
+      "classes_area_km2": {
+        "class_1": 9.157
+      },
+      "classes_pct_sea": {
+        "class_1": 0.339
+      },
+      "classified_area_km2": 9.157
+    },
+    {
+      "date": "2020-06-23",
+      "file": "2020-06-23.geojson",
+      "features": 3,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1793.027,
+      "other_pct_sea": 66.326,
+      "classes_area_km2": {
+        "class_1": 1793.027
+      },
+      "classes_pct_sea": {
+        "class_1": 66.326
+      },
+      "classified_area_km2": 1793.027
+    },
+    {
+      "date": "2020-06-24",
+      "file": "2020-06-24.geojson",
+      "features": 5,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 499.061,
+      "other_pct_sea": 18.461,
+      "classes_area_km2": {
+        "class_1": 499.061
+      },
+      "classes_pct_sea": {
+        "class_1": 18.461
+      },
+      "classified_area_km2": 499.061
+    },
+    {
+      "date": "2020-06-25",
+      "file": "2020-06-25.geojson",
+      "features": 5,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1576.866,
+      "other_pct_sea": 58.33,
+      "classes_area_km2": {
+        "class_1": 1576.866
+      },
+      "classes_pct_sea": {
+        "class_1": 58.33
+      },
+      "classified_area_km2": 1576.866
+    },
+    {
+      "date": "2020-06-28",
+      "file": "2020-06-28.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 38.545,
+      "other_pct_sea": 1.426,
+      "classes_area_km2": {
+        "class_1": 38.545
+      },
+      "classes_pct_sea": {
+        "class_1": 1.426
+      },
+      "classified_area_km2": 38.545
+    },
+    {
+      "date": "2020-06-29",
+      "file": "2020-06-29.geojson",
+      "features": 2,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 74.205,
+      "other_pct_sea": 2.745,
+      "classes_area_km2": {
+        "class_1": 74.205
+      },
+      "classes_pct_sea": {
+        "class_1": 2.745
+      },
+      "classified_area_km2": 74.205
+    },
+    {
+      "date": "2020-06-30",
+      "file": "2020-06-30.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2650.992,
+      "other_pct_sea": 98.064,
+      "classes_area_km2": {
+        "class_1": 2650.992
+      },
+      "classes_pct_sea": {
+        "class_1": 98.064
+      },
+      "classified_area_km2": 2650.992
+    },
+    {
+      "date": "2020-07-01",
+      "file": "2020-07-01.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2663.314,
+      "other_pct_sea": 98.519,
+      "classes_area_km2": {
+        "class_1": 2663.314
+      },
+      "classes_pct_sea": {
+        "class_1": 98.519
+      },
+      "classified_area_km2": 2663.314
+    },
+    {
+      "date": "2020-07-02",
+      "file": "2020-07-02.geojson",
+      "features": 4,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 476.692,
+      "other_pct_sea": 17.633,
+      "classes_area_km2": {
+        "class_1": 476.692
+      },
+      "classes_pct_sea": {
+        "class_1": 17.633
+      },
+      "classified_area_km2": 476.692
+    },
+    {
+      "date": "2020-07-03",
+      "file": "2020-07-03.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2618.236,
+      "other_pct_sea": 96.852,
+      "classes_area_km2": {
+        "class_1": 2618.236
+      },
+      "classes_pct_sea": {
+        "class_1": 96.852
+      },
+      "classified_area_km2": 2618.236
+    },
+    {
+      "date": "2020-07-04",
+      "file": "2020-07-04.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2692.544,
+      "other_pct_sea": 99.601,
+      "classes_area_km2": {
+        "class_1": 2692.544
+      },
+      "classes_pct_sea": {
+        "class_1": 99.601
+      },
+      "classified_area_km2": 2692.544
+    },
+    {
+      "date": "2020-07-05",
+      "file": "2020-07-05.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2604.416,
+      "other_pct_sea": 96.341,
+      "classes_area_km2": {
+        "class_1": 2604.416
+      },
+      "classes_pct_sea": {
+        "class_1": 96.341
+      },
+      "classified_area_km2": 2604.416
+    },
+    {
+      "date": "2020-07-06",
+      "file": "2020-07-06.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2703.339,
+      "other_pct_sea": 100.0,
+      "classes_area_km2": {
+        "class_1": 2703.339
+      },
+      "classes_pct_sea": {
+        "class_1": 100.0
+      },
+      "classified_area_km2": 2703.339
+    },
+    {
+      "date": "2020-07-07",
+      "file": "2020-07-07.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2392.788,
+      "other_pct_sea": 88.512,
+      "classes_area_km2": {
+        "class_1": 2392.788
+      },
+      "classes_pct_sea": {
+        "class_1": 88.512
+      },
+      "classified_area_km2": 2392.788
+    },
+    {
+      "date": "2020-07-08",
+      "file": "2020-07-08.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 797.998,
+      "other_pct_sea": 29.519,
+      "classes_area_km2": {
+        "class_1": 797.998
+      },
+      "classes_pct_sea": {
+        "class_1": 29.519
+      },
+      "classified_area_km2": 797.998
+    },
+    {
+      "date": "2020-07-09",
+      "file": "2020-07-09.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1776.409,
+      "other_pct_sea": 65.712,
+      "classes_area_km2": {
+        "class_1": 1776.409
+      },
+      "classes_pct_sea": {
+        "class_1": 65.712
+      },
+      "classified_area_km2": 1776.409
+    },
+    {
+      "date": "2020-07-10",
+      "file": "2020-07-10.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2689.775,
+      "other_pct_sea": 99.498,
+      "classes_area_km2": {
+        "class_1": 2689.775
+      },
+      "classes_pct_sea": {
+        "class_1": 99.498
+      },
+      "classified_area_km2": 2689.775
+    },
+    {
+      "date": "2020-07-11",
+      "file": "2020-07-11.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2398.348,
+      "other_pct_sea": 88.718,
+      "classes_area_km2": {
+        "class_1": 2398.348
+      },
+      "classes_pct_sea": {
+        "class_1": 88.718
+      },
+      "classified_area_km2": 2398.348
+    },
+    {
+      "date": "2020-07-12",
+      "file": "2020-07-12.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 3.821,
+      "other_pct_sea": 0.141,
+      "classes_area_km2": {
+        "class_1": 3.821
+      },
+      "classes_pct_sea": {
+        "class_1": 0.141
+      },
+      "classified_area_km2": 3.821
+    },
+    {
+      "date": "2020-07-13",
+      "file": "2020-07-13.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2672.06,
+      "other_pct_sea": 98.843,
+      "classes_area_km2": {
+        "class_1": 2672.06
+      },
+      "classes_pct_sea": {
+        "class_1": 98.843
+      },
+      "classified_area_km2": 2672.06
+    },
+    {
+      "date": "2020-07-14",
+      "file": "2020-07-14.geojson",
+      "features": 2,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1260.744,
+      "other_pct_sea": 46.637,
+      "classes_area_km2": {
+        "class_1": 1260.744
+      },
+      "classes_pct_sea": {
+        "class_1": 46.637
+      },
+      "classified_area_km2": 1260.744
+    },
+    {
+      "date": "2020-07-15",
+      "file": "2020-07-15.geojson",
+      "features": 3,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 297.513,
+      "other_pct_sea": 11.005,
+      "classes_area_km2": {
+        "class_1": 297.513
+      },
+      "classes_pct_sea": {
+        "class_1": 11.005
+      },
+      "classified_area_km2": 297.513
+    },
+    {
+      "date": "2020-07-16",
+      "file": "2020-07-16.geojson",
+      "features": 2,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 11.653,
+      "other_pct_sea": 0.431,
+      "classes_area_km2": {
+        "class_1": 11.653
+      },
+      "classes_pct_sea": {
+        "class_1": 0.431
+      },
+      "classified_area_km2": 11.653
+    },
+    {
+      "date": "2020-07-17",
+      "file": "2020-07-17.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1732.277,
+      "other_pct_sea": 64.079,
+      "classes_area_km2": {
+        "class_1": 1732.277
+      },
+      "classes_pct_sea": {
+        "class_1": 64.079
+      },
+      "classified_area_km2": 1732.277
+    },
+    {
+      "date": "2020-07-18",
+      "file": "2020-07-18.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2274.127,
+      "other_pct_sea": 84.123,
+      "classes_area_km2": {
+        "class_1": 2274.127
+      },
+      "classes_pct_sea": {
+        "class_1": 84.123
+      },
+      "classified_area_km2": 2274.127
+    },
+    {
+      "date": "2020-07-19",
+      "file": "2020-07-19.geojson",
+      "features": 2,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1986.918,
+      "other_pct_sea": 73.499,
+      "classes_area_km2": {
+        "class_1": 1986.918
+      },
+      "classes_pct_sea": {
+        "class_1": 73.499
+      },
+      "classified_area_km2": 1986.918
+    },
+    {
+      "date": "2020-07-20",
+      "file": "2020-07-20.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2693.929,
+      "other_pct_sea": 99.652,
+      "classes_area_km2": {
+        "class_1": 2693.929
+      },
+      "classes_pct_sea": {
+        "class_1": 99.652
+      },
+      "classified_area_km2": 2693.929
+    },
+    {
+      "date": "2020-07-21",
+      "file": "2020-07-21.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2676.339,
+      "other_pct_sea": 99.001,
+      "classes_area_km2": {
+        "class_1": 2676.339
+      },
+      "classes_pct_sea": {
+        "class_1": 99.001
+      },
+      "classified_area_km2": 2676.339
+    },
+    {
+      "date": "2020-07-22",
+      "file": "2020-07-22.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2633.406,
+      "other_pct_sea": 97.413,
+      "classes_area_km2": {
+        "class_1": 2633.406
+      },
+      "classes_pct_sea": {
+        "class_1": 97.413
+      },
+      "classified_area_km2": 2633.406
+    },
+    {
+      "date": "2020-07-23",
+      "file": "2020-07-23.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2477.362,
+      "other_pct_sea": 91.641,
+      "classes_area_km2": {
+        "class_1": 2477.362
+      },
+      "classes_pct_sea": {
+        "class_1": 91.641
+      },
+      "classified_area_km2": 2477.362
+    },
+    {
+      "date": "2020-07-24",
+      "file": "2020-07-24.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1727.572,
+      "other_pct_sea": 63.905,
+      "classes_area_km2": {
+        "class_1": 1727.572
+      },
+      "classes_pct_sea": {
+        "class_1": 63.905
+      },
+      "classified_area_km2": 1727.572
+    },
+    {
+      "date": "2020-07-25",
+      "file": "2020-07-25.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2703.339,
+      "other_pct_sea": 100.0,
+      "classes_area_km2": {
+        "class_1": 2703.339
+      },
+      "classes_pct_sea": {
+        "class_1": 100.0
+      },
+      "classified_area_km2": 2703.339
+    },
+    {
+      "date": "2020-07-26",
+      "file": "2020-07-26.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1839.361,
+      "other_pct_sea": 68.04,
+      "classes_area_km2": {
+        "class_1": 1839.361
+      },
+      "classes_pct_sea": {
+        "class_1": 68.04
+      },
+      "classified_area_km2": 1839.361
+    },
+    {
+      "date": "2020-07-27",
+      "file": "2020-07-27.geojson",
+      "features": 6,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 564.144,
+      "other_pct_sea": 20.868,
+      "classes_area_km2": {
+        "class_1": 564.144
+      },
+      "classes_pct_sea": {
+        "class_1": 20.868
+      },
+      "classified_area_km2": 564.144
+    },
+    {
+      "date": "2020-07-28",
+      "file": "2020-07-28.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2692.339,
+      "other_pct_sea": 99.593,
+      "classes_area_km2": {
+        "class_1": 2692.339
+      },
+      "classes_pct_sea": {
+        "class_1": 99.593
+      },
+      "classified_area_km2": 2692.339
+    },
+    {
+      "date": "2020-07-29",
+      "file": "2020-07-29.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2609.624,
+      "other_pct_sea": 96.533,
+      "classes_area_km2": {
+        "class_1": 2609.624
+      },
+      "classes_pct_sea": {
+        "class_1": 96.533
+      },
+      "classified_area_km2": 2609.624
+    },
+    {
+      "date": "2020-07-30",
+      "file": "2020-07-30.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2703.339,
+      "other_pct_sea": 100.0,
+      "classes_area_km2": {
+        "class_1": 2703.339
+      },
+      "classes_pct_sea": {
+        "class_1": 100.0
+      },
+      "classified_area_km2": 2703.339
+    },
+    {
+      "date": "2020-08-01",
+      "file": "2020-08-01.geojson",
+      "features": 5,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1974.331,
+      "other_pct_sea": 73.033,
+      "classes_area_km2": {
+        "class_1": 1974.331
+      },
+      "classes_pct_sea": {
+        "class_1": 73.033
+      },
+      "classified_area_km2": 1974.331
+    },
+    {
+      "date": "2020-08-02",
+      "file": "2020-08-02.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1748.906,
+      "other_pct_sea": 64.694,
+      "classes_area_km2": {
+        "class_1": 1748.906
+      },
+      "classes_pct_sea": {
+        "class_1": 64.694
+      },
+      "classified_area_km2": 1748.906
+    },
+    {
+      "date": "2020-08-03",
+      "file": "2020-08-03.geojson",
+      "features": 4,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 637.044,
+      "other_pct_sea": 23.565,
+      "classes_area_km2": {
+        "class_1": 637.044
+      },
+      "classes_pct_sea": {
+        "class_1": 23.565
+      },
+      "classified_area_km2": 637.044
+    },
+    {
+      "date": "2020-08-04",
+      "file": "2020-08-04.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2684.339,
+      "other_pct_sea": 99.297,
+      "classes_area_km2": {
+        "class_1": 2684.339
+      },
+      "classes_pct_sea": {
+        "class_1": 99.297
+      },
+      "classified_area_km2": 2684.339
+    },
+    {
+      "date": "2020-08-07",
+      "file": "2020-08-07.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2379.522,
+      "other_pct_sea": 88.022,
+      "classes_area_km2": {
+        "class_1": 2379.522
+      },
+      "classes_pct_sea": {
+        "class_1": 88.022
+      },
+      "classified_area_km2": 2379.522
+    },
+    {
+      "date": "2020-08-08",
+      "file": "2020-08-08.geojson",
+      "features": 2,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 755.429,
+      "other_pct_sea": 27.944,
+      "classes_area_km2": {
+        "class_1": 755.429
+      },
+      "classes_pct_sea": {
+        "class_1": 27.944
+      },
+      "classified_area_km2": 755.429
+    },
+    {
+      "date": "2020-08-09",
+      "file": "2020-08-09.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 385.078,
+      "other_pct_sea": 14.245,
+      "classes_area_km2": {
+        "class_1": 385.078
+      },
+      "classes_pct_sea": {
+        "class_1": 14.245
+      },
+      "classified_area_km2": 385.078
+    },
+    {
+      "date": "2020-08-10",
+      "file": "2020-08-10.geojson",
+      "features": 2,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 289.397,
+      "other_pct_sea": 10.705,
+      "classes_area_km2": {
+        "class_1": 289.397
+      },
+      "classes_pct_sea": {
+        "class_1": 10.705
+      },
+      "classified_area_km2": 289.397
+    },
+    {
+      "date": "2020-08-12",
+      "file": "2020-08-12.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2694.51,
+      "other_pct_sea": 99.673,
+      "classes_area_km2": {
+        "class_1": 2694.51
+      },
+      "classes_pct_sea": {
+        "class_1": 99.673
+      },
+      "classified_area_km2": 2694.51
+    },
+    {
+      "date": "2020-08-13",
+      "file": "2020-08-13.geojson",
+      "features": 3,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 688.974,
+      "other_pct_sea": 25.486,
+      "classes_area_km2": {
+        "class_1": 688.974
+      },
+      "classes_pct_sea": {
+        "class_1": 25.486
+      },
+      "classified_area_km2": 688.974
+    },
+    {
+      "date": "2020-08-14",
+      "file": "2020-08-14.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2282.771,
+      "other_pct_sea": 84.443,
+      "classes_area_km2": {
+        "class_1": 2282.771
+      },
+      "classes_pct_sea": {
+        "class_1": 84.443
+      },
+      "classified_area_km2": 2282.771
+    },
+    {
+      "date": "2020-08-15",
+      "file": "2020-08-15.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2692.204,
+      "other_pct_sea": 99.588,
+      "classes_area_km2": {
+        "class_1": 2692.204
+      },
+      "classes_pct_sea": {
+        "class_1": 99.588
+      },
+      "classified_area_km2": 2692.204
+    },
+    {
+      "date": "2020-08-18",
+      "file": "2020-08-18.geojson",
+      "features": 3,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 156.479,
+      "other_pct_sea": 5.788,
+      "classes_area_km2": {
+        "class_1": 156.479
+      },
+      "classes_pct_sea": {
+        "class_1": 5.788
+      },
+      "classified_area_km2": 156.479
+    },
+    {
+      "date": "2020-08-19",
+      "file": "2020-08-19.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2703.339,
+      "other_pct_sea": 100.0,
+      "classes_area_km2": {
+        "class_1": 2703.339
+      },
+      "classes_pct_sea": {
+        "class_1": 100.0
+      },
+      "classified_area_km2": 2703.339
+    },
+    {
+      "date": "2020-08-20",
+      "file": "2020-08-20.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2703.339,
+      "other_pct_sea": 100.0,
+      "classes_area_km2": {
+        "class_1": 2703.339
+      },
+      "classes_pct_sea": {
+        "class_1": 100.0
+      },
+      "classified_area_km2": 2703.339
+    },
+    {
+      "date": "2020-08-21",
+      "file": "2020-08-21.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1231.361,
+      "other_pct_sea": 45.55,
+      "classes_area_km2": {
+        "class_1": 1231.361
+      },
+      "classes_pct_sea": {
+        "class_1": 45.55
+      },
+      "classified_area_km2": 1231.361
+    },
+    {
+      "date": "2020-08-22",
+      "file": "2020-08-22.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2703.339,
+      "other_pct_sea": 100.0,
+      "classes_area_km2": {
+        "class_1": 2703.339
+      },
+      "classes_pct_sea": {
+        "class_1": 100.0
+      },
+      "classified_area_km2": 2703.339
+    },
+    {
+      "date": "2020-08-23",
+      "file": "2020-08-23.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2497.29,
+      "other_pct_sea": 92.378,
+      "classes_area_km2": {
+        "class_1": 2497.29
+      },
+      "classes_pct_sea": {
+        "class_1": 92.378
+      },
+      "classified_area_km2": 2497.29
+    },
+    {
+      "date": "2020-08-24",
+      "file": "2020-08-24.geojson",
+      "features": 4,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 482.713,
+      "other_pct_sea": 17.856,
+      "classes_area_km2": {
+        "class_1": 482.713
+      },
+      "classes_pct_sea": {
+        "class_1": 17.856
+      },
+      "classified_area_km2": 482.713
+    },
+    {
+      "date": "2020-08-26",
+      "file": "2020-08-26.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2141.061,
+      "other_pct_sea": 79.201,
+      "classes_area_km2": {
+        "class_1": 2141.061
+      },
+      "classes_pct_sea": {
+        "class_1": 79.201
+      },
+      "classified_area_km2": 2141.061
+    },
+    {
+      "date": "2020-08-27",
+      "file": "2020-08-27.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 8.52,
+      "other_pct_sea": 0.315,
+      "classes_area_km2": {
+        "class_1": 8.52
+      },
+      "classes_pct_sea": {
+        "class_1": 0.315
+      },
+      "classified_area_km2": 8.52
+    },
+    {
+      "date": "2020-08-28",
+      "file": "2020-08-28.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1006.57,
+      "other_pct_sea": 37.234,
+      "classes_area_km2": {
+        "class_1": 1006.57
+      },
+      "classes_pct_sea": {
+        "class_1": 37.234
+      },
+      "classified_area_km2": 1006.57
+    },
+    {
+      "date": "2020-08-29",
+      "file": "2020-08-29.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1991.969,
+      "other_pct_sea": 73.686,
+      "classes_area_km2": {
+        "class_1": 1991.969
+      },
+      "classes_pct_sea": {
+        "class_1": 73.686
+      },
+      "classified_area_km2": 1991.969
+    },
+    {
+      "date": "2020-08-30",
+      "file": "2020-08-30.geojson",
+      "features": 5,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 1867.409,
+      "other_pct_sea": 69.078,
+      "classes_area_km2": {
+        "class_1": 1867.409
+      },
+      "classes_pct_sea": {
+        "class_1": 69.078
+      },
+      "classified_area_km2": 1867.409
+    },
+    {
+      "date": "2020-09-01",
+      "file": "2020-09-01.geojson",
+      "features": 1,
+      "sea_area_km2": 2703.339,
+      "surface_area_km2": 0.0,
+      "risk_area_km2": 0.0,
+      "cloud_area_km2": 0.0,
+      "no_data_area_km2": 0.0,
+      "surface_pct_sea": 0.0,
+      "risk_pct_sea": 0.0,
+      "cloud_pct_sea": 0.0,
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 391.265,
+      "other_pct_sea": 14.473,
+      "classes_area_km2": {
+        "class_1": 391.265
+      },
+      "classes_pct_sea": {
+        "class_1": 14.473
+      },
+      "classified_area_km2": 391.265
+    }
+  ]
+}
