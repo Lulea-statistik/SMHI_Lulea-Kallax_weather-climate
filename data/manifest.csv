@@ -80,7 +80,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 1,Lufttemperatur,2023,data/parameter_1/2023.csv,8706,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 1,Lufttemperatur,2024,data/parameter_1/2024.csv,8766,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 1,Lufttemperatur,2025,data/parameter_1/2025.csv,8739,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-1,Lufttemperatur,2026,data/parameter_1/2026.csv,6649,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+1,Lufttemperatur,2026,data/parameter_1/2026.csv,6651,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
 10,Solskenstid,1983,data/parameter_10/1983.csv,8760,1983-01-01T00:00:00Z,1983-12-31T23:00:00Z
 10,Solskenstid,1984,data/parameter_10/1984.csv,8784,1984-01-01T00:00:00Z,1984-12-31T23:00:00Z
 10,Solskenstid,1985,data/parameter_10/1985.csv,8760,1985-01-01T00:00:00Z,1985-12-31T23:00:00Z
@@ -124,7 +124,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 10,Solskenstid,2023,data/parameter_10/2023.csv,8760,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 10,Solskenstid,2024,data/parameter_10/2024.csv,8784,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 10,Solskenstid,2025,data/parameter_10/2025.csv,8760,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-10,Solskenstid,2026,data/parameter_10/2026.csv,6654,2026-01-01T00:00:00Z,2026-10-05T05:00:00Z
+10,Solskenstid,2026,data/parameter_10/2026.csv,6656,2026-01-01T00:00:00Z,2026-10-05T07:00:00Z
 11,Global Irradians (svenska stationer),1983,data/parameter_11/1983.csv,8760,1983-01-01T00:00:00Z,1983-12-31T23:00:00Z
 11,Global Irradians (svenska stationer),1984,data/parameter_11/1984.csv,8784,1984-01-01T00:00:00Z,1984-12-31T23:00:00Z
 11,Global Irradians (svenska stationer),1985,data/parameter_11/1985.csv,8760,1985-01-01T00:00:00Z,1985-12-31T23:00:00Z
@@ -168,7 +168,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 11,Global Irradians (svenska stationer),2023,data/parameter_11/2023.csv,8760,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 11,Global Irradians (svenska stationer),2024,data/parameter_11/2024.csv,8784,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 11,Global Irradians (svenska stationer),2025,data/parameter_11/2025.csv,8760,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-11,Global Irradians (svenska stationer),2026,data/parameter_11/2026.csv,6654,2026-01-01T00:00:00Z,2026-10-05T05:00:00Z
+11,Global Irradians (svenska stationer),2026,data/parameter_11/2026.csv,6656,2026-01-01T00:00:00Z,2026-10-05T07:00:00Z
 12,Sikt,1942,data/parameter_12/1942.csv,1360,1942-01-09T13:00:00Z,1942-12-31T18:00:00Z
 12,Sikt,1943,data/parameter_12/1943.csv,1433,1943-01-01T01:00:00Z,1943-12-31T18:00:00Z
 12,Sikt,1944,data/parameter_12/1944.csv,226,1944-03-05T13:00:00Z,1944-12-31T18:00:00Z
@@ -253,7 +253,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 12,Sikt,2023,data/parameter_12/2023.csv,8684,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 12,Sikt,2024,data/parameter_12/2024.csv,8762,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 12,Sikt,2025,data/parameter_12/2025.csv,7726,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-12,Sikt,2026,data/parameter_12/2026.csv,6645,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+12,Sikt,2026,data/parameter_12/2026.csv,6647,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
 13,Rådande väder,1942,data/parameter_13/1942.csv,1360,1942-01-09T13:00:00Z,1942-12-31T18:00:00Z
 13,Rådande väder,1943,data/parameter_13/1943.csv,1433,1943-01-01T01:00:00Z,1943-12-31T18:00:00Z
 13,Rådande väder,1944,data/parameter_13/1944.csv,226,1944-03-05T13:00:00Z,1944-12-31T18:00:00Z
@@ -338,7 +338,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 13,Rådande väder,2023,data/parameter_13/2023.csv,8635,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 13,Rådande väder,2024,data/parameter_13/2024.csv,8742,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 13,Rådande väder,2025,data/parameter_13/2025.csv,8690,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-13,Rådande väder,2026,data/parameter_13/2026.csv,6593,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+13,Rådande väder,2026,data/parameter_13/2026.csv,6595,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
 16,Total molnmängd,1942,data/parameter_16/1942.csv,1360,1942-01-09T13:00:00Z,1942-12-31T18:00:00Z
 16,Total molnmängd,1943,data/parameter_16/1943.csv,1433,1943-01-01T01:00:00Z,1943-12-31T18:00:00Z
 16,Total molnmängd,1944,data/parameter_16/1944.csv,226,1944-03-05T13:00:00Z,1944-12-31T18:00:00Z
@@ -423,7 +423,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 16,Total molnmängd,2023,data/parameter_16/2023.csv,8657,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 16,Total molnmängd,2024,data/parameter_16/2024.csv,8737,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 16,Total molnmängd,2025,data/parameter_16/2025.csv,8693,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-16,Total molnmängd,2026,data/parameter_16/2026.csv,6606,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+16,Total molnmängd,2026,data/parameter_16/2026.csv,6608,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
 21,Byvind,2013,data/parameter_21/2013.csv,6577,2013-01-01T00:00:00Z,2013-10-02T10:00:00Z
 21,Byvind,2016,data/parameter_21/2016.csv,7163,2016-03-07T16:00:00Z,2016-12-31T23:00:00Z
 21,Byvind,2017,data/parameter_21/2017.csv,8719,2017-01-01T00:00:00Z,2017-12-31T23:00:00Z
@@ -435,7 +435,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 21,Byvind,2023,data/parameter_21/2023.csv,4838,2023-01-01T00:00:00Z,2023-12-31T22:00:00Z
 21,Byvind,2024,data/parameter_21/2024.csv,7874,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 21,Byvind,2025,data/parameter_21/2025.csv,8708,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-21,Byvind,2026,data/parameter_21/2026.csv,6644,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+21,Byvind,2026,data/parameter_21/2026.csv,6646,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
 3,Vindriktning,1942,data/parameter_3/1942.csv,1360,1942-01-09T13:00:00Z,1942-12-31T18:00:00Z
 3,Vindriktning,1943,data/parameter_3/1943.csv,1433,1943-01-01T01:00:00Z,1943-12-31T18:00:00Z
 3,Vindriktning,1944,data/parameter_3/1944.csv,226,1944-03-05T13:00:00Z,1944-12-31T18:00:00Z
@@ -520,7 +520,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 3,Vindriktning,2023,data/parameter_3/2023.csv,8699,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 3,Vindriktning,2024,data/parameter_3/2024.csv,8743,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 3,Vindriktning,2025,data/parameter_3/2025.csv,8711,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-3,Vindriktning,2026,data/parameter_3/2026.csv,6645,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+3,Vindriktning,2026,data/parameter_3/2026.csv,6647,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
 39,Daggpunktstemperatur,1951,data/parameter_39/1951.csv,1800,1951-01-02T12:00:00Z,1951-12-31T18:00:00Z
 39,Daggpunktstemperatur,1952,data/parameter_39/1952.csv,1741,1952-01-01T06:00:00Z,1952-12-31T18:00:00Z
 39,Daggpunktstemperatur,1953,data/parameter_39/1953.csv,1999,1953-01-01T06:00:00Z,1953-12-31T18:00:00Z
@@ -596,7 +596,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 39,Daggpunktstemperatur,2023,data/parameter_39/2023.csv,8698,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 39,Daggpunktstemperatur,2024,data/parameter_39/2024.csv,8763,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 39,Daggpunktstemperatur,2025,data/parameter_39/2025.csv,8733,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-39,Daggpunktstemperatur,2026,data/parameter_39/2026.csv,6646,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+39,Daggpunktstemperatur,2026,data/parameter_39/2026.csv,6648,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
 4,Vindhastighet,1942,data/parameter_4/1942.csv,1360,1942-01-09T13:00:00Z,1942-12-31T18:00:00Z
 4,Vindhastighet,1943,data/parameter_4/1943.csv,1433,1943-01-01T01:00:00Z,1943-12-31T18:00:00Z
 4,Vindhastighet,1944,data/parameter_4/1944.csv,226,1944-03-05T13:00:00Z,1944-12-31T18:00:00Z
@@ -681,7 +681,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 4,Vindhastighet,2023,data/parameter_4/2023.csv,8697,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 4,Vindhastighet,2024,data/parameter_4/2024.csv,8737,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 4,Vindhastighet,2025,data/parameter_4/2025.csv,8711,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-4,Vindhastighet,2026,data/parameter_4/2026.csv,6645,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+4,Vindhastighet,2026,data/parameter_4/2026.csv,6647,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
 5,Nederbördsmängd,1946,data/parameter_5/1946.csv,1,1946-12-31T07:00:01Z,1946-12-31T07:00:01Z
 5,Nederbördsmängd,1947,data/parameter_5/1947.csv,365,1947-01-01T06:00:01Z,1947-12-31T06:00:01Z
 5,Nederbördsmängd,1948,data/parameter_5/1948.csv,366,1948-01-01T06:00:01Z,1948-12-31T06:00:01Z
@@ -829,7 +829,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 6,Relativ Luftfuktighet,2023,data/parameter_6/2023.csv,8699,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 6,Relativ Luftfuktighet,2024,data/parameter_6/2024.csv,8763,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 6,Relativ Luftfuktighet,2025,data/parameter_6/2025.csv,8733,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-6,Relativ Luftfuktighet,2026,data/parameter_6/2026.csv,6646,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+6,Relativ Luftfuktighet,2026,data/parameter_6/2026.csv,6648,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
 7,Nederbördsmängd,2013,data/parameter_7/2013.csv,7518,2013-01-01T01:00:00Z,2013-12-31T23:00:00Z
 7,Nederbördsmängd,2014,data/parameter_7/2014.csv,7419,2014-01-01T00:00:00Z,2014-12-31T23:00:00Z
 7,Nederbördsmängd,2015,data/parameter_7/2015.csv,7397,2015-01-01T01:00:00Z,2015-12-31T22:00:00Z
@@ -843,7 +843,7 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 7,Nederbördsmängd,2023,data/parameter_7/2023.csv,8457,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 7,Nederbördsmängd,2024,data/parameter_7/2024.csv,8565,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 7,Nederbördsmängd,2025,data/parameter_7/2025.csv,8573,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-7,Nederbördsmängd,2026,data/parameter_7/2026.csv,6416,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+7,Nederbördsmängd,2026,data/parameter_7/2026.csv,6418,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
 8,Snödjup,1946,data/parameter_8/1946.csv,1,1946-08-13T06:00:00Z,1946-08-13T06:00:00Z
 8,Snödjup,1947,data/parameter_8/1947.csv,342,1947-01-01T06:00:00Z,1947-12-31T06:00:00Z
 8,Snödjup,1948,data/parameter_8/1948.csv,322,1948-01-01T06:00:00Z,1948-12-31T06:00:00Z
@@ -1009,4 +1009,4 @@ parameter_id,parameter_name,year,path,row_count,min_datetime_utc,max_datetime_ut
 9,Lufttryck reducerat havsytans nivå,2023,data/parameter_9/2023.csv,8706,2023-01-01T00:00:00Z,2023-12-31T23:00:00Z
 9,Lufttryck reducerat havsytans nivå,2024,data/parameter_9/2024.csv,8766,2024-01-01T00:00:00Z,2024-12-31T23:00:00Z
 9,Lufttryck reducerat havsytans nivå,2025,data/parameter_9/2025.csv,8739,2025-01-01T00:00:00Z,2025-12-31T23:00:00Z
-9,Lufttryck reducerat havsytans nivå,2026,data/parameter_9/2026.csv,6649,2026-01-01T00:00:00Z,2026-10-05T06:00:00Z
+9,Lufttryck reducerat havsytans nivå,2026,data/parameter_9/2026.csv,6651,2026-01-01T00:00:00Z,2026-10-05T08:00:00Z
