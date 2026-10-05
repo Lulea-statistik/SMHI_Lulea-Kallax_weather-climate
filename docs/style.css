@@ -53,3 +53,7 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
 .seaice-map-legend{background:rgba(255,255,255,.94);padding:8px 10px;border-radius:6px;box-shadow:0 1px 5px rgba(0,0,0,.18);font-size:12px;line-height:1.5}
 .seaice-map-legend i{display:inline-block;width:18px;height:12px;margin-right:7px;vertical-align:-1px}
 @media(max-width:760px){.seaice-map{height:420px}}
+
+.seaice-map-test-controls{display:flex;gap:8px;align-items:center;margin-top:10px}
+.seaice-map-test-controls button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:7px 11px;cursor:pointer;font:inherit}
+.seaice-map-test-controls button:hover{background:#f8fafc}
