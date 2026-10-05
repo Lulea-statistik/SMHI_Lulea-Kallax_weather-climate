@@ -6,7 +6,7 @@
 
   <link rel="icon" type="image/png" href="favicon.png?v=3">
 
-  <link rel="stylesheet" href="style.css?v=37">
+  <link rel="stylesheet" href="style.css?v=38">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -33,6 +33,7 @@
   <button data-page="vegetation">Vegetationsperiod</button>
   <button data-page="lightning">Blixt</button>
   <button data-page="seaice">Havsis</button>
+  <button data-page="algae">Alger</button>
   <button data-page="dateweather">Väder efter datum</button>
   <button data-page="data">Data</button>
 </nav>
@@ -185,6 +186,29 @@
     <div class="chart-card"><h2>Issäsongens längd</h2><p class="hint">Antal kalenderdygn mellan första och sista kartdatum med is inom Luleås havsyta. Måttet påverkas av datatäckningen i arkivet.</p><canvas id="seaIceLength"></canvas></div>
   </section>
 
+
+  <section id="page-algae" class="page">
+    <div class="source-note"><b>Alger – test:</b> SMHI:s <i>SE.SR Ytansamling av alger</i> visar dagliga satellitbaserade analyser av cyanobakterier i Östersjön. Kartan nedan klipper SMHI:s geometrier mot Luleå kommuns havsyta, på samma sätt som havsiskartan. <b>Ytansamling</b> betyder att blomningen koncentrerats vid ytan, medan <b>risk för ytansamling</b> används när blomningen är otydligare eller ligger under ytan. Moln och saknade satellitdata redovisas separat eftersom de begränsar vad satelliten kan se.</div>
+    <div class="chart-card full seaice-map-card">
+      <h2>Cyanobakterier i Luleås havsområde</h2>
+      <p class="hint">Testversion för senaste sommarsäsongen. Reglaget fungerar som på havsissidan: endast vald dags geometrier laddas. Den röda linjen visar Luleås kommunala havsyta.</p>
+      <div id="algaeMap" class="seaice-map" aria-label="Interaktiv karta över SMHI:s alganalys i Luleås havsområde"></div>
+      <div class="seaice-season-controls">
+        <div class="seaice-season-control-row">
+          <label for="algaeSeasonSlider"><b id="algaeSeasonLabel">Algsäsong</b></label>
+          <span id="algaeSeasonDateLabel">Laddar datum…</span>
+        </div>
+        <input id="algaeSeasonSlider" type="range" min="0" max="0" value="0" step="1" disabled>
+        <div class="seaice-season-nav">
+          <button id="algaePrevDate" type="button" disabled>Föregående</button>
+          <button id="algaeNextDate" type="button" disabled>Nästa</button>
+        </div>
+      </div>
+      <p id="algaeMapStatus" class="hint"></p>
+      <p id="algaeSeasonStatus" class="hint"></p>
+    </div>
+  </section>
+
   <section id="page-dateweather" class="page">
     <div class="page-tools date-weather-tools">
       <label>Datum<input id="dateWeatherPicker" type="date"></label>
@@ -199,5 +223,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=60"></script>
+<script src="app.js?v=61"></script>
 </body></html>
