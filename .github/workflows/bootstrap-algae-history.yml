@@ -1,0 +1,54 @@
+name: Bootstrap SMHI algae history
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/bootstrap-algae-history.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: smhi-algae-history-bootstrap
+  cancel-in-progress: false
+
+jobs:
+  bootstrap-algae:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Bootstrap complete algae history
+        env:
+          RUN_MODE: bootstrap
+        run: python scripts/fetch_algae.py
+
+      - name: Commit algae history
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain docs/algae data/algae)" ]; then
+            echo "No algae changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/algae data/algae
+          git commit -m "Bootstrap SMHI algae history"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
