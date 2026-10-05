@@ -6661,3 +6661,4 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162015,Luleå Sol,10,Solskenstid,"summa 1 timme, 1 gång/tim",sekund,2026-10-05T11:00:00Z,2026-10-05T13:00:00+02:00,1791198000000,,0,0,Y,,latest-months
 162015,Luleå Sol,10,Solskenstid,"summa 1 timme, 1 gång/tim",sekund,2026-10-05T12:00:00Z,2026-10-05T14:00:00+02:00,1791201600000,,198,198,Y,,latest-months
 162015,Luleå Sol,10,Solskenstid,"summa 1 timme, 1 gång/tim",sekund,2026-10-05T13:00:00Z,2026-10-05T15:00:00+02:00,1791205200000,,0,0,Y,,latest-months
+162015,Luleå Sol,10,Solskenstid,"summa 1 timme, 1 gång/tim",sekund,2026-10-05T14:00:00Z,2026-10-05T16:00:00+02:00,1791208800000,,0,0,Y,,latest-months
