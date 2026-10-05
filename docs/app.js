@@ -270,19 +270,8 @@ function renderLightning(f){
     data:{labels:years,datasets:annualClasses.map(x=>({label:x.label,stack:'surface',backgroundColor:x.color,borderWidth:0,data:rows.map(r=>{
       const uncertain=r.uncertain_area_500||0;
       if(x.key==='uncertain_area_500')return uncertain;
-      const totalBase=(r.mainland||0)+(r.islands||0)+(r.sea||0)+(r.inland_water||0);
-      if(!totalBase||!uncertain)return r[x.key]||0;
-      // Keep the annual stack exclusive: uncertain observations are removed
-      // proportionally from their base surface only when pair-level details are
-      // unavailable in older cached data. After the next data build exact values
-      // are supplied through uncertainty_pairs.
-      const pairMap=r.uncertainty_pairs||{};
-      let subtract=0;
-      Object.entries(pairMap).forEach(([pair,n])=>{if(pair.split('__').includes(x.key))subtract+=n;});
-      if((r.municipality_boundary_uncertain_500||0)>0 && subtract===0){
-        subtract=Math.round((r[x.key]||0)/totalBase*(r.municipality_boundary_uncertain_500||0));
-      }
-      return Math.max(0,(r[x.key]||0)-subtract);
+      const bySurface=r.uncertain_by_surface||{};
+      return Math.max(0,(r[x.key]||0)-(bySurface[x.key]||0));
     })}))},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Math.round(c.parsed.y)}}},
