@@ -35,6 +35,11 @@ SUMMARY_PATH = DATA_DIR / "summary.json"
 MAP_GEOJSON_PATH = ROOT / "docs" / "seaice_analysis_area.geojson"
 TEST_ICE_DATE = date(2023, 12, 14)
 TEST_ICE_GEOJSON_PATH = ROOT / "docs" / "seaice_test_2023-12-14.geojson"
+SEASON_MAP_LABEL = "2023/24"
+SEASON_MAP_START = date(2023, 10, 15)
+SEASON_MAP_END = date(2024, 6, 6)
+SEASON_MAP_DIR = ROOT / "docs" / "seaice" / "2023-24"
+SEASON_MAP_MANIFEST = SEASON_MAP_DIR / "manifest.json"
 NMD_GEO_PATH = ROOT / "data" / "lightning" / "geography_nmd.geojson"
 
 API_BASE = "https://opendata-download-icemap.smhi.se/api/version/1.0"
@@ -403,6 +408,107 @@ def save_test_ice_geojson(raw: bytes, sea_geom, source_date: str):
     print(f"Sea ice test polygons: {len(features)} features written for {source_date}.")
 
 
+
+def build_season_map_files(rows, sea_geom):
+    """Build a lazy-loadable GeoJSON archive for the 2023/24 test season.
+
+    One file is written per available SMHI map date. The browser therefore
+    downloads only the selected day rather than the whole winter at once.
+    Existing day files are reused, making later workflow runs cheap.
+    """
+    season_dates = [
+        date.fromisoformat(k)
+        for k, r in sorted(rows.items())
+        if r.get("season") == SEASON_MAP_LABEL
+        and SEASON_MAP_START <= date.fromisoformat(k) <= SEASON_MAP_END
+    ]
+    if not season_dates:
+        print(f"Sea ice season map: no dates available for {SEASON_MAP_LABEL}.")
+        return
+
+    SEASON_MAP_DIR.mkdir(parents=True, exist_ok=True)
+    manifest_dates = []
+
+    for i, d in enumerate(season_dates, 1):
+        out_path = SEASON_MAP_DIR / f"{d.isoformat()}.geojson"
+        if not out_path.exists():
+            package = daily_package_url(d)
+            if not package:
+                continue
+            r = get(package)
+            if r is None:
+                continue
+
+            features = []
+            to_4326 = Transformer.from_crs(TARGET_CRS, "EPSG:4326", always_xy=True).transform
+            for geom, props, _ in read_shapefile_zip(r.content):
+                if geom.is_empty:
+                    continue
+                clipped = geom.intersection(sea_geom)
+                if clipped.is_empty or clipped.area <= 0:
+                    continue
+                ice_type = as_int(props.get("type"))
+                if ice_type is None or ice_type < 2:
+                    continue
+                simplified = clipped.simplify(20, preserve_topology=True)
+                if simplified.is_empty:
+                    continue
+                features.append({
+                    "type": "Feature",
+                    "properties": {
+                        "ice_type": ice_type,
+                        "ice_type_name": ICE_TYPES.get(ice_type, f"type_{ice_type}"),
+                        "iceact": normalize_iceact(props.get("iceact")),
+                        "mean_thickness_cm": as_number(props.get("icetck")),
+                        "max_thickness_cm": as_number(props.get("icemax")),
+                        "min_thickness_cm": as_number(props.get("icemin")),
+                        "source_date": d.isoformat(),
+                    },
+                    "geometry": mapping(transform(to_4326, simplified)),
+                })
+
+            fc = {
+                "type": "FeatureCollection",
+                "properties": {
+                    "source": "SMHI SE.SR Analyskarta havsis",
+                    "source_date": d.isoformat(),
+                    "season": SEASON_MAP_LABEL,
+                    "simplification_m": 20,
+                },
+                "features": features,
+            }
+            out_path.write_text(
+                json.dumps(fc, ensure_ascii=False, separators=(",", ":")),
+                encoding="utf-8",
+            )
+
+        if out_path.exists():
+            manifest_dates.append({
+                "date": d.isoformat(),
+                "file": out_path.name,
+                "ice_share_pct": rows[d.isoformat()].get("ice_share_pct"),
+                "mean_ice_thickness_cm": rows[d.isoformat()].get("mean_ice_thickness_cm"),
+                "max_ice_thickness_cm": rows[d.isoformat()].get("max_ice_thickness_cm"),
+            })
+
+        if i % 25 == 0:
+            print(f"Sea ice season map progress {i}/{len(season_dates)}.")
+
+    manifest = {
+        "season": SEASON_MAP_LABEL,
+        "start_date": SEASON_MAP_START.isoformat(),
+        "end_date": SEASON_MAP_END.isoformat(),
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        "simplification_m": 20,
+        "dates": manifest_dates,
+    }
+    SEASON_MAP_MANIFEST.write_text(
+        json.dumps(manifest, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8",
+    )
+    print(f"Sea ice season map: {len(manifest_dates)} lazy-loadable dates written for {SEASON_MAP_LABEL}.")
+
+
 def load_daily():
     rows = {}
     if not DAILY_PATH.exists():
@@ -563,6 +669,8 @@ def main():
                     r = get(package)
                     if r is not None:
                         save_test_ice_geojson(r.content, sea_geom, TEST_ICE_DATE.isoformat())
+            if not SEASON_MAP_MANIFEST.exists():
+                build_season_map_files(rows, sea_geom)
             build_summary(rows)
             return 0
         print(f"Sea-ice incremental scan: {len(candidates)} recent dates within the 15 October-6 June update window.")
@@ -604,6 +712,8 @@ def main():
             r = get(package)
             if r is not None:
                 save_test_ice_geojson(r.content, sea_geom, TEST_ICE_DATE.isoformat())
+    if not SEASON_MAP_MANIFEST.exists():
+        build_season_map_files(rows, sea_geom)
     save_daily(rows)
     build_summary(rows)
     print(f"Sea ice: {len(rows):,} daily Lulea summaries stored; {updated} maps processed this run.")
