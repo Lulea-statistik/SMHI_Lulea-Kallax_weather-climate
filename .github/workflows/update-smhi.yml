@@ -63,6 +63,11 @@ jobs:
           RUN_MODE: ${{ github.event.inputs.mode || 'auto' }}
         run: python scripts/fetch_seaice.py
 
+      - name: Update SMHI algae map test
+        env:
+          RUN_MODE: ${{ github.event.inputs.mode || 'auto' }}
+        run: python scripts/fetch_algae.py
+
       - name: Build GitHub Pages report data
         run: python scripts/build_dashboard_data.py
 
@@ -76,7 +81,7 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data metadata docs/dashboard_data.json docs/daily docs/seaice_analysis_area.geojson
+          git add data metadata docs/dashboard_data.json docs/daily docs/seaice_analysis_area.geojson docs/algae
           if [ -f docs/seaice_test_2023-12-14.geojson ]; then
             git add docs/seaice_test_2023-12-14.geojson
           fi
