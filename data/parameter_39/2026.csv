@@ -6658,3 +6658,5 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162860,Luleå-Kallax Flygplats,39,Daggpunktstemperatur,"momentanvärde, 1 gång/tim",celsius,2026-10-05T17:00:00Z,2026-10-05T19:00:00+02:00,1791219600000,,9.6,9.6,G,,latest-months
 162860,Luleå-Kallax Flygplats,39,Daggpunktstemperatur,"momentanvärde, 1 gång/tim",celsius,2026-10-05T18:00:00Z,2026-10-05T20:00:00+02:00,1791223200000,,10.1,10.1,G,,latest-months
 162860,Luleå-Kallax Flygplats,39,Daggpunktstemperatur,"momentanvärde, 1 gång/tim",celsius,2026-10-05T19:00:00Z,2026-10-05T21:00:00+02:00,1791226800000,,10.5,10.5,G,,latest-months
+162860,Luleå-Kallax Flygplats,39,Daggpunktstemperatur,"momentanvärde, 1 gång/tim",celsius,2026-10-05T20:00:00Z,2026-10-05T22:00:00+02:00,1791230400000,,11.1,11.1,G,,latest-months
+162860,Luleå-Kallax Flygplats,39,Daggpunktstemperatur,"momentanvärde, 1 gång/tim",celsius,2026-10-05T21:00:00Z,2026-10-05T23:00:00+02:00,1791234000000,,6.4,6.4,G,,latest-months

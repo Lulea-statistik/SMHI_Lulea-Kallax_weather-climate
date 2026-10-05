@@ -1136,7 +1136,16 @@
       "surface_pct_sea": 0.0,
       "risk_pct_sea": 0.0,
       "cloud_pct_sea": 0.0,
-      "classified_area_km2": 0.0
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2595.592,
+      "other_pct_sea": 96.014,
+      "classes_area_km2": {
+        "class_1": 2595.592
+      },
+      "classes_pct_sea": {
+        "class_1": 96.014
+      },
+      "classified_area_km2": 2595.592
     },
     {
       "date": "2026-09-18",
@@ -1150,7 +1159,16 @@
       "surface_pct_sea": 0.0,
       "risk_pct_sea": 0.0,
       "cloud_pct_sea": 0.0,
-      "classified_area_km2": 0.0
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2342.478,
+      "other_pct_sea": 86.651,
+      "classes_area_km2": {
+        "class_1": 2342.478
+      },
+      "classes_pct_sea": {
+        "class_1": 86.651
+      },
+      "classified_area_km2": 2342.478
     },
     {
       "date": "2026-09-20",
@@ -1164,7 +1182,16 @@
       "surface_pct_sea": 0.0,
       "risk_pct_sea": 0.0,
       "cloud_pct_sea": 0.0,
-      "classified_area_km2": 0.0
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2703.263,
+      "other_pct_sea": 99.997,
+      "classes_area_km2": {
+        "class_1": 2703.263
+      },
+      "classes_pct_sea": {
+        "class_1": 99.997
+      },
+      "classified_area_km2": 2703.263
     },
     {
       "date": "2026-09-25",
@@ -1178,7 +1205,16 @@
       "surface_pct_sea": 0.0,
       "risk_pct_sea": 0.0,
       "cloud_pct_sea": 0.0,
-      "classified_area_km2": 0.0
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2689.646,
+      "other_pct_sea": 99.493,
+      "classes_area_km2": {
+        "class_1": 2689.646
+      },
+      "classes_pct_sea": {
+        "class_1": 99.493
+      },
+      "classified_area_km2": 2689.646
     },
     {
       "date": "2026-09-28",
@@ -1192,7 +1228,16 @@
       "surface_pct_sea": 0.0,
       "risk_pct_sea": 0.0,
       "cloud_pct_sea": 0.0,
-      "classified_area_km2": 0.0
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 2703.263,
+      "other_pct_sea": 99.997,
+      "classes_area_km2": {
+        "class_1": 2703.263
+      },
+      "classes_pct_sea": {
+        "class_1": 99.997
+      },
+      "classified_area_km2": 2703.263
     },
     {
       "date": "2026-09-30",
@@ -1206,7 +1251,16 @@
       "surface_pct_sea": 0.0,
       "risk_pct_sea": 0.0,
       "cloud_pct_sea": 0.0,
-      "classified_area_km2": 0.0
+      "no_data_pct_sea": 0.0,
+      "other_area_km2": 497.122,
+      "other_pct_sea": 18.389,
+      "classes_area_km2": {
+        "class_1": 497.122
+      },
+      "classes_pct_sea": {
+        "class_1": 18.389
+      },
+      "classified_area_km2": 497.122
     }
   ]
 }

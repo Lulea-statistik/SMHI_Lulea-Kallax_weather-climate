@@ -6618,3 +6618,5 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162860,Luleå-Kallax Flygplats,16,Total molnmängd,"momentanvärde, 1 gång/tim",procent,2026-10-05T17:00:00Z,2026-10-05T19:00:00+02:00,1791219600000,,88,88,G,,latest-months
 162860,Luleå-Kallax Flygplats,16,Total molnmängd,"momentanvärde, 1 gång/tim",procent,2026-10-05T18:00:00Z,2026-10-05T20:00:00+02:00,1791223200000,,88,88,G,,latest-months
 162860,Luleå-Kallax Flygplats,16,Total molnmängd,"momentanvärde, 1 gång/tim",procent,2026-10-05T19:00:00Z,2026-10-05T21:00:00+02:00,1791226800000,,75,75,G,,latest-months
+162860,Luleå-Kallax Flygplats,16,Total molnmängd,"momentanvärde, 1 gång/tim",procent,2026-10-05T20:00:00Z,2026-10-05T22:00:00+02:00,1791230400000,,100,100,G,,latest-months
+162860,Luleå-Kallax Flygplats,16,Total molnmängd,"momentanvärde, 1 gång/tim",procent,2026-10-05T21:00:00Z,2026-10-05T23:00:00+02:00,1791234000000,,75,75,G,,latest-months
