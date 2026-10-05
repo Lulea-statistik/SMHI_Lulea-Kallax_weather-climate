@@ -219,6 +219,7 @@ def normalize_iceact(v):
 
 def aggregate_day(d: date, raw: bytes, sea_geom):
     sea_area = sea_geom.area
+    coverage_geoms = []
     ice_geoms = []
     fast_geoms = []
     concentration_geoms = defaultdict(list)
@@ -241,6 +242,7 @@ def aggregate_day(d: date, raw: bytes, sea_geom):
         if area <= 0:
             continue
 
+        coverage_geoms.append(clipped)
         ice_type = as_int(props.get("type"))
         iceact = normalize_iceact(props.get("iceact"))
         mean_t = as_number(props.get("icetck"))
@@ -266,6 +268,7 @@ def aggregate_day(d: date, raw: bytes, sea_geom):
             if feature_min is not None:
                 min_t = feature_min if min_t is None else min(min_t, feature_min)
 
+    coverage_area = unary_union(coverage_geoms).area if coverage_geoms else 0.0
     ice_area = unary_union(ice_geoms).area if ice_geoms else 0.0
     fast_area = unary_union(fast_geoms).area if fast_geoms else 0.0
     concentration = {
@@ -281,10 +284,14 @@ def aggregate_day(d: date, raw: bytes, sea_geom):
         "date": effective_date,
         "season": season_label(date.fromisoformat(effective_date)),
         "sea_area_km2": round(sea_area / 1e6, 3),
+        "analysis_coverage_area_km2": round(coverage_area / 1e6, 3),
+        "analysis_coverage_pct": round(100 * coverage_area / sea_area, 2) if sea_area else 0.0,
+        "uncovered_area_km2": round(max(0.0, sea_area - coverage_area) / 1e6, 3),
         "ice_area_km2": round(ice_area / 1e6, 3),
-        "ice_share_pct": round(100 * ice_area / sea_area, 2) if sea_area else 0.0,
+        "ice_share_pct": round(100 * ice_area / coverage_area, 2) if coverage_area else 0.0,
+        "ice_share_municipal_pct": round(100 * ice_area / sea_area, 2) if sea_area else 0.0,
         "fast_ice_area_km2": round(fast_area / 1e6, 3),
-        "fast_ice_share_pct": round(100 * fast_area / sea_area, 2) if sea_area else 0.0,
+        "fast_ice_share_pct": round(100 * fast_area / coverage_area, 2) if coverage_area else 0.0,
         "mean_ice_thickness_cm": round(weighted_t / weighted_area, 1) if weighted_area else None,
         "max_ice_thickness_cm": round(max_t, 1) if max_t is not None else None,
         "min_ice_thickness_cm": round(min_t, 1) if min_t is not None else None,
@@ -305,8 +312,12 @@ def load_daily():
                     "date": r["date"],
                     "season": r["season"],
                     "sea_area_km2": float(r["sea_area_km2"]),
+                    "analysis_coverage_area_km2": float(r["analysis_coverage_area_km2"]) if r.get("analysis_coverage_area_km2") else None,
+                    "analysis_coverage_pct": float(r["analysis_coverage_pct"]) if r.get("analysis_coverage_pct") else None,
+                    "uncovered_area_km2": float(r["uncovered_area_km2"]) if r.get("uncovered_area_km2") else None,
                     "ice_area_km2": float(r["ice_area_km2"]),
                     "ice_share_pct": float(r["ice_share_pct"]),
+                    "ice_share_municipal_pct": float(r["ice_share_municipal_pct"]) if r.get("ice_share_municipal_pct") else float(r["ice_share_pct"]),
                     "fast_ice_area_km2": float(r["fast_ice_area_km2"]),
                     "fast_ice_share_pct": float(r["fast_ice_share_pct"]),
                     "mean_ice_thickness_cm": float(r["mean_ice_thickness_cm"]) if r["mean_ice_thickness_cm"] else None,
@@ -324,7 +335,8 @@ def load_daily():
 def save_daily(rows):
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     fields = [
-        "date", "season", "sea_area_km2", "ice_area_km2", "ice_share_pct",
+        "date", "season", "sea_area_km2", "analysis_coverage_area_km2", "analysis_coverage_pct",
+        "uncovered_area_km2", "ice_area_km2", "ice_share_pct", "ice_share_municipal_pct",
         "fast_ice_area_km2", "fast_ice_share_pct", "mean_ice_thickness_cm",
         "max_ice_thickness_cm", "min_ice_thickness_cm",
         "concentration_area_km2", "ice_type_area_km2", "source_crs",
@@ -380,7 +392,7 @@ def build_summary(rows):
         "analysis_crs": "EPSG:3006",
         "source_crs_seen": source_crs,
         "geography": "Lulea municipality sea area from the repository's static NMD geography",
-        "method_note": "Daily SMHI sea-ice polygons are reprojected to EPSG:3006 and intersected with Lulea municipality sea geometry before area statistics are calculated.",
+        "method_note": "Daily SMHI sea-ice polygons are reprojected to EPSG:3006 and intersected with Lulea municipality sea geometry before area statistics are calculated. Ice-share percentages use the portion of the municipal sea area actually covered by that day's SMHI analysis polygons as denominator; total municipal sea area and coverage percentage are retained separately for quality control.",
         "daily": daily,
         "seasonal": seasonal,
     }
@@ -410,6 +422,15 @@ def main():
     rows = load_daily()
     sea_geom = load_lulea_sea_3006()
     mode = os.environ.get("RUN_MODE", "auto")
+
+    # Schema v2 adds explicit map-coverage quality metrics. Existing historical
+    # rows from v1 must be rebuilt once because those values cannot be reconstructed
+    # from the aggregated CSV alone.
+    needs_coverage_rebuild = bool(rows) and any(r.get("analysis_coverage_area_km2") is None for r in rows.values())
+    if needs_coverage_rebuild and mode not in {"bootstrap", "refresh-all"}:
+        print("Sea-ice quality schema changed: historical rows need one refresh-all run to calculate map coverage.")
+        build_summary(rows)
+        return 0
 
     today = datetime.now(timezone.utc).date()
     if mode in {"bootstrap", "refresh-all"} or not rows:
