@@ -84,3 +84,10 @@ Geografin byggs från SCB:s öppna WFS-data. DeSO 2025 används som landmask och
 Detta är en första analysgeometri. SCB:s geometri är användbar för rapporten men bör senare ersättas med Lantmäteriets mer exakta geometri om sådan görs tillgänglig i projektet.
 
 SMHI anger också ett metodbrott i blixtlokaliseringssystemet under 2014, vilket måste beaktas vid trendtolkning.
+
+
+### Effektiv blixtuppdatering
+
+Efter att den historiska blixtserien har hämtats en gång används den sparade historiken som bas. Normala `auto`- och `update`-körningar traverserar inte längre SMHI:s historiska arkiv från 2012. I stället hämtas endast de senaste 14 dagarnas dagliga CSV-resurser direkt, vilket även fångar sena rättningar utan att göra tusentals historiska anrop.
+
+`bootstrap` och `refresh-all` är de enda lägen som hämtar hela historiken. Vid full historikhämtning används enbart CSV-representationen av varje dag, inte parallella CSV/JSON/XML-kopior.
