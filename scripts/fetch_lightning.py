@@ -509,51 +509,97 @@ def build_summary(rows, geo):
     days = defaultdict(set)
     days_by_month = defaultdict(set)
     current = defaultdict(list)
+
+    flag_names = []
+    for d in UNCERTAINTY_DISTANCES_M:
+        flag_names.extend([f"coast_uncertain_{d}", f"municipality_boundary_uncertain_{d}"])
+
     for r in rows.values():
         cls = r["surface_class"]
         y, m = int(r["year"]), int(r["month"])
         annual[y][cls] += 1
         monthly[m][cls] += 1
         monthly_by_year[(y, m)][cls] += 1
+        for flag in flag_names:
+            try:
+                hit = int(r.get(flag, 0) or 0)
+            except (TypeError, ValueError):
+                hit = 0
+            if hit:
+                annual[y][flag] += 1
+                monthly[m][flag] += 1
+                monthly_by_year[(y, m)][flag] += 1
         days[y].add(r["datetime_utc"][:10])
         days_by_month[(y, m)].add(r["datetime_utc"][:10])
         try:
             current[y].append(abs(float(r["current_ka"])))
         except (TypeError, ValueError):
             pass
-    classes = ["mainland", "islands", "sea", "coast_uncertain", "inland_water"]
+
+    classes = ["mainland", "islands", "sea", "inland_water", "other"]
+
+    def add_uncertainty_fields(item, vals, total):
+        for d in UNCERTAINTY_DISTANCES_M:
+            coast = vals.get(f"coast_uncertain_{d}", 0)
+            muni = vals.get(f"municipality_boundary_uncertain_{d}", 0)
+            item[f"coast_uncertain_{d}"] = coast
+            item[f"coast_uncertain_pct_{d}"] = round(100 * coast / max(1, total), 2)
+            item[f"municipality_boundary_uncertain_{d}"] = muni
+            item[f"municipality_boundary_uncertain_pct_{d}"] = round(100 * muni / max(1, total), 2)
+        # Backward-compatible 500 m names for the existing dashboard.
+        item["coast_uncertain"] = item["coast_uncertain_500"]
+        item["uncertain_pct"] = item["coast_uncertain_pct_500"]
+        item["municipality_boundary_uncertain"] = item["municipality_boundary_uncertain_500"]
+        item["municipality_boundary_uncertain_pct"] = item["municipality_boundary_uncertain_pct_500"]
+
     annual_rows = []
     for y in sorted(annual):
-        item = {"year": y, **{c: annual[y].get(c, 0) for c in classes}, "lightning_days": len(days[y])}
-        item["classified_total"] = item["mainland"] + item["islands"] + item["sea"]
-        item["uncertain_pct"] = round(100 * item["coast_uncertain"] / max(1, item["classified_total"] + item["coast_uncertain"]), 2)
+        item = {"year": y, **{cl: annual[y].get(cl, 0) for cl in classes}, "lightning_days": len(days[y])}
+        total = sum(item[cl] for cl in classes)
+        item["classified_total"] = item["mainland"] + item["islands"] + item["sea"] + item["inland_water"]
+        item["records_total"] = total
+        add_uncertainty_fields(item, annual[y], total)
         item["max_abs_current_ka"] = round(max(current[y]), 1) if current[y] else None
         annual_rows.append(item)
+
     monthly_rows = []
     for m in range(1, 13):
-        monthly_rows.append({"month": m, **{c: monthly[m].get(c, 0) for c in classes}})
+        item = {"month": m, **{cl: monthly[m].get(cl, 0) for cl in classes}}
+        total = sum(item[cl] for cl in classes)
+        add_uncertainty_fields(item, monthly[m], total)
+        monthly_rows.append(item)
+
     monthly_year_rows = []
     for (y, m), vals in sorted(monthly_by_year.items()):
-        monthly_year_rows.append({"year": y, "month": m, "lightning_days": len(days_by_month[(y, m)]), **{c: vals.get(c, 0) for c in classes}})
+        item = {
+            "year": y,
+            "month": m,
+            "lightning_days": len(days_by_month[(y, m)]),
+            **{cl: vals.get(cl, 0) for cl in classes},
+        }
+        total = sum(item[cl] for cl in classes)
+        add_uncertainty_fields(item, vals, total)
+        monthly_year_rows.append(item)
+
     summary = {
         "source": "SMHI Blixtdata - historiska arkivdata",
         "source_url": "https://www.smhi.se/data/sok-oppna-data-i-utforskaren/blixtdata-historiska-arkivdata",
         "start_date": "2012-01-02",
         "method_break": "2014",
         "coast_uncertainty_m": COAST_UNCERTAINTY_M,
+        "uncertainty_distances_m": list(UNCERTAINTY_DISTANCES_M),
         "mainland_component_min_km2": MAINLAND_MIN_AREA_KM2,
         "geography_source": "Nationella Marktackedata (NMD), Naturvardsverket public WMS + Region Norrbotten kommungrans",
-        "geography_note": "NMD klass 61 används för inlandsvatten och klass 62 för hav. WMS-paletten avkodas till dessa dokumenterade vattenklasser. Mindre marina landkomponenter redovisas som oar. Geografin lagras statiskt och ateranvands vid dagliga korningar.",
+        "geography_note": "NMD klass 61 används för inlandsvatten och klass 62 för hav. Mindre marina landkomponenter redovisas som oar. Geografin lagras statiskt och ateranvands vid dagliga korningar.",
         "geography_version": GEOGRAPHY_VERSION,
         "uncertainty_version": UNCERTAINTY_VERSION,
-        "uncertainty_note": "Kustosakerhet avser endast marin strandlinje (fastland/hav eller o/hav). Kommungransosakerhet avser endast grans mot andra kommuner, inte kommunens havsgrans. 250/500/1000 m redovisas separat.",
+        "uncertainty_note": "Kustosakerhet avser endast marin strandlinje (fastland/hav eller o/hav). Kommungransosakerhet avser endast grans mot andra kommuner, inte kommunens havsgrans. 250/500/1000 m redovisas separat. Grundklassen behalls aven nar en observation ar osaker.",
         "annual": annual_rows,
         "monthly": monthly_rows,
         "monthly_by_year": monthly_year_rows,
         "records": len(rows),
     }
     SUMMARY_PATH.write_text(json.dumps(summary, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-
 
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
