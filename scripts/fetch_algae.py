@@ -165,7 +165,13 @@ def process_day(d: date, raw_features, sea_wgs84):
         area_km2[cat] = round(unary_union(geoms).area / 1e6, 3)
 
     sea_area = sea_3006.area / 1e6
-    visible_area = sum(area_km2.get(k, 0.0) for k in ("surface", "risk", "cloud", "no_data"))
+    known = {"surface", "risk", "cloud", "no_data"}
+    classified_area = sum(area_km2.values())
+    other_area = sum(v for k, v in area_km2.items() if k not in known)
+    classes_pct = {
+        k: round(100 * v / sea_area, 3) if sea_area else 0.0
+        for k, v in sorted(area_km2.items())
+    }
     return {
         "type": "FeatureCollection",
         "properties": {
@@ -186,7 +192,12 @@ def process_day(d: date, raw_features, sea_wgs84):
         "surface_pct_sea": round(100 * area_km2.get("surface", 0.0) / sea_area, 3) if sea_area else 0.0,
         "risk_pct_sea": round(100 * area_km2.get("risk", 0.0) / sea_area, 3) if sea_area else 0.0,
         "cloud_pct_sea": round(100 * area_km2.get("cloud", 0.0) / sea_area, 3) if sea_area else 0.0,
-        "classified_area_km2": round(visible_area, 3),
+        "no_data_pct_sea": round(100 * area_km2.get("no_data", 0.0) / sea_area, 3) if sea_area else 0.0,
+        "other_area_km2": round(other_area, 3),
+        "other_pct_sea": round(100 * other_area / sea_area, 3) if sea_area else 0.0,
+        "classes_area_km2": {k: round(v, 3) for k, v in sorted(area_km2.items())},
+        "classes_pct_sea": classes_pct,
+        "classified_area_km2": round(classified_area, 3),
     }
 
 
@@ -212,8 +223,21 @@ def main():
             existing = {}
 
     for i, d in enumerate(dates, 1):
-        if RUN_MODE not in {"refresh-all"} and d.isoformat() in existing and (out_dir / existing[d.isoformat()]["file"]).exists():
-            continue
+        old_meta = existing.get(d.isoformat())
+        old_path = out_dir / old_meta["file"] if old_meta and old_meta.get("file") else None
+        if RUN_MODE not in {"refresh-all"} and old_meta and old_path and old_path.exists():
+            if "classes_pct_sea" in old_meta:
+                continue
+            try:
+                saved = json.loads(old_path.read_text(encoding="utf-8"))
+                geo, meta = process_day(d, saved.get("features", []), sea)
+                if geo["features"]:
+                    old_path.write_text(json.dumps(geo, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+                    existing[d.isoformat()] = meta
+                    print(f"Algae {d}: backfilled class areas from saved GeoJSON")
+                    continue
+            except Exception as exc:
+                print(f"Algae {d}: local backfill warning: {exc}")
         try:
             features = fetch_day(d, bbox)
         except Exception as exc:
