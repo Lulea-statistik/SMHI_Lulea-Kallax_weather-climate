@@ -58,6 +58,11 @@ jobs:
           RUN_MODE: ${{ github.event.inputs.mode || 'auto' }}
         run: python scripts/fetch_lightning.py
 
+      - name: Update SMHI sea ice history
+        env:
+          RUN_MODE: ${{ github.event.inputs.mode || 'auto' }}
+        run: python scripts/fetch_seaice.py
+
       - name: Build GitHub Pages report data
         run: python scripts/build_dashboard_data.py
 
