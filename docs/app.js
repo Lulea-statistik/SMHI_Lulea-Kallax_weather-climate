@@ -342,18 +342,45 @@ function seaIceSeasonDateRange(startYear){
 
 function buildSeaIceSeasonTimeline(dailyRows,seasonalRows){
   const byDate=new Map(dailyRows.map(r=>[r.date,r]));
-  const labels=[],rows=[];
+  const labels=[],rows=[],seasonKeys=[];
   seasonalRows.forEach((s,idx)=>{
     seaIceSeasonDateRange(s.start_year).forEach(date=>{
       labels.push(date);
       rows.push(byDate.get(date)||null);
+      seasonKeys.push(s.season);
     });
     if(idx<seasonalRows.length-1){
       labels.push('');
       rows.push(null);
+      seasonKeys.push(null);
     }
   });
-  return {labels,rows};
+  return {labels,rows,seasonKeys};
+}
+
+function buildSeaIceMissingTail(timeline,field){
+  const out=Array(timeline.rows.length).fill(null);
+  const seasons=[...new Set(timeline.seasonKeys.filter(Boolean))];
+  seasons.forEach(season=>{
+    const idxs=[];
+    timeline.seasonKeys.forEach((s,i)=>{if(s===season)idxs.push(i);});
+    let lastIdx=-1,lastValue=null;
+    idxs.forEach(i=>{
+      const r=timeline.rows[i];
+      const v=r?r[field]:null;
+      if(v!==null&&v!==undefined&&Number.isFinite(Number(v))){
+        lastIdx=i;
+        lastValue=Number(v);
+      }
+    });
+    if(lastIdx<0)return;
+    const seasonEnd=idxs[idxs.length-1];
+    if(lastIdx>=seasonEnd)return;
+    // Start at the last observed point so the grey dashed segment connects
+    // cleanly to the measured line, then carry that last known value forward.
+    for(let i=lastIdx;i<=seasonEnd;i++)out[i]=lastValue;
+  });
+  return out;
 }
 
 function renderSeaIce(f){
@@ -378,13 +405,20 @@ function renderSeaIce(f){
   if(!has)return;
 
   if(timeline.rows.length){
+    const iceTail=buildSeaIceMissingTail(timeline,'ice_share_pct');
+    const meanTail=buildSeaIceMissingTail(timeline,'mean_ice_thickness_cm');
+    const maxTail=buildSeaIceMissingTail(timeline,'max_ice_thickness_cm');
+
     lineChart('seaIceDaily',timeline.labels,[
-      {label:'Isutbredning',data:timeline.rows.map(r=>r?r.ice_share_pct:null),borderWidth:2,pointRadius:0,spanGaps:false}
+      {label:'Isutbredning',data:timeline.rows.map(r=>r?r.ice_share_pct:null),borderWidth:2,pointRadius:0,spanGaps:false},
+      {label:'Data saknas – sista kända värde',data:iceTail,borderColor:'#9ca3af',backgroundColor:'#9ca3af',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false}
     ],'%');
 
     lineChart('seaIceThickness',timeline.labels,[
       {label:'Medeltjocklek',data:timeline.rows.map(r=>r?r.mean_ice_thickness_cm:null),borderWidth:2,pointRadius:0,spanGaps:false},
-      {label:'Maximal tjocklek',data:timeline.rows.map(r=>r?r.max_ice_thickness_cm:null),borderWidth:2,pointRadius:0,spanGaps:false}
+      {label:'Maximal tjocklek',data:timeline.rows.map(r=>r?r.max_ice_thickness_cm:null),borderWidth:2,pointRadius:0,spanGaps:false},
+      {label:'Saknad data – medel',data:meanTail,borderColor:'#9ca3af',backgroundColor:'#9ca3af',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false},
+      {label:'Saknad data – max',data:maxTail,borderColor:'#6b7280',backgroundColor:'#6b7280',borderDash:[3,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false}
     ],'cm');
   }else{
     destroyChart('seaIceDaily');
