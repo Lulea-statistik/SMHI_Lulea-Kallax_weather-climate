@@ -207,6 +207,16 @@
       <p id="algaeMapStatus" class="hint"></p>
       <p id="algaeSeasonStatus" class="hint"></p>
     </div>
+    <div class="chart-card full">
+      <h2>Andel havsyta per algklass och datum</h2>
+      <p class="hint">Stackade staplar visar hur stor andel av Luleås kommunala havsyta som täcks av varje klass i SMHI:s analys för respektive kartdatum. Moln och saknad satellitdata redovisas som egna klasser och ska inte tolkas som frånvaro av alger. Råa SMHI-klasser som ännu saknar verifierad betydelse visas neutralt med klassnumret.</p>
+      <canvas id="algaeDailyClasses"></canvas>
+    </div>
+    <div class="chart-card full">
+      <h2>Observationsdagar med respektive algklass</h2>
+      <p class="hint">Antal kartdatum under den aktuella algsäsongen då respektive klass förekommer inom Luleås havsyta. Samma dag kan innehålla flera klasser och kan därför räknas i flera staplar.</p>
+      <canvas id="algaeClassDays"></canvas>
+    </div>
   </section>
 
   <section id="page-dateweather" class="page">
@@ -223,5 +233,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=61"></script>
+<script src="app.js?v=62"></script>
 </body></html>
