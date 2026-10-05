@@ -447,6 +447,99 @@ function algaeClassColor(name){
   return '#60a5fa';
 }
 
+function algaeClassLabel(name){
+  const labels={
+    surface:'Ytansamling',
+    risk:'Risk för ytansamling',
+    cloud:'Moln',
+    no_data:'Data saknas'
+  };
+  if(labels[name])return labels[name];
+  const m=String(name||'').match(/^class_(.+)$/);
+  return m?'SMHI klass '+m[1]:(name||'Övrigt');
+}
+
+function algaeClassRows(manifest){
+  const dates=manifest?.dates||[];
+  const keys=new Set();
+  dates.forEach(r=>{
+    const raw=r.classes_pct_sea||{};
+    Object.keys(raw).forEach(k=>keys.add(k));
+    if(!Object.keys(raw).length){
+      if((r.surface_pct_sea||0)>0)keys.add('surface');
+      if((r.risk_pct_sea||0)>0)keys.add('risk');
+      if((r.cloud_pct_sea||0)>0)keys.add('cloud');
+      if((r.no_data_pct_sea||0)>0)keys.add('no_data');
+    }
+  });
+  const order=['surface','risk','cloud','no_data'];
+  return [...keys].sort((a,b)=>{
+    const ai=order.indexOf(a),bi=order.indexOf(b);
+    if(ai>=0||bi>=0)return (ai<0?999:ai)-(bi<0?999:bi);
+    return String(a).localeCompare(String(b),'sv');
+  });
+}
+
+function algaePct(row,key){
+  if(row?.classes_pct_sea&&row.classes_pct_sea[key]!=null)return Number(row.classes_pct_sea[key])||0;
+  const fallback={surface:'surface_pct_sea',risk:'risk_pct_sea',cloud:'cloud_pct_sea',no_data:'no_data_pct_sea'};
+  return fallback[key]&&row?.[fallback[key]]!=null?Number(row[fallback[key]])||0:0;
+}
+
+function renderAlgaeCharts(manifest){
+  const rows=manifest?.dates||[];
+  const keys=algaeClassRows(manifest);
+  if(!el('algaeDailyClasses')||!el('algaeClassDays'))return;
+
+  destroyChart('algaeDailyClasses');
+  destroyChart('algaeClassDays');
+
+  if(!rows.length||!keys.length){
+    const msg='Klassarealer saknas i nuvarande manifest. Nästa algkörning fyller på dem från de redan sparade kartfilerna.';
+    const a=el('algaeDailyClasses')?.parentElement?.querySelector('.hint');
+    const b=el('algaeClassDays')?.parentElement?.querySelector('.hint');
+    if(a)a.textContent=msg;
+    if(b)b.textContent=msg;
+    return;
+  }
+
+  charts.algaeDailyClasses=new Chart(el('algaeDailyClasses'),{
+    type:'bar',
+    data:{
+      labels:rows.map(r=>r.date),
+      datasets:keys.map(k=>({
+        label:algaeClassLabel(k),
+        data:rows.map(r=>algaePct(r,k)),
+        backgroundColor:algaeClassColor(k),
+        borderWidth:0,
+        stack:'algae'
+      }))
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:2})+' %'}}},
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:24,maxRotation:55,minRotation:35}},
+        y:{stacked:true,beginAtZero:true,max:100,title:{display:true,text:'andel av kommunal havsyta (%)'},ticks:{callback:v=>v+' %'}}
+      }
+    }
+  });
+
+  const dayCounts=keys.map(k=>rows.reduce((n,r)=>n+(algaePct(r,k)>0?1:0),0));
+  charts.algaeClassDays=new Chart(el('algaeClassDays'),{
+    type:'bar',
+    data:{
+      labels:keys.map(algaeClassLabel),
+      datasets:[{label:String(manifest.year||''),data:dayCounts,backgroundColor:keys.map(algaeClassColor),borderWidth:0}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' observationsdagar'}}},
+      scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'observationsdagar'},ticks:{precision:0}}}
+    }
+  });
+}
+
 async function loadAlgaeSeasonManifest(){
   if(algaeSeasonManifest)return algaeSeasonManifest;
   const status=el('algaeSeasonStatus');
@@ -455,6 +548,7 @@ async function loadAlgaeSeasonManifest(){
     const r=await fetch('algae/'+year+'/manifest.json?v=1',{cache:'no-store'});
     if(!r.ok)throw new Error('Algkartan är ännu inte genererad. Kör workflowet i bootstrap-läge en gång.');
     algaeSeasonManifest=await r.json();
+    renderAlgaeCharts(algaeSeasonManifest);
     const dates=algaeSeasonManifest.dates||[];
     const slider=el('algaeSeasonSlider');
     if(!slider||!dates.length)throw new Error('Inga algkartdatum hittades för '+year+'.');
