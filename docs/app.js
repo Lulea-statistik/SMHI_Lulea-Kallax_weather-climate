@@ -397,7 +397,7 @@ function renderSeaIce(f){
   const noData=el('seaIceNoData');
   const has=daily.length>0||seasonal.length>0;
   if(noData)noData.style.display=has?'none':'block';
-  ['seaIceDaily','seaIceSeasonMax','seaIceThickness','seaIceFast','seaIceLength'].forEach(id=>{
+  ['seaIceDaily','seaIceThickness','seaIceFast','seaIceLength'].forEach(id=>{
     const canvas=el(id);
     if(canvas)canvas.parentElement.style.display=has?'block':'none';
     if(!has)destroyChart(id);
@@ -410,13 +410,13 @@ function renderSeaIce(f){
     const maxTail=buildSeaIceMissingTail(timeline,'max_ice_thickness_cm');
 
     lineChart('seaIceDaily',timeline.labels,[
-      {label:'Isutbredning',data:timeline.rows.map(r=>r?r.ice_share_pct:null),borderWidth:2,pointRadius:0,spanGaps:false},
+      {label:'Isutbredning',data:timeline.rows.map(r=>r?r.ice_share_pct:null),borderColor:'#111827',backgroundColor:'#111827',borderWidth:2,pointRadius:0,spanGaps:false},
       {label:'Data saknas – sista kända värde',data:iceTail,borderColor:'#9ca3af',backgroundColor:'#9ca3af',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false}
     ],'%');
 
     lineChart('seaIceThickness',timeline.labels,[
-      {label:'Medeltjocklek',data:timeline.rows.map(r=>r?r.mean_ice_thickness_cm:null),borderWidth:2,pointRadius:0,spanGaps:false},
-      {label:'Maximal tjocklek',data:timeline.rows.map(r=>r?r.max_ice_thickness_cm:null),borderWidth:2,pointRadius:0,spanGaps:false},
+      {label:'Medeltjocklek',data:timeline.rows.map(r=>r?r.mean_ice_thickness_cm:null),borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,spanGaps:false},
+      {label:'Maximal tjocklek',data:timeline.rows.map(r=>r?r.max_ice_thickness_cm:null),borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,spanGaps:false},
       {label:'Saknad data – medel',data:meanTail,borderColor:'#9ca3af',backgroundColor:'#9ca3af',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false},
       {label:'Saknad data – max',data:maxTail,borderColor:'#6b7280',backgroundColor:'#6b7280',borderDash:[3,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false}
     ],'cm');
@@ -426,7 +426,6 @@ function renderSeaIce(f){
   }
 
   const labels=seasonal.map(r=>r.season);
-  barChart('seaIceSeasonMax',labels,seasonal.map(r=>r.max_ice_share_pct),'%');
   barChart('seaIceFast',labels,seasonal.map(r=>r.max_fast_ice_share_pct),'%');
   barChart('seaIceLength',labels,seasonal.map(r=>r.season_length_days),'dygn');
 
