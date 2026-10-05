@@ -464,14 +464,14 @@ function renderSeaIce(f){
 
     lineChart('seaIceDaily',timeline.labels,[
       {label:'Isutbredning',data:timeline.rows.map(r=>r?r.ice_share_pct:null),borderColor:'#111827',backgroundColor:'#111827',borderWidth:2,pointRadius:0,spanGaps:false},
-      {label:'Data saknas – sista kända värde',data:iceTail,borderColor:'#9ca3af',backgroundColor:'#9ca3af',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false}
+      {label:'Data saknas – sista kända värde',data:iceTail,borderColor:'#dc2626',backgroundColor:'#dc2626',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false}
     ],'%');
 
     lineChart('seaIceThickness',timeline.labels,[
       {label:'Medeltjocklek',data:timeline.rows.map(r=>r?r.mean_ice_thickness_cm:null),borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,spanGaps:false},
       {label:'Maximal tjocklek',data:timeline.rows.map(r=>r?r.max_ice_thickness_cm:null),borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,spanGaps:false},
-      {label:'Saknad data – medel',data:meanTail,borderColor:'#9ca3af',backgroundColor:'#9ca3af',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false},
-      {label:'Saknad data – max',data:maxTail,borderColor:'#6b7280',backgroundColor:'#6b7280',borderDash:[3,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false}
+      {label:'Saknad data – medel',data:meanTail,borderColor:'#ef4444',backgroundColor:'#ef4444',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false},
+      {label:'Saknad data – max',data:maxTail,borderColor:'#b91c1c',backgroundColor:'#b91c1c',borderDash:[3,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false}
     ],'cm');
   }else{
     destroyChart('seaIceDaily');
@@ -479,7 +479,7 @@ function renderSeaIce(f){
   }
 
   const labels=seasonal.map(r=>r.season);
-  barChart('seaIceFast',labels,seasonal.map(r=>r.max_fast_ice_share_pct),'%');
+  barChart('seaIceFast',labels,seasonal.map(r=>r.max_fast_ice_share_pct),'%','#d8b4fe');
   barChart('seaIceLength',labels,seasonal.map(r=>r.season_length_days),'dygn');
 
   const latest=seasonal.length?seasonal[seasonal.length-1]:null;
