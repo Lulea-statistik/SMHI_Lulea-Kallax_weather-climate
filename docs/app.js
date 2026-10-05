@@ -1,4 +1,4 @@
-let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;const algaeSeasonCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function lineChart(id,labels,datasets,yTitle,extra={}){destroyChart(id);charts[id]=new Chart(el(id),{type:'line',data:{labels,datasets:datasets.map(d=>({borderWidth:2,pointRadius:0,tension:.15,...d}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:datasets.length>1}},scales:{x:{grid:{display:false}},y:{title:{display:!!yTitle,text:yTitle}}},...extra}});}
@@ -540,15 +540,40 @@ function renderAlgaeCharts(manifest){
   });
 }
 
-async function loadAlgaeSeasonManifest(){
-  if(algaeSeasonManifest)return algaeSeasonManifest;
+async function loadAlgaeHistoryIndex(){
+  if(algaeHistoryIndex)return algaeHistoryIndex;
+  const r=await fetch('algae/index.json?v=1',{cache:'no-store'});
+  if(!r.ok){
+    const current=new Date().getUTCMonth()+1>=6?new Date().getUTCFullYear():new Date().getUTCFullYear()-1;
+    algaeHistoryIndex={years:[{year:current}]};
+    return algaeHistoryIndex;
+  }
+  algaeHistoryIndex=await r.json();
+  const select=el('algaeYear');
+  if(select){
+    const years=(algaeHistoryIndex.years||[]).map(x=>Number(x.year)).filter(Number.isFinite).sort((a,b)=>b-a);
+    select.innerHTML=years.map(y=>'<option value="'+y+'">'+y+(y<=2009?' · äldre klassning':'')+'</option>').join('');
+  }
+  return algaeHistoryIndex;
+}
+
+async function loadAlgaeSeasonManifest(year=null,force=false){
   const status=el('algaeSeasonStatus');
   try{
-    const year=new Date().getUTCMonth()+1>=6?new Date().getUTCFullYear():new Date().getUTCFullYear()-1;
+    const idx=await loadAlgaeHistoryIndex();
+    const available=(idx.years||[]).map(x=>Number(x.year)).filter(Number.isFinite).sort((a,b)=>b-a);
+    if(year==null){
+      const selected=Number(el('algaeYear')?.value);
+      year=Number.isFinite(selected)&&selected?selected:(available[0]||new Date().getUTCFullYear());
+    }
+    if(!force&&algaeSeasonManifest&&Number(algaeSeasonManifest.year)===Number(year))return algaeSeasonManifest;
+
     const r=await fetch('algae/'+year+'/manifest.json?v=1',{cache:'no-store'});
-    if(!r.ok)throw new Error('Algkartan är ännu inte genererad. Kör workflowet i bootstrap-läge en gång.');
+    if(!r.ok)throw new Error('Ingen algsäsong hittades för '+year+'.');
     algaeSeasonManifest=await r.json();
+    if(el('algaeYear'))el('algaeYear').value=String(year);
     renderAlgaeCharts(algaeSeasonManifest);
+
     const dates=algaeSeasonManifest.dates||[];
     const slider=el('algaeSeasonSlider');
     if(!slider||!dates.length)throw new Error('Inga algkartdatum hittades för '+year+'.');
@@ -560,7 +585,11 @@ async function loadAlgaeSeasonManifest(){
     el('algaeNextDate').disabled=false;
     if(el('algaeSeasonLabel'))el('algaeSeasonLabel').textContent='Algsäsong '+year;
     updateAlgaeSeasonDateLabel();
-    if(status)status.textContent='Välj datum med reglaget. Endast vald dags polygoner laddas.';
+
+    const legacy=algaeSeasonManifest.legacy_classification||Number(year)<=2009;
+    if(status)status.textContent=legacy
+      ? 'Äldre SMHI-klassning (2002–2009). Råa klasser visas där säker översättning saknas.'
+      : 'Välj datum med reglaget. Endast vald dags polygoner laddas.';
     return algaeSeasonManifest;
   }catch(err){
     if(status)status.textContent=err.message;
@@ -616,7 +645,7 @@ async function showAlgaeSeasonDate(index){
         const p=f.properties||{};
         const names={surface:'Ytansamling',risk:'Risk för ytansamling',cloud:'Moln',no_data:'Data saknas'};
         const rows=[
-          'Klass: '+(names[p.algae_class]||p.algae_class||'Övrigt'),
+          'Klass: '+(names[p.algae_class]||algaeClassLabel(p.algae_class)||'Övrigt'),
           p.date?'Datum: '+p.date:null
         ].filter(Boolean);
         layer.bindPopup(rows.join('<br>'));
@@ -648,6 +677,15 @@ function setupAlgaeSeasonControls(){
   });
   el('algaePrevDate')?.addEventListener('click',()=>showAlgaeSeasonDate(Number(slider.value)-1));
   el('algaeNextDate')?.addEventListener('click',()=>showAlgaeSeasonDate(Number(slider.value)+1));
+  el('algaeYear')?.addEventListener('change',async e=>{
+    const year=Number(e.target.value);
+    if(algaeSeasonLayer&&algaeLeafletMap){
+      algaeLeafletMap.removeLayer(algaeSeasonLayer);
+      algaeSeasonLayer=null;
+    }
+    await loadAlgaeSeasonManifest(year,true);
+    await showAlgaeSeasonDate(el('algaeSeasonSlider')?.value||0);
+  });
 }
 
 async function initAlgaeMap(){
