@@ -165,11 +165,19 @@
       <h2>Vad betyder 100 % isutbredning?</h2>
       <p class="hint">Den interaktiva kartan visar den faktiska geometri som används i havsisstatistiken. Den blå polygonen är SMHI:s analyserade havsyta inom Luleå; när hela den ytan är klassad som havsis visas 100 %. Den röda linjen visar Luleås kommunala havsyta.</p>
       <div id="seaIceMap" class="seaice-map" aria-label="Interaktiv karta över SMHI:s analyserade havsyta i Luleå"></div>
-      <div class="seaice-map-test-controls">
-        <button id="seaIceTestPolygons" type="button">Visa test: ispolygoner 14 dec 2023</button>
+      <div class="seaice-season-controls">
+        <div class="seaice-season-control-row">
+          <label for="seaIceSeasonSlider"><b>Issäsong 2023/24</b></label>
+          <span id="seaIceSeasonDateLabel">Laddar datum…</span>
+        </div>
+        <input id="seaIceSeasonSlider" type="range" min="0" max="0" value="0" step="1" disabled>
+        <div class="seaice-season-nav">
+          <button id="seaIcePrevDate" type="button" disabled>Föregående</button>
+          <button id="seaIceNextDate" type="button" disabled>Nästa</button>
+        </div>
       </div>
       <p id="seaIceMapStatus" class="hint"></p>
-      <p id="seaIceTestStatus" class="hint"></p>
+      <p id="seaIceSeasonStatus" class="hint"></p>
     </div>
     <div class="chart-card"><h2>Isutbredning inom analyserad Luleå-havsyta</h2><p class="hint">Andel av den del av kommunens havsyta som täcks av dagens SMHI-analys och som klassas som havsis. Varje issäsong visas med samma tidsfönster: 15 oktober–6 juni. Om en säsong saknar observationer i slutet visas en röd streckad linje med sista kända värdet fram till 6 juni.</p><p id="seaIceLatest" class="hint"></p><canvas id="seaIceDaily"></canvas></div>
     <div class="chart-card"><h2>Istjocklek</h2><p class="hint">Areaviktad medeltjocklek och högsta rapporterade tjocklek i de ispolygoner som överlappar Luleås havsyta. Varje issäsong börjar 15 oktober och slutar 6 juni. Om data saknas efter sista observationen visas sista kända värdet vidare som en röd streckad linje.</p><canvas id="seaIceThickness"></canvas></div>
@@ -191,5 +199,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=59"></script>
+<script src="app.js?v=60"></script>
 </body></html>
