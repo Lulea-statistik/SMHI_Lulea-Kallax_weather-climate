@@ -395,7 +395,14 @@ def daterange(start: date, end: date):
 
 
 def is_ice_season_date(d: date):
-    return d.month in {1, 2, 3, 4, 5, 11, 12}
+    """Daily sea-ice update window: 15 October through 6 June."""
+    if d.month > 10 or d.month < 6:
+        return True
+    if d.month == 10:
+        return d.day >= 15
+    if d.month == 6:
+        return d.day <= 6
+    return False
 
 
 def main():
@@ -414,8 +421,12 @@ def main():
         print(f"Sea-ice history scan: {len(candidates):,} candidate dates from {start}.")
     else:
         start = today - timedelta(days=RECENT_DAYS - 1)
-        candidates = list(daterange(start, today))
-        print(f"Sea-ice incremental scan: {len(candidates)} recent dates.")
+        candidates = [d for d in daterange(start, today) if is_ice_season_date(d)]
+        if not candidates:
+            print("Sea-ice incremental scan skipped: today is outside the 15 October-6 June update window.")
+            build_summary(rows)
+            return 0
+        print(f"Sea-ice incremental scan: {len(candidates)} recent dates within the 15 October-6 June update window.")
 
     updated = 0
     found = 0
