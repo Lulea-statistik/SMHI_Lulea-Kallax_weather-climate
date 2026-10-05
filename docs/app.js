@@ -256,6 +256,10 @@ function renderLightning(f){
     {key:'sea',label:'Hav',color:'rgba(54,162,235,0.62)'},
     {key:'inland_water',label:'Inlandsvatten',color:'rgba(125,187,214,0.52)'}
   ];
+  const annualClasses=[
+    ...classes,
+    {key:'uncertain_area_500',label:'Osäkert område',color:'rgba(156,163,175,0.72)'}
+  ];
   const annualSource=f.month?(L.monthly_by_year||[]).filter(r=>r.month===f.month):(L.annual||[]);
   const rows=annualSource.filter(r=>r.year>=f.from&&r.year<=f.to).sort((a,b)=>a.year-b.year);
   const years=rows.map(r=>r.year);
@@ -263,7 +267,23 @@ function renderLightning(f){
   destroyChart('lightningAnnual');
   charts.lightningAnnual=new Chart(el('lightningAnnual'),{
     type:'bar',
-    data:{labels:years,datasets:classes.map(x=>({label:x.label,stack:'surface',backgroundColor:x.color,borderWidth:0,data:rows.map(r=>r[x.key]||0)}))},
+    data:{labels:years,datasets:annualClasses.map(x=>({label:x.label,stack:'surface',backgroundColor:x.color,borderWidth:0,data:rows.map(r=>{
+      const uncertain=r.uncertain_area_500||0;
+      if(x.key==='uncertain_area_500')return uncertain;
+      const totalBase=(r.mainland||0)+(r.islands||0)+(r.sea||0)+(r.inland_water||0);
+      if(!totalBase||!uncertain)return r[x.key]||0;
+      // Keep the annual stack exclusive: uncertain observations are removed
+      // proportionally from their base surface only when pair-level details are
+      // unavailable in older cached data. After the next data build exact values
+      // are supplied through uncertainty_pairs.
+      const pairMap=r.uncertainty_pairs||{};
+      let subtract=0;
+      Object.entries(pairMap).forEach(([pair,n])=>{if(pair.split('__').includes(x.key))subtract+=n;});
+      if((r.municipality_boundary_uncertain_500||0)>0 && subtract===0){
+        subtract=Math.round((r[x.key]||0)/totalBase*(r.municipality_boundary_uncertain_500||0));
+      }
+      return Math.max(0,(r[x.key]||0)-subtract);
+    })}))},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Math.round(c.parsed.y)}}},
       scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,title:{display:true,text:'urladdningar'},ticks:{precision:0}}}}
@@ -289,17 +309,35 @@ function renderLightning(f){
       scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,title:{display:true,text:'genomsnitt per år'}}}}
   });
 
-  const pct=(r,key)=>{
-    const total=(r.records_total!=null?r.records_total:
-      (r.mainland||0)+(r.islands||0)+(r.sea||0)+(r.inland_water||0)+(r.other||0));
-    return total?100*(r[key]||0)/total:0;
-  };
-  lineChart('lightningUncertain',years,[
-    {label:'Kust 250 m',data:rows.map(r=>pct(r,'coast_uncertain_250')),borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,0.10)',pointRadius:0,borderDash:[3,4]},
-    {label:'Kust 500 m',data:rows.map(r=>pct(r,'coast_uncertain_500')),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.18)',pointRadius:1},
-    {label:'Kust 1 000 m',data:rows.map(r=>pct(r,'coast_uncertain_1000')),borderColor:'#6b7280',backgroundColor:'rgba(107,114,128,0.10)',pointRadius:0,borderDash:[7,4]},
-    {label:'Kommungräns 500 m',data:rows.map(r=>pct(r,'municipality_boundary_uncertain_500')),borderColor:'#111827',backgroundColor:'rgba(17,24,39,0.08)',pointRadius:1,borderDash:[2,3]}
-  ],'%');
+  const uncertaintyTypes=[
+    {key:'mainland__sea',label:'Fastland ↔ hav'},
+    {key:'islands__sea',label:'Öar ↔ hav'},
+    {key:'inland_water__mainland',label:'Fastland ↔ inlandsvatten'},
+    {key:'inland_water__islands',label:'Öar ↔ inlandsvatten'},
+    {key:'inland_water__sea',label:'Hav ↔ inlandsvatten'},
+    {key:'islands__mainland',label:'Fastland ↔ öar'}
+  ];
+  const visibleTypes=uncertaintyTypes.filter(t=>rows.some(r=>((r.uncertainty_pairs||{})[t.key]||0)>0));
+  const uncertaintyDatasets=visibleTypes.map((t,i)=>({
+    label:t.label,
+    backgroundColor:['rgba(107,114,128,0.68)','rgba(156,163,175,0.68)','rgba(75,85,99,0.58)','rgba(209,213,219,0.88)','rgba(148,163,184,0.72)','rgba(120,113,108,0.62)'][i%6],
+    borderWidth:0,
+    data:rows.map(r=>((r.uncertainty_pairs||{})[t.key]||0))
+  }));
+  uncertaintyDatasets.push({
+    label:'Kommungräns',
+    backgroundColor:'rgba(17,24,39,0.78)',
+    borderWidth:0,
+    data:rows.map(r=>r.municipality_boundary_uncertain_500||0)
+  });
+  destroyChart('lightningUncertain');
+  charts.lightningUncertain=new Chart(el('lightningUncertain'),{
+    type:'bar',
+    data:{labels:years,datasets:uncertaintyDatasets},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Math.round(c.parsed.y)}}},
+      scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'urladdningar'},ticks:{precision:0}}}}
+  });
 }
 
 function render(){
