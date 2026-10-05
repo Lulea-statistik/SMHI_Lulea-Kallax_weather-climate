@@ -54,6 +54,13 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
 .seaice-map-legend i{display:inline-block;width:18px;height:12px;margin-right:7px;vertical-align:-1px}
 @media(max-width:760px){.seaice-map{height:420px}}
 
-.seaice-map-test-controls{display:flex;gap:8px;align-items:center;margin-top:10px}
-.seaice-map-test-controls button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:7px 11px;cursor:pointer;font:inherit}
-.seaice-map-test-controls button:hover{background:#f8fafc}
+
+.seaice-season-controls{margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#f8fafc}
+.seaice-season-control-row{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:7px}
+.seaice-season-control-row span{font-variant-numeric:tabular-nums}
+.seaice-season-controls input[type="range"]{width:100%}
+.seaice-season-nav{display:flex;gap:8px;margin-top:8px}
+.seaice-season-nav button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:6px 10px;cursor:pointer;font:inherit}
+.seaice-season-nav button:hover:not(:disabled){background:#eef2f7}
+.seaice-season-nav button:disabled{opacity:.45;cursor:default}
+@media(max-width:640px){.seaice-season-control-row{align-items:flex-start;flex-direction:column;gap:4px}}
