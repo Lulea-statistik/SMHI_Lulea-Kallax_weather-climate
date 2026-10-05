@@ -25,13 +25,14 @@ from xml.etree import ElementTree as ET
 import requests
 import shapefile
 from pyproj import CRS, Transformer
-from shapely.geometry import shape
+from shapely.geometry import shape, mapping
 from shapely.ops import transform, unary_union
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data" / "seaice"
 DAILY_PATH = DATA_DIR / "daily.csv"
 SUMMARY_PATH = DATA_DIR / "summary.json"
+MAP_GEOJSON_PATH = ROOT / "docs" / "seaice_analysis_area.geojson"
 NMD_GEO_PATH = ROOT / "data" / "lightning" / "geography_nmd.geojson"
 
 API_BASE = "https://opendata-download-icemap.smhi.se/api/version/1.0"
@@ -280,7 +281,7 @@ def aggregate_day(d: date, raw: bytes, sea_geom):
         for k, v in type_geoms.items() if v
     }
     effective_date = sorted(chartdates)[-1] if chartdates else d.isoformat()
-    return {
+    row = {
         "date": effective_date,
         "season": season_label(date.fromisoformat(effective_date)),
         "sea_area_km2": round(sea_area / 1e6, 3),
@@ -299,6 +300,42 @@ def aggregate_day(d: date, raw: bytes, sea_geom):
         "ice_type_area_km2": types,
         "source_crs": source_crs,
     }
+    return row, coverage_area and unary_union(coverage_geoms).buffer(0)
+
+
+def save_map_geojson(sea_geom, coverage_geom, source_date):
+    if coverage_geom is None or coverage_geom.is_empty:
+        return
+    to_4326 = Transformer.from_crs(TARGET_CRS, "EPSG:4326", always_xy=True).transform
+    sea_wgs84 = transform(to_4326, sea_geom)
+    coverage_wgs84 = transform(to_4326, coverage_geom)
+    feature_collection = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "kind": "municipal_sea",
+                    "name": "Luleå kommunal havsyta",
+                },
+                "geometry": mapping(sea_wgs84),
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "kind": "smhi_analysis",
+                    "name": "SMHI analyserad havsyta",
+                    "source_date": source_date,
+                },
+                "geometry": mapping(coverage_wgs84),
+            },
+        ],
+    }
+    MAP_GEOJSON_PATH.parent.mkdir(parents=True, exist_ok=True)
+    MAP_GEOJSON_PATH.write_text(
+        json.dumps(feature_collection, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8",
+    )
 
 
 def load_daily():
@@ -451,6 +488,8 @@ def main():
 
     updated = 0
     found = 0
+    latest_coverage_geom = None
+    latest_coverage_date = None
     for i, d in enumerate(candidates, 1):
         package = daily_package_url(d)
         if not package:
@@ -460,8 +499,11 @@ def main():
             r = get(package)
             if r is None:
                 continue
-            row = aggregate_day(d, r.content, sea_geom)
+            row, coverage_geom = aggregate_day(d, r.content, sea_geom)
             rows[row["date"]] = row
+            if coverage_geom is not None and not coverage_geom.is_empty:
+                latest_coverage_geom = coverage_geom
+                latest_coverage_date = row["date"]
             updated += 1
             if updated % 25 == 0:
                 save_daily(rows)
@@ -471,6 +513,9 @@ def main():
         if i % 250 == 0:
             print(f"Sea-ice scan progress {i}/{len(candidates)}; packages found {found}; maps aggregated {updated}.")
 
+    if latest_coverage_geom is not None:
+        save_map_geojson(sea_geom, latest_coverage_geom, latest_coverage_date)
+        print(f"Sea ice map geometry updated from {latest_coverage_date}.")
     save_daily(rows)
     build_summary(rows)
     print(f"Sea ice: {len(rows):,} daily Lulea summaries stored; {updated} maps processed this run.")
