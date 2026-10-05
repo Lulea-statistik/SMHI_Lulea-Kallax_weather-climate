@@ -36,7 +36,9 @@ main{padding:18px}.filters{display:flex;gap:12px;align-items:end;flex-wrap:wrap;
 @media(min-width:1050px){#page-sunshine .sun-energy-right{grid-column:2}}
 
 body.dateweather-active #globalFilters{display:none!important}
-body.temp2-active #globalFilters{display:none!important}
+body.temp2-active #globalFilters .year-filter,
+body.temp2-active #globalFilters .year-sliders,
+body.temp2-active #globalFilters #resetFilters{display:none!important}
 
 .temp2-window input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:999px;background:linear-gradient(to right,#dbe5ec 0%,#dbe5ec 100%)}
 .temp2-window input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:0;margin-top:-8px;cursor:grab}
