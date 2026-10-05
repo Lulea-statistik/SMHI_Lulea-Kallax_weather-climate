@@ -329,13 +329,44 @@ function renderLightning(f){
   });
 }
 
+function seaIceSeasonDateRange(startYear){
+  const out=[];
+  let d=new Date(Date.UTC(startYear,9,15));
+  const end=new Date(Date.UTC(startYear+1,5,6));
+  while(d<=end){
+    out.push(d.toISOString().slice(0,10));
+    d.setUTCDate(d.getUTCDate()+1);
+  }
+  return out;
+}
+
+function buildSeaIceSeasonTimeline(dailyRows,seasonalRows){
+  const byDate=new Map(dailyRows.map(r=>[r.date,r]));
+  const labels=[],rows=[];
+  seasonalRows.forEach((s,idx)=>{
+    seaIceSeasonDateRange(s.start_year).forEach(date=>{
+      labels.push(date);
+      rows.push(byDate.get(date)||null);
+    });
+    if(idx<seasonalRows.length-1){
+      labels.push('');
+      rows.push(null);
+    }
+  });
+  return {labels,rows};
+}
+
 function renderSeaIce(f){
   const S=DATA.sea_ice||{};
-  const daily=(S.daily||[]).filter(r=>{
-    const y=Number(String(r.date||'').slice(0,4));
-    return y>=f.from&&y<=f.to;
-  }).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-  const seasonal=(S.seasonal||[]).filter(r=>r.start_year>=f.from&&r.start_year<=f.to).sort((a,b)=>a.start_year-b.start_year);
+  const seasonal=(S.seasonal||[])
+    .filter(r=>r.start_year>=f.from&&r.start_year<=f.to)
+    .sort((a,b)=>a.start_year-b.start_year);
+  const selectedStarts=new Set(seasonal.map(r=>r.start_year));
+  const daily=(S.daily||[])
+    .filter(r=>selectedStarts.has(Number(String(r.season||'').slice(0,4))))
+    .sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const timeline=buildSeaIceSeasonTimeline(daily,seasonal);
+
   const noData=el('seaIceNoData');
   const has=daily.length>0||seasonal.length>0;
   if(noData)noData.style.display=has?'none':'block';
@@ -346,14 +377,14 @@ function renderSeaIce(f){
   });
   if(!has)return;
 
-  if(daily.length){
-    lineChart('seaIceDaily',daily.map(r=>r.date),[
-      {label:'Isutbredning',data:daily.map(r=>r.ice_share_pct),borderWidth:2,pointRadius:0}
+  if(timeline.rows.length){
+    lineChart('seaIceDaily',timeline.labels,[
+      {label:'Isutbredning',data:timeline.rows.map(r=>r?r.ice_share_pct:null),borderWidth:2,pointRadius:0,spanGaps:false}
     ],'%');
 
-    lineChart('seaIceThickness',daily.map(r=>r.date),[
-      {label:'Medeltjocklek',data:daily.map(r=>r.mean_ice_thickness_cm),borderWidth:2,pointRadius:0},
-      {label:'Maximal tjocklek',data:daily.map(r=>r.max_ice_thickness_cm),borderWidth:2,pointRadius:0}
+    lineChart('seaIceThickness',timeline.labels,[
+      {label:'Medeltjocklek',data:timeline.rows.map(r=>r?r.mean_ice_thickness_cm:null),borderWidth:2,pointRadius:0,spanGaps:false},
+      {label:'Maximal tjocklek',data:timeline.rows.map(r=>r?r.max_ice_thickness_cm:null),borderWidth:2,pointRadius:0,spanGaps:false}
     ],'cm');
   }else{
     destroyChart('seaIceDaily');
@@ -369,7 +400,7 @@ function renderSeaIce(f){
   const note=el('seaIceLatest');
   if(note){
     note.textContent=latest
-      ? 'Senaste kompletta/partiella säsong i datat: '+latest.season+
+      ? 'Varje issäsong visas från 15 oktober till 6 juni. Senaste kompletta/partiella säsong i datat: '+latest.season+
         '. Maximal isutbredning '+Number(latest.max_ice_share_pct||0).toFixed(1).replace('.',',')+
         ' % den '+(latest.max_ice_date||'–')+'.'
       : '';
