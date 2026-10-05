@@ -36,6 +36,7 @@ main{padding:18px}.filters{display:flex;gap:12px;align-items:end;flex-wrap:wrap;
 @media(min-width:1050px){#page-sunshine .sun-energy-right{grid-column:2}}
 
 body.dateweather-active #globalFilters{display:none!important}
+body.algae-active #globalFilters{display:none!important}
 body.temp2-active #globalFilters .year-filter,
 body.temp2-active #globalFilters .year-sliders,
 body.temp2-active #globalFilters #resetFilters{display:none!important}
