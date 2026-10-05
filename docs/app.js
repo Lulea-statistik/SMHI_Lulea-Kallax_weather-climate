@@ -254,7 +254,7 @@ function renderLightning(f){
     {key:'mainland',label:'Fastland',color:'rgba(79,157,105,0.68)'},
     {key:'islands',label:'Öar',color:'rgba(242,201,76,0.68)'},
     {key:'sea',label:'Hav',color:'rgba(54,162,235,0.62)'},
-    {key:'coast_uncertain',label:'Kust/osäker',color:'rgba(156,163,175,0.60)'}
+    {key:'inland_water',label:'Inlandsvatten',color:'rgba(125,187,214,0.52)'}
   ];
   const annualSource=f.month?(L.monthly_by_year||[]).filter(r=>r.month===f.month):(L.annual||[]);
   const rows=annualSource.filter(r=>r.year>=f.from&&r.year<=f.to).sort((a,b)=>a.year-b.year);
@@ -289,11 +289,17 @@ function renderLightning(f){
       scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,title:{display:true,text:'genomsnitt per år'}}}}
   });
 
-  const uncertain=rows.map(r=>{
-    const total=(r.mainland||0)+(r.islands||0)+(r.sea||0)+(r.coast_uncertain||0);
-    return total?100*(r.coast_uncertain||0)/total:0;
-  });
-  lineChart('lightningUncertain',years,[{label:'Kust/osäker',data:uncertain,borderColor:'#6b7280',backgroundColor:'rgba(107,114,128,0.20)'}],'%');
+  const pct=(r,key)=>{
+    const total=(r.records_total!=null?r.records_total:
+      (r.mainland||0)+(r.islands||0)+(r.sea||0)+(r.inland_water||0)+(r.other||0));
+    return total?100*(r[key]||0)/total:0;
+  };
+  lineChart('lightningUncertain',years,[
+    {label:'Kust 250 m',data:rows.map(r=>pct(r,'coast_uncertain_250')),borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,0.10)',pointRadius:0,borderDash:[3,4]},
+    {label:'Kust 500 m',data:rows.map(r=>pct(r,'coast_uncertain_500')),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.18)',pointRadius:1},
+    {label:'Kust 1 000 m',data:rows.map(r=>pct(r,'coast_uncertain_1000')),borderColor:'#6b7280',backgroundColor:'rgba(107,114,128,0.10)',pointRadius:0,borderDash:[7,4]},
+    {label:'Kommungräns 500 m',data:rows.map(r=>pct(r,'municipality_boundary_uncertain_500')),borderColor:'#111827',backgroundColor:'rgba(17,24,39,0.08)',pointRadius:1,borderDash:[2,3]}
+  ],'%');
 }
 
 function render(){
