@@ -37,13 +37,15 @@ OUT_DIR = ROOT / "data" / "lightning"
 SUMMARY_PATH = OUT_DIR / "summary.json"
 GEO_PATH = OUT_DIR / "geography.geojson"
 NMD_GEO_PATH = OUT_DIR / "geography_nmd.geojson"
-GEOGRAPHY_VERSION = "nmd-water-v2"
+GEOGRAPHY_VERSION = "nmd-water-v3"
+UNCERTAINTY_VERSION = "surface-flags-v1"
 
 ATOM_URL = "https://opendata-download-lightning.smhi.se/api/version/latest.atom"
 SCB_WFS = "https://geodata.scb.se/geoserver/stat/wfs"
 MUNICIPALITY_ARCGIS = "https://services-eu1.arcgis.com/Ek4rv9ndj9nQOpV3/arcgis/rest/services/Region_kommun/FeatureServer/1/query"
 MUNICIPALITY_CODE = "2580"
 COAST_UNCERTAINTY_M = 500.0
+UNCERTAINTY_DISTANCES_M = (250, 500, 1000)
 MAINLAND_MIN_AREA_KM2 = 100.0
 TIMEOUT = 90
 
@@ -216,7 +218,7 @@ def load_analysis_geography():
         cls = (feat.get("properties") or {}).get("class")
         if cls and feat.get("geometry"):
             by_class[cls] = shape(feat["geometry"])
-    required = ["municipality", "mainland", "islands", "sea", "inland_water", "shoreline"]
+    required = ["municipality", "mainland", "islands", "sea", "inland_water", "shoreline", "neighbor_boundary"]
     missing = [x for x in required if x not in by_class]
     if missing:
         raise RuntimeError(f"NMD geography missing classes: {missing}")
@@ -229,6 +231,7 @@ def load_analysis_geography():
         "sea": transform(TO_3006, by_class["sea"]),
         "inland_water": transform(TO_3006, by_class["inland_water"]),
         "coast_boundary": transform(TO_3006, by_class["shoreline"]),
+        "neighbor_boundary": transform(TO_3006, by_class["neighbor_boundary"]),
         "bounds": municipality_wgs.bounds,
         "source": "NMD, Naturvardsverket public WMS",
     }
@@ -246,21 +249,38 @@ def summary_geography_version():
 def reclassify_existing_rows(rows, geo):
     changed = 0
     removed = 0
+    uncertainty_updated = 0
     for key in list(rows):
         r = rows[key]
         try:
             rec = {"lat": float(r["lat"]), "lon": float(r["lon"])}
         except Exception:
             continue
-        cls = classify(rec, geo)
+        # Historical rows classified as coast_uncertain need their underlying
+        # surface restored. Other rows keep their good existing surface class unless
+        # they are missing/obsolete.
+        old_cls = r.get("surface_class")
+        if old_cls in {"coast_uncertain", "", None, "other"}:
+            cls = classify_surface(rec, geo)
+        else:
+            cls = old_cls
         if cls is None:
             rows.pop(key, None)
             removed += 1
             continue
-        if r.get("surface_class") != cls:
+        if old_cls != cls:
             r["surface_class"] = cls
             changed += 1
-    print(f"Lightning geography reclassification: {changed:,} changed, {removed:,} outside geometry")
+
+        flags = uncertainty_flags(rec, geo, cls)
+        for name, value in flags.items():
+            r[name] = value
+        uncertainty_updated += 1
+    print(
+        f"Lightning smart uncertainty update: {uncertainty_updated:,} stored observations; "
+        f"{changed:,} surface classes restored/changed, {removed:,} outside geometry. "
+        "No historical lightning archive download was needed."
+    )
     return rows
 
 
@@ -421,22 +441,38 @@ def parse_payload(text: str):
             yield rec
 
 
-def classify(rec, geo):
+def classify_surface(rec, geo):
     p = transform(TO_3006, Point(rec["lon"], rec["lat"]))
     if not geo["municipality"].covers(p):
         return None
-    dist = p.distance(geo["coast_boundary"])
-    if dist <= COAST_UNCERTAINTY_M:
-        return "coast_uncertain"
     if geo["mainland"].covers(p):
-        return "mainland"
-    if geo["islands"].covers(p):
-        return "islands"
-    if geo["sea"].covers(p):
-        return "sea"
-    if geo["inland_water"].covers(p):
-        return "inland_water"
-    return "other"
+        cls = "mainland"
+    elif geo["islands"].covers(p):
+        cls = "islands"
+    elif geo["sea"].covers(p):
+        cls = "sea"
+    elif geo["inland_water"].covers(p):
+        cls = "inland_water"
+    else:
+        cls = "other"
+    return cls
+
+
+def uncertainty_flags(rec, geo, surface_class=None):
+    p = transform(TO_3006, Point(rec["lon"], rec["lat"]))
+    if surface_class is None:
+        surface_class = classify_surface(rec, geo)
+    coast_dist = p.distance(geo["coast_boundary"]) if surface_class in {"mainland", "islands", "sea"} else float("inf")
+    municipality_dist = p.distance(geo["neighbor_boundary"])
+    out = {}
+    for d in UNCERTAINTY_DISTANCES_M:
+        out[f"coast_uncertain_{d}"] = int(coast_dist <= d)
+        out[f"municipality_boundary_uncertain_{d}"] = int(municipality_dist <= d)
+    return out
+
+
+def classify(rec, geo):
+    return classify_surface(rec, geo)
 
 
 def load_existing_rows():
@@ -455,7 +491,9 @@ def save_rows(rows):
     by_year = defaultdict(list)
     for r in rows.values():
         by_year[int(r["datetime_utc"][:4])].append(r)
-    fields = ["datetime_utc", "year", "month", "day", "lat", "lon", "current_ka", "multiplicity", "chi_square", "cloud_indicator", "surface_class"]
+    fields = ["datetime_utc", "year", "month", "day", "lat", "lon", "current_ka", "multiplicity", "chi_square", "cloud_indicator", "surface_class",
+              "coast_uncertain_250", "coast_uncertain_500", "coast_uncertain_1000",
+              "municipality_boundary_uncertain_250", "municipality_boundary_uncertain_500", "municipality_boundary_uncertain_1000"]
     for year, yr in by_year.items():
         yr.sort(key=lambda r: r["datetime_utc"])
         with (OUT_DIR / f"{year}.csv").open("w", encoding="utf-8", newline="") as f:
@@ -507,6 +545,8 @@ def build_summary(rows, geo):
         "geography_source": "Nationella Marktackedata (NMD), Naturvardsverket public WMS + Region Norrbotten kommungrans",
         "geography_note": "NMD klass 61 används för inlandsvatten och klass 62 för hav. WMS-paletten avkodas till dessa dokumenterade vattenklasser. Mindre marina landkomponenter redovisas som oar. Geografin lagras statiskt och ateranvands vid dagliga korningar.",
         "geography_version": GEOGRAPHY_VERSION,
+        "uncertainty_version": UNCERTAINTY_VERSION,
+        "uncertainty_note": "Kustosakerhet avser endast marin strandlinje (fastland/hav eller o/hav). Kommungransosakerhet avser endast grans mot andra kommuner, inte kommunens havsgrans. 250/500/1000 m redovisas separat.",
         "annual": annual_rows,
         "monthly": monthly_rows,
         "monthly_by_year": monthly_year_rows,
@@ -524,7 +564,16 @@ def main():
         return 2
 
     existing = load_existing_rows()
-    if existing and summary_geography_version() != GEOGRAPHY_VERSION:
+    current_summary = {}
+    if SUMMARY_PATH.exists():
+        try:
+            current_summary = json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            current_summary = {}
+    if existing and (
+        current_summary.get("geography_version") != GEOGRAPHY_VERSION
+        or current_summary.get("uncertainty_version") != UNCERTAINTY_VERSION
+    ):
         existing = reclassify_existing_rows(existing, geo)
         save_rows(existing)
     mode = os.environ.get("RUN_MODE", "auto")
@@ -582,6 +631,7 @@ def main():
                         "cloud_indicator": "" if rec.get("cloud_indicator") is None else rec.get("cloud_indicator"),
                         "surface_class": cls,
                     }
+                    row.update(uncertainty_flags(rec, geo, cls))
                     key = (row["datetime_utc"], row["lat"], row["lon"])
                     if key not in existing:
                         n_new += 1
