@@ -289,14 +289,20 @@ def aggregate_day(d: date, raw: bytes, sea_geom):
         "analysis_coverage_area_km2": round(coverage_area / 1e6, 3),
         "analysis_coverage_pct": round(100 * coverage_area / sea_area, 2) if sea_area else 0.0,
         "uncovered_area_km2": round(max(0.0, sea_area - coverage_area) / 1e6, 3),
-        "ice_area_km2": round(ice_area / 1e6, 3),
-        "ice_share_pct": round(100 * ice_area / coverage_area, 2) if coverage_area else 0.0,
-        "ice_share_municipal_pct": round(100 * ice_area / sea_area, 2) if sea_area else 0.0,
-        "fast_ice_area_km2": round(fast_area / 1e6, 3),
-        "fast_ice_share_pct": round(100 * fast_area / coverage_area, 2) if coverage_area else 0.0,
-        "mean_ice_thickness_cm": round(weighted_t / weighted_area, 1) if weighted_area else None,
-        "max_ice_thickness_cm": round(max_t, 1) if max_t is not None else None,
-        "min_ice_thickness_cm": round(min_t, 1) if min_t is not None else None,
+        "ice_area_km2": round(ice_area / 1e6, 6),
+        # Keep enough precision for tiny late/early-season ice remnants. With
+        # two decimals, a real but very small ice area could be displayed as
+        # 0.00 %, while still having a valid non-zero thickness.
+        "ice_share_pct": round(100 * ice_area / coverage_area, 4) if coverage_area else 0.0,
+        "ice_share_municipal_pct": round(100 * ice_area / sea_area, 4) if sea_area else 0.0,
+        "fast_ice_area_km2": round(fast_area / 1e6, 6),
+        "fast_ice_share_pct": round(100 * fast_area / coverage_area, 4) if coverage_area else 0.0,
+        # Thickness is defined only where ice exists. A genuinely ice-free
+        # analysis therefore has 0 cm thickness; if ice exists but SMHI has
+        # no thickness attribute, keep the value missing rather than inventing it.
+        "mean_ice_thickness_cm": 0.0 if ice_area <= 0 else (round(weighted_t / weighted_area, 1) if weighted_area else None),
+        "max_ice_thickness_cm": 0.0 if ice_area <= 0 else (round(max_t, 1) if max_t is not None else None),
+        "min_ice_thickness_cm": 0.0 if ice_area <= 0 else (round(min_t, 1) if min_t is not None else None),
         "concentration_area_km2": concentration,
         "ice_type_area_km2": types,
         "source_crs": source_crs,
