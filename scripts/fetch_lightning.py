@@ -37,7 +37,7 @@ OUT_DIR = ROOT / "data" / "lightning"
 SUMMARY_PATH = OUT_DIR / "summary.json"
 GEO_PATH = OUT_DIR / "geography.geojson"
 NMD_GEO_PATH = OUT_DIR / "geography_nmd.geojson"
-GEOGRAPHY_VERSION = "nmd2023-v1"
+GEOGRAPHY_VERSION = "nmd-water-v2"
 
 ATOM_URL = "https://opendata-download-lightning.smhi.se/api/version/latest.atom"
 SCB_WFS = "https://geodata.scb.se/geoserver/stat/wfs"
@@ -230,7 +230,7 @@ def load_analysis_geography():
         "inland_water": transform(TO_3006, by_class["inland_water"]),
         "coast_boundary": transform(TO_3006, by_class["shoreline"]),
         "bounds": municipality_wgs.bounds,
-        "source": "NMD2023, Naturvardsverket",
+        "source": "NMD, Naturvardsverket public WMS",
     }
 
 
@@ -504,8 +504,8 @@ def build_summary(rows, geo):
         "method_break": "2014",
         "coast_uncertainty_m": COAST_UNCERTAINTY_M,
         "mainland_component_min_km2": MAINLAND_MIN_AREA_KM2,
-        "geography_source": "Nationella Marktackedata 2023 (NMD2023), Naturvardsverket + Region Norrbotten kommungrans",
-        "geography_note": "NMD2023 klass 61 används för inlandsvatten och klass 62 för hav. Mindre marina landkomponenter redovisas som oar. Geografin lagras statiskt och ateranvands vid dagliga korningar.",
+        "geography_source": "Nationella Marktackedata (NMD), Naturvardsverket public WMS + Region Norrbotten kommungrans",
+        "geography_note": "NMD klass 61 används för inlandsvatten och klass 62 för hav. WMS-paletten avkodas till dessa dokumenterade vattenklasser. Mindre marina landkomponenter redovisas som oar. Geografin lagras statiskt och ateranvands vid dagliga korningar.",
         "geography_version": GEOGRAPHY_VERSION,
         "annual": annual_rows,
         "monthly": monthly_rows,
