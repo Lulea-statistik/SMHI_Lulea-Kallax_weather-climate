@@ -38,7 +38,7 @@ SUMMARY_PATH = OUT_DIR / "summary.json"
 GEO_PATH = OUT_DIR / "geography.geojson"
 NMD_GEO_PATH = OUT_DIR / "geography_nmd.geojson"
 GEOGRAPHY_VERSION = "nmd-water-v3"
-UNCERTAINTY_VERSION = "surface-flags-v1"
+UNCERTAINTY_VERSION = "surface-flags-v2"
 
 ATOM_URL = "https://opendata-download-lightning.smhi.se/api/version/latest.atom"
 SCB_WFS = "https://geodata.scb.se/geoserver/stat/wfs"
@@ -462,12 +462,41 @@ def uncertainty_flags(rec, geo, surface_class=None):
     p = transform(TO_3006, Point(rec["lon"], rec["lat"]))
     if surface_class is None:
         surface_class = classify_surface(rec, geo)
+
     coast_dist = p.distance(geo["coast_boundary"]) if surface_class in {"mainland", "islands", "sea"} else float("inf")
     municipality_dist = p.distance(geo["neighbor_boundary"])
-    out = {}
+
+    # User-facing uncertainty is deliberately simple: at the 500 m main level,
+    # identify the nearest alternative surface that the positioning error could
+    # plausibly move the observation into. This gives one exclusive surface-pair
+    # category per observation instead of exposing technical uncertainty bands.
+    surface_labels = {
+        "mainland": "mainland",
+        "islands": "islands",
+        "sea": "sea",
+        "inland_water": "inland_water",
+    }
+    pair = ""
+    if surface_class in surface_labels:
+        alternatives = []
+        for other in surface_labels:
+            if other == surface_class:
+                continue
+            geom = geo.get(other)
+            if geom is None or geom.is_empty:
+                continue
+            dist = p.distance(geom)
+            if dist <= COAST_UNCERTAINTY_M:
+                alternatives.append((dist, other))
+        if alternatives:
+            _, other = min(alternatives, key=lambda x: x[0])
+            pair = "__".join(sorted((surface_class, other)))
+
+    out = {"uncertainty_pair": pair}
     for d in UNCERTAINTY_DISTANCES_M:
         out[f"coast_uncertain_{d}"] = int(coast_dist <= d)
         out[f"municipality_boundary_uncertain_{d}"] = int(municipality_dist <= d)
+    out["uncertain_area_500"] = int(bool(pair) or municipality_dist <= COAST_UNCERTAINTY_M)
     return out
 
 
@@ -492,6 +521,7 @@ def save_rows(rows):
     for r in rows.values():
         by_year[int(r["datetime_utc"][:4])].append(r)
     fields = ["datetime_utc", "year", "month", "day", "lat", "lon", "current_ka", "multiplicity", "chi_square", "cloud_indicator", "surface_class",
+              "uncertainty_pair", "uncertain_area_500",
               "coast_uncertain_250", "coast_uncertain_500", "coast_uncertain_1000",
               "municipality_boundary_uncertain_250", "municipality_boundary_uncertain_500", "municipality_boundary_uncertain_1000"]
     for year, yr in by_year.items():
@@ -520,6 +550,23 @@ def build_summary(rows, geo):
         annual[y][cls] += 1
         monthly[m][cls] += 1
         monthly_by_year[(y, m)][cls] += 1
+
+        pair = str(r.get("uncertainty_pair", "") or "")
+        if pair:
+            pair_key = f"uncertainty_pair__{pair}"
+            annual[y][pair_key] += 1
+            monthly[m][pair_key] += 1
+            monthly_by_year[(y, m)][pair_key] += 1
+
+        try:
+            uncertain_area = int(r.get("uncertain_area_500", 0) or 0)
+        except (TypeError, ValueError):
+            uncertain_area = 0
+        if uncertain_area:
+            annual[y]["uncertain_area_500"] += 1
+            monthly[m]["uncertain_area_500"] += 1
+            monthly_by_year[(y, m)]["uncertain_area_500"] += 1
+
         for flag in flag_names:
             try:
                 hit = int(r.get(flag, 0) or 0)
@@ -539,6 +586,20 @@ def build_summary(rows, geo):
     classes = ["mainland", "islands", "sea", "inland_water", "other"]
 
     def add_uncertainty_fields(item, vals, total):
+        item["uncertain_area_500"] = vals.get("uncertain_area_500", 0)
+        pair_keys = [
+            "inland_water__mainland",
+            "inland_water__islands",
+            "inland_water__sea",
+            "islands__mainland",
+            "islands__sea",
+            "mainland__sea",
+        ]
+        item["uncertainty_pairs"] = {
+            pair: vals.get(f"uncertainty_pair__{pair}", 0)
+            for pair in pair_keys
+            if vals.get(f"uncertainty_pair__{pair}", 0)
+        }
         for d in UNCERTAINTY_DISTANCES_M:
             coast = vals.get(f"coast_uncertain_{d}", 0)
             muni = vals.get(f"municipality_boundary_uncertain_{d}", 0)
@@ -593,7 +654,7 @@ def build_summary(rows, geo):
         "geography_note": "NMD klass 61 används för inlandsvatten och klass 62 för hav. Mindre marina landkomponenter redovisas som oar. Geografin lagras statiskt och ateranvands vid dagliga korningar.",
         "geography_version": GEOGRAPHY_VERSION,
         "uncertainty_version": UNCERTAINTY_VERSION,
-        "uncertainty_note": "Kustosakerhet avser endast marin strandlinje (fastland/hav eller o/hav). Kommungransosakerhet avser endast grans mot andra kommuner, inte kommunens havsgrans. 250/500/1000 m redovisas separat. Grundklassen behalls aven nar en observation ar osaker.",
+        "uncertainty_note": "Osakert omrade anvander 500 m som huvudniva. Varje observation far hogst ett ytpar utifran sin grundklass och narmaste alternativa yta. Kommungransosakerhet beraknas separat och kan overlappa ett ytpar. Tekniska 250/500/1000 m-flaggor behalls i data men exponeras inte i huvuddiagrammen.",
         "annual": annual_rows,
         "monthly": monthly_rows,
         "monthly_by_year": monthly_year_rows,
