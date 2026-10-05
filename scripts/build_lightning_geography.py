@@ -34,8 +34,8 @@ OUT_DIR = ROOT / "data" / "lightning"
 OUT_PATH = OUT_DIR / "geography_nmd.geojson"
 
 MUNICIPALITY_ARCGIS = "https://services-eu1.arcgis.com/Ek4rv9ndj9nQOpV3/arcgis/rest/services/Region_kommun/FeatureServer/1/query"
-NMD_WMS = "https://geodata.naturvardsverket.se/inspire/lc-nmd/wms"
-NMD_LAYER = "LC.LandCoverRaster.Bas"
+NMD_WMS = "https://geodata.naturvardsverket.se/inspire/lc-nmd/ows"
+NMD_LAYER = "LC.LandCoverRaster"
 PIXEL_SIZE_M = 20.0
 TILE_SIZE = 1536
 MAINLAND_MIN_AREA_KM2 = 100.0
