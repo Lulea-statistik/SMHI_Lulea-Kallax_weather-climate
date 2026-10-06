@@ -62,6 +62,10 @@ def main():
         shp=next(root.rglob("Kommun_Sweref99TM.shp"))
         prj=shp.with_suffix(".prj").read_text(encoding="utf-8",errors="replace")
         src=CRS.from_wkt(prj)
+        epsg3006=CRS.from_epsg(3006)
+        equivalent_3006=bool(src.equals(epsg3006, ignore_axis_order=True))
+        if not equivalent_3006:
+            raise RuntimeError("SCB municipality PRJ is not equivalent to EPSG:3006")
         tr=Transformer.from_crs(src,"EPSG:4326",always_xy=True)
         sf=shapefile.Reader(str(shp),encoding="cp1252")
         fields=[f[0] for f in sf.fields[1:]]
@@ -101,12 +105,13 @@ def main():
             "municipality_record":rec_used,
             "municipality_source_crs_wkt_prefix":prj[:500],
             "municipality_source_explicit_epsg3006":'AUTHORITY["EPSG",3006]' in prj,
+            "municipality_source_equivalent_epsg3006":equivalent_3006,
             "map_fit_crs":"EPSG:4326",
             "map_fit_params":p,
             "image_size":list(snow.size),
             "lulea_pixel_bbox":[round(x,3) for x in bbox],
             "lulea_vertices_inside_image_pct":round(float(inside.mean()*100),2),
-            "note":"Preview only. Black/white outline is SCB Lulea municipality transformed from verified SWEREF 99 TM to EPSG:4326, then through the national SMHI PNG fit."
+            "note":"Preview only. Black/white outline is SCB Lulea municipality whose PRJ was verified by pyproj as equivalent to EPSG:3006, transformed to EPSG:4326, then through the national SMHI PNG fit."
         }
         base.save(OUTPNG)
         OUTJSON.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
