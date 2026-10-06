@@ -1,0 +1,42 @@
+name: Probe MESAN snow fields
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/probe-mesan-snow.yml"
+      - "scripts/probe_mesan_snow.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Probe MESAN A GRIB
+        run: python scripts/probe_mesan_snow.py
+      - name: Commit probe metadata
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain docs/snowgrid/mesan_probe.json)" ]; then
+            echo "No probe output."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid/mesan_probe.json
+          git commit -m "Record MESAN snow GRIB probe"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
