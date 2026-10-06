@@ -1135,6 +1135,86 @@ function buildSnowGridTimeline(series){
   return {labels,meanGrid,maxGrid,coverGrid,mainGrid,meanRecent,maxRecent,coverRecent,mainRecent,seasonKeys};
 }
 
+function snowSeasonWeekIndex(dateStr){
+  const d=new Date(dateStr+'T12:00:00Z');
+  const y=d.getUTCFullYear();
+  const startYear=d.getUTCMonth()>=8?y:y-1;
+  const start=new Date(Date.UTC(startYear,8,1,12));
+  return Math.floor((d-start)/604800000)+1;
+}
+
+function buildSnowWeeklyProfiles(series){
+  const seasons=(series?.seasons||[]).slice().sort((a,b)=>a.season.localeCompare(b.season));
+  const weekly=[];
+  seasons.forEach(s=>{
+    const byWeek=new Map();
+    (s.daily||[]).forEach(r=>{
+      const w=snowSeasonWeekIndex(r.date);
+      if(w<1||w>53)return;
+      if(!byWeek.has(w))byWeek.set(w,{depth:[],coverage:[]});
+      const x=byWeek.get(w);
+      if(r.mean_cm!=null&&Number.isFinite(Number(r.mean_cm)))x.depth.push(Number(r.mean_cm));
+      if(r.snow_cover_share_pct!=null&&Number.isFinite(Number(r.snow_cover_share_pct)))x.coverage.push(Number(r.snow_cover_share_pct));
+    });
+    byWeek.forEach((v,w)=>{
+      const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+      weekly.push({season:s.season,source_type:s.source_type,week:w,depth:avg(v.depth),coverage:avg(v.coverage)});
+    });
+  });
+
+  const snowWeeks=[...new Set(weekly.filter(r=>(r.depth||0)>=1||(r.coverage||0)>0).map(r=>r.week))].sort((a,b)=>a-b);
+  const latestSeason=seasons.at(-1)?.season||null;
+  const seasonDepth=seasons.map(s=>{
+    const vals=weekly.filter(r=>r.season===s.season&&r.depth!=null).map(r=>r.depth);
+    return {season:s.season,mean:vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null};
+  }).filter(r=>r.mean!=null);
+  const snowiestSeason=seasonDepth.length?seasonDepth.reduce((a,b)=>b.mean>a.mean?b:a).season:latestSeason;
+
+  const profile=(field)=>snowWeeks.map(week=>{
+    const vals=weekly.filter(r=>r.week===week&&r[field]!=null).map(r=>r[field]);
+    const find=(season)=>weekly.find(r=>r.week===week&&r.season===season)?.[field]??null;
+    return {
+      week,
+      p10:temp2Quantile(vals,.10),
+      p25:temp2Quantile(vals,.25),
+      median:temp2Quantile(vals,.50),
+      p75:temp2Quantile(vals,.75),
+      p90:temp2Quantile(vals,.90),
+      latest:find(latestSeason),
+      snowiest:find(snowiestSeason)
+    };
+  });
+  return {latestSeason,snowiestSeason,depth:profile('depth'),coverage:profile('coverage')};
+}
+
+function renderSnowWeeklyProfileChart(id,rows,latestSeason,snowiestSeason,yTitle,maxY=null){
+  if(!el(id)||!rows.length)return;
+  destroyChart(id);
+  charts[id]=new Chart(el(id),{
+    type:'line',
+    data:{labels:rows.map(r=>'V'+r.week),datasets:[
+      {label:'P10',data:rows.map(r=>r.p10),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0},
+      {label:'10–90 percentil',data:rows.map(r=>r.p90),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(209,213,219,.42)',pointRadius:0,borderWidth:0,fill:'-1'},
+      {label:'P25',data:rows.map(r=>r.p25),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0},
+      {label:'25–75 percentil',data:rows.map(r=>r.p75),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(156,163,175,.30)',pointRadius:0,borderWidth:0,fill:'-1'},
+      {label:'Median',data:rows.map(r=>r.median),borderColor:'#6b7280',backgroundColor:'#6b7280',pointRadius:0,borderWidth:2,tension:.15},
+      {label:(latestSeason||'Senaste säsong').replace('-', '/'),data:rows.map(r=>r.latest),borderColor:'#2563eb',backgroundColor:'#2563eb',pointRadius:0,borderWidth:2.5,tension:.15,spanGaps:false},
+      {label:(snowiestSeason||'Snörikaste säsong').replace('-', '/')+' (snörikaste säsong)',data:rows.map(r=>r.snowiest),borderColor:'#2e8b57',backgroundColor:'#2e8b57',pointRadius:0,borderWidth:2,borderDash:[6,4],tension:.15,spanGaps:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:true,labels:{filter:item=>!['P10','P25'].includes(item.text)}},
+        tooltip:{callbacks:{
+          label:c=>c.parsed.y==null?c.dataset.label:c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+(yTitle==='cm'?' cm':' %')
+        }}
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:24}},
+        y:{beginAtZero:true,...(maxY!=null?{max:maxY}:{}),title:{display:true,text:yTitle},ticks:yTitle==='andel (%)'?{callback:v=>v+' %'}:{}}
+      }}
+  });
+}
+
 function snowMapSource(){
   return el('snowMapSource')?.value||'grid';
 }
@@ -1249,7 +1329,7 @@ function updateSnowMapCopy(){
     :'Medelvärde för tillgängliga stationer inom Luleå kommun; närliggande stationer används om kommunstationer saknas.';
   if(el('snowMapCoverageTitle'))el('snowMapCoverageTitle').textContent=grid?'Andel yta med snötäcke per snösäsong':'Andel stationer med mätbart snötäcke';
   if(el('snowMapCoverageHint'))el('snowMapCoverageHint').textContent=grid
-    ?'Andel analyserade gridceller med minst 1 cm snödjup. Grön streckad linje visar celler där minst 50 % av den del av gridcellen som ligger inom kommunen är fastland, enligt samma fastlandsgeometri som Blixt-sidan.'
+    ?'Andel analyserade gridceller med minst 1 cm snödjup. GridClim och den senare observationsbaserade interpolationen visas som samma mått men med olika linjestil.'
     :'Andel rapporterande stationer med minst 1 cm snödjup.';
 }
 
@@ -1262,17 +1342,26 @@ async function renderSnowMapCharts(){
     const series=await loadSnowGridSeries();
     if(series?.seasons?.length){
       const t=buildSnowGridTimeline(series);
+      const meanAll=t.labels.map((_,i)=>t.meanGrid[i]??t.meanRecent[i]??null);
+      const maxAll=t.labels.map((_,i)=>t.maxGrid[i]??t.maxRecent[i]??null);
+      const sourceBySeason=new Map((series.seasons||[]).map(s=>[s.season,s.source_type==='observations_interpolated'?'Interpolerat från stationsobservationer':'GridClim']));
       destroyChart('snowMapMean');
       charts.snowMapMean=new Chart(el('snowMapMean'),{
         type:'line',
         data:{labels:t.labels,datasets:[
-          {label:'Medelsnödjup · GridClim',data:t.meanGrid,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false},
-          {label:'Maxsnödjup · GridClim',data:t.maxGrid,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,tension:.08,spanGaps:false},
-          {label:'Medelsnödjup · interpolerat',data:t.meanRecent,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,borderDash:[6,4],tension:.12,spanGaps:false},
-          {label:'Maxsnödjup · interpolerat',data:t.maxRecent,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,borderDash:[6,4],tension:.08,spanGaps:false}
+          {label:'Medelsnödjup',data:meanAll,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false},
+          {label:'Maxsnödjup',data:maxAll,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,tension:.08,spanGaps:false}
         ]},
         options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-          plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>items[0]?.label||'',label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' cm'}}},
+          plugins:{legend:{display:true},tooltip:{callbacks:{
+            title:items=>items[0]?.label||'',
+            label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' cm',
+            afterBody:items=>{
+              const i=items?.[0]?.dataIndex;
+              const season=t.seasonKeys[i];
+              return season?['Datakälla: '+(sourceBySeason.get(season)||'okänd')]:[];
+            }
+          }}},
           scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{beginAtZero:true,title:{display:true,text:'cm'}}}}
       });
 
@@ -1280,32 +1369,7 @@ async function renderSnowMapCharts(){
         {label:'Alla gridceller · GridClim',data:t.coverGrid,borderColor:'#6d28d9',backgroundColor:'#6d28d9',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false},
         {label:'Alla gridceller · interpolerat',data:t.coverRecent,borderColor:'#6d28d9',backgroundColor:'#6d28d9',borderWidth:2,pointRadius:0,borderDash:[6,4],tension:.12,spanGaps:false}
       ];
-      if(t.mainGrid.some(v=>v!=null)){
-        coverageDatasets.push({
-          label:'Minst 50 % fastland · GridClim',
-          data:t.mainGrid,
-          borderColor:'#15803d',
-          backgroundColor:'#15803d',
-          borderWidth:2,
-          pointRadius:0,
-          borderDash:[6,4],
-          tension:.12,
-          spanGaps:false
-        });
-      }
-      if(t.mainRecent.some(v=>v!=null)){
-        coverageDatasets.push({
-          label:'Minst 50 % fastland · interpolerat',
-          data:t.mainRecent,
-          borderColor:'#15803d',
-          backgroundColor:'#15803d',
-          borderWidth:2,
-          pointRadius:0,
-          borderDash:[2,5],
-          tension:.12,
-          spanGaps:false
-        });
-      }
+
       destroyChart('snowMapCoverage');
       charts.snowMapCoverage=new Chart(el('snowMapCoverage'),{
         type:'line',
@@ -1314,6 +1378,10 @@ async function renderSnowMapCharts(){
           plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %'}}},
           scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}
       });
+
+      const weekly=buildSnowWeeklyProfiles(series);
+      renderSnowWeeklyProfileChart('snowWeeklyDepthProfile',weekly.depth,weekly.latestSeason,weekly.snowiestSeason,'cm');
+      renderSnowWeeklyProfileChart('snowWeeklyCoverageProfile',weekly.coverage,weekly.latestSeason,weekly.snowiestSeason,'andel (%)',100);
 
       const copernicus=await loadCopernicusSnowDuration();
       const durationClasses=copernicus?.classes||[];
@@ -1356,6 +1424,8 @@ async function renderSnowMapCharts(){
   }
 
   destroyChart('snowMapDuration');
+  destroyChart('snowWeeklyDepthProfile');
+  destroyChart('snowWeeklyCoverageProfile');
   const rows=snowMapSeasonData?.daily||[];
   if(!rows.length)return;
   lineChart('snowMapMean',rows.map(r=>r.date),[
