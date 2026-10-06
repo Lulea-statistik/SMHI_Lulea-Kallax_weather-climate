@@ -1,0 +1,49 @@
+{
+  "region": "Norrbotten county (lnkod 25)",
+  "model": "isotropic north-up scale+offset",
+  "image_size": [
+    249,
+    570
+  ],
+  "results": [
+    {
+      "crs": "EPSG:4326",
+      "objective": 1979.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "scale": 41.804157878125075,
+        "ox": -66.47144978514683,
+        "oy": -1321.4368660838704
+      }
+    },
+    {
+      "crs": "EPSG:3857",
+      "objective": 1979.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "scale": 0.0003755331396166526,
+        "ox": -66.47144978514683,
+        "oy": -1648.703702756783
+      }
+    },
+    {
+      "crs": "EPSG:3006",
+      "objective": 1979.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "scale": 0.0009156828282835005,
+        "ox": 39.58628210611607,
+        "oy": -2747.266663762569
+      }
+    }
+  ]
+}
