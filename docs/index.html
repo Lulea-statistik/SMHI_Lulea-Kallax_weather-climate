@@ -181,6 +181,12 @@
       <p class="hint">100 % stackat för hydrologiska år september–augusti från 2016/17. Källa: Copernicus HR-WSI SP_S2 Snow Phenology, Snow Cover Duration (20 m), aggregerat till rapportens 2,5 km-celler. Endast celler med giltiga satellitpixlar ingår.</p>
       <canvas id="snowMapDuration"></canvas>
     </div>
+    <div class="chart-card full">
+      <h2>Daglig snödjupsfördelning i Luleå 2025/26</h2>
+      <p class="hint">Arealviktad fördelning mellan SMHI:s publicerade snödjupsklasser. Serien är härledd från SMHI:s renderade analyserade snödjupskartor och är därför inte ett originalt numeriskt raster. Kommungränsen har georefererats mot SMHI:s kartbild och kantpixlar vägs fraktionellt.</p>
+      <p id="smhiRenderedSnowQa" class="hint">Laddar kvalitetsinformation…</p>
+      <canvas id="smhiRenderedSnowDaily"></canvas>
+    </div>
   </section>
 
   <section id="page-zerocross" class="page">
@@ -296,5 +302,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=79"></script>
+<script src="app.js?v=80"></script>
 </body></html>
