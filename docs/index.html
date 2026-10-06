@@ -166,7 +166,7 @@
       <div class="snowmap-chart-stack">
         <div class="chart-card snowmap-chart">
           <h2 id="snowMapMeanTitle">Snödjup per snösäsong</h2>
-          <p id="snowMapMeanHint" class="hint">Säsongerna visas efter varandra med samma upplägg som havsisen. Linjerna visar analyserat medel- och maxsnödjup.</p>
+          <p id="snowMapMeanHint" class="hint">Säsongerna visas efter varandra. Linjerna visar medel- och maxsnödjup; datakälla för respektive säsong visas i hover-rutan.</p>
           <canvas id="snowMapMean"></canvas>
         </div>
         <div class="chart-card snowmap-chart">
@@ -175,6 +175,16 @@
           <canvas id="snowMapCoverage"></canvas>
         </div>
       </div>
+    </div>
+    <div class="chart-card full tall">
+      <h2>Veckoprofil snödjup</h2>
+      <p class="hint">Historisk variation vecka för vecka inom snösäsongen. Vecka 1 börjar 1 september och endast veckor där snö förekommit historiskt visas. Ljusgrått band = 10:e–90:e percentilen, mörkare grått = 25:e–75:e percentilen, grå linje = median, blå linje = senaste säsongen och grön streckad linje = den snörikaste säsongen räknat på genomsnittligt snödjup.</p>
+      <canvas id="snowWeeklyDepthProfile"></canvas>
+    </div>
+    <div class="chart-card full tall">
+      <h2>Veckoprofil andel snötäcke</h2>
+      <p class="hint">Historisk variation i andelen analyserade gridceller med minst 1 cm snödjup, vecka för vecka inom snösäsongen. Samma percentilband och jämförelsesäsonger används som i veckoprofilen för snödjup.</p>
+      <canvas id="snowWeeklyCoverageProfile"></canvas>
     </div>
     <div class="chart-card full snowmap-duration-card">
       <h2>Hur länge låg snötäcket kvar?</h2>
@@ -302,5 +312,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=80"></script>
+<script src="app.js?v=81"></script>
 </body></html>
