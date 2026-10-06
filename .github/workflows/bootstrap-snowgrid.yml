@@ -35,6 +35,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Sync latest main before build
+        shell: bash
+        run: |
+          git fetch origin "${GITHUB_REF_NAME}"
+          git checkout "${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
