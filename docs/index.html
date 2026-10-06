@@ -191,10 +191,9 @@
     <div class="lightning-layout">
       <div class="chart-card seaice-map-card lightning-map-card">
         <h2>Blixttäthet i Luleå kommun</h2>
-        <p class="hint">Standardläget <b>Medel</b> visar genomsnittligt antal registrerade urladdningar per år i varje fast 1 × 1 km-ruta för hela perioden 2012–2026. Välj ett enskilt år för årsbilden.</p>
+        <p class="hint">Kartan följer sidans filter för <b>Från år</b>, <b>Till år</b> och <b>Månad</b>. Vid flera valda år visar varje fast 2 × 2 km-ruta genomsnittligt antal registrerade urladdningar per år; vid ett enda år visas årets antal.</p>
         <div class="page-tools lightning-map-tools">
-          <label>År<select id="lightningMapYear"></select></label>
-          <label>Kartläge<select id="lightningMapMode"><option value="density">Täthet</option><option value="grid">1 km-rutnät</option><option value="points">Enskilda blixtar</option><option value="none">Inget lager</option></select></label>
+          <label>Kartläge<select id="lightningMapMode"><option value="grid">2 km-rutnät</option><option value="points">Enskilda blixtar</option><option value="none">Inget lager</option></select></label>
           <label>Yttyp<select id="lightningMapSurface"><option value="all">Alla yttyper</option><option value="mainland">Fastland</option><option value="islands">Öar</option><option value="sea">Hav</option><option value="inland_water">Inlandsvatten</option><option value="uncertain">Osäkert område</option></select></label>
         </div>
         <div id="lightningMap" class="seaice-map lightning-map" aria-label="Interaktiv karta över blixttäthet i Luleå kommun"></div>
@@ -284,5 +283,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=69"></script>
+<script src="app.js?v=70"></script>
 </body></html>
