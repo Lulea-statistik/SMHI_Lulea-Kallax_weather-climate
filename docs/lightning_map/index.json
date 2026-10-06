@@ -1,110 +1,110 @@
 {
-  "cell_size_m": 1000,
+  "cell_size_m": 2000,
   "years": [
     {
       "year": 2012,
       "file": "2012.json",
       "lightning_count": 654,
-      "grid_cells": 521,
-      "max_cell_count": 5
+      "grid_cells": 372,
+      "max_cell_count": 13
     },
     {
       "year": 2013,
       "file": "2013.json",
       "lightning_count": 542,
-      "grid_cells": 456,
-      "max_cell_count": 5
+      "grid_cells": 358,
+      "max_cell_count": 9
     },
     {
       "year": 2014,
       "file": "2014.json",
       "lightning_count": 1981,
-      "grid_cells": 1287,
-      "max_cell_count": 20
+      "grid_cells": 746,
+      "max_cell_count": 54
     },
     {
       "year": 2015,
       "file": "2015.json",
       "lightning_count": 448,
-      "grid_cells": 299,
-      "max_cell_count": 7
+      "grid_cells": 210,
+      "max_cell_count": 13
     },
     {
       "year": 2016,
       "file": "2016.json",
       "lightning_count": 1269,
-      "grid_cells": 897,
-      "max_cell_count": 14
+      "grid_cells": 555,
+      "max_cell_count": 24
     },
     {
       "year": 2017,
       "file": "2017.json",
       "lightning_count": 296,
-      "grid_cells": 229,
-      "max_cell_count": 7
+      "grid_cells": 171,
+      "max_cell_count": 8
     },
     {
       "year": 2018,
       "file": "2018.json",
       "lightning_count": 2645,
-      "grid_cells": 1647,
-      "max_cell_count": 14
+      "grid_cells": 894,
+      "max_cell_count": 24
     },
     {
       "year": 2019,
       "file": "2019.json",
       "lightning_count": 1684,
-      "grid_cells": 1071,
-      "max_cell_count": 13
+      "grid_cells": 679,
+      "max_cell_count": 28
     },
     {
       "year": 2020,
       "file": "2020.json",
       "lightning_count": 2794,
-      "grid_cells": 1747,
-      "max_cell_count": 9
+      "grid_cells": 919,
+      "max_cell_count": 17
     },
     {
       "year": 2021,
       "file": "2021.json",
       "lightning_count": 2729,
-      "grid_cells": 1687,
-      "max_cell_count": 10
+      "grid_cells": 877,
+      "max_cell_count": 22
     },
     {
       "year": 2022,
       "file": "2022.json",
       "lightning_count": 747,
-      "grid_cells": 536,
-      "max_cell_count": 8
+      "grid_cells": 352,
+      "max_cell_count": 15
     },
     {
       "year": 2023,
       "file": "2023.json",
       "lightning_count": 2243,
-      "grid_cells": 1216,
-      "max_cell_count": 10
+      "grid_cells": 617,
+      "max_cell_count": 28
     },
     {
       "year": 2024,
       "file": "2024.json",
       "lightning_count": 2156,
-      "grid_cells": 1075,
-      "max_cell_count": 23
+      "grid_cells": 534,
+      "max_cell_count": 40
     },
     {
       "year": 2025,
       "file": "2025.json",
       "lightning_count": 6577,
-      "grid_cells": 2655,
-      "max_cell_count": 19
+      "grid_cells": 1099,
+      "max_cell_count": 47
     },
     {
       "year": 2026,
       "file": "2026.json",
       "lightning_count": 758,
-      "grid_cells": 490,
-      "max_cell_count": 9
+      "grid_cells": 329,
+      "max_cell_count": 18
     }
   ],
   "average": {
@@ -112,7 +112,7 @@
     "year_count": 15,
     "first_year": 2012,
     "last_year": 2026,
-    "grid_cells": 4943,
-    "max_cell_count": 2.0
+    "grid_cells": 1334,
+    "max_cell_count": 4.933
   }
 }
