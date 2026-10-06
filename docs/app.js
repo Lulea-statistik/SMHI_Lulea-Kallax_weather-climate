@@ -1,4 +1,4 @@
-let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function lineChart(id,labels,datasets,yTitle,extra={}){destroyChart(id);charts[id]=new Chart(el(id),{type:'line',data:{labels,datasets:datasets.map(d=>({borderWidth:2,pointRadius:0,tension:.15,...d}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:datasets.length>1}},scales:{x:{grid:{display:false}},y:{title:{display:!!yTitle,text:yTitle}}},...extra}});}
@@ -1073,6 +1073,32 @@ async function loadSnowGridIndex(){
   return snowGridIndex;
 }
 
+async function loadSnowGridSeries(){
+  if(snowGridSeries)return snowGridSeries;
+  const r=await fetch('snowgrid/series.json?v=1',{cache:'no-store'});
+  if(!r.ok)return null;
+  snowGridSeries=await r.json();
+  return snowGridSeries;
+}
+
+function buildSnowGridTimeline(series){
+  const labels=[],mean=[],max=[],cover=[],seasonKeys=[];
+  (series?.seasons||[]).slice().sort((a,b)=>a.season.localeCompare(b.season)).forEach((s,idx,arr)=>{
+    (s.daily||[]).forEach(r=>{
+      labels.push(r.date);
+      mean.push(r.mean_cm);
+      max.push(r.max_cm);
+      cover.push(r.snow_cover_share_pct);
+      seasonKeys.push(s.season);
+    });
+    if(idx<arr.length-1){
+      labels.push('');
+      mean.push(null);max.push(null);cover.push(null);seasonKeys.push(null);
+    }
+  });
+  return {labels,mean,max,cover,seasonKeys};
+}
+
 function snowMapSource(){
   return el('snowMapSource')?.value||'grid';
 }
@@ -1116,7 +1142,7 @@ async function loadSnowGridSeason(season=null,force=false){
   if(el('snowMapSeason'))el('snowMapSeason').value=season;
   if(el('snowMapSeasonLabel'))el('snowMapSeasonLabel').textContent='Snösäsong '+season.replace('-', '/');
   setupSnowMapSlider();
-  renderSnowMapCharts();
+  await renderSnowMapCharts();
   return snowGridData;
 }
 
@@ -1139,7 +1165,7 @@ async function loadSnowMapSeason(season=null,force=false){
   if(el('snowMapSeason'))el('snowMapSeason').value=season;
   if(el('snowMapSeasonLabel'))el('snowMapSeasonLabel').textContent='Snösäsong '+season.replace('-', '/');
   setupSnowMapSlider();
-  renderSnowMapCharts();
+  await renderSnowMapCharts();
   return snowMapSeasonData;
 }
 
@@ -1170,25 +1196,56 @@ function updateSnowMapCopy(){
   if(el('snowMapHint'))el('snowMapHint').textContent=grid
     ?'Varje 2,5 km-gridcell visar analyserat snödjup från SMHIGridClim inom Luleå kommun.'
     :'Fyllda cirklar är stationer inom kommunen; ringmarkerade stationer ligger utanför kommunen men inom 60 km.';
-  if(el('snowMapMeanTitle'))el('snowMapMeanTitle').textContent=grid?'Genomsnittligt analyserat snödjup per datum':'Genomsnittligt observerat snödjup per datum';
+  if(el('snowMapMeanTitle'))el('snowMapMeanTitle').textContent=grid?'Snödjup per snösäsong':'Genomsnittligt observerat snödjup per datum';
   if(el('snowMapMeanHint'))el('snowMapMeanHint').textContent=grid
-    ?'Medelvärde av analyserade gridceller inom Luleå kommun.'
+    ?'Säsongerna visas efter varandra. Linjerna visar analyserat medel- och maxsnödjup inom Luleå kommun.'
     :'Medelvärde för tillgängliga stationer inom Luleå kommun; närliggande stationer används om kommunstationer saknas.';
-  if(el('snowMapCoverageTitle'))el('snowMapCoverageTitle').textContent=grid?'Andel analyserad yta med mätbart snötäcke':'Andel stationer med mätbart snötäcke';
+  if(el('snowMapCoverageTitle'))el('snowMapCoverageTitle').textContent=grid?'Andel yta med snötäcke per snösäsong':'Andel stationer med mätbart snötäcke';
   if(el('snowMapCoverageHint'))el('snowMapCoverageHint').textContent=grid
-    ?'Andel analyserade gridceller med minst 1 cm snödjup.'
+    ?'Andel analyserade gridceller med minst 1 cm snödjup. Säsongerna visas kronologiskt efter varandra.'
     :'Andel rapporterande stationer med minst 1 cm snödjup.';
 }
 
-function renderSnowMapCharts(){
+async function renderSnowMapCharts(){
   const grid=snowMapSource()==='grid';
-  const rows=grid?(snowGridData?.daily||[]):(snowMapSeasonData?.daily||[]);
+
+  if(grid){
+    const series=await loadSnowGridSeries();
+    if(series?.seasons?.length){
+      const t=buildSnowGridTimeline(series);
+      destroyChart('snowMapMean');
+      charts.snowMapMean=new Chart(el('snowMapMean'),{
+        type:'line',
+        data:{labels:t.labels,datasets:[
+          {label:'Medelsnödjup',data:t.mean,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false},
+          {label:'Maxsnödjup',data:t.max,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,tension:.08,spanGaps:false}
+        ]},
+        options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+          plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>items[0]?.label||'',label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' cm'}}},
+          scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{beginAtZero:true,title:{display:true,text:'cm'}}}}
+      });
+
+      destroyChart('snowMapCoverage');
+      charts.snowMapCoverage=new Chart(el('snowMapCoverage'),{
+        type:'line',
+        data:{labels:t.labels,datasets:[
+          {label:'Yta med minst 1 cm snö',data:t.cover,borderColor:'#6d28d9',backgroundColor:'#6d28d9',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false}
+        ]},
+        options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+          plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %'}}},
+          scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}
+      });
+      return;
+    }
+  }
+
+  const rows=snowMapSeasonData?.daily||[];
   if(!rows.length)return;
   lineChart('snowMapMean',rows.map(r=>r.date),[
-    {label:grid?'Analyserat medelsnödjup':'Observerat medelsnödjup',data:rows.map(r=>r.mean_cm),borderColor:'#2563eb'}
+    {label:'Observerat medelsnödjup',data:rows.map(r=>r.mean_cm),borderColor:'#2563eb'}
   ],'cm',{scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{beginAtZero:true,title:{display:true,text:'cm'}}}});
   lineChart('snowMapCoverage',rows.map(r=>r.date),[
-    {label:grid?'Yta med snötäcke':'Stationer med snötäcke',data:rows.map(r=>r.snow_cover_share_pct),borderColor:'#6d28d9'}
+    {label:'Stationer med snötäcke',data:rows.map(r=>r.snow_cover_share_pct),borderColor:'#6d28d9'}
   ],'andel (%)',{scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}});
 }
 
