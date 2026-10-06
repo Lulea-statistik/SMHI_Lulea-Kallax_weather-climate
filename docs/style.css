@@ -66,13 +66,6 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
 .seaice-season-nav button:disabled{opacity:.45;cursor:default}
 @media(max-width:640px){.seaice-season-control-row{align-items:flex-start;flex-direction:column;gap:4px}}
 
-@media(max-width:1049px){
-  #page-lightning .lightning-top-grid{grid-template-columns:1fr}
-  #page-lightning .lightning-top-grid>.chart-card{min-height:0}
-  #page-lightning .lightning-map-card{height:auto;min-height:0}\n  #page-lightning .lightning-map{height:520px;min-height:520px;flex:none}
-  #page-lightning .lightning-primary-chart canvas{height:auto!important;max-height:300px}
-}
-
 /* Lightning page: map left, consistent chart column right. */
 #page-lightning .lightning-layout{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;align-items:start}
 #page-lightning .lightning-map-card{height:646px;min-height:646px;display:flex;flex-direction:column}
@@ -83,5 +76,6 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
 #page-lightning .lightning-chart canvas{height:250px!important;max-height:250px;width:100%!important}
 @media(max-width:1049px){
   #page-lightning .lightning-layout{grid-template-columns:1fr}
-  #page-lightning .lightning-map{height:520px;min-height:520px}
+  #page-lightning .lightning-map-card{height:auto;min-height:0}
+  #page-lightning .lightning-map{height:520px;min-height:520px;flex:none}
 }
