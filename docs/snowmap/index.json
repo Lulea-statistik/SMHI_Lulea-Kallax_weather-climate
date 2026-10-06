@@ -1,5 +1,5 @@
 {
-  "source": "SMHI Meteorologiska observationer - Snodjup dygnsvarde, parameter 8",
+  "source": "SMHI Meteorologiska observationer - Snodjup dygnsvarde, parameter 8 (meter converted to cm)",
   "source_url": "https://www.smhi.se/data/sok-oppna-data-i-utforskaren/se-acmf-meteorologiska-observationer-snodjup-dygnsvarde",
   "map_reference_url": "https://www.smhi.se/vader/observationer/snodjup",
   "buffer_km": 60,
@@ -35,7 +35,7 @@
       "distance_to_municipality_km": 35.8,
       "active": true,
       "from": 1729468800000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "170630",
@@ -57,7 +57,7 @@
       "distance_to_municipality_km": 13.5,
       "active": true,
       "from": -731116800000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "151570",
@@ -145,7 +145,7 @@
       "distance_to_municipality_km": 41.7,
       "active": true,
       "from": -283996800000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "161780",
@@ -211,7 +211,7 @@
       "distance_to_municipality_km": 23.3,
       "active": true,
       "from": -654912000000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "160870",
@@ -222,7 +222,7 @@
       "distance_to_municipality_km": 26.6,
       "active": true,
       "from": 1761998400000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "161900",
@@ -233,7 +233,7 @@
       "distance_to_municipality_km": 0.0,
       "active": true,
       "from": 660009600000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "160850",
@@ -244,7 +244,7 @@
       "distance_to_municipality_km": 42.9,
       "active": true,
       "from": 184032000000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "173760",
@@ -354,7 +354,7 @@
       "distance_to_municipality_km": 0.0,
       "active": true,
       "from": -788918400000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "172920",
@@ -409,7 +409,7 @@
       "distance_to_municipality_km": 0.0,
       "active": true,
       "from": 1727913600000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "171780",
@@ -464,7 +464,7 @@
       "distance_to_municipality_km": 24.3,
       "active": true,
       "from": -2056492800000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "161770",
@@ -541,7 +541,7 @@
       "distance_to_municipality_km": 34.4,
       "active": true,
       "from": 625881600000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "161710",
@@ -662,7 +662,7 @@
       "distance_to_municipality_km": 4.4,
       "active": true,
       "from": 1739664000000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "160960",
@@ -684,7 +684,7 @@
       "distance_to_municipality_km": 58.9,
       "active": true,
       "from": 830908800000,
-      "to": 1791280800000
+      "to": 1791288000000
     },
     {
       "id": "171830",
