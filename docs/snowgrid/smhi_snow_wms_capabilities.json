@@ -1,0 +1,80 @@
+{
+  "url": "https://opendata-view.smhi.se/met-obs/ACMF.snodjup_momentan_view/wms?service=WMS&request=GetCapabilities",
+  "http_status": 200,
+  "content_type": "text/xml",
+  "wms_version": "1.3.0",
+  "root_element": "WMS_Capabilities",
+  "supported_crs": [
+    "CRS:84",
+    "EPSG:3006",
+    "EPSG:3007",
+    "EPSG:3008",
+    "EPSG:3009",
+    "EPSG:3010",
+    "EPSG:3011",
+    "EPSG:3012",
+    "EPSG:3013",
+    "EPSG:3014",
+    "EPSG:3015",
+    "EPSG:3016",
+    "EPSG:3017",
+    "EPSG:3018",
+    "EPSG:3021",
+    "EPSG:3035",
+    "EPSG:3857",
+    "EPSG:4326",
+    "EPSG:900913"
+  ],
+  "layers": [
+    {
+      "name": "ACMF.snodjup_momentan_view",
+      "title": "ACMF.Meteorologiska observationer - Snödjup dygnsvärde",
+      "crs": [
+        "EPSG:3006",
+        "EPSG:3007",
+        "EPSG:3008",
+        "EPSG:3009",
+        "EPSG:3010",
+        "EPSG:3011",
+        "EPSG:3012",
+        "EPSG:3013",
+        "EPSG:3014",
+        "EPSG:3015",
+        "EPSG:3016",
+        "EPSG:3017",
+        "EPSG:3018",
+        "EPSG:3021",
+        "EPSG:3035",
+        "EPSG:3857",
+        "EPSG:4326",
+        "EPSG:900913",
+        "CRS:84"
+      ],
+      "bounding_boxes": [
+        {
+          "EX_GeographicBoundingBox": {
+            "westBoundLongitude": "10.934440612792969",
+            "eastBoundLongitude": "24.177400588989258",
+            "southBoundLatitude": "55.269744873046875",
+            "northBoundLatitude": "68.97565460205078"
+          }
+        },
+        {
+          "CRS": "CRS:84",
+          "minx": "10.934440612792969",
+          "miny": "55.269744873046875",
+          "maxx": "24.177400588989258",
+          "maxy": "68.97565460205078"
+        },
+        {
+          "CRS": "EPSG:4326",
+          "minx": "55.269744873046875",
+          "miny": "10.934440612792969",
+          "maxx": "68.97565460205078",
+          "maxy": "24.177400588989258"
+        }
+      ]
+    }
+  ],
+  "raw_xml_prefix": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><WMS_Capabilities xmlns:inspire_common=\"http://inspire.ec.europa.eu/schemas/common/1.0\" xmlns:inspire_vs=\"http://inspire.ec.europa.eu/schemas/inspire_vs/1.0\" version=\"1.3.0\" updateSequence=\"29035\" xmlns=\"http://www.opengis.net/wms\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wms https://opendata-view.smhi.se/schemas/wms/1.3.0/capabilities_1_3_0.xsd http://inspire.ec.europa.eu/schemas/inspire_vs/1.0 https://inspire.ec.europa.eu/schemas/inspire_vs/1.0/inspire_vs.xsd\">\n  <Service>\n    <Name>WMS</Name>\n    <Title>GeoServer Web Map Service</Title>\n    <Abstract>A compliant implementation of WMS plus most of the SLD extension (dynamic styling). Can also generate PDF, SVG, KML, GeoRSS</Abstract>\n    <KeywordList>\n      <Keyword>WFS</Keyword>\n      <Keyword>WMS</Keyword>\n      <Keyword>GEOSERVER</Keyword>\n    </KeywordList>\n    <OnlineResource xlink:type=\"simple\" xlink:href=\"https://opendata.smhi.se\"/>\n    <ContactInformation>\n      <ContactPersonPrimary>\n        <ContactPerson>SMHI</ContactPerson>\n        <ContactOrganization>SMHI</ContactOrganization>\n      </ContactPersonPrimary>\n      <ContactPosition/>\n      <ContactAddress>\n        <AddressType>Work</AddressType>\n        <Address>FolkborgsvÃ¤gen 17</Address>\n        <City>NorrkÃ¶ping</City>\n        <StateOrProvince/>\n        <PostCode>60200</PostCode>\n        <Country>Sweden</Country>\n      </ContactAddress>\n      <ContactVoiceTelephone>+46 (11) 495 80 00</ContactVoiceTelephone>\n      <ContactFacsimileTelephone/>\n      <ContactElectronicMailAddress>opendata@smhi.se</ContactElectronicMailAddress>\n    </ContactInformation>\n    <Fees>no conditions apply</Fees>\n    <AccessConstraints>None</AccessConstraints>\n  </Service>\n  <Capability>\n    <Request>\n      <GetCapabilities>\n        <Format>text/xml</Format>\n        <DCPType>\n          <HTTP>\n            <Get>\n              <OnlineResource xl"
+}
