@@ -17,7 +17,10 @@
     <img class="brandLogo" src="lulea-statistik-logo.svg" alt="" aria-hidden="true">
     <div class="brandText"><h1>SMHI Kallax – klimatrapport</h1><p>Luleå-Kallax Flygplats · station 162860</p></div>
   </div>
-  <div id="updated" class="updated"></div>
+  <div class="topbar-status">
+    <div id="globalLoading" class="global-loading" aria-live="polite"><span class="loading-spinner" aria-hidden="true"></span><span id="globalLoadingText">Laddar rapport…</span></div>
+    <div id="updated" class="updated"></div>
+  </div>
 </header>
 <nav class="tabs" id="tabs">
   <button data-page="temp1" class="active">Temperatur 1</button>
@@ -173,6 +176,11 @@
         </div>
       </div>
     </div>
+    <div class="chart-card full snowmap-duration-card">
+      <h2>Hur länge låg snötäcket kvar?</h2>
+      <p class="hint">100 % stackat per snösäsong. Varje gridcell klassas efter hur många veckor under säsongen den hade minst 1 cm analyserat snödjup.</p>
+      <canvas id="snowMapDuration"></canvas>
+    </div>
   </section>
 
   <section id="page-zerocross" class="page">
@@ -288,5 +296,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=76"></script>
+<script src="app.js?v=77"></script>
 </body></html>
