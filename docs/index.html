@@ -140,7 +140,7 @@
   </section>
 
   <section id="page-snowmap" class="page">
-    <div class="source-note"><b>Snötäckeskarta:</b> Huvudläget använder SMHIGridClim, ett analyserat snödjupsfält med 2,5 km upplösning som kombinerar meteorologisk återanalys med stationsobservationer. SMHIGridClim finns för 1961–2018. För senare år kan stationsobservationer visas som kontrollager. Klassgränserna följer nivåerna som används på SMHI:s snödjupskarta: barmark, 1, 3, 10, 30, 50, 75, 100, 150 och 200+ cm.</div>
+    <div class="source-note"><b>Snötäckeskarta:</b> Två metoder används i samma 2,5 km-grid. <b>1990/91–2017/18</b> är SMHIGridClim, ett analyserat snödjupsfält som kombinerar återanalys och stationsobservationer. <b>2018/19–2025/26</b> är en separat observationsbaserad IDW-interpolation av SMHI:s snödjupsstationer till samma grid. Metodbytet markeras i rapporten och serierna bör därför inte tolkas som helt metodhomogena över 2018. Säsongen 2025/26 är preliminär/ofullständig där stationsarkivet ännu saknar hela juli. Klassgränser: barmark, 1, 3, 10, 30, 50, 75, 100, 150 och 200+ cm.</div>
     <div class="page-tools">
       <label>Datakälla<select id="snowMapSource"><option value="grid">Analyserat snödjup, 2,5 km</option><option value="stations">Stationsobservationer</option></select></label>
       <label>Snösäsong<select id="snowMapSeason"></select></label>
@@ -296,5 +296,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=77"></script>
+<script src="app.js?v=78"></script>
 </body></html>
