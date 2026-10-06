@@ -1,0 +1,29 @@
+{
+  "source_snow_png": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260215.png",
+  "source_county_overlay": "https://www.smhi.se/pd/klimat/snow_depth/layer_imgs/lan2425.png",
+  "municipality_source": "SCB Kommun_Sweref99TM.shp",
+  "municipality_record": {
+    "code": "2580",
+    "name": "Luleå"
+  },
+  "municipality_source_crs_wkt_prefix": "PROJCS[\"unnamed\",GEOGCS[\"GCS_unnamed\",DATUM[\"D_GRS_80\",SPHEROID[\"GRS_80\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"False_Easting\",500000.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",15.0],PARAMETER[\"Scale_Factor\",0.9996],PARAMETER[\"Latitude_Of_Origin\",0.0],UNIT[\"Meter\",1.0]]",
+  "municipality_source_explicit_epsg3006": false,
+  "map_fit_crs": "EPSG:4326",
+  "map_fit_params": {
+    "scale": 9.388355490170358,
+    "ox": -81.54385001233868,
+    "oy": 1042.762947720799
+  },
+  "image_size": [
+    249,
+    570
+  ],
+  "lulea_pixel_bbox": [
+    119.013,
+    420.312,
+    130.813,
+    428.565
+  ],
+  "lulea_vertices_inside_image_pct": 100.0,
+  "note": "Preview only. Black/white outline is SCB Lulea municipality transformed from verified SWEREF 99 TM to EPSG:4326, then through the national SMHI PNG fit."
+}
