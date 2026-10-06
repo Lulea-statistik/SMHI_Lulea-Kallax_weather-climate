@@ -1,0 +1,17 @@
+{
+  "source": "SMHIGridClim (UERRA-Harmonie / GridPP)",
+  "source_url": "https://www.smhi.se/data/sok-oppna-data-i-utforskaren/meteorologisk-ateranalys-smhigridclim-uerra-harmonie",
+  "resolution_km": 2.5,
+  "available_period": "1961-01-01–2018-12-31",
+  "seasons": [
+    {
+      "season": "2017-18",
+      "file": "2017-18.json",
+      "grid_file": "2017-18_grid.geojson",
+      "first_date": "2017-08-01",
+      "last_date": "2018-07-31",
+      "dates": 365,
+      "cells": 885
+    }
+  ]
+}
