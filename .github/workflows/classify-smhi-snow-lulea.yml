@@ -1,0 +1,33 @@
+name: Classify SMHI snow Lulea
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/classify-smhi-snow-lulea.yml"
+      - "scripts/classify_smhi_snow_lulea.py"
+      - "docs/snowgrid/smhi_snow_crs_symmetric.json"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  classify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests pillow numpy pyshp pyproj shapely
+      - run: python scripts/classify_smhi_snow_lulea.py
+      - name: Commit outputs
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid/smhi_snow_lulea_classification_2026-02-15.json docs/snowgrid/smhi_snow_lulea_classification_2026-02-15.png
+          git commit -m "Add Lulea snow classification QA"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
