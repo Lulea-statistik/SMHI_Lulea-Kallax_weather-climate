@@ -4,7 +4,7 @@
 from __future__ import annotations
 import io,json,tempfile,zipfile
 from pathlib import Path
-import requests, shapefile
+import requests, shapefile, time
 from PIL import Image,ImageDraw
 from pyproj import CRS,Transformer
 
@@ -19,8 +19,17 @@ SCB="https://www.scb.se/contentassets/3443fea3fa6640f7a57ea15d9a372d33/shape_sve
 TIMEOUT=90
 
 def dl(url):
-    r=requests.get(url,timeout=TIMEOUT,headers={"User-Agent":"Lulea-statistik-SMHI-Lulea-3013-preview/1.0"})
-    r.raise_for_status(); return r.content
+    last=None
+    for attempt in range(5):
+        try:
+            r=requests.get(url,timeout=TIMEOUT,headers={"User-Agent":"Lulea-statistik-SMHI-Lulea-3013-preview/1.0"})
+            r.raise_for_status()
+            return r.content
+        except requests.RequestException as exc:
+            last=exc
+            if attempt < 4:
+                time.sleep(5*(attempt+1))
+    raise RuntimeError(f"Download failed after retries: {url}: {last}")
 
 def expand(td):
     root=Path(td)
