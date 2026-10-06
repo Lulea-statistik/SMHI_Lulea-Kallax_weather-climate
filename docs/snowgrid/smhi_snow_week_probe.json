@@ -1,0 +1,285 @@
+{
+  "api": "https://www.smhi.se/pd/fodl-klimat/api/snowdepth/week",
+  "status": 200,
+  "content_type": "application/json; charset=utf-8",
+  "length": 3332,
+  "json": {
+    "obs": [
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260511.png",
+        "alt": "Observationer 2026-05-11",
+        "title": "2026-05-11"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260512.png",
+        "alt": "Observationer 2026-05-12",
+        "title": "2026-05-12"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260513.png",
+        "alt": "Observationer 2026-05-13",
+        "title": "2026-05-13"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260514.png",
+        "alt": "Observationer 2026-05-14",
+        "title": "2026-05-14"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260515.png",
+        "alt": "Observationer 2026-05-15",
+        "title": "2026-05-15"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260516.png",
+        "alt": "Observationer 2026-05-16",
+        "title": "2026-05-16"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260517.png",
+        "alt": "Observationer 2026-05-17",
+        "title": "2026-05-17"
+      }
+    ],
+    "depths": [
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260511.png",
+        "alt": "Snödjup 2026-05-11",
+        "title": "2026-05-11"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260512.png",
+        "alt": "Snödjup 2026-05-12",
+        "title": "2026-05-12"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260513.png",
+        "alt": "Snödjup 2026-05-13",
+        "title": "2026-05-13"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260514.png",
+        "alt": "Snödjup 2026-05-14",
+        "title": "2026-05-14"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260515.png",
+        "alt": "Snödjup 2026-05-15",
+        "title": "2026-05-15"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260516.png",
+        "alt": "Snödjup 2026-05-16",
+        "title": "2026-05-16"
+      },
+      {
+        "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260517.png",
+        "alt": "Snödjup 2026-05-17",
+        "title": "2026-05-17"
+      }
+    ],
+    "options": [],
+    "addInfo": {
+      "seasonActive": false,
+      "infoText": {
+        "se_text": "Den 17 maj 2026 hade endast två av SMHI:s observationsstationer mätbart snödjup. Det är därmed inte längre meningsfullt att uppdatera snödjupskartan för säsongen 2025-2026. Notera dock att snö ännu förekommer i högre fjällterräng.",
+        "se_hdr": "Slut för säsongen.",
+        "en_text": "17 May 2026 only two of SMHI's observing stations had a measurable snow depth. It is therefore no longer meaningful to update the snow depth map for the 2025-2026 season. However, please note that snow still occurs in high mountain areas.",
+        "en_hdr": "Season ended."
+      }
+    },
+    "selectWeek": true,
+    "selectOptions": [
+      {
+        "label": "2009-2010",
+        "val": "0910",
+        "selected": false
+      },
+      {
+        "label": "2010-2011",
+        "val": "1011",
+        "selected": false
+      },
+      {
+        "label": "2011-2012",
+        "val": "1112",
+        "selected": false
+      },
+      {
+        "label": "2012-2013",
+        "val": "1213",
+        "selected": false
+      },
+      {
+        "label": "2013-2014",
+        "val": "1314",
+        "selected": false
+      },
+      {
+        "label": "2014-2015",
+        "val": "1415",
+        "selected": false
+      },
+      {
+        "label": "2015-2016",
+        "val": "1516",
+        "selected": false
+      },
+      {
+        "label": "2016-2017",
+        "val": "1617",
+        "selected": false
+      },
+      {
+        "label": "2017-2018",
+        "val": "1718",
+        "selected": false
+      },
+      {
+        "label": "2018-2019",
+        "val": "1819",
+        "selected": false
+      },
+      {
+        "label": "2019-2020",
+        "val": "1920",
+        "selected": false
+      },
+      {
+        "label": "2020-2021",
+        "val": "2021",
+        "selected": false
+      },
+      {
+        "label": "2021-2022",
+        "val": "2122",
+        "selected": false
+      },
+      {
+        "label": "2022-2023",
+        "val": "2223",
+        "selected": false
+      },
+      {
+        "label": "2023-2024",
+        "val": "2324",
+        "selected": false
+      },
+      {
+        "label": "2024-2025",
+        "val": "2425",
+        "selected": false
+      },
+      {
+        "label": "2025-2026",
+        "val": "2526",
+        "selected": true
+      },
+      {
+        "label": "week",
+        "val": "week",
+        "selected": true
+      }
+    ]
+  },
+  "assets": [
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260511.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "11220",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260511.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260512.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "12660",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260512.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260513.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "12666",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260513.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260514.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "11687",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260514.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260515.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "13092",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260515.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260516.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "12515",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260516.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260517.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "12435",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/snoobs260517.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260511.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "71229",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260511.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260512.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "66631",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260512.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260513.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "64928",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260513.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260514.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "63504",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260514.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260515.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "59238",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260515.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260516.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "58167",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260516.png"
+    },
+    {
+      "url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260517.png",
+      "status": 200,
+      "content_type": "image/png",
+      "content_length": "58134",
+      "final_url": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260517.png"
+    }
+  ]
+}
