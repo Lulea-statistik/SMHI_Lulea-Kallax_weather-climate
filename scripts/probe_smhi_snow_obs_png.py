@@ -31,7 +31,7 @@ def analyze(content,url):
     return {
         "url":url,"size":list(im.size),"opaque_pixels":opaque,
         "alpha_bbox":bbox,"unique_rgb_opaque":len(cnt),
-        "common_rgb":[{"rgb":list(k),"count":v} for k,v in cnt.most_common(40)]
+        "common_rgb":[{"rgb":[int(x) for x in k],"count":int(v)} for k,v in cnt.most_common(40)]
     }
 
 def main():
