@@ -79,3 +79,16 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
   #page-lightning .lightning-map-card{height:auto;min-height:0}
   #page-lightning .lightning-map{height:520px;min-height:520px;flex:none}
 }
+
+/* Snow map mirrors the lightning page proportions. */
+#page-snowmap .snowmap-layout{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;align-items:start}
+#page-snowmap .snowmap-map-card{height:646px;min-height:646px;display:flex;flex-direction:column}
+#page-snowmap .snowmap-map{height:auto;min-height:0;flex:1}
+#page-snowmap .snowmap-chart-stack{display:grid;grid-template-columns:1fr;gap:16px}
+#page-snowmap .snowmap-chart{width:100%;min-height:315px}
+#page-snowmap .snowmap-chart canvas{height:250px!important;max-height:250px;width:100%!important}
+@media(max-width:1049px){
+  #page-snowmap .snowmap-layout{grid-template-columns:1fr}
+  #page-snowmap .snowmap-map-card{height:auto;min-height:0}
+  #page-snowmap .snowmap-map{height:520px;min-height:520px;flex:none}
+}
