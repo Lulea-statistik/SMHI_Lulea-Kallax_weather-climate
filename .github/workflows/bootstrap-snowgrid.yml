@@ -1,0 +1,67 @@
+name: Bootstrap SMHI snow grid
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/bootstrap-snowgrid.yml"
+      - "scripts/fetch_snowgrid.py"
+  workflow_dispatch:
+    inputs:
+      start_year:
+        description: "Första snösäsongens startår"
+        required: true
+        default: "2017"
+      end_year:
+        description: "Sista snösäsongens startår"
+        required: true
+        default: "2017"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: smhi-snowgrid-bootstrap
+  cancel-in-progress: false
+
+jobs:
+  build-grid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build GridClim snow layer
+        env:
+          SNOWGRID_START_YEAR: ${{ github.event.inputs.start_year || '2017' }}
+          SNOWGRID_END_YEAR: ${{ github.event.inputs.end_year || '2017' }}
+          CPL_VSIL_CURL_ALLOWED_EXTENSIONS: ".nc"
+          GDAL_HTTP_MULTIRANGE: "YES"
+        run: python scripts/fetch_snowgrid.py
+
+      - name: Commit snow grid data
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain docs/snowgrid docs/snowmap_boundary.geojson)" ]; then
+            echo "No snow-grid changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid docs/snowmap_boundary.geojson
+          git commit -m "Bootstrap SMHIGridClim snow layer"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
