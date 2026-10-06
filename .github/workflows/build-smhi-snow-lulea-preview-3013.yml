@@ -1,0 +1,33 @@
+name: Build SMHI snow Lulea preview EPSG3013
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/build-smhi-snow-lulea-preview-3013.yml"
+      - "scripts/build_smhi_snow_lulea_preview_epsg3013.py"
+      - "docs/snowgrid/smhi_snow_crs_symmetric.json"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests pillow pyshp pyproj
+      - run: python scripts/build_smhi_snow_lulea_preview_epsg3013.py
+      - name: Commit preview
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid/smhi_snow_lulea_georef_preview_epsg3013.png docs/snowgrid/smhi_snow_lulea_georef_preview_epsg3013.json
+          git commit -m "Add Lulea snow georef preview EPSG3013"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
