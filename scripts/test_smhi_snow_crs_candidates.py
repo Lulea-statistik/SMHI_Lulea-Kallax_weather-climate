@@ -92,13 +92,21 @@ def main():
             p=res.x
             col=p[0]*xy[:,0]+p[1]; row=p[2]*xy[:,1]+p[3]
             inside=(col>=0)&(col<w)&(row>=0)&(row<h)
-            vals=dist[np.rint(row[inside]).astype(int),np.rint(col[inside]).astype(int)]
+            if inside.any():
+                vals=dist[np.rint(row[inside]).astype(int),np.rint(col[inside]).astype(int)]
+                med=round(float(np.median(vals)),3)
+                p90=round(float(np.percentile(vals,90)),3)
+            else:
+                vals=np.array([],dtype=float)
+                med=None
+                p90=None
             results.append({
                 "crs":crs,
                 "objective":round(float(obj(p)),4),
                 "inside_pct":round(float(inside.mean()*100),2),
-                "median_pixel_error":round(float(np.median(vals)),3),
-                "p90_pixel_error":round(float(np.percentile(vals,90)),3),
+                "valid":bool(inside.any()),
+                "median_pixel_error":med,
+                "p90_pixel_error":p90,
                 "params":{"sx":float(p[0]),"ox":float(p[1]),"sy":float(p[2]),"oy":float(p[3])}
             })
         results.sort(key=lambda r:r["objective"])
