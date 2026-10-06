@@ -1,0 +1,55 @@
+name: Backfill GridClim snow statistics
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/backfill-snowgrid-stats.yml"
+      - "scripts/backfill_snowgrid_stats.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: smhi-snowgrid-bootstrap
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync latest main
+        shell: bash
+        run: |
+          git fetch origin "${GITHUB_REF_NAME}"
+          git checkout "${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Backfill derived snow statistics
+        run: python scripts/backfill_snowgrid_stats.py
+      - name: Commit derived snow statistics
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain docs/snowgrid)" ]; then
+            echo "No snow-grid changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid
+          git commit -m "Backfill GridClim snow statistics"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
