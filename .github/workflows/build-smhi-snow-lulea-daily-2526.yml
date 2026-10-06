@@ -1,0 +1,33 @@
+name: Build SMHI snow Lulea daily 2526
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/build-smhi-snow-lulea-daily-2526.yml"
+      - "scripts/build_smhi_snow_lulea_daily_2526.py"
+      - "docs/snowgrid/smhi_snow_crs_symmetric.json"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests pillow numpy pyshp pyproj shapely
+      - run: python scripts/build_smhi_snow_lulea_daily_2526.py
+      - name: Commit outputs
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid/smhi_snow_lulea_daily_2526.json docs/snowgrid/smhi_snow_lulea_daily_2526.csv
+          git commit -m "Add daily Lulea snow class series 2025-26"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
