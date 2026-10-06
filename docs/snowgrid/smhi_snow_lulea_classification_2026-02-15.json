@@ -1,0 +1,152 @@
+{
+  "date": "2026-02-15",
+  "snow_png": "https://www.smhi.se/pd/klimat/snow_depth/2526/sno260215.png",
+  "map_fit_crs": "EPSG:3013",
+  "map_fit_objective": 2.6258,
+  "map_fit_forward_median_px": 1.0,
+  "map_fit_reverse_median_px": 1.155,
+  "metres_per_pixel_approx": 2813.3,
+  "municipality": {
+    "code": "2580",
+    "name": "Luleå"
+  },
+  "source_crs_note": "SCB municipality coordinates operationally verified separately as 0.0 m shift to EPSG:3006 over Lulea vertices.",
+  "qa": {
+    "official_polygon_area_km2_epsg3006_coords": 2028.694,
+    "polygon_area_km2_after_transform_epsg3013": 2029.284,
+    "exact_pixel_geometry_area_km2": 2029.284,
+    "native_raster_mask_area_km2": 2390.221,
+    "native_raster_area_error_pct_vs_official": 17.82,
+    "exact_pixel_geometry_area_error_pct_vs_official": 0.03,
+    "lulea_pixel_bbox": [
+      195.204,
+      118.874,
+      215.193,
+      153.921
+    ],
+    "lulea_pixel_width": 19.989,
+    "lulea_pixel_height": 35.048,
+    "native_mask_pixels": 302
+  },
+  "classification": {
+    "palette_source": "SMHI snow-depth app legend",
+    "max_rgb_distance": 34.0,
+    "inside_mask_pixels": 302,
+    "classified_pixels": 294,
+    "unclassified_pixels": 8,
+    "classified_share_pct": 97.35,
+    "classes": [
+      {
+        "class": "200+",
+        "legend_rgb": [
+          129,
+          15,
+          124
+        ],
+        "lower_cm": 200,
+        "pixels": 0,
+        "share_of_classified_pct": 0.0
+      },
+      {
+        "class": "150-199",
+        "legend_rgb": [
+          140,
+          107,
+          177
+        ],
+        "lower_cm": 150,
+        "pixels": 0,
+        "share_of_classified_pct": 0.0
+      },
+      {
+        "class": "100-149",
+        "legend_rgb": [
+          140,
+          150,
+          198
+        ],
+        "lower_cm": 100,
+        "pixels": 11,
+        "share_of_classified_pct": 3.74
+      },
+      {
+        "class": "75-99",
+        "legend_rgb": [
+          56,
+          116,
+          185
+        ],
+        "lower_cm": 75,
+        "pixels": 1,
+        "share_of_classified_pct": 0.34
+      },
+      {
+        "class": "50-74",
+        "legend_rgb": [
+          59,
+          157,
+          220
+        ],
+        "lower_cm": 50,
+        "pixels": 136,
+        "share_of_classified_pct": 46.26
+      },
+      {
+        "class": "30-49",
+        "legend_rgb": [
+          158,
+          208,
+          243
+        ],
+        "lower_cm": 30,
+        "pixels": 140,
+        "share_of_classified_pct": 47.62
+      },
+      {
+        "class": "10-29",
+        "legend_rgb": [
+          222,
+          235,
+          247
+        ],
+        "lower_cm": 10,
+        "pixels": 0,
+        "share_of_classified_pct": 0.0
+      },
+      {
+        "class": "3-9",
+        "legend_rgb": [
+          255,
+          255,
+          255
+        ],
+        "lower_cm": 3,
+        "pixels": 1,
+        "share_of_classified_pct": 0.34
+      },
+      {
+        "class": "1-2",
+        "legend_rgb": [
+          183,
+          209,
+          198
+        ],
+        "lower_cm": 1,
+        "pixels": 3,
+        "share_of_classified_pct": 1.02
+      },
+      {
+        "class": "barmark",
+        "legend_rgb": [
+          113,
+          165,
+          143
+        ],
+        "lower_cm": 0,
+        "pixels": 2,
+        "share_of_classified_pct": 0.68
+      }
+    ]
+  },
+  "warning": "Derived from rendered SMHI PNG. Classes are map legend categories, not an original numeric raster. Native image resolution is coarse."
+}
