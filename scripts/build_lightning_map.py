@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build lazy-loadable annual lightning map data and a 1 km density grid for GitHub Pages."""
+"""Build lazy-loadable annual lightning map data and a fixed 2 km grid for GitHub Pages."""
 
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ BOUNDARY_OUT = OUT / "boundary.geojson"
 
 TO_3006 = Transformer.from_crs("EPSG:4326", "EPSG:3006", always_xy=True)
 TO_4326 = Transformer.from_crs("EPSG:3006", "EPSG:4326", always_xy=True)
-CELL = 1000.0
+CELL = 2000.0
 
 SURFACES = {"mainland", "islands", "sea", "inland_water", "uncertain"}
 
@@ -59,7 +59,7 @@ def main():
                 encoding="utf-8",
             )
 
-    index = {"cell_size_m": 1000, "years": []}
+    index = {"cell_size_m": 2000, "years": []}
     annual_grids = []
 
     for path in sorted(SRC.glob("20??.csv")):
@@ -69,7 +69,7 @@ def main():
             continue
 
         points = []
-        cells = defaultdict(lambda: {"count":0, "by_surface":defaultdict(int)})
+        cells = defaultdict(lambda: {"count":0, "by_surface":defaultdict(int), "by_month":defaultdict(int), "by_surface_month":defaultdict(lambda: defaultdict(int))})
         with path.open("r", encoding="utf-8-sig", newline="") as f:
             for row in csv.DictReader(f):
                 lat = as_float(row.get("lat"))
@@ -79,10 +79,12 @@ def main():
                 surface = normalize_surface(row)
                 current = as_float(row.get("current_ka"))
                 dt = str(row.get("datetime_utc") or "")
+                month = int(row.get("month") or 0)
                 points.append({
                     "lat": round(lat, 6),
                     "lon": round(lon, 6),
                     "surface": surface,
+                    "month": month,
                     "current_ka": round(current, 1) if current is not None else None,
                     "datetime_utc": dt,
                 })
@@ -92,6 +94,9 @@ def main():
                 c = cells[(x0, y0)]
                 c["count"] += 1
                 c["by_surface"][surface] += 1
+                if 1 <= month <= 12:
+                    c["by_month"][str(month)] += 1
+                    c["by_surface_month"][surface][str(month)] += 1
 
         grid = []
         for (x0, y0), c in cells.items():
@@ -99,6 +104,8 @@ def main():
             grid.append({
                 "count": c["count"],
                 "by_surface": dict(c["by_surface"]),
+                "by_month": dict(c["by_month"]),
+                "by_surface_month": {k: dict(v) for k, v in c["by_surface_month"].items()},
                 "lat": round(latc, 6),
                 "lon": round(lonc, 6),
                 "polygon": cell_polygon(x0, y0),
@@ -107,7 +114,7 @@ def main():
         grid.sort(key=lambda x: (-x["count"], x["lat"], x["lon"]))
         payload = {
             "year": year,
-            "cell_size_m": 1000,
+            "cell_size_m": 2000,
             "points": points,
             "grid": grid,
         }
@@ -127,9 +134,9 @@ def main():
                 for c in grid
             },
         })
-        print(f"Lightning map {year}: {len(points)} flashes, {len(grid)} occupied 1 km cells")
+        print(f"Lightning map {year}: {len(points)} flashes, {len(grid)} occupied 2 km cells")
 
-    # Mean annual lightning density per fixed 1 km cell across all available years.
+    # Mean annual lightning density per fixed 2 km cell across all available years.
     # Missing cells in a year count as zero, so values are directly comparable.
     n_years = len(annual_grids)
     avg_cells = {}
