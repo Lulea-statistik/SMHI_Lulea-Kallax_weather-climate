@@ -1,4 +1,4 @@
-let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;let smhiRenderedSnowDaily=null;let smhiRenderedSnowQa=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 let globalLoadingCount=0;
 function beginGlobalLoading(text='Laddar…'){
@@ -1366,6 +1366,89 @@ async function renderSnowMapCharts(){
   ],'andel (%)',{scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}});
 }
 
+async function renderSmhiRenderedSnowDaily(){
+  if(!el('smhiRenderedSnowDaily'))return;
+  try{
+    if(!smhiRenderedSnowDaily){
+      const r=await fetch('snowgrid/smhi_snow_lulea_daily_2526.json?v=1',{cache:'no-store'});
+      if(!r.ok)throw new Error('Den dagliga SMHI-kartserien saknas.');
+      smhiRenderedSnowDaily=await r.json();
+    }
+    if(!smhiRenderedSnowQa){
+      const qr=await fetch('snowgrid/smhi_snow_lulea_classification_2026-02-15.json?v=1',{cache:'no-store'});
+      if(qr.ok)smhiRenderedSnowQa=await qr.json();
+    }
+    const rows=smhiRenderedSnowDaily?.daily||[];
+    if(!rows.length)throw new Error('Inga klassificerade SMHI-kartdagar hittades.');
+
+    const defs=[
+      {key:'share_barmark',label:'Barmark',color:'#71A58F'},
+      {key:'share_1_2',label:'1–2 cm',color:'#b7d1c6'},
+      {key:'share_3_9',label:'3–9 cm',color:'#FFFFFF',border:'#cbd5e1'},
+      {key:'share_10_29',label:'10–29 cm',color:'#DEEBF7'},
+      {key:'share_30_49',label:'30–49 cm',color:'#9ED0F3'},
+      {key:'share_50_74',label:'50–74 cm',color:'#3B9DDC'},
+      {key:'share_75_99',label:'75–99 cm',color:'#3874B9'},
+      {key:'share_100_149',label:'100–149 cm',color:'#8C96C6'},
+      {key:'share_150_199',label:'150–199 cm',color:'#8C6BB1'},
+      {key:'share_200plus',label:'200+ cm',color:'#810F7C'}
+    ];
+
+    destroyChart('smhiRenderedSnowDaily');
+    charts.smhiRenderedSnowDaily=new Chart(el('smhiRenderedSnowDaily'),{
+      type:'bar',
+      data:{
+        labels:rows.map(r=>r.date),
+        datasets:defs.map(d=>({
+          label:d.label,
+          stack:'depth',
+          data:rows.map(r=>Number(r[d.key]||0)),
+          backgroundColor:d.color,
+          borderColor:d.border||d.color,
+          borderWidth:d.border?0.5:0,
+          barPercentage:1,
+          categoryPercentage:1
+        }))
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{display:true},
+          tooltip:{callbacks:{
+            title:items=>{
+              const i=items?.[0]?.dataIndex;
+              const r=rows[i];
+              return r?formatSeaIceMapDate(r.date)+' · klassificerad yta '+Number(r.classified_area_share_pct||0).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %':'';
+            },
+            label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %'
+          }}
+        },
+        scales:{
+          x:{stacked:true,grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},
+          y:{stacked:true,min:0,max:100,title:{display:true,text:'andel klassificerad kommunyta (%)'},ticks:{callback:v=>v+' %'}}
+        }
+      }
+    });
+
+    const qa=smhiRenderedSnowQa?.qa||{};
+    const cq=smhiRenderedSnowQa?.classification||{};
+    const classShares=rows.map(r=>Number(r.classified_area_share_pct)).filter(Number.isFinite);
+    const avgClass=classShares.length?classShares.reduce((a,b)=>a+b,0)/classShares.length:null;
+    const bits=[
+      (smhiRenderedSnowDaily.processed_days||rows.length)+' kartdagar',
+      (smhiRenderedSnowDaily.failed_days||0)+' misslyckade dagar',
+      smhiRenderedSnowDaily.metres_per_pixel_approx!=null?'ca '+Number(smhiRenderedSnowDaily.metres_per_pixel_approx).toLocaleString('sv-SE',{maximumFractionDigits:0})+' m/pixel':null,
+      qa.fractional_raster_area_error_pct_vs_official!=null?'QA areafel '+Number(qa.fractional_raster_area_error_pct_vs_official).toLocaleString('sv-SE',{maximumFractionDigits:2})+' % mot SCB-geometrin':null,
+      avgClass!=null?'genomsnittligt '+avgClass.toLocaleString('sv-SE',{maximumFractionDigits:1})+' % av kommunytan färgklassificerad':null,
+      cq.classified_area_share_pct!=null?'testdatum 15 feb: '+Number(cq.classified_area_share_pct).toLocaleString('sv-SE',{maximumFractionDigits:1})+' % klassificerad':null
+    ].filter(Boolean);
+    if(el('smhiRenderedSnowQa'))el('smhiRenderedSnowQa').textContent=bits.join(' · ')+'.';
+  }catch(err){
+    destroyChart('smhiRenderedSnowDaily');
+    if(el('smhiRenderedSnowQa'))el('smhiRenderedSnowQa').textContent=err.message;
+  }
+}
+
 async function showSnowMapDate(index){
   if(!snowMapLeaflet)return;
   await loadSnowMapSeason();
@@ -1455,6 +1538,7 @@ async function initSnowMap(){
   const status=el('snowMapStatus');
   if(snowMapLeaflet){
     setTimeout(()=>snowMapLeaflet.invalidateSize(),50);
+    await renderSmhiRenderedSnowDaily();
     return;
   }
   try{
@@ -1484,6 +1568,7 @@ async function initSnowMap(){
     await refreshSnowMapSeasonOptions();
     await loadSnowMapSeason();
     await showSnowMapDate(el('snowMapDateSlider')?.value||0);
+    await renderSmhiRenderedSnowDaily();
   }catch(err){
     if(status)status.textContent=err.message;
     if(el('snowMapSource'))el('snowMapSource').value='stations';
