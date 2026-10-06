@@ -287,12 +287,9 @@ function lightningCellCount(cell,surface){
 function lightningDensityColor(v,max){
   if(v<=0)return 'rgba(0,0,0,0)';
   const p=max>0?v/max:0;
-  if(p<.15)return '#dbeafe';
-  if(p<.3)return '#93c5fd';
-  if(p<.5)return '#60a5fa';
-  if(p<.7)return '#3b82f6';
-  if(p<.85)return '#2563eb';
-  return '#7c3aed';
+  if(p<1/3)return '#bfdbfe';
+  if(p<2/3)return '#facc15';
+  return '#dc2626';
 }
 
 function renderLightningMapLayer(){
@@ -393,10 +390,9 @@ async function initLightningMap(){
     legend.onAdd=()=>{
       const div=L.DomUtil.create('div','seaice-map-legend');
       div.innerHTML='<b>Blixttäthet</b>'+
-        '<div><i style="background:#dbeafe"></i>Låg</div>'+
-        '<div><i style="background:#60a5fa"></i>Medel</div>'+
-        '<div><i style="background:#2563eb"></i>Hög</div>'+
-        '<div><i style="background:#7c3aed"></i>Högst</div>'+
+        '<div><i style="background:#bfdbfe"></i>Låg</div>'+
+        '<div><i style="background:#facc15"></i>Medel</div>'+
+        '<div><i style="background:#dc2626"></i>Hög</div>'+
         '<div><i style="background:transparent;border:2px solid #dc2626"></i>Luleå kommun</div>';
       return div;
     };
@@ -470,23 +466,25 @@ function renderLightning(f){
   });
 
   const uncertaintyTypes=[
-    {key:'mainland__sea',label:'Fastland ↔ hav'},
-    {key:'islands__sea',label:'Öar ↔ hav'},
-    {key:'inland_water__mainland',label:'Fastland ↔ inlandsvatten'},
-    {key:'inland_water__islands',label:'Öar ↔ inlandsvatten'},
-    {key:'inland_water__sea',label:'Hav ↔ inlandsvatten'},
-    {key:'islands__mainland',label:'Fastland ↔ öar'}
+    {key:'mainland__sea',label:'Fastland ↔ hav',color:'#2563eb'},
+    {key:'islands__sea',label:'Öar ↔ hav',color:'#f59e0b'},
+    {key:'inland_water__mainland',label:'Fastland ↔ inlandsvatten',color:'#16a34a'},
+    {key:'inland_water__islands',label:'Öar ↔ inlandsvatten',color:'#a855f7'},
+    {key:'inland_water__sea',label:'Hav ↔ inlandsvatten',color:'#06b6d4'},
+    {key:'islands__mainland',label:'Fastland ↔ öar',color:'#ec4899'}
   ];
   const visibleTypes=uncertaintyTypes.filter(t=>rows.some(r=>((r.uncertainty_pairs||{})[t.key]||0)>0));
-  const uncertaintyDatasets=visibleTypes.map((t,i)=>({
+  const uncertaintyDatasets=visibleTypes.map(t=>({
     label:t.label,
-    backgroundColor:['rgba(107,114,128,0.68)','rgba(156,163,175,0.68)','rgba(75,85,99,0.58)','rgba(209,213,219,0.88)','rgba(148,163,184,0.72)','rgba(120,113,108,0.62)'][i%6],
+    stack:'uncertainty',
+    backgroundColor:t.color,
     borderWidth:0,
     data:rows.map(r=>((r.uncertainty_pairs||{})[t.key]||0))
   }));
   uncertaintyDatasets.push({
     label:'Kommungräns',
-    backgroundColor:'rgba(17,24,39,0.78)',
+    stack:'uncertainty',
+    backgroundColor:'#374151',
     borderWidth:0,
     data:rows.map(r=>r.municipality_boundary_uncertain_500||0)
   });
@@ -496,7 +494,10 @@ function renderLightning(f){
     data:{labels:years,datasets:uncertaintyDatasets},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Math.round(c.parsed.y)}}},
-      scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'urladdningar'},ticks:{precision:0}}}}
+      scales:{
+        x:{stacked:true,grid:{display:false}},
+        y:{stacked:true,beginAtZero:true,title:{display:true,text:'urladdningar'},ticks:{precision:0}}
+      }}
   });
 }
 
