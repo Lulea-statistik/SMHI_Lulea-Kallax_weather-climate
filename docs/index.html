@@ -188,7 +188,7 @@
   <section id="page-lightning" class="page">
     <div class="source-note"><b>Blixtdata:</b> SMHI:s historiska arkiv över registrerade urladdningar används från 2012 och framåt. Observationer klassas som fastland, ö, hav eller inlandsvatten. Observationer vars position ligger så nära en yt- eller kommungräns att klassningen är osäker redovisas som <b>Osäkert område</b>. SMHI anger att medianfelet vid normal drift ska vara mindre än cirka 500 meter, men enskilda avvikelser kan vara större. Det finns dessutom ett metodbrott i blixtlokaliseringssystemet under 2014, vilket gör äldre och nyare nivåer mindre direkt jämförbara.</div>
     <div id="lightningNoData" class="chart-card full" style="display:none"><h2>Blixtdata väntar på första hämtningen</h2><p class="hint">Kör workflowet med refresh-all för att hämta historiken och bygga klassningen.</p></div>
-    <div class="lightning-top-grid">
+    <div class="lightning-layout">
       <div class="chart-card seaice-map-card lightning-map-card">
         <h2>Blixttäthet i Luleå kommun</h2>
         <p class="hint">Standardläget <b>Medel</b> visar genomsnittligt antal registrerade urladdningar per år i varje fast 1 × 1 km-ruta för hela perioden 2012–2026. Välj ett enskilt år för årsbilden.</p>
@@ -200,11 +200,13 @@
         <div id="lightningMap" class="seaice-map lightning-map" aria-label="Interaktiv karta över blixttäthet i Luleå kommun"></div>
         <p id="lightningMapStatus" class="hint"></p>
       </div>
-      <div class="chart-card lightning-primary-chart"><h2>Blixturladdningar per år</h2><p class="hint">Visar fastland, öar, hav, inlandsvatten och osäkert område. Osäkra observationer särredovisas och dubbelräknas inte i stapeln.</p><canvas id="lightningAnnual"></canvas></div>
+      <div class="lightning-chart-stack">
+        <div class="chart-card lightning-chart"><h2>Blixturladdningar per år</h2><p class="hint">Visar fastland, öar, hav, inlandsvatten och osäkert område. Osäkra observationer särredovisas och dubbelräknas inte i stapeln.</p><canvas id="lightningAnnual"></canvas></div>
+        <div class="chart-card lightning-chart"><h2>Genomsnittlig månadsfördelning</h2><p class="hint">Fördelning av registrerade urladdningar per månad inom valt årsintervall.</p><canvas id="lightningMonthly"></canvas></div>
+        <div class="chart-card lightning-chart"><h2>Blixtdygn per år</h2><p class="hint">Antal dygn med minst en registrerad urladdning inom Luleå kommun.</p><canvas id="lightningDays"></canvas></div>
+        <div class="chart-card lightning-chart"><h2>Osäkerhet vid kust och kommungräns</h2><p class="hint">Staplarna är stackade per år. Varje färg visar en gränstyp, exempelvis fastland–hav eller öar–hav. Kommungräns redovisas separat i samma stack och kan överlappa en ytgräns.</p><canvas id="lightningUncertain"></canvas></div>
+      </div>
     </div>
-    <div class="chart-card"><h2>Blixtdygn per år</h2><p class="hint">Antal dygn med minst en registrerad urladdning inom Luleå kommun.</p><canvas id="lightningDays"></canvas></div>
-    <div class="chart-card"><h2>Genomsnittlig månadsfördelning</h2><p class="hint">Fördelning av registrerade urladdningar per månad inom valt årsintervall.</p><canvas id="lightningMonthly"></canvas></div>
-    <div class="chart-card"><h2>Osäkerhet vid kust och kommungräns</h2><p class="hint">Staplarna visar antal urladdningar där positionen ligger i ett osäkert gränsområde mellan två yttyper, exempelvis fastland–hav eller öar–hav. Kommungräns visas separat och kan överlappa en ytgräns.</p><canvas id="lightningUncertain"></canvas></div>
   </section>
 
   <section id="page-seaice" class="page">
@@ -282,5 +284,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=66"></script>
+<script src="app.js?v=67"></script>
 </body></html>
