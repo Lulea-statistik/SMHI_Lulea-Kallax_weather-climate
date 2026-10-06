@@ -29,6 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 NMD_GEO_PATH = ROOT / "data" / "lightning" / "geography_nmd.geojson"
 OUT_ROOT = ROOT / "docs" / "snowgrid"
 BOUNDARY_PATH = ROOT / "docs" / "snowmap_boundary.geojson"
+SERIES_PATH = OUT_ROOT / "series.json"
 BASE = "https://opendata-download-metanalys.smhi.se/gridclim/snd"
 TIMEOUT = 180
 
@@ -310,6 +311,29 @@ def main():
 
     by_season={x["season"]:x for x in index["seasons"] if x.get("season")}
 
+    series_by_season={}
+    if SERIES_PATH.exists():
+        try:
+            old_series=json.loads(SERIES_PATH.read_text(encoding="utf-8"))
+            series_by_season={x["season"]:x for x in old_series.get("seasons",[]) if x.get("season")}
+        except Exception:
+            series_by_season={}
+    elif index["seasons"]:
+        # One-time migration: build the lightweight chart series from already
+        # generated season files without re-downloading GridClim.
+        for meta in index["seasons"]:
+            p=OUT_ROOT/meta.get("file","")
+            if not p.exists():
+                continue
+            try:
+                old_payload=json.loads(p.read_text(encoding="utf-8"))
+                series_by_season[meta["season"]]={
+                    "season":meta["season"],
+                    "daily":old_payload.get("daily",[]),
+                }
+            except Exception as exc:
+                print(f"Series migration warning for {p}: {exc}")
+
     for start_year in range(START_YEAR,END_YEAR+1):
         if start_year+1>2018:
             continue
@@ -344,10 +368,20 @@ def main():
             "dates":len(days),
             "cells":len(grid.get("features",[])),
         }
+        series_by_season[season]={
+            "season":season,
+            "daily":payload["daily"],
+        }
         print(f"Snow grid {season}: {len(days)} dates, {len(grid.get('features',[]))} Lulea cells")
 
     index["seasons"]=sorted(by_season.values(),key=lambda x:x["season"])
     existing_index.write_text(json.dumps(index,ensure_ascii=False,indent=2),encoding="utf-8")
+    series_payload={
+        "source":"SMHIGridClim",
+        "resolution_km":2.5,
+        "seasons":sorted(series_by_season.values(),key=lambda x:x["season"]),
+    }
+    SERIES_PATH.write_text(json.dumps(series_payload,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
 
 
 if __name__=="__main__":
