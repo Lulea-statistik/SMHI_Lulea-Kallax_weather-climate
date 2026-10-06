@@ -1,0 +1,37 @@
+name: Probe SMHI snow geometry
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/probe-smhi-snow-geometry.yml"
+      - "scripts/probe_smhi_snow_geometry.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Probe snow map geometry
+        run: python scripts/probe_smhi_snow_geometry.py
+      - name: Commit result
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid/smhi_snow_geometry_probe.json
+          git commit -m "Record SMHI snow geometry probe"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
