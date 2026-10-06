@@ -69,15 +69,15 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
 @media(max-width:1049px){
   #page-lightning .lightning-top-grid{grid-template-columns:1fr}
   #page-lightning .lightning-top-grid>.chart-card{min-height:0}
-  #page-lightning .lightning-map{height:520px;min-height:520px}
+  #page-lightning .lightning-map-card{height:auto;min-height:0}\n  #page-lightning .lightning-map{height:520px;min-height:520px;flex:none}
   #page-lightning .lightning-primary-chart canvas{height:auto!important;max-height:300px}
 }
 
 /* Lightning page: map left, consistent chart column right. */
 #page-lightning .lightning-layout{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;align-items:start}
-#page-lightning .lightning-map-card{min-height:0;display:flex;flex-direction:column}
+#page-lightning .lightning-map-card{height:646px;min-height:646px;display:flex;flex-direction:column}
 #page-lightning .lightning-map-tools{flex-wrap:wrap;grid-column:auto;margin-bottom:8px}
-#page-lightning .lightning-map{height:420px;min-height:420px}
+#page-lightning .lightning-map{height:auto;min-height:0;flex:1}
 #page-lightning .lightning-chart-stack{display:grid;grid-template-columns:1fr;gap:16px}
 #page-lightning .lightning-chart{width:100%;min-height:315px}
 #page-lightning .lightning-chart canvas{height:250px!important;max-height:250px;width:100%!important}
