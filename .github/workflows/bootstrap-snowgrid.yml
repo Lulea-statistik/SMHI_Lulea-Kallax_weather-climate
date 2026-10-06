@@ -1,12 +1,6 @@
 name: Bootstrap SMHI snow grid
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/bootstrap-snowgrid.yml"
-      - "scripts/fetch_snowgrid.py"
   workflow_dispatch:
     inputs:
       start_year:

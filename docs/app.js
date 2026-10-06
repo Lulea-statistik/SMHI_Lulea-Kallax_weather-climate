@@ -1095,7 +1095,7 @@ async function loadSnowGridIndex(){
 
 async function loadSnowGridSeries(){
   if(snowGridSeries)return snowGridSeries;
-  const r=await fetch('snowgrid/series.json?v=2',{cache:'no-store'});
+  const r=await fetch('snowgrid/series.json?v=3',{cache:'no-store'});
   if(!r.ok)return null;
   snowGridSeries=await r.json();
   return snowGridSeries;
@@ -1104,7 +1104,8 @@ async function loadSnowGridSeries(){
 function buildSnowGridTimeline(series){
   const labels=[],mean=[],max=[],cover=[],mainlandCover=[],seasonKeys=[];
   (series?.seasons||[]).slice().sort((a,b)=>a.season.localeCompare(b.season)).forEach((s,idx,arr)=>{
-    const mainlandByDate=new Map((s.daily_mainland||[]).map(r=>[r.date,r.snow_cover_share_pct]));
+    const mainlandRows=s.daily_mainland_majority||s.daily_mainland||[];
+    const mainlandByDate=new Map(mainlandRows.map(r=>[r.date,r.snow_cover_share_pct]));
     (s.daily||[]).forEach(r=>{
       labels.push(r.date);
       mean.push(r.mean_cm);
@@ -1224,7 +1225,7 @@ function updateSnowMapCopy(){
     :'Medelvärde för tillgängliga stationer inom Luleå kommun; närliggande stationer används om kommunstationer saknas.';
   if(el('snowMapCoverageTitle'))el('snowMapCoverageTitle').textContent=grid?'Andel yta med snötäcke per snösäsong':'Andel stationer med mätbart snötäcke';
   if(el('snowMapCoverageHint'))el('snowMapCoverageHint').textContent=grid
-    ?'Andel analyserade gridceller med minst 1 cm snödjup. Grön streckad linje visar gridceller som berör fastland enligt samma geografiklassning som Blixt-sidan.'
+    ?'Andel analyserade gridceller med minst 1 cm snödjup. Grön streckad linje visar celler där minst 50 % av den del av gridcellen som ligger inom kommunen är fastland, enligt samma fastlandsgeometri som Blixt-sidan.'
     :'Andel rapporterande stationer med minst 1 cm snödjup.';
 }
 
@@ -1254,7 +1255,7 @@ async function renderSnowMapCharts(){
       ];
       if(t.mainlandCover.some(v=>v!=null)){
         coverageDatasets.push({
-          label:'Gridceller som berör fastland',
+          label:'Minst 50 % fastland',
           data:t.mainlandCover,
           borderColor:'#15803d',
           backgroundColor:'#15803d',

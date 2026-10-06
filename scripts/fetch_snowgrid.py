@@ -237,8 +237,13 @@ def process_month(year: int, month: int, municipality_wgs84, mainland_wgs84=None
                 clipped = poly.intersection(municipality_grid)
                 if clipped.is_empty:
                     continue
-                touches_mainland = bool(mainland_grid is not None and poly.intersects(mainland_grid))
-                cells.append((rr,cc,transform(to_wgs, clipped),touches_mainland))
+                touches_mainland = bool(mainland_grid is not None and clipped.intersects(mainland_grid))
+                mainland_share_pct = 0.0
+                if mainland_grid is not None and clipped.area > 0:
+                    mainland_part = clipped.intersection(mainland_grid)
+                    mainland_share_pct = max(0.0, min(100.0, 100.0 * mainland_part.area / clipped.area))
+                mainland_majority = mainland_share_pct >= 50.0
+                cells.append((rr,cc,transform(to_wgs, clipped),touches_mainland,mainland_share_pct,mainland_majority))
 
         dates = iso_dates(year,month)
         count = min(ds.count,len(dates))
@@ -246,7 +251,7 @@ def process_month(year: int, month: int, municipality_wgs84, mainland_wgs84=None
         for b in range(1,count+1):
             arr = ds.read(b, window=win, masked=True)
             vals = []
-            for rr,cc,_,_ in cells:
+            for rr,cc,_,_,_,_ in cells:
                 local_r,local_c = rr-row0,cc-col0
                 if local_r<0 or local_c<0 or local_r>=arr.shape[0] or local_c>=arr.shape[1]:
                     vals.append(None)
@@ -266,8 +271,13 @@ def process_month(year: int, month: int, municipality_wgs84, mainland_wgs84=None
             grid_geom = {
                 "type":"FeatureCollection",
                 "features":[
-                    {"type":"Feature","id":i,"properties":{"cell_id":i,"touches_mainland":bool(touch)},"geometry":mapping(g)}
-                    for i,(_,_,g,touch) in enumerate(cells)
+                    {"type":"Feature","id":i,"properties":{
+                        "cell_id":i,
+                        "touches_mainland":bool(touch),
+                        "mainland_share_pct":round(float(share),1),
+                        "mainland_majority":bool(majority)
+                    },"geometry":mapping(g)}
+                    for i,(_,_,g,touch,share,majority) in enumerate(cells)
                 ]
             }
         return rows,grid_geom
@@ -322,7 +332,7 @@ def season_cell_stats(days, grid):
     mainland_ids = {
         int((f.get("properties") or {}).get("cell_id", f.get("id", -1)))
         for f in features
-        if (f.get("properties") or {}).get("touches_mainland")
+        if (f.get("properties") or {}).get("mainland_majority")
     }
 
     daily_mainland = []
@@ -364,8 +374,8 @@ def season_cell_stats(days, grid):
         "snow_duration_pct": class_pct,
         "snow_duration_counts": class_counts,
         "classified_cells": classified,
-        "mainland_touching_cells": len(mainland_ids),
-        "daily_mainland": daily_mainland,
+        "mainland_majority_cells": len(mainland_ids),
+        "daily_mainland_majority": daily_mainland,
     }
 
 
@@ -419,10 +429,10 @@ def main():
                 series_by_season[meta["season"]]={
                     "season":meta["season"],
                     "daily":old_payload.get("daily",[]),
-                    "daily_mainland":old_payload.get("daily_mainland",[]),
+                    "daily_mainland_majority":old_payload.get("daily_mainland_majority",old_payload.get("daily_mainland",[])),
                     "snow_duration_pct":old_payload.get("snow_duration_pct",{}),
                     "classified_cells":old_payload.get("classified_cells"),
-                    "mainland_touching_cells":old_payload.get("mainland_touching_cells"),
+                    "mainland_majority_cells":old_payload.get("mainland_majority_cells",old_payload.get("mainland_touching_cells")),
                 }
             except Exception as exc:
                 print(f"Series migration warning for {p}: {exc}")
@@ -451,11 +461,11 @@ def main():
             "grid_file":grid_file,
             "days":days,
             "daily":summarize(days),
-            "daily_mainland":stats["daily_mainland"],
+            "daily_mainland_majority":stats["daily_mainland_majority"],
             "snow_duration_pct":stats["snow_duration_pct"],
             "snow_duration_counts":stats["snow_duration_counts"],
             "classified_cells":stats["classified_cells"],
-            "mainland_touching_cells":stats["mainland_touching_cells"],
+            "mainland_majority_cells":stats["mainland_majority_cells"],
         }
         (OUT_ROOT/data_file).write_text(json.dumps(payload,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
         by_season[season]={
@@ -470,10 +480,10 @@ def main():
         series_by_season[season]={
             "season":season,
             "daily":payload["daily"],
-            "daily_mainland":payload["daily_mainland"],
+            "daily_mainland_majority":payload["daily_mainland_majority"],
             "snow_duration_pct":payload["snow_duration_pct"],
             "classified_cells":payload["classified_cells"],
-            "mainland_touching_cells":payload["mainland_touching_cells"],
+            "mainland_majority_cells":payload["mainland_majority_cells"],
         }
         print(f"Snow grid {season}: {len(days)} dates, {len(grid.get('features',[]))} Lulea cells")
 
