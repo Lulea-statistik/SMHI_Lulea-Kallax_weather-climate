@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import re
 import tempfile
+import tarfile
 from pathlib import Path
 from urllib.parse import urljoin
 from xml.etree import ElementTree as ET
@@ -15,6 +16,7 @@ import rasterio
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"docs"/"snowgrid"/"mesan_probe.json"
 BASE="https://opendata-download-grid-archive.smhi.se/feed/6"
+SMHIDEF_URL="https://data-download.smhi.se/data/example_files/meteorology/mesan/smhidef.tar.gz"
 TARGET=("2018","01","15")
 S=requests.Session()
 S.headers.update({"User-Agent":"Lulea-statistik-MESAN-probe/1.0"})
@@ -125,15 +127,49 @@ def inspect_grib(url):
     return report
 
 
+def inspect_smhi_definitions():
+    report={"url":SMHIDEF_URL,"matches":[]}
+    r=get(SMHIDEF_URL)
+    report["bytes"]=len(r.content)
+    with tempfile.NamedTemporaryFile(suffix=".tar.gz",delete=False) as tmp:
+        tmp.write(r.content)
+        tar_path=tmp.name
+    try:
+        with tempfile.TemporaryDirectory() as td:
+            with tarfile.open(tar_path,"r:gz") as tar:
+                tar.extractall(td)
+            root=Path(td)
+            for fp in root.rglob("*"):
+                if not fp.is_file() or fp.stat().st_size > 5_000_000:
+                    continue
+                try:
+                    txt=fp.read_text(encoding="utf-8",errors="ignore")
+                except Exception:
+                    continue
+                lines=txt.splitlines()
+                for i,line in enumerate(lines):
+                    if re.search(r"(^|\D)(144|145|146)(\D|$)",line):
+                        context="\n".join(lines[max(0,i-3):min(len(lines),i+4)])
+                        if any(k in context.lower() for k in ["snow","snö","depth","snowfall","swe","water equivalent","snd","144","145","146"]):
+                            report["matches"].append({"file":str(fp.relative_to(root)),"line":i+1,"context":context})
+                            if len(report["matches"])>=80:
+                                return report
+    finally:
+        Path(tar_path).unlink(missing_ok=True)
+    return report
+
+
 def main():
     files,trace=descend()
     inspected=[]
     for f in files[:5]:
         inspected.append(inspect_grib(f["href"]))
     OUT.parent.mkdir(parents=True,exist_ok=True)
-    OUT.write_text(json.dumps({"target":"-".join(TARGET),"trace":trace,"files":files[:20],"inspected":inspected},ensure_ascii=False,indent=2),encoding="utf-8")
+    definitions=inspect_smhi_definitions()
+    OUT.write_text(json.dumps({"target":"-".join(TARGET),"trace":trace,"files":files[:20],"inspected":inspected,"smhi_definitions":definitions},ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps({
         "files":[x["href"] for x in files[:10]],
+        "definition_matches":len(definitions.get("matches",[])),
         "summary":[{
             "final_url":x.get("final_url"),
             "content_type":x.get("content_type"),
