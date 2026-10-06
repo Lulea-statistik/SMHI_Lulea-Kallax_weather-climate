@@ -1,0 +1,36 @@
+name: Probe SMHI snow observation overlay
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/probe-smhi-snow-obs.yml"
+      - "scripts/probe_smhi_snow_obs_png.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests pillow numpy
+      - run: python scripts/probe_smhi_snow_obs_png.py
+      - name: Commit result
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid/smhi_snow_obs_png_probe.json
+          git commit -m "Record SMHI snow observation overlay probe"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
