@@ -73,43 +73,107 @@ def month_url(year: int, month: int) -> str:
 
 
 def open_snd(url: str):
-    """Download the monthly NetCDF robustly, then open it locally.
+    """Download a monthly NetCDF with resumable HTTP Range requests.
 
-    SMHI's large NetCDF responses can occasionally close mid-transfer. A full
-    local file is more reliable than GDAL /vsicurl for these monthly archives.
+    SMHI's server sometimes closes large transfers early. Keep the partial file
+    and request the remaining byte range instead of restarting from byte zero.
     """
-    last_error = None
-    for attempt in range(1, 6):
-        tmp = tempfile.NamedTemporaryFile(suffix=".nc", delete=False)
-        path = tmp.name
-        tmp.close()
+    tmp = tempfile.NamedTemporaryFile(suffix=".nc", delete=False)
+    path = tmp.name
+    tmp.close()
+
+    try:
+        # Discover the expected size. If HEAD is unavailable, the first GET
+        # will populate it from Content-Length / Content-Range.
+        expected = 0
         try:
-            print(f"Downloading NetCDF attempt {attempt}/5")
-            with SESSION.get(url, timeout=(30, TIMEOUT), stream=True) as r:
-                r.raise_for_status()
-                expected = int(r.headers.get("Content-Length") or 0)
-                written = 0
-                with open(path, "wb") as out:
-                    for chunk in r.iter_content(chunk_size=1024 * 1024):
-                        if not chunk:
-                            continue
-                        out.write(chunk)
-                        written += len(chunk)
-                if expected and written != expected:
-                    raise IOError(f"Incomplete download: {written} of {expected} bytes")
-            ds = rasterio.open(f'NETCDF:"{path}":snd')
-            return ds, path
+            h = SESSION.head(url, timeout=(30, 60), allow_redirects=True)
+            if h.ok:
+                expected = int(h.headers.get("Content-Length") or 0)
         except Exception as exc:
-            last_error = exc
-            print(f"Download/open attempt {attempt} failed: {exc}")
+            print(f"HEAD warning: {exc}")
+
+        max_attempts = 30
+        for attempt in range(1, max_attempts + 1):
+            current = os.path.getsize(path) if os.path.exists(path) else 0
+            if expected and current >= expected:
+                break
+
+            headers = {}
+            mode = "wb"
+            if current > 0:
+                headers["Range"] = f"bytes={current}-"
+                mode = "ab"
+
+            print(
+                f"Downloading NetCDF chunk attempt {attempt}/{max_attempts}"
+                + (f" from byte {current}" if current else "")
+            )
+
             try:
-                os.unlink(path)
-            except OSError:
-                pass
-            if attempt < 5:
-                import time
-                time.sleep(2 ** attempt)
-    raise RuntimeError(f"Could not download/open GridClim NetCDF after 5 attempts: {last_error}")
+                with SESSION.get(
+                    url,
+                    headers=headers,
+                    timeout=(30, TIMEOUT),
+                    stream=True,
+                    allow_redirects=True,
+                ) as r:
+                    r.raise_for_status()
+
+                    # A server that ignores Range returns 200. In that case
+                    # restart the local file to avoid duplicating bytes.
+                    if current > 0 and r.status_code != 206:
+                        print("Server ignored Range request; restarting local file.")
+                        current = 0
+                        mode = "wb"
+
+                    content_range = r.headers.get("Content-Range") or ""
+                    if "/" in content_range:
+                        try:
+                            expected = int(content_range.rsplit("/", 1)[1])
+                        except Exception:
+                            pass
+                    elif not expected:
+                        length = int(r.headers.get("Content-Length") or 0)
+                        if length:
+                            expected = current + length if r.status_code == 206 else length
+
+                    with open(path, mode) as out:
+                        for chunk in r.iter_content(chunk_size=1024 * 1024):
+                            if chunk:
+                                out.write(chunk)
+
+            except Exception as exc:
+                size = os.path.getsize(path) if os.path.exists(path) else 0
+                print(f"Chunk attempt {attempt} interrupted at {size} bytes: {exc}")
+                if attempt < max_attempts:
+                    import time
+                    time.sleep(min(30, 1 + attempt))
+                continue
+
+            size = os.path.getsize(path)
+            print(f"Downloaded {size}" + (f" of {expected} bytes" if expected else " bytes"))
+            if expected and size >= expected:
+                break
+
+        final_size = os.path.getsize(path) if os.path.exists(path) else 0
+        if expected and final_size < expected:
+            raise RuntimeError(
+                f"Incomplete GridClim download after {max_attempts} resumptions: "
+                f"{final_size} of {expected} bytes"
+            )
+        if final_size == 0:
+            raise RuntimeError("GridClim download produced an empty file")
+
+        ds = rasterio.open(f'NETCDF:"{path}":snd')
+        return ds, path
+
+    except Exception:
+        try:
+            os.unlink(path)
+        except OSError:
+            pass
+        raise
 
 
 def iso_dates(year: int, month: int):
