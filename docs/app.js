@@ -1,4 +1,4 @@
-let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 let globalLoadingCount=0;
 function beginGlobalLoading(text='Laddar…'){
@@ -1101,6 +1101,14 @@ async function loadSnowGridSeries(){
   return snowGridSeries;
 }
 
+async function loadCopernicusSnowDuration(){
+  if(copernicusSnowDuration)return copernicusSnowDuration;
+  const r=await fetch('snowgrid/copernicus_scd_series.json?v=1',{cache:'no-store'});
+  if(!r.ok)return null;
+  copernicusSnowDuration=await r.json();
+  return copernicusSnowDuration;
+}
+
 function buildSnowGridTimeline(series){
   const labels=[],meanGrid=[],maxGrid=[],coverGrid=[],mainGrid=[];
   const meanRecent=[],maxRecent=[],coverRecent=[],mainRecent=[],seasonKeys=[];
@@ -1307,9 +1315,10 @@ async function renderSnowMapCharts(){
           scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}
       });
 
-      const durationClasses=series.duration_classes||['0–4 veckor','5–8 veckor','9–12 veckor','13–16 veckor','17–20 veckor','21–24 veckor','25+ veckor'];
-      const durationColors=['#e0f2fe','#bae6fd','#7dd3fc','#38bdf8','#0ea5e9','#0369a1','#0c4a6e'];
-      const seasons=(series.seasons||[]).filter(s=>s.snow_duration_pct&&Object.keys(s.snow_duration_pct).length);
+      const copernicus=await loadCopernicusSnowDuration();
+      const durationClasses=copernicus?.classes||[];
+      const durationColors=['#e0f2fe','#bae6fd','#7dd3fc','#38bdf8','#0ea5e9','#0284c7','#0369a1','#075985','#0c4a6e'];
+      const seasons=(copernicus?.seasons||[]).filter(s=>s.class_pct&&Object.keys(s.class_pct).length);
       destroyChart('snowMapDuration');
       if(seasons.length){
         charts.snowMapDuration=new Chart(el('snowMapDuration'),{
@@ -1321,14 +1330,24 @@ async function renderSnowMapCharts(){
               stack:'duration',
               backgroundColor:durationColors[i%durationColors.length],
               borderWidth:0,
-              data:seasons.map(s=>Number(s.snow_duration_pct?.[label]||0))
+              data:seasons.map(s=>Number(s.class_pct?.[label]||0))
             }))
           },
           options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-            plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %'}}},
+            plugins:{
+              legend:{display:true},
+              tooltip:{callbacks:{
+                title:items=>{
+                  const idx=items?.[0]?.dataIndex;
+                  const s=seasons[idx];
+                  return s?s.season.replace('-', '/')+' · '+(s.classified_cells||0)+' giltiga 2,5 km-celler':'';
+                },
+                label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %'
+              }}
+            },
             scales:{
               x:{stacked:true,grid:{display:false}},
-              y:{stacked:true,min:0,max:100,title:{display:true,text:'andel gridceller (%)'},ticks:{callback:v=>v+' %'}}
+              y:{stacked:true,min:0,max:100,title:{display:true,text:'andel giltiga 2,5 km-celler (%)'},ticks:{callback:v=>v+' %'}}
             }}
         });
       }
