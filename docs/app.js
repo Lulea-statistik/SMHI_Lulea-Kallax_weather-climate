@@ -327,7 +327,7 @@ function renderLightningMapLayer(){
   cells.forEach(({c,n})=>{
     if(mode==='grid'){
       const poly=L.polygon(c.polygon.map(x=>[x[1],x[0]]),{
-        color:'#334155',weight:.45,fillColor:lightningDensityColor(n,max),fillOpacity:.72
+        color:'#cbd5e1',weight:.55,opacity:.8,fillColor:lightningDensityColor(n,max),fillOpacity:.72
       });
       const valueText=isAverage
         ? n.toLocaleString('sv-SE',{maximumFractionDigits:2})+' urladdningar per år'
@@ -446,20 +446,39 @@ function renderLightning(f){
   });
 
   const dayVals=rows.map(r=>r.lightning_days||0);
-  barChart('lightningDays',years,dayVals,'dygn','rgba(99,102,241,0.58)');
+  destroyChart('lightningDays');
+  charts.lightningDays=new Chart(el('lightningDays'),{
+    data:{labels:years,datasets:[
+      {type:'bar',label:'Blixtdygn',data:dayVals,backgroundColor:'rgba(99,102,241,0.58)',borderWidth:0},
+      {type:'line',label:'Linjär trend',data:linearTrend(years,dayVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' dygn'}}},
+      scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'dygn'},ticks:{precision:0}}}}
+  });
+  if(el('lightningDaysTrendText'))el('lightningDaysTrendText').textContent=trendRateText(years,dayVals,'dygn');
 
   const monthRows=(L.monthly_by_year||[]).filter(r=>r.year>=f.from&&r.year<=f.to);
   const monthAgg=months.map((_,i)=>{
     const rr=monthRows.filter(r=>r.month===i+1);
     const yearsN=new Set(rr.map(r=>r.year)).size||1;
     const out={};
-    classes.forEach(x=>out[x.key]=rr.reduce((s,r)=>s+(r[x.key]||0),0)/yearsN);
+    annualClasses.forEach(x=>{
+      if(x.key==='uncertain_area_500'){
+        out[x.key]=rr.reduce((s,r)=>s+(r.uncertain_area_500||0),0)/yearsN;
+      }else{
+        out[x.key]=rr.reduce((s,r)=>{
+          const bySurface=r.uncertain_by_surface||{};
+          return s+Math.max(0,(r[x.key]||0)-(bySurface[x.key]||0));
+        },0)/yearsN;
+      }
+    });
     return out;
   });
   destroyChart('lightningMonthly');
   charts.lightningMonthly=new Chart(el('lightningMonthly'),{
     type:'bar',
-    data:{labels:months,datasets:classes.map(x=>({label:x.label,stack:'surface',backgroundColor:x.color,borderWidth:0,data:monthAgg.map(r=>r[x.key]||0)}))},
+    data:{labels:months,datasets:annualClasses.map(x=>({label:x.label,stack:'surface',backgroundColor:x.color,borderWidth:0,data:monthAgg.map(r=>r[x.key]||0)}))},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1).replace('.',',')}}},
       scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,title:{display:true,text:'genomsnitt per år'}}}}
