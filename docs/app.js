@@ -284,12 +284,21 @@ function lightningCellCount(cell,surface){
   return Number(cell.by_surface?.[surface])||0;
 }
 
+function lightningHexToRgb(hex){
+  const h=hex.replace('#','');
+  return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];
+}
+function lightningMixColor(a,b,t){
+  const x=lightningHexToRgb(a),y=lightningHexToRgb(b);
+  const c=x.map((v,i)=>Math.round(v+(y[i]-v)*Math.max(0,Math.min(1,t))));
+  return '#'+c.map(v=>v.toString(16).padStart(2,'0')).join('');
+}
 function lightningDensityColor(v,max){
   if(v<=0)return 'rgba(0,0,0,0)';
-  const p=max>0?v/max:0;
-  if(p<1/3)return '#bfdbfe';
-  if(p<2/3)return '#facc15';
-  return '#dc2626';
+  const p=Math.max(0,Math.min(1,max>0?v/max:0));
+  return p<=0.5
+    ? lightningMixColor('#bfdbfe','#facc15',p/0.5)
+    : lightningMixColor('#facc15','#dc2626',(p-0.5)/0.5);
 }
 
 function renderLightningMapLayer(){
@@ -301,6 +310,11 @@ function renderLightningMapLayer(){
   const surface=el('lightningMapSurface')?.value||'all';
   const status=el('lightningMapStatus');
   const isAverage=String(lightningMapData.year)==='average';
+
+  if(mode==='none'){
+    if(status)status.textContent='Blixtlagret är avstängt.';
+    return;
+  }
 
   if(isAverage&&mode==='points'){
     mode='density';
@@ -327,7 +341,7 @@ function renderLightningMapLayer(){
   cells.forEach(({c,n})=>{
     if(mode==='grid'){
       const poly=L.polygon(c.polygon.map(x=>[x[1],x[0]]),{
-        color:'#cbd5e1',weight:.55,opacity:.8,fillColor:lightningDensityColor(n,max),fillOpacity:.72
+        color:'#aeb8c4',weight:.55,opacity:.82,fillColor:lightningDensityColor(n,max),fillOpacity:.72
       });
       const valueText=isAverage
         ? n.toLocaleString('sv-SE',{maximumFractionDigits:2})+' urladdningar per år'
@@ -390,10 +404,9 @@ async function initLightningMap(){
     legend.onAdd=()=>{
       const div=L.DomUtil.create('div','seaice-map-legend');
       div.innerHTML='<b>Blixttäthet</b>'+
-        '<div><i style="background:#bfdbfe"></i>Låg</div>'+
-        '<div><i style="background:#facc15"></i>Medel</div>'+
-        '<div><i style="background:#dc2626"></i>Hög</div>'+
-        '<div><i style="background:transparent;border:2px solid #dc2626"></i>Luleå kommun</div>';
+        '<div style="margin:5px 0 2px;width:118px;height:12px;border-radius:2px;background:linear-gradient(90deg,#bfdbfe 0%,#facc15 50%,#dc2626 100%)"></div>'+
+        '<div style="display:flex;justify-content:space-between;width:118px;font-size:11px"><span>Låg</span><span>Medel</span><span>Hög</span></div>'+
+        '<div style="margin-top:5px"><i style="background:transparent;border:2px solid #dc2626"></i>Luleå kommun</div>';
       return div;
     };
     legend.addTo(lightningMapLeaflet);
@@ -1692,6 +1705,45 @@ function updateRangeTrack(){
   const left=((a-min)/(max-min))*100,right=100-((b-min)/(max-min))*100;
   el('rangeSelected').style.left=left+'%';el('rangeSelected').style.right=right+'%';
 }
+function yearBoundsFromRows(rows,key='year'){
+  const vals=(rows||[]).map(r=>Number(r?.[key])).filter(Number.isFinite);
+  return vals.length?{min:Math.min(...vals),max:Math.max(...vals)}:null;
+}
+function pageYearBounds(page){
+  const fallback={min:DATA.years[0],max:DATA.years[DATA.years.length-1]};
+  const candidates={
+    temp1:()=>yearBoundsFromRows(DATA.temperature?.annual||DATA.temperature?.monthly),
+    temp2:()=>yearBoundsFromRows(DATA.temperature?.annual||DATA.temperature?.monthly),
+    precip:()=>yearBoundsFromRows(DATA.precipitation?.annual||DATA.precipitation?.monthly_total),
+    wind:()=>yearBoundsFromRows(DATA.wind?.speed_annual||DATA.wind?.speed_monthly),
+    weather:()=>yearBoundsFromRows(DATA.weather?.codes),
+    visibility:()=>yearBoundsFromRows(DATA.visibility?.annual||DATA.visibility?.monthly),
+    humidity:()=>yearBoundsFromRows(DATA.humidity?.annual||DATA.humidity?.monthly),
+    sunshine:()=>yearBoundsFromRows(DATA.sunshine?.annual||DATA.sunshine?.monthly_total),
+    snow:()=>yearBoundsFromRows(DATA.snow?.annual_mean||DATA.snow?.annual_max),
+    zerocross:()=>yearBoundsFromRows(DATA.zero_crossings),
+    vegetation:()=>yearBoundsFromRows(DATA.vegetation?.climate_10y,'window_end'),
+    lightning:()=>yearBoundsFromRows(DATA.lightning?.annual),
+    dateweather:()=>yearBoundsFromRows(DATA.temperature?.annual||DATA.temperature?.monthly)
+  };
+  try{return candidates[page]?.()||fallback;}catch{return fallback;}
+}
+function applyPageYearBounds(page,resetToFull=true){
+  if(!DATA||!el('yearFrom')||!el('yearTo')||!el('rangeFrom')||!el('rangeTo'))return;
+  const b=pageYearBounds(page);
+  const allYears=DATA.years.filter(y=>y>=b.min&&y<=b.max);
+  if(!allYears.length)return;
+  ['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=allYears.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));
+  ['rangeFrom','rangeTo'].forEach(id=>{el(id).min=b.min;el(id).max=b.max;el(id).step=1;});
+  let from=resetToFull?b.min:Math.max(b.min,Math.min(b.max,Number(el('yearFrom').value)||b.min));
+  let to=resetToFull?b.max:Math.max(b.min,Math.min(b.max,Number(el('yearTo').value)||b.max));
+  if(from>to){from=b.min;to=b.max;}
+  el('yearFrom').value=String(from);el('yearTo').value=String(to);
+  el('rangeFrom').value=String(from);el('rangeTo').value=String(to);
+  el('rangeFromLabel').textContent=from;el('rangeToLabel').textContent=to;
+  updateRangeTrack();
+}
+
 function syncYear(source,value,renderNow=true){
   let a=+el('yearFrom').value,b=+el('yearTo').value;
   if(source==='from')a=+value;else b=+value;
@@ -1702,8 +1754,8 @@ function syncYear(source,value,renderNow=true){
   updateRangeTrack();
   if(renderNow)render();
 }
-function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');document.body.classList.toggle('algae-active',btn.dataset.page==='algae');if(btn.dataset.page==='seaice')initSeaIceMap();if(btn.dataset.page==='algae')initAlgaeMap();if(btn.dataset.page==='snowmap')initSnowMap();if(btn.dataset.page==='lightning')initLightningMap();setTimeout(()=>{Object.values(charts).forEach(c=>c.resize());if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();if(algaeLeafletMap)algaeLeafletMap.invalidateSize();if(snowMapLeaflet)snowMapLeaflet.invalidateSize();if(lightningMapLeaflet)lightningMapLeaflet.invalidateSize();},80);}));}
-function setupFilters(){const years=DATA.years,min=years[0],max=years[years.length-1];['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=years.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));el('yearFrom').value=min;el('yearTo').value=max;['rangeFrom','rangeTo'].forEach(id=>{el(id).min=min;el(id).max=max;el(id).step=1;});el('rangeFrom').value=min;el('rangeTo').value=max;el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;updateRangeTrack();el('yearFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
+function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');document.body.classList.toggle('algae-active',btn.dataset.page==='algae');applyPageYearBounds(btn.dataset.page,true);render();if(btn.dataset.page==='seaice')initSeaIceMap();if(btn.dataset.page==='algae')initAlgaeMap();if(btn.dataset.page==='snowmap')initSnowMap();if(btn.dataset.page==='lightning')initLightningMap();setTimeout(()=>{Object.values(charts).forEach(c=>c.resize());if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();if(algaeLeafletMap)algaeLeafletMap.invalidateSize();if(snowMapLeaflet)snowMapLeaflet.invalidateSize();if(lightningMapLeaflet)lightningMapLeaflet.invalidateSize();},80);}));}
+function setupFilters(){const years=DATA.years,min=years[0],max=years[years.length-1];['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=years.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));el('yearFrom').value=min;el('yearTo').value=max;['rangeFrom','rangeTo'].forEach(id=>{el(id).min=min;el(id).max=max;el(id).step=1;});el('rangeFrom').value=min;el('rangeTo').value=max;el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;updateRangeTrack();const activePage=document.querySelector('#tabs button.active')?.dataset.page||'temp1';applyPageYearBounds(activePage,true);el('yearFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
 el('yearTo').addEventListener('change',e=>syncYear('to',e.target.value,true));
 el('rangeFrom').addEventListener('input',e=>syncYear('from',e.target.value,false));
 el('rangeTo').addEventListener('input',e=>syncYear('to',e.target.value,false));
@@ -1713,10 +1765,9 @@ el('month').addEventListener('change',render);
 el('tempMetric').addEventListener('change',render);
 el('weatherCode').addEventListener('change',render);
 el('resetFilters').addEventListener('click',()=>{
-  el('yearFrom').value=min;el('yearTo').value=max;
-  el('rangeFrom').value=min;el('rangeTo').value=max;
-  el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;
-  el('month').value='0';updateRangeTrack();render();
+  const activePage=document.querySelector('#tabs button.active')?.dataset.page||'temp1';
+  applyPageYearBounds(activePage,true);
+  el('month').value='0';render();
 });}
 function setupWeatherCodes(){
   const types=[...new Set(DATA.weather.codes.map(r=>normalizedWeatherPhenomenon(r.code,r.year)))].sort((a,b)=>a.localeCompare(b,'sv'));
