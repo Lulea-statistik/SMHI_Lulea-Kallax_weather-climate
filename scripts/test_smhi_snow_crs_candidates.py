@@ -80,7 +80,8 @@ def main():
                 row=sy*xy[:,1]+oy
                 inside=(col>=0)&(col<w)&(row>=0)&(row<h)
                 if inside.mean()<0.96: return 999+(0.96-inside.mean())*1000
-                rr=np.rint(row[inside]).astype(int); cc=np.rint(col[inside]).astype(int)
+                rr=np.clip(np.rint(row[inside]).astype(int),0,h-1)
+                cc=np.clip(np.rint(col[inside]).astype(int),0,w-1)
                 vals=dist[rr,cc]
                 return float(np.median(vals)+0.3*np.percentile(vals,80))
 
@@ -103,7 +104,9 @@ def main():
             col=p[0]*xy[:,0]+p[1]; row=p[2]*xy[:,1]+p[3]
             inside=(col>=0)&(col<w)&(row>=0)&(row<h)
             if inside.any():
-                vals=dist[np.rint(row[inside]).astype(int),np.rint(col[inside]).astype(int)]
+                rr=np.clip(np.rint(row[inside]).astype(int),0,h-1)
+                cc=np.clip(np.rint(col[inside]).astype(int),0,w-1)
+                vals=dist[rr,cc]
                 med=round(float(np.median(vals)),3)
                 p90=round(float(np.percentile(vals,90)),3)
             else:
