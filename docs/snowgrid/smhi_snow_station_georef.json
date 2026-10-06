@@ -1,0 +1,119 @@
+{
+  "date": "2026-02-15",
+  "candidate_component_count": 21,
+  "observing_local_station_count": 11,
+  "matched_control_points": 0,
+  "status": "too_few_matches",
+  "nearest_diagnostics": [
+    {
+      "station_id": "160850",
+      "station_name": "Koler",
+      "pred_col": 160.108,
+      "pred_row": 140.651,
+      "nearest_component_id": 3,
+      "nearest_component_col": 179.942,
+      "nearest_component_row": 122.918,
+      "distance_px": 26.605
+    },
+    {
+      "station_id": "161790",
+      "station_name": "Piteå",
+      "pred_col": 172.208,
+      "pred_row": 143.699,
+      "nearest_component_id": 3,
+      "nearest_component_col": 179.942,
+      "nearest_component_row": 122.918,
+      "distance_px": 22.174
+    },
+    {
+      "station_id": "161900",
+      "station_name": "Klöverträsk D",
+      "pred_col": 170.516,
+      "pred_row": 129.737,
+      "nearest_component_id": 3,
+      "nearest_component_col": 179.942,
+      "nearest_component_row": 122.918,
+      "distance_px": 11.634
+    },
+    {
+      "station_id": "161930",
+      "station_name": "Brännberg D",
+      "pred_col": 168.191,
+      "pred_row": 124.445,
+      "nearest_component_id": 3,
+      "nearest_component_col": 179.942,
+      "nearest_component_row": 122.918,
+      "distance_px": 11.85
+    },
+    {
+      "station_id": "162960",
+      "station_name": "Råneå",
+      "pred_col": 181.143,
+      "pred_row": 117.328,
+      "nearest_component_id": 3,
+      "nearest_component_col": 179.942,
+      "nearest_component_row": 122.918,
+      "distance_px": 5.718
+    },
+    {
+      "station_id": "163940",
+      "station_name": "Kalix D",
+      "pred_col": 191.866,
+      "pred_row": 112.972,
+      "nearest_component_id": 3,
+      "nearest_component_col": 179.942,
+      "nearest_component_row": 122.918,
+      "distance_px": 15.528
+    },
+    {
+      "station_id": "170670",
+      "station_name": "Harads D",
+      "pred_col": 163.955,
+      "pred_row": 114.827,
+      "nearest_component_id": 3,
+      "nearest_component_col": 179.942,
+      "nearest_component_row": 122.918,
+      "distance_px": 17.918
+    },
+    {
+      "station_id": "172700",
+      "station_name": "Veniksel",
+      "pred_col": 182.475,
+      "pred_row": 106.697,
+      "nearest_component_id": 3,
+      "nearest_component_col": 179.942,
+      "nearest_component_row": 122.918,
+      "distance_px": 16.418
+    },
+    {
+      "station_id": "172840",
+      "station_name": "Rödupp",
+      "pred_col": 184.805,
+      "pred_row": 91.542,
+      "nearest_component_id": 2,
+      "nearest_component_col": 182.478,
+      "nearest_component_row": 64.109,
+      "distance_px": 27.532
+    },
+    {
+      "station_id": "173750",
+      "station_name": "Bodträsk",
+      "pred_col": 192.082,
+      "pred_row": 103.78,
+      "nearest_component_id": 3,
+      "nearest_component_col": 179.942,
+      "nearest_component_row": 122.918,
+      "distance_px": 22.663
+    },
+    {
+      "station_id": "173760",
+      "station_name": "Kypasjärvi D",
+      "pred_col": 191.015,
+      "pred_row": 99.337,
+      "nearest_component_id": 3,
+      "nearest_component_col": 179.942,
+      "nearest_component_row": 122.918,
+      "distance_px": 26.051
+    }
+  ]
+}
