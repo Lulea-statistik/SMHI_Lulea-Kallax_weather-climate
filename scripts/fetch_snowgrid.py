@@ -27,6 +27,7 @@ from pyproj import Transformer
 
 ROOT = Path(__file__).resolve().parents[1]
 NMD_GEO_PATH = ROOT / "data" / "lightning" / "geography_nmd.geojson"
+LIGHTNING_GEO_PATH = ROOT / "data" / "lightning" / "geography.geojson"
 OUT_ROOT = ROOT / "docs" / "snowgrid"
 BOUNDARY_PATH = ROOT / "docs" / "snowmap_boundary.geojson"
 SERIES_PATH = OUT_ROOT / "series.json"
@@ -62,6 +63,25 @@ def load_municipality():
     if not geoms:
         raise RuntimeError("Lulea municipality geometry is missing")
     return unary_union(geoms).buffer(0)
+
+
+def load_mainland_geometry():
+    """Use the same mainland classification already produced for the lightning page."""
+    if not LIGHTNING_GEO_PATH.exists():
+        return None
+    data = json.loads(LIGHTNING_GEO_PATH.read_text(encoding="utf-8"))
+    geoms = []
+    for feat in data.get("features", []):
+        props = feat.get("properties") or {}
+        if props.get("class") != "mainland" or not feat.get("geometry"):
+            continue
+        try:
+            g = shape(feat["geometry"]).buffer(0)
+        except Exception:
+            continue
+        if not g.is_empty:
+            geoms.append(g)
+    return unary_union(geoms).buffer(0) if geoms else None
 
 
 def month_url(year: int, month: int) -> str:
@@ -189,7 +209,7 @@ def cell_polygon(ds, row: int, col: int):
     return Polygon([(x0,y0),(x1,y0),(x1,y1),(x0,y1),(x0,y0)])
 
 
-def process_month(year: int, month: int, municipality_wgs84, grid_geom=None):
+def process_month(year: int, month: int, municipality_wgs84, mainland_wgs84=None, grid_geom=None):
     url = month_url(year, month)
     print(f"Snow grid {year}-{month:02d}: {url}")
     ds, tmp_path = open_snd(url)
@@ -199,6 +219,7 @@ def process_month(year: int, month: int, municipality_wgs84, grid_geom=None):
         to_grid = Transformer.from_crs("EPSG:4326", ds.crs, always_xy=True).transform
         to_wgs = Transformer.from_crs(ds.crs, "EPSG:4326", always_xy=True).transform
         municipality_grid = transform(to_grid, municipality_wgs84)
+        mainland_grid = transform(to_grid, mainland_wgs84) if mainland_wgs84 is not None else None
         minx,miny,maxx,maxy = municipality_grid.bounds
         win = from_bounds(minx,miny,maxx,maxy,transform=ds.transform)
         win = win.round_offsets().round_lengths()
@@ -216,7 +237,8 @@ def process_month(year: int, month: int, municipality_wgs84, grid_geom=None):
                 clipped = poly.intersection(municipality_grid)
                 if clipped.is_empty:
                     continue
-                cells.append((rr,cc,transform(to_wgs, clipped)))
+                touches_mainland = bool(mainland_grid is not None and poly.intersects(mainland_grid))
+                cells.append((rr,cc,transform(to_wgs, clipped),touches_mainland))
 
         dates = iso_dates(year,month)
         count = min(ds.count,len(dates))
@@ -224,7 +246,7 @@ def process_month(year: int, month: int, municipality_wgs84, grid_geom=None):
         for b in range(1,count+1):
             arr = ds.read(b, window=win, masked=True)
             vals = []
-            for rr,cc,_ in cells:
+            for rr,cc,_,_ in cells:
                 local_r,local_c = rr-row0,cc-col0
                 if local_r<0 or local_c<0 or local_r>=arr.shape[0] or local_c>=arr.shape[1]:
                     vals.append(None)
@@ -244,8 +266,8 @@ def process_month(year: int, month: int, municipality_wgs84, grid_geom=None):
             grid_geom = {
                 "type":"FeatureCollection",
                 "features":[
-                    {"type":"Feature","id":i,"properties":{"cell_id":i},"geometry":mapping(g)}
-                    for i,(_,_,g) in enumerate(cells)
+                    {"type":"Feature","id":i,"properties":{"cell_id":i,"touches_mainland":bool(touch)},"geometry":mapping(g)}
+                    for i,(_,_,g,touch) in enumerate(cells)
                 ]
             }
         return rows,grid_geom
@@ -281,9 +303,76 @@ def summarize(days):
     return summary
 
 
+SNOW_WEEK_CLASSES = [
+    ("0–4 veckor", 0, 4),
+    ("5–8 veckor", 5, 8),
+    ("9–12 veckor", 9, 12),
+    ("13–16 veckor", 13, 16),
+    ("17–20 veckor", 17, 20),
+    ("21–24 veckor", 21, 24),
+    ("25+ veckor", 25, None),
+]
+
+
+def season_cell_stats(days, grid):
+    features = grid.get("features", [])
+    n_cells = len(features)
+    snow_days = [0] * n_cells
+    valid_days = [0] * n_cells
+    mainland_ids = {
+        int((f.get("properties") or {}).get("cell_id", f.get("id", -1)))
+        for f in features
+        if (f.get("properties") or {}).get("touches_mainland")
+    }
+
+    daily_mainland = []
+    for d in days:
+        vals = d.get("values_cm") or []
+        mainland_vals = []
+        for i, v in enumerate(vals[:n_cells]):
+            if v is None:
+                continue
+            valid_days[i] += 1
+            if v >= 1:
+                snow_days[i] += 1
+            if i in mainland_ids:
+                mainland_vals.append(v)
+        daily_mainland.append({
+            "date": d["date"],
+            "snow_cover_share_pct": round(
+                100 * sum(v >= 1 for v in mainland_vals) / len(mainland_vals), 1
+            ) if mainland_vals else None,
+            "cells": len(mainland_vals),
+        })
+
+    class_counts = {label: 0 for label, _, _ in SNOW_WEEK_CLASSES}
+    for i in range(n_cells):
+        if not valid_days[i]:
+            continue
+        weeks = snow_days[i] / 7.0
+        for label, lo, hi in SNOW_WEEK_CLASSES:
+            if weeks >= lo and (hi is None or weeks <= hi):
+                class_counts[label] += 1
+                break
+
+    classified = sum(class_counts.values())
+    class_pct = {
+        label: round(100 * count / classified, 2) if classified else 0.0
+        for label, count in class_counts.items()
+    }
+    return {
+        "snow_duration_pct": class_pct,
+        "snow_duration_counts": class_counts,
+        "classified_cells": classified,
+        "mainland_touching_cells": len(mainland_ids),
+        "daily_mainland": daily_mainland,
+    }
+
+
 def main():
     OUT_ROOT.mkdir(parents=True,exist_ok=True)
     municipality=load_municipality()
+    mainland=load_mainland_geometry()
 
     # Keep the same boundary file used by the station map.
     if not BOUNDARY_PATH.exists():
@@ -330,6 +419,10 @@ def main():
                 series_by_season[meta["season"]]={
                     "season":meta["season"],
                     "daily":old_payload.get("daily",[]),
+                    "daily_mainland":old_payload.get("daily_mainland",[]),
+                    "snow_duration_pct":old_payload.get("snow_duration_pct",{}),
+                    "classified_cells":old_payload.get("classified_cells"),
+                    "mainland_touching_cells":old_payload.get("mainland_touching_cells"),
                 }
             except Exception as exc:
                 print(f"Series migration warning for {p}: {exc}")
@@ -341,7 +434,7 @@ def main():
         days=[]
         grid=None
         for year,month in season_months(start_year):
-            rows,grid=process_month(year,month,municipality,grid)
+            rows,grid=process_month(year,month,municipality,mainland,grid)
             days.extend(rows)
         days.sort(key=lambda x:x["date"])
         if not days or grid is None:
@@ -350,6 +443,7 @@ def main():
         grid_file=f"{season}_grid.geojson"
         data_file=f"{season}.json"
         (OUT_ROOT/grid_file).write_text(json.dumps(grid,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
+        stats=season_cell_stats(days,grid)
         payload={
             "season":season,
             "source":"SMHIGridClim",
@@ -357,6 +451,11 @@ def main():
             "grid_file":grid_file,
             "days":days,
             "daily":summarize(days),
+            "daily_mainland":stats["daily_mainland"],
+            "snow_duration_pct":stats["snow_duration_pct"],
+            "snow_duration_counts":stats["snow_duration_counts"],
+            "classified_cells":stats["classified_cells"],
+            "mainland_touching_cells":stats["mainland_touching_cells"],
         }
         (OUT_ROOT/data_file).write_text(json.dumps(payload,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
         by_season[season]={
@@ -371,6 +470,10 @@ def main():
         series_by_season[season]={
             "season":season,
             "daily":payload["daily"],
+            "daily_mainland":payload["daily_mainland"],
+            "snow_duration_pct":payload["snow_duration_pct"],
+            "classified_cells":payload["classified_cells"],
+            "mainland_touching_cells":payload["mainland_touching_cells"],
         }
         print(f"Snow grid {season}: {len(days)} dates, {len(grid.get('features',[]))} Lulea cells")
 
