@@ -37,14 +37,19 @@ function normalizedWeatherPhenomenon(code,year){
   }
   return label;
 }
-function temp2MixColor(a,b,t){
-  const hex=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
-  const x=hex(a),y=hex(b),p=Math.max(0,Math.min(1,t));
-  const c=x.map((v,i)=>Math.round(v+(y[i]-v)*p));
-  return '#'+c.map(v=>v.toString(16).padStart(2,'0')).join('');
+function temp2Quantile(values,q){
+  const v=values.filter(x=>x!=null&&Number.isFinite(x)).slice().sort((a,b)=>a-b);
+  if(!v.length)return null;
+  if(v.length===1)return v[0];
+  const pos=(v.length-1)*q;
+  const base=Math.floor(pos),rest=pos-base;
+  return v[base+1]!==undefined?v[base]+rest*(v[base+1]-v[base]):v[base];
 }
-function temp2YearColor(index,count){
-  return temp2MixColor('#f6e7a6','#0066cc',count<=1?1:index/(count-1));
+function temp2AnnualMean(year){
+  const vals=DATA.temperature.monthly
+    .filter(r=>r.year===year&&r.avg!=null&&Number.isFinite(r.avg))
+    .map(r=>r.avg);
+  return vals.length?vals.reduce((s,v)=>s+v,0)/vals.length:null;
 }
 function setupTemp2Slider(){
   const years=[...DATA.years].sort((a,b)=>a-b);
@@ -64,43 +69,89 @@ function renderTemp2(){
   const fallbackStart=Math.max(allYears[0],allYears[allYears.length-1]-(period-1));
   const start=temp2Start??fallbackStart;
   const years=Array.from({length:period},(_,i)=>start+i).filter(y=>DATA.years.includes(y));
+  if(!years.length)return;
+  const latestYear=years[years.length-1];
   el('temp2PeriodLabel').textContent=start+'–'+(start+period-1);
 
+  const yearMeans=years.map(y=>({year:y,mean:temp2AnnualMean(y)})).filter(x=>x.mean!=null&&Number.isFinite(x.mean));
+  const extremeYear=yearMeans.length
+    ? yearMeans.reduce((best,cur)=>cur.mean>best.mean?cur:best,yearMeans[0]).year
+    : latestYear;
+
   const selectedMonth=+(el('month')?.value||0);
+
+  destroyChart('tempProfiles');
+
   if(selectedMonth){
-    const vals=years.map(y=>{
+    const values=years.map(y=>{
       const r=DATA.temperature.monthly.find(x=>x.year===y&&x.month===selectedMonth);
-      return r?r.avg:null;
+      return r?.avg??null;
     });
-    destroyChart('tempProfiles');
+    const p10=temp2Quantile(values,.10),p25=temp2Quantile(values,.25),median=temp2Quantile(values,.50),p75=temp2Quantile(values,.75),p90=temp2Quantile(values,.90);
+    const latestIndex=years.indexOf(latestYear),extremeIndex=years.indexOf(extremeYear);
     charts.tempProfiles=new Chart(el('tempProfiles'),{
       type:'line',
-      data:{labels:years,datasets:[{
-        label:months[selectedMonth-1],
-        data:vals,
-        borderColor:'#0066cc',
-        backgroundColor:'#0066cc',
-        pointBackgroundColor:years.map((_,i)=>temp2YearColor(i,years.length)),
-        pointBorderColor:years.map((_,i)=>temp2YearColor(i,years.length)),
-        pointRadius:3,
-        borderWidth:2,
-        tension:.15
-      }]},
+      data:{labels:years,datasets:[
+        {label:'Månadsmedel',data:values,borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,.15)',pointRadius:2,borderWidth:1.5,tension:.12},
+        {label:'Median',data:years.map(()=>median),borderColor:'#6b7280',pointRadius:0,borderWidth:2},
+        {label:'10–90 percentil',data:years.map(()=>p90),borderColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0,fill:{target:{value:p10},above:'rgba(209,213,219,.28)'}},
+        {label:'25–75 percentil',data:years.map(()=>p75),borderColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0,fill:{target:{value:p25},above:'rgba(156,163,175,.28)'}},
+        {label:String(latestYear),data:years.map((_,i)=>i===latestIndex?values[i]:null),showLine:false,pointRadius:6,pointBackgroundColor:'#2563eb',pointBorderColor:'#2563eb'},
+        {label:extremeYear+' (varmaste år)',data:years.map((_,i)=>i===extremeIndex?values[i]:null),showLine:false,pointRadius:6,pointBackgroundColor:'#2e8b57',pointBorderColor:'#2e8b57'}
+      ]},
       options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-        plugins:{legend:{display:false}},
+        plugins:{legend:{display:true,labels:{filter:item=>!['10–90 percentil','25–75 percentil'].includes(item.text)}},
+          tooltip:{callbacks:{label:c=>c.parsed.y==null?c.dataset.label:c.dataset.label+': '+c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:2})+' °C'}}},
         scales:{x:{grid:{display:false}},y:{title:{display:true,text:'°C'}}}}
     });
-  }else{
-    lineChart('tempProfiles',months,years.map((y,idx)=>({
-      label:String(y),
-      borderColor:temp2YearColor(idx,years.length),
-      backgroundColor:temp2YearColor(idx,years.length),
-      data:[...Array(12)].map((_,i)=>{
-        const r=DATA.temperature.monthly.find(x=>x.year===y&&x.month===i+1);
-        return r?r.avg:null;
-      })
-    })),'°C');
+    return;
   }
+
+  const stats=[...Array(12)].map((_,i)=>{
+    const vals=years.map(y=>{
+      const r=DATA.temperature.monthly.find(x=>x.year===y&&x.month===i+1);
+      return r?.avg??null;
+    }).filter(v=>v!=null&&Number.isFinite(v));
+    return {
+      p10:temp2Quantile(vals,.10),
+      p25:temp2Quantile(vals,.25),
+      median:temp2Quantile(vals,.50),
+      p75:temp2Quantile(vals,.75),
+      p90:temp2Quantile(vals,.90)
+    };
+  });
+
+  const latestSeries=[...Array(12)].map((_,i)=>{
+    const r=DATA.temperature.monthly.find(x=>x.year===latestYear&&x.month===i+1);
+    return r?.avg??null;
+  });
+  const extremeSeries=[...Array(12)].map((_,i)=>{
+    const r=DATA.temperature.monthly.find(x=>x.year===extremeYear&&x.month===i+1);
+    return r?.avg??null;
+  });
+
+  charts.tempProfiles=new Chart(el('tempProfiles'),{
+    type:'line',
+    data:{labels:months,datasets:[
+      {label:'P10',data:stats.map(d=>d.p10),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0},
+      {label:'10–90 percentil',data:stats.map(d=>d.p90),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(209,213,219,.42)',pointRadius:0,borderWidth:0,fill:'-1'},
+      {label:'P25',data:stats.map(d=>d.p25),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0},
+      {label:'25–75 percentil',data:stats.map(d=>d.p75),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(156,163,175,.42)',pointRadius:0,borderWidth:0,fill:'-1'},
+      {label:start+'–'+(start+period-1)+' median',data:stats.map(d=>d.median),borderColor:'#737373',backgroundColor:'#737373',pointRadius:0,borderWidth:2,tension:.2},
+      {label:extremeYear+' (varmaste år)',data:extremeSeries,borderColor:'#2e8b57',backgroundColor:'#2e8b57',pointRadius:0,borderWidth:2,borderDash:[5,4],tension:.2},
+      {label:String(latestYear),data:latestSeries,borderColor:'#2563eb',backgroundColor:'#2563eb',pointRadius:0,borderWidth:2.5,tension:.2}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:true,labels:{filter:item=>!['P10','P25'].includes(item.text)}},
+        tooltip:{callbacks:{label:c=>{
+          if(c.parsed.y==null)return c.dataset.label;
+          return c.dataset.label+': '+c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:2})+' °C';
+        }}}
+      },
+      scales:{x:{grid:{display:false}},y:{title:{display:true,text:'°C'}}}
+    }
+  });
 }
 function weatherChart(rows){
   destroyChart('weatherCodes');
