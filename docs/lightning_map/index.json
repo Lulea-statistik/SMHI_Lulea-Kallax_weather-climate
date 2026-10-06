@@ -106,5 +106,13 @@
       "grid_cells": 490,
       "max_cell_count": 9
     }
-  ]
+  ],
+  "average": {
+    "file": "average.json",
+    "year_count": 15,
+    "first_year": 2012,
+    "last_year": 2026,
+    "grid_cells": 4943,
+    "max_cell_count": 2.0
+  }
 }
