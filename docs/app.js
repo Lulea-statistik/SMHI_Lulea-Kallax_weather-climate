@@ -1498,12 +1498,18 @@ function render(){
   });
 
   const va=selectedAnnualRows(DATA.visibility.annual,DATA.visibility.monthly,f);
-  const vaVals=va.map(r=>Math.round(r.avg));
+  const vaYears=va.map(r=>r.year),vaVals=va.map(r=>Math.round(r.avg));
   destroyChart('visibilityAnnual');
-  charts.visibilityAnnual=new Chart(el('visibilityAnnual'),{type:'line',data:{labels:va.map(r=>r.year),datasets:[{data:vaVals,borderWidth:2,pointRadius:0,tension:.15}]},
+  charts.visibilityAnnual=new Chart(el('visibilityAnnual'),{
+    data:{labels:vaYears,datasets:[
+      {type:'line',label:f.month?months[f.month-1]+' medel':'Årsmedel',data:vaVals,borderWidth:2,pointRadius:0,tension:.15},
+      {type:'line',label:'Linjär trend',data:linearTrend(vaYears,vaVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+    ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>Math.round(c.parsed.y)+' meter'}}},
-      scales:{x:{grid:{display:false}},y:{title:{display:true,text:'meter'},ticks:{precision:0,callback:v=>Math.round(v)}}}}});
+      plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Math.round(c.parsed.y)+' meter'}}},
+      scales:{x:{grid:{display:false}},y:{title:{display:true,text:'meter'},ticks:{precision:0,callback:v=>Math.round(v)}}}}
+  });
+  if(el('visibilityAnnualTrendText'))el('visibilityAnnualTrendText').textContent=trendRateText(vaYears,vaVals,'meter');
   let vm=DATA.visibility.monthly.filter(r=>inYears(r,f));
   const vmVals=aggregateMonthlyMean(vm).map(v=>v==null?null:Math.round(v));
   destroyChart('visibilityMonthly');
