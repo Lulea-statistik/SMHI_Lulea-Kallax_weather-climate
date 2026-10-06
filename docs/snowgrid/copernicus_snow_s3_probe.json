@@ -1,0 +1,1258 @@
+{
+  "tiles": [
+    "34WET",
+    "34WEU"
+  ],
+  "products": {
+    "SP_S2": {
+      "34WET": {
+        "2016": [
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_MTD.xml",
+            "size": 21672
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_NOBS.tif",
+            "size": 8613521
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 2760131
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_QLK.png",
+            "size": 485782
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_SCD-QA.tif",
+            "size": 4883042
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_SCD.tif",
+            "size": 11639525
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_SCM-QA.tif",
+            "size": 8217401
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_SCM.tif",
+            "size": 9098547
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_SCO-QA.tif",
+            "size": 4323748
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_SCO.tif",
+            "size": 4338990
+          },
+          {
+            "key": "SP_S2/34WET/2016/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20160901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2017": [
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_MTD.xml",
+            "size": 21672
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_NOBS.tif",
+            "size": 9056941
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 2758659
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_QLK.png",
+            "size": 413218
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_SCD-QA.tif",
+            "size": 4758526
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_SCD.tif",
+            "size": 10712129
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_SCM-QA.tif",
+            "size": 7287101
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_SCM.tif",
+            "size": 8587834
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_SCO-QA.tif",
+            "size": 4260077
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_SCO.tif",
+            "size": 4252132
+          },
+          {
+            "key": "SP_S2/34WET/2017/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20170901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2018": [
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_MTD.xml",
+            "size": 37751
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_NOBS.tif",
+            "size": 8654212
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 2767309
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_QLK.png",
+            "size": 494128
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_SCD-QA.tif",
+            "size": 4753319
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_SCD.tif",
+            "size": 12788148
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_SCM-QA.tif",
+            "size": 7770562
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_SCM.tif",
+            "size": 9342111
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_SCO-QA.tif",
+            "size": 4052396
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_SCO.tif",
+            "size": 4060566
+          },
+          {
+            "key": "SP_S2/34WET/2018/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20180901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2019": [
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_MTD.xml",
+            "size": 37698
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_NOBS.tif",
+            "size": 8545750
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 2720028
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_QLK.png",
+            "size": 509555
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_SCD-QA.tif",
+            "size": 4756988
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_SCD.tif",
+            "size": 13023992
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_SCM-QA.tif",
+            "size": 8240081
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_SCM.tif",
+            "size": 9488694
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_SCO-QA.tif",
+            "size": 5020727
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_SCO.tif",
+            "size": 5093254
+          },
+          {
+            "key": "SP_S2/34WET/2019/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20190901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2020": [
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_MTD.xml",
+            "size": 37804
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_NOBS.tif",
+            "size": 8910137
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 2793822
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_QLK.png",
+            "size": 559126
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_SCD-QA.tif",
+            "size": 4761166
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_SCD.tif",
+            "size": 14868499
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_SCM-QA.tif",
+            "size": 8211646
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_SCM.tif",
+            "size": 10299852
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_SCO-QA.tif",
+            "size": 4903894
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_SCO.tif",
+            "size": 4985313
+          },
+          {
+            "key": "SP_S2/34WET/2020/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20200901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2021": [
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_MTD.xml",
+            "size": 36850
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_NOBS.tif",
+            "size": 8820731
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 2764934
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_QLK.png",
+            "size": 497265
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_SCD-QA.tif",
+            "size": 4769998
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_SCD.tif",
+            "size": 12421372
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_SCM-QA.tif",
+            "size": 7428416
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_SCM.tif",
+            "size": 8524833
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_SCO-QA.tif",
+            "size": 5176925
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_SCO.tif",
+            "size": 5193350
+          },
+          {
+            "key": "SP_S2/34WET/2021/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20210901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2022": [
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_MTD.xml",
+            "size": 37486
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_NOBS.tif",
+            "size": 8667605
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 2875800
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_QLK.png",
+            "size": 478130
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_SCD-QA.tif",
+            "size": 4766235
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_SCD.tif",
+            "size": 12619404
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_SCM-QA.tif",
+            "size": 7322464
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_SCM.tif",
+            "size": 9849402
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_SCO-QA.tif",
+            "size": 4539785
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_SCO.tif",
+            "size": 4580034
+          },
+          {
+            "key": "SP_S2/34WET/2022/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20220901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2023": [
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_MTD.xml",
+            "size": 37221
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_NOBS.tif",
+            "size": 9014873
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 2768066
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_QLK.png",
+            "size": 516349
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCD-QA.tif",
+            "size": 4755673
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCD.tif",
+            "size": 13182347
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCM-QA.tif",
+            "size": 7382105
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCM.tif",
+            "size": 8569271
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCO-QA.tif",
+            "size": 5414762
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCO.tif",
+            "size": 5155844
+          },
+          {
+            "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2024": [
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_MTD.xml",
+            "size": 21672
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_NOBS.tif",
+            "size": 8166008
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 3235094
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_QLK.png",
+            "size": 481052
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_SCD-QA.tif",
+            "size": 4789193
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_SCD.tif",
+            "size": 11205238
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_SCM-QA.tif",
+            "size": 8050549
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_SCM.tif",
+            "size": 8995808
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_SCO-QA.tif",
+            "size": 4807855
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_SCO.tif",
+            "size": 4815517
+          },
+          {
+            "key": "SP_S2/34WET/2024/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20240901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2025": [
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_MTD.xml",
+            "size": 37645
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_NOBS.tif",
+            "size": 8648934
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 2975131
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_QLK.png",
+            "size": 434189
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_SCD-QA.tif",
+            "size": 4838946
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_SCD.tif",
+            "size": 9894359
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_SCM-QA.tif",
+            "size": 7730092
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_SCM.tif",
+            "size": 8331517
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_SCO-QA.tif",
+            "size": 4145981
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_SCO.tif",
+            "size": 4143092
+          },
+          {
+            "key": "SP_S2/34WET/2025/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20250901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ]
+      },
+      "34WEU": {
+        "2016": [
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_MTD.xml",
+            "size": 21670
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_NOBS.tif",
+            "size": 14765567
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 7506245
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_QLK.png",
+            "size": 907904
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_SCD-QA.tif",
+            "size": 7704484
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_SCD.tif",
+            "size": 20193327
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_SCM-QA.tif",
+            "size": 13042369
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_SCM.tif",
+            "size": 15204388
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_SCO-QA.tif",
+            "size": 7642237
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_SCO.tif",
+            "size": 7643007
+          },
+          {
+            "key": "SP_S2/34WEU/2016/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20160901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2017": [
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_MTD.xml",
+            "size": 21670
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_NOBS.tif",
+            "size": 15925686
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 8088495
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_QLK.png",
+            "size": 762468
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_SCD-QA.tif",
+            "size": 7916787
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_SCD.tif",
+            "size": 16892065
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_SCM-QA.tif",
+            "size": 12446670
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_SCM.tif",
+            "size": 13795867
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_SCO-QA.tif",
+            "size": 8447179
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_SCO.tif",
+            "size": 8511286
+          },
+          {
+            "key": "SP_S2/34WEU/2017/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20170901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2018": [
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_MTD.xml",
+            "size": 37590
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_NOBS.tif",
+            "size": 17123250
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 6962268
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_QLK.png",
+            "size": 1140019
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_SCD-QA.tif",
+            "size": 7750178
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_SCD.tif",
+            "size": 26253890
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_SCM-QA.tif",
+            "size": 14816614
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_SCM.tif",
+            "size": 17274580
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_SCO-QA.tif",
+            "size": 7908310
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_SCO.tif",
+            "size": 8068759
+          },
+          {
+            "key": "SP_S2/34WEU/2018/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20180901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2019": [
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_MTD.xml",
+            "size": 37855
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_NOBS.tif",
+            "size": 17515065
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 6631243
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_QLK.png",
+            "size": 952204
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_SCD-QA.tif",
+            "size": 7820886
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_SCD.tif",
+            "size": 23678466
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_SCM-QA.tif",
+            "size": 14940865
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_SCM.tif",
+            "size": 17885374
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_SCO-QA.tif",
+            "size": 6564463
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_SCO.tif",
+            "size": 6597873
+          },
+          {
+            "key": "SP_S2/34WEU/2019/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20190901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2020": [
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_MTD.xml",
+            "size": 37219
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_NOBS.tif",
+            "size": 15941984
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 6609827
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_QLK.png",
+            "size": 1076956
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_SCD-QA.tif",
+            "size": 7802973
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_SCD.tif",
+            "size": 25126712
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_SCM-QA.tif",
+            "size": 14003295
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_SCM.tif",
+            "size": 15962916
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_SCO-QA.tif",
+            "size": 8356919
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_SCO.tif",
+            "size": 8398905
+          },
+          {
+            "key": "SP_S2/34WEU/2020/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20200901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2021": [
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_MTD.xml",
+            "size": 36371
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_NOBS.tif",
+            "size": 16942118
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 6645589
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_QLK.png",
+            "size": 937332
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_SCD-QA.tif",
+            "size": 7894753
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_SCD.tif",
+            "size": 22236972
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_SCM-QA.tif",
+            "size": 13620251
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_SCM.tif",
+            "size": 15481974
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_SCO-QA.tif",
+            "size": 5680271
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_SCO.tif",
+            "size": 5653050
+          },
+          {
+            "key": "SP_S2/34WEU/2021/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20210901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2022": [
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_MTD.xml",
+            "size": 37060
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_NOBS.tif",
+            "size": 15868159
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 6728948
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_QLK.png",
+            "size": 954320
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_SCD-QA.tif",
+            "size": 7752463
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_SCD.tif",
+            "size": 24059639
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_SCM-QA.tif",
+            "size": 12811532
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_SCM.tif",
+            "size": 18686709
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_SCO-QA.tif",
+            "size": 6447551
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_SCO.tif",
+            "size": 6515919
+          },
+          {
+            "key": "SP_S2/34WEU/2022/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20220901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2023": [
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_MTD.xml",
+            "size": 36901
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_NOBS.tif",
+            "size": 16810910
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 6653965
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_QLK.png",
+            "size": 938778
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCD-QA.tif",
+            "size": 7818762
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCD.tif",
+            "size": 22204498
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCM-QA.tif",
+            "size": 12197404
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCM.tif",
+            "size": 13287739
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCO-QA.tif",
+            "size": 9836162
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCO.tif",
+            "size": 10097988
+          },
+          {
+            "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2024": [
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_MTD.xml",
+            "size": 21670
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_NOBS.tif",
+            "size": 14775674
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 7265772
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_QLK.png",
+            "size": 1049993
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_SCD-QA.tif",
+            "size": 8105090
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_SCD.tif",
+            "size": 23100257
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_SCM-QA.tif",
+            "size": 15982012
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_SCM.tif",
+            "size": 18302201
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_SCO-QA.tif",
+            "size": 5766656
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_SCO.tif",
+            "size": 5766033
+          },
+          {
+            "key": "SP_S2/34WEU/2024/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20240901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ],
+        "2025": [
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_MTD.xml",
+            "size": 37060
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_NOBS.tif",
+            "size": 14724759
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_NOBS.tif.aux.xml",
+            "size": 52259
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_QAFLAGS.tif",
+            "size": 6913288
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_QLK.png",
+            "size": 1024585
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_SCD-QA.tif",
+            "size": 8254923
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_SCD-QA.tif.aux.xml",
+            "size": 1593
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_SCD.tif",
+            "size": 22449723
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_SCD.tif.aux.xml",
+            "size": 52664
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_SCM-QA.tif",
+            "size": 15889292
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_SCM.tif",
+            "size": 18258585
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_SCM.tif.aux.xml",
+            "size": 52117
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_SCO-QA.tif",
+            "size": 5060945
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_SCO.tif",
+            "size": 5024182
+          },
+          {
+            "key": "SP_S2/34WEU/2025/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20250901P1Y_S2_V100_SCO.tif.aux.xml",
+            "size": 51954
+          }
+        ]
+      }
+    },
+    "SP_S1S2": {
+      "34WET": {},
+      "34WEU": {}
+    }
+  }
+}
