@@ -27,7 +27,7 @@ def pick_county_shp(folder: Path):
     scored=[]
     for p in cands:
         try:
-            sf=shapefile.Reader(str(p))
+            sf=shapefile.Reader(str(p), encoding="cp1252")
             fields=[f[0].lower() for f in sf.fields[1:]]
             n=len(sf)
             # Counties are normally about 21 polygons and often have lan/län fields.
@@ -115,7 +115,7 @@ def main():
         print(json.dumps({"scb_archive_files":all_files[:400]},ensure_ascii=False,indent=2))
 
         (score,n,p,fields),scored=pick_county_shp(root)
-        sf=shapefile.Reader(str(p))
+        sf=shapefile.Reader(str(p), encoding="cp1252")
         pts, county_info=sample_shape_boundaries(sf)
 
         # Affine mapping EPSG:3006 (x,y) -> image (col,row)
