@@ -8,244 +8,227 @@
     249,
     570
   ],
-  "model": "candidate CRS + independent x/y scale and offset only; no rotation/shear/polynomial",
+  "model": "candidate CRS + one isotropic scale and x/y offset; north-up, no rotation/shear/polynomial",
   "results": [
     {
-      "crs": "EPSG:3857",
-      "objective": 4.3361,
+      "crs": "EPSG:4326",
+      "objective": 3.5,
       "inside_pct": 100.0,
       "valid": true,
-      "median_pixel_error": 2.236,
-      "p90_pixel_error": 10.63,
+      "median_pixel_error": 2.0,
+      "p90_pixel_error": 7.211,
       "params": {
-        "sx": 0.00010173991052916001,
-        "ox": -109.32438969163418,
-        "sy": -9.988111721538123e-05,
-        "oy": 1288.397717059852
-      }
-    },
-    {
-      "crs": "EPSG:3012",
-      "objective": 4.3574,
-      "inside_pct": 100.0,
-      "valid": true,
-      "median_pixel_error": 2.236,
-      "p90_pixel_error": 11.0,
-      "params": {
-        "sx": 0.00025651550950547776,
-        "ox": 20.79915903868676,
-        "sy": -0.00024530875766880364,
-        "oy": 2066.246269201324
-      }
-    },
-    {
-      "crs": "EPSG:3006",
-      "objective": 4.8409,
-      "inside_pct": 100.0,
-      "valid": true,
-      "median_pixel_error": 2.828,
-      "p90_pixel_error": 9.849,
-      "params": {
-        "sx": 0.00022489685869987478,
-        "ox": -8.910033917405585,
-        "sy": -0.00022028198784581997,
-        "oy": 1911.2385866032844
-      }
-    },
-    {
-      "crs": "EPSG:3014",
-      "objective": 4.9193,
-      "inside_pct": 100.0,
-      "valid": true,
-      "median_pixel_error": 2.236,
-      "p90_pixel_error": 14.036,
-      "params": {
-        "sx": 0.00032096577660945186,
-        "ox": 78.36397548293697,
-        "sy": -0.00035745772631998337,
-        "oy": 2752.019251424364
-      }
-    },
-    {
-      "crs": "EPSG:3008",
-      "objective": 4.9284,
-      "inside_pct": 100.0,
-      "valid": true,
-      "median_pixel_error": 2.828,
-      "p90_pixel_error": 10.44,
-      "params": {
-        "sx": 0.0002685333430882653,
-        "ox": 7.152568860719616,
-        "sy": -0.00023679515881942147,
-        "oy": 2010.1295440556291
+        "scale": 9.388355490170358,
+        "ox": -81.54385001233868,
+        "oy": 1042.762947720799
       }
     },
     {
       "crs": "EPSG:3011",
-      "objective": 4.9284,
+      "objective": 4.0361,
       "inside_pct": 100.0,
       "valid": true,
-      "median_pixel_error": 2.828,
-      "p90_pixel_error": 10.77,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 10.0,
       "params": {
-        "sx": 0.0002445383149760541,
-        "ox": 103.85906287947617,
-        "sy": -0.0002195061447207164,
-        "oy": 1907.3396774219184
+        "scale": 0.0001975880063730553,
+        "ox": 66.41499489228178,
+        "oy": 1764.6107699230497
+      }
+    },
+    {
+      "crs": "EPSG:3016",
+      "objective": 4.0361,
+      "inside_pct": 100.0,
+      "valid": true,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 8.246,
+      "params": {
+        "scale": 0.00016735340786273165,
+        "ox": 98.22853491474723,
+        "oy": 1561.4762366614948
+      }
+    },
+    {
+      "crs": "EPSG:3017",
+      "objective": 4.0361,
+      "inside_pct": 100.0,
+      "valid": true,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 8.544,
+      "params": {
+        "scale": 0.0001595747471326009,
+        "ox": 110.24709790423495,
+        "oy": 1510.9386834736865
+      }
+    },
+    {
+      "crs": "EPSG:3018",
+      "objective": 4.0361,
+      "inside_pct": 100.0,
+      "valid": true,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 9.0,
+      "params": {
+        "scale": 0.0001614362117119398,
+        "ox": 121.80506036951704,
+        "oy": 1524.6153429080105
+      }
+    },
+    {
+      "crs": "EPSG:3857",
+      "objective": 4.0361,
+      "inside_pct": 100.0,
+      "valid": true,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 9.0,
+      "params": {
+        "scale": 8.234417339871502e-05,
+        "ox": -61.14370003852112,
+        "oy": 1139.1427547226654
+      }
+    },
+    {
+      "crs": "EPSG:3010",
+      "objective": 4.1334,
+      "inside_pct": 100.0,
+      "valid": true,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 9.899,
+      "params": {
+        "scale": 0.00019705405598838445,
+        "ox": 51.394055187727844,
+        "oy": 1762.6455595526506
+      }
+    },
+    {
+      "crs": "EPSG:3015",
+      "objective": 4.157,
+      "inside_pct": 100.0,
+      "valid": true,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 10.817,
+      "params": {
+        "scale": 0.00019605682294760848,
+        "ox": 119.77642828885843,
+        "oy": 1760.5054764557394
       }
     },
     {
       "crs": "EPSG:3021",
-      "objective": 4.9284,
+      "objective": 4.157,
       "inside_pct": 100.0,
       "valid": true,
-      "median_pixel_error": 2.828,
-      "p90_pixel_error": 10.63,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 9.487,
       "params": {
-        "sx": 0.00024522985844963236,
-        "ox": -288.21220812675995,
-        "sy": -0.0002425701340456401,
-        "oy": 2048.2627836143793
-      }
-    },
-    {
-      "crs": "EPSG:3009",
-      "objective": 4.9497,
-      "inside_pct": 100.0,
-      "valid": true,
-      "median_pixel_error": 2.828,
-      "p90_pixel_error": 10.44,
-      "params": {
-        "sx": 0.00025248416297939406,
-        "ox": 30.95973052725352,
-        "sy": -0.0002410448924694241,
-        "oy": 2038.0804820482022
+        "scale": 0.00019322027141198273,
+        "ox": -219.30338136951912,
+        "oy": 1735.873962239194
       }
     },
     {
       "crs": "EPSG:3013",
+      "objective": 4.2485,
+      "inside_pct": 100.0,
+      "valid": true,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 11.18,
+      "params": {
+        "scale": 0.00019339566812614652,
+        "ox": 88.03988560455355,
+        "oy": 1743.8867436218948
+      }
+    },
+    {
+      "crs": "EPSG:3014",
+      "objective": 4.2485,
+      "inside_pct": 100.0,
+      "valid": true,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 11.314,
+      "params": {
+        "scale": 0.00019583582623174892,
+        "ox": 104.57075361894977,
+        "oy": 1758.5865724533078
+      }
+    },
+    {
+      "crs": "EPSG:3009",
+      "objective": 4.266,
+      "inside_pct": 100.0,
+      "valid": true,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 11.323,
+      "params": {
+        "scale": 0.00019193793717052124,
+        "ox": 79.59815151508096,
+        "oy": 1734.0128614701923
+      }
+    },
+    {
+      "crs": "EPSG:3007",
+      "objective": 4.3361,
+      "inside_pct": 100.0,
+      "valid": true,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 10.644,
+      "params": {
+        "scale": 0.0001861225391194933,
+        "ox": 1.1613380487814133,
+        "oy": 1691.4257725001748
+      }
+    },
+    {
+      "crs": "EPSG:3006",
       "objective": 4.9497,
       "inside_pct": 100.0,
       "valid": true,
       "median_pixel_error": 2.828,
       "p90_pixel_error": 10.0,
       "params": {
-        "sx": 0.00023752497920312483,
-        "ox": 73.9006956766066,
-        "sy": -0.0002299034904439776,
-        "oy": 1976.3806087720377
+        "scale": 0.00021387002150141223,
+        "ox": -10.41625562770993,
+        "oy": 1856.7339587285514
       }
     },
     {
-      "crs": "EPSG:3016",
+      "crs": "EPSG:3012",
       "objective": 4.9497,
-      "inside_pct": 100.0,
-      "valid": true,
-      "median_pixel_error": 2.828,
-      "p90_pixel_error": 10.63,
-      "params": {
-        "sx": 0.00019558653124186631,
-        "ox": 126.11638038226772,
-        "sy": -0.00026559722358855307,
-        "oy": 2199.885712985572
-      }
-    },
-    {
-      "crs": "EPSG:3035",
-      "objective": 4.9497,
-      "inside_pct": 100.0,
-      "valid": true,
-      "median_pixel_error": 2.828,
-      "p90_pixel_error": 10.198,
-      "params": {
-        "sx": 0.00025942235303511604,
-        "ox": -1123.252520375897,
-        "sy": -0.000245896930811976,
-        "oy": 1446.0244841820481
-      }
-    },
-    {
-      "crs": "EPSG:3018",
-      "objective": 4.9918,
       "inside_pct": 100.0,
       "valid": true,
       "median_pixel_error": 2.828,
       "p90_pixel_error": 10.296,
       "params": {
-        "sx": 0.0002073156513884895,
-        "ox": 166.7159263335361,
-        "sy": -0.00023323044618760188,
-        "oy": 1930.8749417667452
+        "scale": 0.00017910706451311145,
+        "ox": 74.92094631316255,
+        "oy": 1566.8763620243008
       }
     },
     {
-      "crs": "EPSG:3007",
-      "objective": 5.1132,
-      "inside_pct": 97.56,
-      "valid": true,
-      "median_pixel_error": 2.828,
-      "p90_pixel_error": 12.083,
-      "params": {
-        "sx": 0.00028603468321229827,
-        "ox": -35.475630277581246,
-        "sy": -0.0002535139522595189,
-        "oy": 2072.144522724805
-      }
-    },
-    {
-      "crs": "EPSG:3015",
-      "objective": 5.1213,
-      "inside_pct": 100.0,
-      "valid": true,
-      "median_pixel_error": 3.0,
-      "p90_pixel_error": 10.63,
-      "params": {
-        "sx": 0.0002824669136937079,
-        "ox": 89.72809744111476,
-        "sy": -0.0002183543251777141,
-        "oy": 1887.2109375996129
-      }
-    },
-    {
-      "crs": "EPSG:4326",
-      "objective": 5.1633,
-      "inside_pct": 97.9,
-      "valid": true,
-      "median_pixel_error": 3.0,
-      "p90_pixel_error": 11.402,
-      "params": {
-        "sx": 16.891236748166385,
-        "ox": -138.69304371803338,
-        "sy": -28.579005802284478,
-        "oy": 2127.046043745769
-      }
-    },
-    {
-      "crs": "EPSG:3010",
-      "objective": 5.184,
-      "inside_pct": 100.0,
-      "valid": true,
-      "median_pixel_error": 3.0,
-      "p90_pixel_error": 13.892,
-      "params": {
-        "sx": 0.0002820376726474418,
-        "ox": 65.86361642015822,
-        "sy": -0.00036097575162031095,
-        "oy": 2773.344276575086
-      }
-    },
-    {
-      "crs": "EPSG:3017",
+      "crs": "EPSG:3008",
       "objective": 5.5054,
-      "inside_pct": 98.14,
+      "inside_pct": 100.0,
       "valid": true,
       "median_pixel_error": 3.162,
-      "p90_pixel_error": 10.817,
+      "p90_pixel_error": 11.0,
       "params": {
-        "sx": 0.00031270615090667046,
-        "ox": 156.91465013138213,
-        "sy": -0.00038195043477981316,
-        "oy": 2945.308727432459
+        "scale": 0.00026398153244544976,
+        "ox": 50.1919938885445,
+        "oy": 2168.071028637354
+      }
+    },
+    {
+      "crs": "EPSG:3035",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "scale": 0.0002457091274830355,
+        "ox": -1044.1726799274356,
+        "oy": 2884.5145996560796
       }
     }
   ]
