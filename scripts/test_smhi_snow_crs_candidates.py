@@ -71,13 +71,15 @@ def main():
             xy=xy[good]
             xmin,ymin=xy.min(axis=0); xmax,ymax=xy.max(axis=0)
             sx0=(w-20)/(xmax-xmin); sy0=(h-20)/(ymax-ymin)
-            # only independent x/y scales + offsets; no shear/rotation.
-            p0=np.array([sx0,10-sx0*xmin,-sy0,h-10+sy0*ymin],float)
+            # Strict north-up similarity: one common magnitude scale for both axes.
+            # This preserves projection geometry and avoids anisotropic stretching.
+            s0=min(abs(sx0),abs(sy0))
+            p0=np.array([s0,10-s0*xmin,h-10+s0*ymin],float)
 
             def obj(p):
-                sx,ox,sy,oy=p
-                col=sx*xy[:,0]+ox
-                row=sy*xy[:,1]+oy
+                sc,ox,oy=p
+                col=sc*xy[:,0]+ox
+                row=-sc*xy[:,1]+oy
                 inside=(col>=0)&(col<w)&(row>=0)&(row<h)
                 if inside.mean()<0.96: return 999+(0.96-inside.mean())*1000
                 rr=np.clip(np.rint(row[inside]).astype(int),0,h-1)
@@ -88,20 +90,18 @@ def main():
             # Offset terms are in pixel space after multiplying very large
             # projected coordinates, so they may be hundreds or thousands of
             # pixels in magnitude. Centre bounds on the analytically derived p0.
-            sxlo,sxhi=sorted((p0[0]*0.6,p0[0]*1.5))
-            sylo,syhi=sorted((p0[2]*0.6,p0[2]*1.5))
+            slo,shi=sorted((p0[0]*0.5,p0[0]*1.7))
             oxspan=max(500.0,abs(p0[1])*1.5)
-            oyspan=max(500.0,abs(p0[3])*1.5)
+            oyspan=max(500.0,abs(p0[2])*1.5)
             bounds=[
-                (sxlo,sxhi),
+                (slo,shi),
                 (p0[1]-oxspan,p0[1]+oxspan),
-                (sylo,syhi),
-                (p0[3]-oyspan,p0[3]+oyspan)
+                (p0[2]-oyspan,p0[2]+oyspan)
             ]
             de=differential_evolution(obj,bounds,seed=42,popsize=10,maxiter=80,polish=False)
             res=minimize(obj,de.x,method="Nelder-Mead",options={"maxiter":1500})
             p=res.x
-            col=p[0]*xy[:,0]+p[1]; row=p[2]*xy[:,1]+p[3]
+            col=p[0]*xy[:,0]+p[1]; row=-p[0]*xy[:,1]+p[2]
             inside=(col>=0)&(col<w)&(row>=0)&(row<h)
             if inside.any():
                 rr=np.clip(np.rint(row[inside]).astype(int),0,h-1)
@@ -120,7 +120,7 @@ def main():
                 "valid":bool(inside.any()),
                 "median_pixel_error":med,
                 "p90_pixel_error":p90,
-                "params":{"sx":float(p[0]),"ox":float(p[1]),"sy":float(p[2]),"oy":float(p[3])}
+                "params":{"scale":float(p[0]),"ox":float(p[1]),"oy":float(p[2])}
             })
         results.sort(key=lambda r:r["objective"])
         report={
@@ -130,7 +130,7 @@ def main():
             "source_prj_explicit_epsg3006":'AUTHORITY["EPSG",3006]' in prj,
             "source_prj_wkt_prefix":prj[:500],
             "image_size":[w,h],
-            "model":"candidate CRS + independent x/y scale and offset only; no rotation/shear/polynomial",
+            "model":"candidate CRS + one isotropic scale and x/y offset; north-up, no rotation/shear/polynomial",
             "results":results
         }
         OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
