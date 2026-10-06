@@ -142,32 +142,36 @@
       <label>Datakälla<select id="snowMapSource"><option value="grid">Analyserat snödjup, 2,5 km</option><option value="stations">Stationsobservationer</option></select></label>
       <label>Snösäsong<select id="snowMapSeason"></select></label>
     </div>
-    <div class="chart-card full seaice-map-card">
-      <h2 id="snowMapTitle">Analyserat snödjup i Luleå kommun</h2>
-      <p id="snowMapHint" class="hint">Välj säsong och datum. Varje ruta visar analyserat snödjup från SMHIGridClim inom Luleå kommun.</p>
-      <div id="snowMap" class="seaice-map" aria-label="Interaktiv karta över observerat snödjup i Luleå kommun"></div>
-      <div class="seaice-season-controls">
-        <div class="seaice-season-control-row">
-          <label for="snowMapDateSlider"><b id="snowMapSeasonLabel">Snösäsong</b></label>
-          <span id="snowMapDateLabel">Laddar datum…</span>
+    <div class="snowmap-layout">
+      <div class="chart-card seaice-map-card snowmap-map-card">
+        <h2 id="snowMapTitle">Analyserat snödjup i Luleå kommun</h2>
+        <p id="snowMapHint" class="hint">Välj säsong och datum. Varje ruta visar analyserat snödjup från SMHIGridClim inom Luleå kommun.</p>
+        <div id="snowMap" class="seaice-map snowmap-map" aria-label="Interaktiv karta över analyserat snödjup i Luleå kommun"></div>
+        <div class="seaice-season-controls">
+          <div class="seaice-season-control-row">
+            <label for="snowMapDateSlider"><b id="snowMapSeasonLabel">Snösäsong</b></label>
+            <span id="snowMapDateLabel">Laddar datum…</span>
+          </div>
+          <input id="snowMapDateSlider" type="range" min="0" max="0" value="0" step="1" disabled>
+          <div class="seaice-season-nav">
+            <button id="snowMapPrevDate" type="button" disabled>Föregående</button>
+            <button id="snowMapNextDate" type="button" disabled>Nästa</button>
+          </div>
         </div>
-        <input id="snowMapDateSlider" type="range" min="0" max="0" value="0" step="1" disabled>
-        <div class="seaice-season-nav">
-          <button id="snowMapPrevDate" type="button" disabled>Föregående</button>
-          <button id="snowMapNextDate" type="button" disabled>Nästa</button>
+        <p id="snowMapStatus" class="hint"></p>
+      </div>
+      <div class="snowmap-chart-stack">
+        <div class="chart-card snowmap-chart">
+          <h2 id="snowMapMeanTitle">Snödjup per snösäsong</h2>
+          <p id="snowMapMeanHint" class="hint">Säsongerna visas efter varandra med samma upplägg som havsisen. Linjerna visar analyserat medel- och maxsnödjup.</p>
+          <canvas id="snowMapMean"></canvas>
+        </div>
+        <div class="chart-card snowmap-chart">
+          <h2 id="snowMapCoverageTitle">Andel yta med snötäcke per snösäsong</h2>
+          <p id="snowMapCoverageHint" class="hint">Andel analyserade gridceller med minst 1 cm snödjup. Säsongerna visas kronologiskt efter varandra.</p>
+          <canvas id="snowMapCoverage"></canvas>
         </div>
       </div>
-      <p id="snowMapStatus" class="hint"></p>
-    </div>
-    <div class="chart-card">
-      <h2 id="snowMapMeanTitle">Genomsnittligt snödjup per datum</h2>
-      <p id="snowMapMeanHint" class="hint">Medelvärde av gridceller inom Luleå kommun för analyserat läge.</p>
-      <canvas id="snowMapMean"></canvas>
-    </div>
-    <div class="chart-card">
-      <h2 id="snowMapCoverageTitle">Andel yta med mätbart snötäcke</h2>
-      <p id="snowMapCoverageHint" class="hint">Andel analyserade gridceller med minst 1 cm snödjup.</p>
-      <canvas id="snowMapCoverage"></canvas>
     </div>
   </section>
 
@@ -284,5 +288,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=75"></script>
+<script src="app.js?v=76"></script>
 </body></html>
