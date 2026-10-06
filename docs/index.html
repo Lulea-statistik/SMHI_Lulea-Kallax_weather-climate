@@ -188,6 +188,17 @@
   <section id="page-lightning" class="page">
     <div class="source-note"><b>Blixtdata:</b> SMHI:s historiska arkiv över registrerade urladdningar används från 2012 och framåt. Observationer klassas som fastland, ö, hav eller inlandsvatten. Observationer vars position ligger så nära en yt- eller kommungräns att klassningen är osäker redovisas som <b>Osäkert område</b>. SMHI anger att medianfelet vid normal drift ska vara mindre än cirka 500 meter, men enskilda avvikelser kan vara större. Det finns dessutom ett metodbrott i blixtlokaliseringssystemet under 2014, vilket gör äldre och nyare nivåer mindre direkt jämförbara.</div>
     <div id="lightningNoData" class="chart-card full" style="display:none"><h2>Blixtdata väntar på första hämtningen</h2><p class="hint">Kör workflowet med refresh-all för att hämta historiken och bygga klassningen.</p></div>
+    <div class="chart-card full seaice-map-card">
+      <h2>Blixttäthet i Luleå kommun</h2>
+      <p class="hint">Välj år och kartläge. Täthetsläget använder samma fasta 1 × 1 km-rutor varje år, vilket gör geografiska jämförelser mellan år möjliga. Enskilda punkter visar registrerade urladdningar och laddas bara när Blixt-sidan öppnas.</p>
+      <div class="page-tools">
+        <label>År<select id="lightningMapYear"></select></label>
+        <label>Kartläge<select id="lightningMapMode"><option value="density">Täthet</option><option value="grid">1 km-rutnät</option><option value="points">Enskilda blixtar</option></select></label>
+        <label>Yttyp<select id="lightningMapSurface"><option value="all">Alla yttyper</option><option value="mainland">Fastland</option><option value="islands">Öar</option><option value="sea">Hav</option><option value="inland_water">Inlandsvatten</option><option value="uncertain">Osäkert område</option></select></label>
+      </div>
+      <div id="lightningMap" class="seaice-map" aria-label="Interaktiv karta över blixttäthet i Luleå kommun"></div>
+      <p id="lightningMapStatus" class="hint"></p>
+    </div>
     <div class="chart-card"><h2>Blixturladdningar per år</h2><p class="hint">Visar fastland, öar, hav, inlandsvatten och osäkert område. Osäkra observationer särredovisas och dubbelräknas inte i stapeln.</p><canvas id="lightningAnnual"></canvas></div>
     <div class="chart-card"><h2>Blixtdygn per år</h2><p class="hint">Antal dygn med minst en registrerad urladdning inom Luleå kommun.</p><canvas id="lightningDays"></canvas></div>
     <div class="chart-card"><h2>Genomsnittlig månadsfördelning</h2><p class="hint">Fördelning av registrerade urladdningar per månad inom valt årsintervall.</p><canvas id="lightningMonthly"></canvas></div>
@@ -269,5 +280,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=64"></script>
+<script src="app.js?v=65"></script>
 </body></html>
