@@ -247,8 +247,8 @@ async function loadLightningMapIndex(){
   const years=(lightningMapIndex.years||[]).slice().sort((a,b)=>b.year-a.year);
   const select=el('lightningMapYear');
   if(select){
-    select.innerHTML=years.map(x=>'<option value="'+x.year+'">'+x.year+'</option>').join('');
-    if(years.length)select.value=String(years[0].year);
+    select.innerHTML='<option value="average">Medel</option>'+years.map(x=>'<option value="'+x.year+'">'+x.year+'</option>').join('');
+    select.value='average';
   }
   return lightningMapIndex;
 }
@@ -256,19 +256,22 @@ async function loadLightningMapIndex(){
 async function loadLightningMapYear(year=null,force=false){
   const idx=await loadLightningMapIndex();
   const years=(idx.years||[]).slice().sort((a,b)=>b.year-a.year);
-  year=Number(year||el('lightningMapYear')?.value||years[0]?.year);
-  if(!Number.isFinite(year))throw new Error('Inget blixtår hittades.');
-  if(!force&&lightningMapData&&Number(lightningMapData.year)===year)return lightningMapData;
-  if(lightningMapCache.has(year)){
-    lightningMapData=lightningMapCache.get(year);
+  let key=String(year||el('lightningMapYear')?.value||'average');
+  const isAverage=key==='average';
+  if(!isAverage&&!/^20\d{2}$/.test(key))throw new Error('Inget blixtår hittades.');
+  if(!force&&lightningMapData&&String(lightningMapData.year)===key)return lightningMapData;
+  if(lightningMapCache.has(key)){
+    lightningMapData=lightningMapCache.get(key);
   }else{
-    const meta=years.find(x=>Number(x.year)===year);
-    const r=await fetch('lightning_map/'+(meta?.file||year+'.json')+'?v=1',{cache:'no-store'});
-    if(!r.ok)throw new Error('Blixtkartan saknar data för '+year+'.');
+    const meta=isAverage?idx.average:years.find(x=>String(x.year)===key);
+    const file=meta?.file||(isAverage?'average.json':key+'.json');
+    const r=await fetch('lightning_map/'+file+'?v=1',{cache:'no-store'});
+    if(!r.ok)throw new Error('Blixtkartan saknar data för '+(isAverage?'medelperioden':key)+'.');
     lightningMapData=await r.json();
-    lightningMapCache.set(year,lightningMapData);
+    lightningMapCache.set(key,lightningMapData);
   }
-  if(el('lightningMapYear'))el('lightningMapYear').value=String(year);
+  if(el('lightningMapYear'))el('lightningMapYear').value=key;
+  if(isAverage&&el('lightningMapMode')?.value==='points')el('lightningMapMode').value='density';
   return lightningMapData;
 }
 
@@ -297,9 +300,15 @@ function renderLightningMapLayer(){
   if(lightningMapLayer)lightningMapLeaflet.removeLayer(lightningMapLayer);
   lightningMapLayer=L.layerGroup();
 
-  const mode=el('lightningMapMode')?.value||'density';
+  let mode=el('lightningMapMode')?.value||'density';
   const surface=el('lightningMapSurface')?.value||'all';
   const status=el('lightningMapStatus');
+  const isAverage=String(lightningMapData.year)==='average';
+
+  if(isAverage&&mode==='points'){
+    mode='density';
+    if(el('lightningMapMode'))el('lightningMapMode').value='density';
+  }
 
   if(mode==='points'){
     const pts=(lightningMapData.points||[]).filter(p=>surface==='all'||p.surface===surface);
@@ -323,20 +332,33 @@ function renderLightningMapLayer(){
       const poly=L.polygon(c.polygon.map(x=>[x[1],x[0]]),{
         color:'#334155',weight:.45,fillColor:lightningDensityColor(n,max),fillOpacity:.72
       });
-      poly.bindPopup('<b>1 km-ruta</b><br>'+n.toLocaleString('sv-SE')+' urladdningar'+(surface==='all'?'':' · '+lightningSurfaceLabel(surface)));
+      const valueText=isAverage
+        ? n.toLocaleString('sv-SE',{maximumFractionDigits:2})+' urladdningar per år'
+        : n.toLocaleString('sv-SE')+' urladdningar';
+      poly.bindPopup('<b>1 km-ruta</b><br>'+valueText+(surface==='all'?'':' · '+lightningSurfaceLabel(surface)));
       poly.addTo(lightningMapLayer);
     }else{
-      const radius=6+20*Math.sqrt(n/max);
+      const radius=4+10*Math.sqrt(n/max);
       const circ=L.circleMarker([c.lat,c.lon],{
-        radius,color:'transparent',weight:0,fillColor:lightningDensityColor(n,max),fillOpacity:.42
+        radius,color:'transparent',weight:0,fillColor:lightningDensityColor(n,max),fillOpacity:.28
       });
-      circ.bindPopup('<b>Täthetscell 1 km</b><br>'+n.toLocaleString('sv-SE')+' urladdningar'+(surface==='all'?'':' · '+lightningSurfaceLabel(surface)));
+      const valueText=isAverage
+        ? n.toLocaleString('sv-SE',{maximumFractionDigits:2})+' urladdningar per år'
+        : n.toLocaleString('sv-SE')+' urladdningar';
+      circ.bindPopup('<b>Täthetscell 1 km</b><br>'+valueText+(surface==='all'?'':' · '+lightningSurfaceLabel(surface)));
       circ.addTo(lightningMapLayer);
     }
   });
   lightningMapLayer.addTo(lightningMapLeaflet);
   const total=cells.reduce((s,x)=>s+x.n,0);
-  if(status)status.textContent=lightningMapData.year+': '+total.toLocaleString('sv-SE')+' urladdningar i '+cells.length.toLocaleString('sv-SE')+' belagda 1 km-rutor'+(surface==='all'?'.':' · '+lightningSurfaceLabel(surface)+'.');
+  if(status){
+    if(isAverage){
+      const years=lightningMapData.years_included||[];
+      status.textContent='Medel '+(years[0]||'')+'–'+(years[years.length-1]||'')+': '+total.toLocaleString('sv-SE',{maximumFractionDigits:1})+' urladdningar per år i genomsnitt · '+cells.length.toLocaleString('sv-SE')+' 1 km-rutor'+(surface==='all'?'.':' · '+lightningSurfaceLabel(surface)+'.');
+    }else{
+      status.textContent=lightningMapData.year+': '+total.toLocaleString('sv-SE')+' urladdningar i '+cells.length.toLocaleString('sv-SE')+' belagda 1 km-rutor'+(surface==='all'?'.':' · '+lightningSurfaceLabel(surface)+'.');
+    }
+  }
 }
 
 function setupLightningMapControls(){
