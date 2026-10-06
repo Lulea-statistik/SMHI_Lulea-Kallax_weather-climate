@@ -1,4 +1,4 @@
-let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;const snowMapSeasonCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;const snowMapSeasonCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function lineChart(id,labels,datasets,yTitle,extra={}){destroyChart(id);charts[id]=new Chart(el(id),{type:'line',data:{labels,datasets:datasets.map(d=>({borderWidth:2,pointRadius:0,tension:.15,...d}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:datasets.length>1}},scales:{x:{grid:{display:false}},y:{title:{display:!!yTitle,text:yTitle}}},...extra}});}
@@ -237,6 +237,155 @@ function daylightHoursInMonth(year,month){
     if(h!=null&&Number.isFinite(h)){total+=h;valid++;}
   }
   return valid===days?total:null;
+}
+
+async function loadLightningMapIndex(){
+  if(lightningMapIndex)return lightningMapIndex;
+  const r=await fetch('lightning_map/index.json?v=1',{cache:'no-store'});
+  if(!r.ok)throw new Error('Blixtkartan väntar på första kartbygget.');
+  lightningMapIndex=await r.json();
+  const years=(lightningMapIndex.years||[]).slice().sort((a,b)=>b.year-a.year);
+  const select=el('lightningMapYear');
+  if(select){
+    select.innerHTML=years.map(x=>'<option value="'+x.year+'">'+x.year+'</option>').join('');
+    if(years.length)select.value=String(years[0].year);
+  }
+  return lightningMapIndex;
+}
+
+async function loadLightningMapYear(year=null,force=false){
+  const idx=await loadLightningMapIndex();
+  const years=(idx.years||[]).slice().sort((a,b)=>b.year-a.year);
+  year=Number(year||el('lightningMapYear')?.value||years[0]?.year);
+  if(!Number.isFinite(year))throw new Error('Inget blixtår hittades.');
+  if(!force&&lightningMapData&&Number(lightningMapData.year)===year)return lightningMapData;
+  if(lightningMapCache.has(year)){
+    lightningMapData=lightningMapCache.get(year);
+  }else{
+    const meta=years.find(x=>Number(x.year)===year);
+    const r=await fetch('lightning_map/'+(meta?.file||year+'.json')+'?v=1',{cache:'no-store'});
+    if(!r.ok)throw new Error('Blixtkartan saknar data för '+year+'.');
+    lightningMapData=await r.json();
+    lightningMapCache.set(year,lightningMapData);
+  }
+  if(el('lightningMapYear'))el('lightningMapYear').value=String(year);
+  return lightningMapData;
+}
+
+function lightningSurfaceLabel(s){
+  return {mainland:'Fastland',islands:'Öar',sea:'Hav',inland_water:'Inlandsvatten',uncertain:'Osäkert område'}[s]||s;
+}
+
+function lightningCellCount(cell,surface){
+  if(surface==='all')return Number(cell.count)||0;
+  return Number(cell.by_surface?.[surface])||0;
+}
+
+function lightningDensityColor(v,max){
+  if(v<=0)return 'rgba(0,0,0,0)';
+  const p=max>0?v/max:0;
+  if(p<.15)return '#dbeafe';
+  if(p<.3)return '#93c5fd';
+  if(p<.5)return '#60a5fa';
+  if(p<.7)return '#3b82f6';
+  if(p<.85)return '#2563eb';
+  return '#7c3aed';
+}
+
+function renderLightningMapLayer(){
+  if(!lightningMapLeaflet||!lightningMapData)return;
+  if(lightningMapLayer)lightningMapLeaflet.removeLayer(lightningMapLayer);
+  lightningMapLayer=L.layerGroup();
+
+  const mode=el('lightningMapMode')?.value||'density';
+  const surface=el('lightningMapSurface')?.value||'all';
+  const status=el('lightningMapStatus');
+
+  if(mode==='points'){
+    const pts=(lightningMapData.points||[]).filter(p=>surface==='all'||p.surface===surface);
+    pts.forEach(p=>{
+      const m=L.circleMarker([p.lat,p.lon],{
+        radius:3,color:'#111827',weight:.4,fillColor:'#f59e0b',fillOpacity:.72
+      });
+      const current=p.current_ka==null?'okänd':Number(p.current_ka).toLocaleString('sv-SE',{maximumFractionDigits:1})+' kA';
+      m.bindPopup((p.datetime_utc||'')+'<br>'+lightningSurfaceLabel(p.surface)+'<br>Strömstyrka: '+current);
+      m.addTo(lightningMapLayer);
+    });
+    lightningMapLayer.addTo(lightningMapLeaflet);
+    if(status)status.textContent=lightningMapData.year+': '+pts.length.toLocaleString('sv-SE')+' registrerade urladdningar i valt urval.';
+    return;
+  }
+
+  const cells=(lightningMapData.grid||[]).map(c=>({c,n:lightningCellCount(c,surface)})).filter(x=>x.n>0);
+  const max=Math.max(1,...cells.map(x=>x.n));
+  cells.forEach(({c,n})=>{
+    if(mode==='grid'){
+      const poly=L.polygon(c.polygon.map(x=>[x[1],x[0]]),{
+        color:'#334155',weight:.45,fillColor:lightningDensityColor(n,max),fillOpacity:.72
+      });
+      poly.bindPopup('<b>1 km-ruta</b><br>'+n.toLocaleString('sv-SE')+' urladdningar'+(surface==='all'?'':' · '+lightningSurfaceLabel(surface)));
+      poly.addTo(lightningMapLayer);
+    }else{
+      const radius=6+20*Math.sqrt(n/max);
+      const circ=L.circleMarker([c.lat,c.lon],{
+        radius,color:'transparent',weight:0,fillColor:lightningDensityColor(n,max),fillOpacity:.42
+      });
+      circ.bindPopup('<b>Täthetscell 1 km</b><br>'+n.toLocaleString('sv-SE')+' urladdningar'+(surface==='all'?'':' · '+lightningSurfaceLabel(surface)));
+      circ.addTo(lightningMapLayer);
+    }
+  });
+  lightningMapLayer.addTo(lightningMapLeaflet);
+  const total=cells.reduce((s,x)=>s+x.n,0);
+  if(status)status.textContent=lightningMapData.year+': '+total.toLocaleString('sv-SE')+' urladdningar i '+cells.length.toLocaleString('sv-SE')+' belagda 1 km-rutor'+(surface==='all'?'.':' · '+lightningSurfaceLabel(surface)+'.');
+}
+
+function setupLightningMapControls(){
+  el('lightningMapYear')?.addEventListener('change',async e=>{await loadLightningMapYear(e.target.value,true);renderLightningMapLayer();});
+  el('lightningMapMode')?.addEventListener('change',renderLightningMapLayer);
+  el('lightningMapSurface')?.addEventListener('change',renderLightningMapLayer);
+}
+
+async function initLightningMap(){
+  const mapEl=el('lightningMap');
+  if(!mapEl||typeof L==='undefined')return;
+  const status=el('lightningMapStatus');
+  if(lightningMapLeaflet){
+    setTimeout(()=>lightningMapLeaflet.invalidateSize(),50);
+    return;
+  }
+  try{
+    if(status)status.textContent='Laddar blixtkartan…';
+    lightningMapLeaflet=L.map(mapEl,{zoomControl:true});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      maxZoom:18,attribution:'&copy; OpenStreetMap contributors'
+    }).addTo(lightningMapLeaflet);
+
+    const br=await fetch('lightning_map/boundary.geojson?v=1',{cache:'no-store'});
+    if(br.ok){
+      const boundary=await br.json();
+      lightningMapBoundary=L.geoJSON(boundary,{style:{color:'#dc2626',weight:2.4,fill:false}}).addTo(lightningMapLeaflet);
+      const b=lightningMapBoundary.getBounds();if(b.isValid())lightningMapLeaflet.fitBounds(b.pad(.04));
+    }
+
+    const legend=L.control({position:'topright'});
+    legend.onAdd=()=>{
+      const div=L.DomUtil.create('div','seaice-map-legend');
+      div.innerHTML='<b>Blixttäthet</b>'+
+        '<div><i style="background:#dbeafe"></i>Låg</div>'+
+        '<div><i style="background:#60a5fa"></i>Medel</div>'+
+        '<div><i style="background:#2563eb"></i>Hög</div>'+
+        '<div><i style="background:#7c3aed"></i>Högst</div>'+
+        '<div><i style="background:transparent;border:2px solid #dc2626"></i>Luleå kommun</div>';
+      return div;
+    };
+    legend.addTo(lightningMapLeaflet);
+
+    await loadLightningMapIndex();
+    await loadLightningMapYear();
+    renderLightningMapLayer();
+  }catch(err){
+    if(status)status.textContent=err.message;
+  }
 }
 
 function renderLightning(f){
@@ -1511,7 +1660,7 @@ function syncYear(source,value,renderNow=true){
   updateRangeTrack();
   if(renderNow)render();
 }
-function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');document.body.classList.toggle('algae-active',btn.dataset.page==='algae');if(btn.dataset.page==='seaice')initSeaIceMap();if(btn.dataset.page==='algae')initAlgaeMap();if(btn.dataset.page==='snowmap')initSnowMap();setTimeout(()=>{Object.values(charts).forEach(c=>c.resize());if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();if(algaeLeafletMap)algaeLeafletMap.invalidateSize();if(snowMapLeaflet)snowMapLeaflet.invalidateSize();},80);}));}
+function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');document.body.classList.toggle('algae-active',btn.dataset.page==='algae');if(btn.dataset.page==='seaice')initSeaIceMap();if(btn.dataset.page==='algae')initAlgaeMap();if(btn.dataset.page==='snowmap')initSnowMap();if(btn.dataset.page==='lightning')initLightningMap();setTimeout(()=>{Object.values(charts).forEach(c=>c.resize());if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();if(algaeLeafletMap)algaeLeafletMap.invalidateSize();if(snowMapLeaflet)snowMapLeaflet.invalidateSize();if(lightningMapLeaflet)lightningMapLeaflet.invalidateSize();},80);}));}
 function setupFilters(){const years=DATA.years,min=years[0],max=years[years.length-1];['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=years.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));el('yearFrom').value=min;el('yearTo').value=max;['rangeFrom','rangeTo'].forEach(id=>{el(id).min=min;el(id).max=max;el(id).step=1;});el('rangeFrom').value=min;el('rangeTo').value=max;el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;updateRangeTrack();el('yearFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
 el('yearTo').addEventListener('change',e=>syncYear('to',e.target.value,true));
 el('rangeFrom').addEventListener('input',e=>syncYear('from',e.target.value,false));
@@ -1532,4 +1681,4 @@ function setupWeatherCodes(){
   el('weatherCode').innerHTML='<option value="all">Alla vädertyper</option>'+types.map(t=>'<option value="'+t+'">'+t+'</option>').join('');
   el('weatherCode').value='all';
 }
-fetch('dashboard_data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas');return r.json();}).then(d=>{DATA=d;el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');el('weatherSource').href=d.weather.source_url;setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupSnowMapControls();setupFilters();setupDateWeather();render();}).catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';});
+fetch('dashboard_data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas');return r.json();}).then(d=>{DATA=d;el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');el('weatherSource').href=d.weather.source_url;setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupSnowMapControls();setupLightningMapControls();setupFilters();setupDateWeather();render();}).catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';});
