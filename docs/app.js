@@ -37,20 +37,34 @@ function normalizedWeatherPhenomenon(code,year){
   }
   return label;
 }
+function temp2MixColor(a,b,t){
+  const hex=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+  const x=hex(a),y=hex(b),p=Math.max(0,Math.min(1,t));
+  const c=x.map((v,i)=>Math.round(v+(y[i]-v)*p));
+  return '#'+c.map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+function temp2YearColor(index,count){
+  return temp2MixColor('#f6e7a6','#0066cc',count<=1?1:index/(count-1));
+}
 function setupTemp2Slider(){
   const years=[...DATA.years].sort((a,b)=>a-b);
-  const minStart=years[0],maxStart=years[years.length-1]-9;
-  const minCenter=minStart+4.5,maxCenter=maxStart+4.5;
+  const period=30;
+  const minStart=years[0],maxStart=Math.max(minStart,years[years.length-1]-(period-1));
+  const centerOffset=(period-1)/2;
+  const minCenter=minStart+centerOffset,maxCenter=maxStart+centerOffset;
   temp2Start=maxStart;
   const s=el('temp2Start');
-  s.min=minCenter;s.max=maxCenter;s.step=1;s.value=temp2Start+4.5;
-  s.addEventListener('input',e=>{temp2Start=Math.round((+e.target.value)-4.5);renderTemp2();});
+  s.min=minCenter;s.max=maxCenter;s.step=1;s.value=temp2Start+centerOffset;
+  s.addEventListener('input',e=>{temp2Start=Math.round((+e.target.value)-centerOffset);renderTemp2();});
   renderTemp2();
 }
 function renderTemp2(){
-  const start=temp2Start??([...DATA.years].sort((a,b)=>a-b).slice(-10)[0]);
-  const years=Array.from({length:10},(_,i)=>start+i).filter(y=>DATA.years.includes(y));
-  el('temp2PeriodLabel').textContent=start+'–'+(start+9);
+  const period=30;
+  const allYears=[...DATA.years].sort((a,b)=>a-b);
+  const fallbackStart=Math.max(allYears[0],allYears[allYears.length-1]-(period-1));
+  const start=temp2Start??fallbackStart;
+  const years=Array.from({length:period},(_,i)=>start+i).filter(y=>DATA.years.includes(y));
+  el('temp2PeriodLabel').textContent=start+'–'+(start+period-1);
 
   const selectedMonth=+(el('month')?.value||0);
   if(selectedMonth){
@@ -58,10 +72,29 @@ function renderTemp2(){
       const r=DATA.temperature.monthly.find(x=>x.year===y&&x.month===selectedMonth);
       return r?r.avg:null;
     });
-    lineChart('tempProfiles',years,[{label:months[selectedMonth-1],data:vals,borderColor:MONTH_GREEN,backgroundColor:MONTH_GREEN}],'°C');
+    destroyChart('tempProfiles');
+    charts.tempProfiles=new Chart(el('tempProfiles'),{
+      type:'line',
+      data:{labels:years,datasets:[{
+        label:months[selectedMonth-1],
+        data:vals,
+        borderColor:'#0066cc',
+        backgroundColor:'#0066cc',
+        pointBackgroundColor:years.map((_,i)=>temp2YearColor(i,years.length)),
+        pointBorderColor:years.map((_,i)=>temp2YearColor(i,years.length)),
+        pointRadius:3,
+        borderWidth:2,
+        tension:.15
+      }]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+        plugins:{legend:{display:false}},
+        scales:{x:{grid:{display:false}},y:{title:{display:true,text:'°C'}}}}
+    });
   }else{
-    lineChart('tempProfiles',months,years.map(y=>({
+    lineChart('tempProfiles',months,years.map((y,idx)=>({
       label:String(y),
+      borderColor:temp2YearColor(idx,years.length),
+      backgroundColor:temp2YearColor(idx,years.length),
       data:[...Array(12)].map((_,i)=>{
         const r=DATA.temperature.monthly.find(x=>x.year===y&&x.month===i+1);
         return r?r.avg:null;
@@ -305,7 +338,7 @@ async function renderLightningMapLayer(filterOverride=null){
   if(lightningMapLayer)lightningMapLeaflet.removeLayer(lightningMapLayer);
   lightningMapLayer=L.layerGroup();
 
-  const mode=el('lightningMapMode')?.value||'grid';
+  const mode=el('lightningMapMode')?.value||'grid2000';
   const surface=el('lightningMapSurface')?.value||'all';
   const status=el('lightningMapStatus');
   const f=filterOverride||currentFilters();
@@ -344,9 +377,11 @@ async function renderLightningMapLayer(filterOverride=null){
       return;
     }
 
+    const gridSize=mode==='grid1000'?1000:mode==='grid4000'?4000:2000;
     const aggregated=new Map();
     range.data.forEach(data=>{
-      (data.grid||[]).forEach(c=>{
+      const grid=(data.grids?.[String(gridSize)]||[]);
+      grid.forEach(c=>{
         const n=lightningGridCount(c,surface,month);
         if(n<=0)return;
         const key=String(c.lon)+','+String(c.lat);
@@ -371,7 +406,8 @@ async function renderLightningMapLayer(filterOverride=null){
       const valueText=isAverage
         ? n.toLocaleString('sv-SE',{maximumFractionDigits:2})+' urladdningar per år'
         : n.toLocaleString('sv-SE',{maximumFractionDigits:0})+' urladdningar';
-      poly.bindPopup('<b>2 × 2 km-ruta</b><br>'+valueText+'<br>'+monthLabel+(surface==='all'?'':' · '+lightningSurfaceLabel(surface)));
+      const km=gridSize/1000;
+      poly.bindPopup('<b>'+km+' × '+km+' km-ruta</b><br>'+valueText+'<br>'+monthLabel+(surface==='all'?'':' · '+lightningSurfaceLabel(surface)));
       poly.addTo(lightningMapLayer);
     });
     lightningMapLayer.addTo(lightningMapLeaflet);
@@ -381,7 +417,7 @@ async function renderLightningMapLayer(filterOverride=null){
       status.textContent=(isAverage?'Medel '+f.from+'–'+f.to:f.from)+' · '+monthLabel+': '+
         total.toLocaleString('sv-SE',{maximumFractionDigits:isAverage?1:0})+
         (isAverage?' urladdningar per år i genomsnitt':' urladdningar')+
-        ' · '+cells.length.toLocaleString('sv-SE')+' belagda 2 × 2 km-rutor'+
+        ' · '+cells.length.toLocaleString('sv-SE')+' belagda '+(gridSize/1000)+' × '+(gridSize/1000)+' km-rutor'+
         (surface==='all'?'.':' · '+lightningSurfaceLabel(surface)+'.');
     }
   }catch(err){
@@ -419,7 +455,7 @@ async function initLightningMap(){
     const legend=L.control({position:'topright'});
     legend.onAdd=()=>{
       const div=L.DomUtil.create('div','seaice-map-legend');
-      div.innerHTML='<b>Blixtar per 2 × 2 km</b>'+
+      div.innerHTML='<b>Blixtar per rutnätscell</b>'+
         '<div style="margin:5px 0 2px;width:118px;height:12px;border-radius:2px;background:linear-gradient(90deg,#bfdbfe 0%,#facc15 50%,#dc2626 100%)"></div>'+
         '<div style="display:flex;justify-content:space-between;width:118px;font-size:11px"><span>Låg</span><span>Medel</span><span>Hög</span></div>'+
         '<div style="margin-top:5px"><i style="background:transparent;border:2px solid #dc2626"></i>Luleå kommun</div>';
