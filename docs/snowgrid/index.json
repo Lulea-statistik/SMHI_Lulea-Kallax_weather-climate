@@ -5,6 +5,69 @@
   "available_period": "1961-01-01–2018-12-31",
   "seasons": [
     {
+      "season": "2010-11",
+      "file": "2010-11.json",
+      "grid_file": "2010-11_grid.geojson",
+      "first_date": "2010-08-01",
+      "last_date": "2011-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2011-12",
+      "file": "2011-12.json",
+      "grid_file": "2011-12_grid.geojson",
+      "first_date": "2011-08-01",
+      "last_date": "2012-07-31",
+      "dates": 366,
+      "cells": 885
+    },
+    {
+      "season": "2012-13",
+      "file": "2012-13.json",
+      "grid_file": "2012-13_grid.geojson",
+      "first_date": "2012-08-01",
+      "last_date": "2013-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2013-14",
+      "file": "2013-14.json",
+      "grid_file": "2013-14_grid.geojson",
+      "first_date": "2013-08-01",
+      "last_date": "2014-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2014-15",
+      "file": "2014-15.json",
+      "grid_file": "2014-15_grid.geojson",
+      "first_date": "2014-08-01",
+      "last_date": "2015-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2015-16",
+      "file": "2015-16.json",
+      "grid_file": "2015-16_grid.geojson",
+      "first_date": "2015-08-01",
+      "last_date": "2016-07-31",
+      "dates": 366,
+      "cells": 885
+    },
+    {
+      "season": "2016-17",
+      "file": "2016-17.json",
+      "grid_file": "2016-17_grid.geojson",
+      "first_date": "2016-08-01",
+      "last_date": "2017-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
       "season": "2017-18",
       "file": "2017-18.json",
       "grid_file": "2017-18_grid.geojson",
