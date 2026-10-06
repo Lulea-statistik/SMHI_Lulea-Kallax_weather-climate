@@ -65,3 +65,17 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
 .seaice-season-nav button:hover:not(:disabled){background:#eef2f7}
 .seaice-season-nav button:disabled{opacity:.45;cursor:default}
 @media(max-width:640px){.seaice-season-control-row{align-items:flex-start;flex-direction:column;gap:4px}}
+
+/* Lightning map: narrow/tall left column with annual chart aligned on the right. */
+#page-lightning .lightning-top-grid{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:16px;align-items:stretch}
+#page-lightning .lightning-top-grid>.chart-card{min-height:620px}
+#page-lightning .lightning-map-card{display:flex;flex-direction:column}
+#page-lightning .lightning-map-tools{flex-wrap:wrap;grid-column:auto;margin-bottom:8px}
+#page-lightning .lightning-map{height:500px;flex:1;min-height:500px}
+#page-lightning .lightning-primary-chart canvas{max-height:500px;height:500px!important}
+@media(max-width:1049px){
+  #page-lightning .lightning-top-grid{grid-template-columns:1fr}
+  #page-lightning .lightning-top-grid>.chart-card{min-height:0}
+  #page-lightning .lightning-map{height:520px;min-height:520px}
+  #page-lightning .lightning-primary-chart canvas{height:auto!important;max-height:300px}
+}
