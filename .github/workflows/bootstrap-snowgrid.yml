@@ -12,11 +12,11 @@ on:
       start_year:
         description: "Första snösäsongens startår"
         required: true
-        default: "2000"
+        default: "1990"
       end_year:
         description: "Sista snösäsongens startår"
         required: true
-        default: "2009"
+        default: "1999"
 
 permissions:
   contents: write
@@ -53,8 +53,8 @@ jobs:
 
       - name: Build GridClim snow layer
         env:
-          SNOWGRID_START_YEAR: ${{ github.event.inputs.start_year || '2000' }}
-          SNOWGRID_END_YEAR: ${{ github.event.inputs.end_year || '2009' }}
+          SNOWGRID_START_YEAR: ${{ github.event.inputs.start_year || '1990' }}
+          SNOWGRID_END_YEAR: ${{ github.event.inputs.end_year || '1999' }}
           CPL_VSIL_CURL_ALLOWED_EXTENSIONS: ".nc"
           GDAL_HTTP_MULTIRANGE: "YES"
         run: python scripts/fetch_snowgrid.py
