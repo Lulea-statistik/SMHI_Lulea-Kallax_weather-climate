@@ -1,0 +1,1837 @@
+{
+  "target": "2018-01-15",
+  "trace": [
+    {
+      "url": "https://opendata-download-grid-archive.smhi.se/feed/6",
+      "links": [
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6",
+          "rel": "self",
+          "type": "application/atom+xml",
+          "title": "Detta dokument"
+        },
+        {
+          "href": "https://opendata-catalog.smhi.se/md/24cc102f-e584-4f5f-96bc-7f26d122cacf",
+          "rel": "describedby",
+          "type": "application/vnd.iso.19139+xml",
+          "title": ""
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2014",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2014"
+        },
+        {
+          "href": "https://opendata-catalog.smhi.se/md/70c69e3f-22b0-4d4f-9976-a4479428de24",
+          "rel": "describedby",
+          "type": "application/vnd.iso.19139+xml",
+          "title": ""
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2015",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2015"
+        },
+        {
+          "href": "https://opendata-catalog.smhi.se/md/70c69e3f-22b0-4d4f-9976-a4479428de24",
+          "rel": "describedby",
+          "type": "application/vnd.iso.19139+xml",
+          "title": ""
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2016",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2016"
+        },
+        {
+          "href": "https://opendata-catalog.smhi.se/md/70c69e3f-22b0-4d4f-9976-a4479428de24",
+          "rel": "describedby",
+          "type": "application/vnd.iso.19139+xml",
+          "title": ""
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2017",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2017"
+        },
+        {
+          "href": "https://opendata-catalog.smhi.se/md/70c69e3f-22b0-4d4f-9976-a4479428de24",
+          "rel": "describedby",
+          "type": "application/vnd.iso.19139+xml",
+          "title": ""
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018"
+        },
+        {
+          "href": "https://opendata-catalog.smhi.se/md/70c69e3f-22b0-4d4f-9976-a4479428de24",
+          "rel": "describedby",
+          "type": "application/vnd.iso.19139+xml",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "url": "https://opendata-download-grid-archive.smhi.se/feed/6/2018",
+      "links": [
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018",
+          "rel": "self",
+          "type": "application/atom+xml",
+          "title": "Detta dokument"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/02",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-02"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/03",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-03"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/04",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-04"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/05",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-05"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/06",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-06"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/07",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-07"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/08",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-08"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/09",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-09"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/10",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-10"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/11",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-11"
+        }
+      ]
+    },
+    {
+      "url": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01",
+      "links": [
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01",
+          "rel": "self",
+          "type": "application/atom+xml",
+          "title": "Detta dokument"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/01",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-01"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/02",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-02"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/03",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-03"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/04",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-04"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/05",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-05"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/06",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-06"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/07",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-07"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/08",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-08"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/09",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-09"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/10",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-10"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/11",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-11"
+        }
+      ]
+    },
+    {
+      "url": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/15",
+      "links": [
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/15",
+          "rel": "self",
+          "type": "application/atom+xml",
+          "title": "Detta dokument"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150000+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 00:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150100+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 01:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150200+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 02:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150300+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 03:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150400+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 04:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150500+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 05:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150600+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 06:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150700+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 07:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150800+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 08:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150900+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 09:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151000+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 10:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151100+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 11:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151200+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 12:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151300+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 13:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151400+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 14:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151500+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 15:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151600+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 16:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151700+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 17:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151800+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 18:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151900+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 19:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801152000+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 20:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801152100+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 21:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801152200+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 22:00 UTC"
+        },
+        {
+          "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801152300+000H00M",
+          "rel": "enclosure",
+          "type": "application/atom+xml",
+          "title": " 2018-01-15 23:00 UTC"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/15",
+      "rel": "self",
+      "type": "application/atom+xml",
+      "title": "Detta dokument"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150000+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 00:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150100+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 01:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150200+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 02:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150300+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 03:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150400+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 04:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150500+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 05:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150600+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 06:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150700+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 07:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150800+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 08:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150900+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 09:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151000+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 10:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151100+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 11:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151200+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 12:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151300+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 13:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151400+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 14:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151500+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 15:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151600+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 16:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151700+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 17:00 UTC"
+    },
+    {
+      "href": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801151800+000H00M",
+      "rel": "enclosure",
+      "type": "application/atom+xml",
+      "title": " 2018-01-15 18:00 UTC"
+    }
+  ],
+  "inspected": [
+    {
+      "url": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/15",
+      "status": 200,
+      "content_type": "application/xml",
+      "content_length": "979",
+      "bytes": 12617,
+      "magic_hex": "3c3f786d6c2076657273696f6e3d2231",
+      "magic_ascii": "<?xml version=\"1",
+      "final_url": "https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/15",
+      "datasets": [],
+      "not_grib_preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><feed xmlns=\"http://www.w3.org/2005/Atom\" xmlns:ns0=\"http://www.georss.org/georss/11\"><title>Meteorologisk analysmodell MESAN (AROME): Välj tidpunkt</title><subtitle></subtitle><link rel=\"self\" type=\"application/atom+xml\" title=\"Detta dokument\" href=\"https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/15\" hreflang=\"sv\"/><id>https://opendata-download-grid-archive.smhi.se/feed/6/2018/01/15</id><rights>Copyright (c) 2016, SMHI; all rights reserved</r"
+    },
+    {
+      "url": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150000+000H00M",
+      "status": 200,
+      "content_type": null,
+      "content_length": "18406200",
+      "bytes": 18406200,
+      "magic_hex": "475249420b3bf80100001c8152a0ff80",
+      "magic_ascii": "GRIB.;......R...",
+      "final_url": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150000+000H00M",
+      "datasets": [],
+      "driver": "GRIB",
+      "crs": "GEOGCRS[\"Coordinate System imported from GRIB file\",BASEGEOGCRS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",ELLIPSOID[\"Sphere\",6367470,0,LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]],PRIMEM[\"Greenwich\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],DERIVINGCONVERSION[\"Pole rotation (GRIB convention)\",METHOD[\"Pole rotation (GRIB convention)\"],PARAMETER[\"Latitude of the southern pole (GRIB convention)\",-30,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],PARAMETER[\"Longitude of the southern pole (GRIB convention)\",15,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],PARAMETER[\"Axis rotation (GRIB convention)\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],CS[ellipsoidal,2],AXIS[\"latitude\",north,ORDER[1],ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],AXIS[\"longitude\",east,ORDER[2],ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]]",
+      "shape": [
+        779,
+        630
+      ],
+      "count": 25,
+      "tags": {},
+      "subdatasets": [],
+      "bands": [
+        {
+          "band": 1,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Temperature [C]",
+            "GRIB_ELEMENT": "TMP",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 2,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Virtual temperature [C]",
+            "GRIB_ELEMENT": "VTMP",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 3,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "Wind speed [m/s]",
+            "GRIB_ELEMENT": "WIND",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 4,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "u-component of wind [m/s]",
+            "GRIB_ELEMENT": "UGRD",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 5,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "v-component of wind [m/s]",
+            "GRIB_ELEMENT": "VGRD",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 6,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Relative humidity [%]",
+            "GRIB_ELEMENT": "RH",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 7,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var165 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 8,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var167 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 9,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var175 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 10,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var177 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 11,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var172 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 12,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var174 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 13,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m]",
+            "GRIB_COMMENT": "Visibility [m]",
+            "GRIB_ELEMENT": "VIS",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 14,
+          "description": "0[m] GPML (Specified altitude above MSL)",
+          "tags": {
+            "GRIB_UNIT": "[Pa]",
+            "GRIB_COMMENT": "Pressure [Pa]",
+            "GRIB_ELEMENT": "PRES",
+            "GRIB_SHORT_NAME": "0-GPML",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 15,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Total cloud cover [%]",
+            "GRIB_ELEMENT": "TCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 16,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Best lifted index (to 500 hPa) [C]",
+            "GRIB_ELEMENT": "BLI",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 17,
+          "description": "0[m] GPML (Specified altitude above MSL)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Convective snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOC",
+            "GRIB_SHORT_NAME": "0-GPML",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 18,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Convective snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 19,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Large scale snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOL",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 20,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Low cloud cover [%]",
+            "GRIB_ELEMENT": "LCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 21,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var145 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 22,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var146 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 23,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Medium cloud cover [%]",
+            "GRIB_ELEMENT": "MCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 24,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "High cloud cover [%]",
+            "GRIB_ELEMENT": "HCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 25,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var144 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515974400",
+            "GRIB_VALID_TIME": "1515974400",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        }
+      ]
+    },
+    {
+      "url": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150100+000H00M",
+      "status": 200,
+      "content_type": null,
+      "content_length": "16197456",
+      "bytes": 16197456,
+      "magic_hex": "475249420b3bf80100001c8152a0ff80",
+      "magic_ascii": "GRIB.;......R...",
+      "final_url": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150100+000H00M",
+      "datasets": [],
+      "driver": "GRIB",
+      "crs": "GEOGCRS[\"Coordinate System imported from GRIB file\",BASEGEOGCRS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",ELLIPSOID[\"Sphere\",6367470,0,LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]],PRIMEM[\"Greenwich\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],DERIVINGCONVERSION[\"Pole rotation (GRIB convention)\",METHOD[\"Pole rotation (GRIB convention)\"],PARAMETER[\"Latitude of the southern pole (GRIB convention)\",-30,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],PARAMETER[\"Longitude of the southern pole (GRIB convention)\",15,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],PARAMETER[\"Axis rotation (GRIB convention)\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],CS[ellipsoidal,2],AXIS[\"latitude\",north,ORDER[1],ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],AXIS[\"longitude\",east,ORDER[2],ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]]",
+      "shape": [
+        779,
+        630
+      ],
+      "count": 22,
+      "tags": {},
+      "subdatasets": [],
+      "bands": [
+        {
+          "band": 1,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Temperature [C]",
+            "GRIB_ELEMENT": "TMP",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 2,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Virtual temperature [C]",
+            "GRIB_ELEMENT": "VTMP",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 3,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "Wind speed [m/s]",
+            "GRIB_ELEMENT": "WIND",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 4,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "u-component of wind [m/s]",
+            "GRIB_ELEMENT": "UGRD",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 5,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "v-component of wind [m/s]",
+            "GRIB_ELEMENT": "VGRD",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 6,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Relative humidity [%]",
+            "GRIB_ELEMENT": "RH",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 7,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var165 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 8,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var167 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 9,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var175 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 10,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m]",
+            "GRIB_COMMENT": "Visibility [m]",
+            "GRIB_ELEMENT": "VIS",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 11,
+          "description": "0[m] GPML (Specified altitude above MSL)",
+          "tags": {
+            "GRIB_UNIT": "[Pa]",
+            "GRIB_COMMENT": "Pressure [Pa]",
+            "GRIB_ELEMENT": "PRES",
+            "GRIB_SHORT_NAME": "0-GPML",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 12,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Total cloud cover [%]",
+            "GRIB_ELEMENT": "TCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 13,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Best lifted index (to 500 hPa) [C]",
+            "GRIB_ELEMENT": "BLI",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 14,
+          "description": "0[m] GPML (Specified altitude above MSL)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Convective snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOC",
+            "GRIB_SHORT_NAME": "0-GPML",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 15,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Convective snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 16,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Large scale snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOL",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 17,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Low cloud cover [%]",
+            "GRIB_ELEMENT": "LCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 18,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var145 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 19,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var146 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 20,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Medium cloud cover [%]",
+            "GRIB_ELEMENT": "MCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 21,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "High cloud cover [%]",
+            "GRIB_ELEMENT": "HCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 22,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var144 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515978000",
+            "GRIB_VALID_TIME": "1515978000",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        }
+      ]
+    },
+    {
+      "url": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150200+000H00M",
+      "status": 200,
+      "content_type": null,
+      "content_length": "16197456",
+      "bytes": 16197456,
+      "magic_hex": "475249420b3bf80100001c8152a0ff80",
+      "magic_ascii": "GRIB.;......R...",
+      "final_url": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150200+000H00M",
+      "datasets": [],
+      "driver": "GRIB",
+      "crs": "GEOGCRS[\"Coordinate System imported from GRIB file\",BASEGEOGCRS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",ELLIPSOID[\"Sphere\",6367470,0,LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]],PRIMEM[\"Greenwich\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],DERIVINGCONVERSION[\"Pole rotation (GRIB convention)\",METHOD[\"Pole rotation (GRIB convention)\"],PARAMETER[\"Latitude of the southern pole (GRIB convention)\",-30,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],PARAMETER[\"Longitude of the southern pole (GRIB convention)\",15,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],PARAMETER[\"Axis rotation (GRIB convention)\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],CS[ellipsoidal,2],AXIS[\"latitude\",north,ORDER[1],ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],AXIS[\"longitude\",east,ORDER[2],ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]]",
+      "shape": [
+        779,
+        630
+      ],
+      "count": 22,
+      "tags": {},
+      "subdatasets": [],
+      "bands": [
+        {
+          "band": 1,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Temperature [C]",
+            "GRIB_ELEMENT": "TMP",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 2,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Virtual temperature [C]",
+            "GRIB_ELEMENT": "VTMP",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 3,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "Wind speed [m/s]",
+            "GRIB_ELEMENT": "WIND",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 4,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "u-component of wind [m/s]",
+            "GRIB_ELEMENT": "UGRD",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 5,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "v-component of wind [m/s]",
+            "GRIB_ELEMENT": "VGRD",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 6,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Relative humidity [%]",
+            "GRIB_ELEMENT": "RH",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 7,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var165 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 8,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var167 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 9,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var175 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 10,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m]",
+            "GRIB_COMMENT": "Visibility [m]",
+            "GRIB_ELEMENT": "VIS",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 11,
+          "description": "0[m] GPML (Specified altitude above MSL)",
+          "tags": {
+            "GRIB_UNIT": "[Pa]",
+            "GRIB_COMMENT": "Pressure [Pa]",
+            "GRIB_ELEMENT": "PRES",
+            "GRIB_SHORT_NAME": "0-GPML",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 12,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Total cloud cover [%]",
+            "GRIB_ELEMENT": "TCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 13,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Best lifted index (to 500 hPa) [C]",
+            "GRIB_ELEMENT": "BLI",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 14,
+          "description": "0[m] GPML (Specified altitude above MSL)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Convective snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOC",
+            "GRIB_SHORT_NAME": "0-GPML",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 15,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Convective snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 16,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Large scale snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOL",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 17,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Low cloud cover [%]",
+            "GRIB_ELEMENT": "LCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 18,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var145 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 19,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var146 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 20,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Medium cloud cover [%]",
+            "GRIB_ELEMENT": "MCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 21,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "High cloud cover [%]",
+            "GRIB_ELEMENT": "HCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 22,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var144 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515981600",
+            "GRIB_VALID_TIME": "1515981600",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        }
+      ]
+    },
+    {
+      "url": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150300+000H00M",
+      "status": 200,
+      "content_type": null,
+      "content_length": "18406200",
+      "bytes": 18406200,
+      "magic_hex": "475249420b3bf80100001c8152a0ff80",
+      "magic_ascii": "GRIB.;......R...",
+      "final_url": "https://opendata-download-grid-archive.smhi.se/data/6/201801/MESAN_201801150300+000H00M",
+      "datasets": [],
+      "driver": "GRIB",
+      "crs": "GEOGCRS[\"Coordinate System imported from GRIB file\",BASEGEOGCRS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",ELLIPSOID[\"Sphere\",6367470,0,LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]],PRIMEM[\"Greenwich\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],DERIVINGCONVERSION[\"Pole rotation (GRIB convention)\",METHOD[\"Pole rotation (GRIB convention)\"],PARAMETER[\"Latitude of the southern pole (GRIB convention)\",-30,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],PARAMETER[\"Longitude of the southern pole (GRIB convention)\",15,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],PARAMETER[\"Axis rotation (GRIB convention)\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],CS[ellipsoidal,2],AXIS[\"latitude\",north,ORDER[1],ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]],AXIS[\"longitude\",east,ORDER[2],ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]]",
+      "shape": [
+        779,
+        630
+      ],
+      "count": 25,
+      "tags": {},
+      "subdatasets": [],
+      "bands": [
+        {
+          "band": 1,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Temperature [C]",
+            "GRIB_ELEMENT": "TMP",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 2,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Virtual temperature [C]",
+            "GRIB_ELEMENT": "VTMP",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 3,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "Wind speed [m/s]",
+            "GRIB_ELEMENT": "WIND",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 4,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "u-component of wind [m/s]",
+            "GRIB_ELEMENT": "UGRD",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 5,
+          "description": "10[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m/s]",
+            "GRIB_COMMENT": "v-component of wind [m/s]",
+            "GRIB_ELEMENT": "VGRD",
+            "GRIB_SHORT_NAME": "10-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 6,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Relative humidity [%]",
+            "GRIB_ELEMENT": "RH",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 7,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var165 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 8,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var167 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 9,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var175 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 10,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var177 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 11,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var172 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 12,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var174 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 13,
+          "description": "2[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[m]",
+            "GRIB_COMMENT": "Visibility [m]",
+            "GRIB_ELEMENT": "VIS",
+            "GRIB_SHORT_NAME": "2-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 14,
+          "description": "0[m] GPML (Specified altitude above MSL)",
+          "tags": {
+            "GRIB_UNIT": "[Pa]",
+            "GRIB_COMMENT": "Pressure [Pa]",
+            "GRIB_ELEMENT": "PRES",
+            "GRIB_SHORT_NAME": "0-GPML",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 15,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Total cloud cover [%]",
+            "GRIB_ELEMENT": "TCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 16,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[C]",
+            "GRIB_COMMENT": "Best lifted index (to 500 hPa) [C]",
+            "GRIB_ELEMENT": "BLI",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 17,
+          "description": "0[m] GPML (Specified altitude above MSL)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Convective snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOC",
+            "GRIB_SHORT_NAME": "0-GPML",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 18,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Convective snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 19,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[kg/m^2]",
+            "GRIB_COMMENT": "Large scale snow [kg/m^2]",
+            "GRIB_ELEMENT": "SNOL",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 20,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Low cloud cover [%]",
+            "GRIB_ELEMENT": "LCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 21,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var145 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 22,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var146 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 23,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "Medium cloud cover [%]",
+            "GRIB_ELEMENT": "MCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 24,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[%]",
+            "GRIB_COMMENT": "High cloud cover [%]",
+            "GRIB_ELEMENT": "HCDC",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        },
+        {
+          "band": 25,
+          "description": "0[m] HTGL (Specified height level above ground)",
+          "tags": {
+            "GRIB_UNIT": "[-]",
+            "GRIB_COMMENT": "undefined [-]",
+            "GRIB_ELEMENT": "var144 of table 129 of center 82",
+            "GRIB_SHORT_NAME": "0-HTGL",
+            "GRIB_REF_TIME": "1515985200",
+            "GRIB_VALID_TIME": "1515985200",
+            "GRIB_FORECAST_SECONDS": "0"
+          }
+        }
+      ]
+    }
+  ]
+}
