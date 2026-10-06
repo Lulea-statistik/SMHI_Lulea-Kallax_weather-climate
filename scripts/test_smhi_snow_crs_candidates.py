@@ -58,6 +58,9 @@ def main():
         prj=shp.with_suffix(".prj").read_text(encoding="utf-8",errors="replace")
         src=CRS.from_wkt(prj)
         src_epsg=src.to_epsg()
+        # ESRI WKT may not round-trip through to_epsg(), even when the WKT
+        # explicitly carries an EPSG authority code. Capture that authority.
+        src_authority=src.to_authority()
         results=[]
 
         for crs in CANDS:
@@ -81,11 +84,18 @@ def main():
                 vals=dist[rr,cc]
                 return float(np.median(vals)+0.3*np.percentile(vals,80))
 
+            # Offset terms are in pixel space after multiplying very large
+            # projected coordinates, so they may be hundreds or thousands of
+            # pixels in magnitude. Centre bounds on the analytically derived p0.
+            sxlo,sxhi=sorted((p0[0]*0.6,p0[0]*1.5))
+            sylo,syhi=sorted((p0[2]*0.6,p0[2]*1.5))
+            oxspan=max(500.0,abs(p0[1])*1.5)
+            oyspan=max(500.0,abs(p0[3])*1.5)
             bounds=[
-                (p0[0]*0.6,p0[0]*1.5),
-                (-200,200),
-                (p0[2]*1.5,p0[2]*0.6) if p0[2]<0 else (p0[2]*0.6,p0[2]*1.5),
-                (-200,h+200)
+                (sxlo,sxhi),
+                (p0[1]-oxspan,p0[1]+oxspan),
+                (sylo,syhi),
+                (p0[3]-oyspan,p0[3]+oyspan)
             ]
             de=differential_evolution(obj,bounds,seed=42,popsize=10,maxiter=80,polish=False)
             res=minimize(obj,de.x,method="Nelder-Mead",options={"maxiter":1500})
@@ -113,6 +123,8 @@ def main():
         report={
             "source_shapefile":shp.name,
             "source_prj_epsg_verified":src_epsg,
+            "source_prj_authority":list(src_authority) if src_authority else None,
+            "source_prj_explicit_epsg3006":'AUTHORITY["EPSG",3006]' in prj,
             "source_prj_wkt_prefix":prj[:500],
             "image_size":[w,h],
             "model":"candidate CRS + independent x/y scale and offset only; no rotation/shear/polynomial",
