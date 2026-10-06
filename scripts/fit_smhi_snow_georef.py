@@ -88,9 +88,33 @@ def main():
     dist=distance_transform_edt(~mask)
 
     with tempfile.TemporaryDirectory() as td:
-        z=zipfile.ZipFile(io.BytesIO(download(SCB)))
+        raw=download(SCB)
+        z=zipfile.ZipFile(io.BytesIO(raw))
         z.extractall(td)
-        (score,n,p,fields),scored=pick_county_shp(Path(td))
+
+        # SCB packages may contain nested ZIP archives. Expand those too.
+        root=Path(td)
+        expanded=True
+        while expanded:
+            expanded=False
+            for zp in list(root.rglob("*.zip")):
+                marker=zp.with_suffix(zp.suffix+".expanded")
+                if marker.exists():
+                    continue
+                try:
+                    with zipfile.ZipFile(zp) as nz:
+                        dest=zp.parent/(zp.stem+"_expanded")
+                        dest.mkdir(exist_ok=True)
+                        nz.extractall(dest)
+                    marker.write_text("ok",encoding="utf-8")
+                    expanded=True
+                except zipfile.BadZipFile:
+                    marker.write_text("bad",encoding="utf-8")
+
+        all_files=[str(p.relative_to(root)) for p in root.rglob("*") if p.is_file()]
+        print(json.dumps({"scb_archive_files":all_files[:400]},ensure_ascii=False,indent=2))
+
+        (score,n,p,fields),scored=pick_county_shp(root)
         sf=shapefile.Reader(str(p))
         pts, county_info=sample_shape_boundaries(sf)
 
