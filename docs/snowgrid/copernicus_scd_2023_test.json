@@ -1,0 +1,6265 @@
+{
+  "product": "Copernicus HR-WSI SP_S2 Snow Cover Duration",
+  "hydrological_year": "2023-09-01–2024-08-31",
+  "source_resolution_m": 20,
+  "target_grid_km": 2.5,
+  "aggregation": "mean valid SCD days per existing Lulea grid cell",
+  "tiles": [
+    {
+      "tile": "34WET",
+      "key": "SP_S2/34WET/2023/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WET_20230901P1Y_S2_V100_SCD.tif",
+      "crs": "EPSG:32634",
+      "shape": [
+        5490,
+        5490
+      ],
+      "dtype": "uint16",
+      "nodata": 65535.0,
+      "tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "band_tags": {},
+      "valid_pixels": 3115379,
+      "valid_min": 0.0,
+      "valid_mean": 184.5,
+      "valid_max": 266.0,
+      "excluded_values_sample": [
+        420
+      ]
+    },
+    {
+      "tile": "34WEU",
+      "key": "SP_S2/34WEU/2023/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100/CLMS_WSI_SP_020m_T34WEU_20230901P1Y_S2_V100_SCD.tif",
+      "crs": "EPSG:32634",
+      "shape": [
+        5490,
+        5490
+      ],
+      "dtype": "uint16",
+      "nodata": 65535.0,
+      "tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "band_tags": {},
+      "valid_pixels": 2734527,
+      "valid_min": 15.0,
+      "valid_mean": 167.62,
+      "valid_max": 225.0,
+      "excluded_values_sample": [
+        420
+      ]
+    }
+  ],
+  "classified_cells": 577,
+  "class_counts": {
+    "25+ veckor": 447,
+    "21–24 veckor": 127,
+    "17–20 veckor": 3
+  },
+  "class_pct": {
+    "0–4 veckor": 0.0,
+    "5–8 veckor": 0.0,
+    "9–12 veckor": 0.0,
+    "13–16 veckor": 0.0,
+    "17–20 veckor": 0.5,
+    "21–24 veckor": 22.0,
+    "25+ veckor": 77.5
+  },
+  "cells": [
+    {
+      "cell_id": 0,
+      "mean_snow_cover_days": 216.3,
+      "weeks": 30.9,
+      "class": "25+ veckor",
+      "pixels": 1154
+    },
+    {
+      "cell_id": 1,
+      "mean_snow_cover_days": 215.8,
+      "weeks": 30.8,
+      "class": "25+ veckor",
+      "pixels": 2397
+    },
+    {
+      "cell_id": 2,
+      "mean_snow_cover_days": 213.7,
+      "weeks": 30.5,
+      "class": "25+ veckor",
+      "pixels": 334
+    },
+    {
+      "cell_id": 3,
+      "mean_snow_cover_days": 212.1,
+      "weeks": 30.3,
+      "class": "25+ veckor",
+      "pixels": 13456
+    },
+    {
+      "cell_id": 4,
+      "mean_snow_cover_days": 214.1,
+      "weeks": 30.6,
+      "class": "25+ veckor",
+      "pixels": 13114
+    },
+    {
+      "cell_id": 5,
+      "mean_snow_cover_days": 213.7,
+      "weeks": 30.5,
+      "class": "25+ veckor",
+      "pixels": 509
+    },
+    {
+      "cell_id": 6,
+      "mean_snow_cover_days": 212.8,
+      "weeks": 30.4,
+      "class": "25+ veckor",
+      "pixels": 6536
+    },
+    {
+      "cell_id": 7,
+      "mean_snow_cover_days": 205.9,
+      "weeks": 29.4,
+      "class": "25+ veckor",
+      "pixels": 15557
+    },
+    {
+      "cell_id": 8,
+      "mean_snow_cover_days": 213.4,
+      "weeks": 30.5,
+      "class": "25+ veckor",
+      "pixels": 15654
+    },
+    {
+      "cell_id": 9,
+      "mean_snow_cover_days": 212.7,
+      "weeks": 30.4,
+      "class": "25+ veckor",
+      "pixels": 8647
+    },
+    {
+      "cell_id": 10,
+      "mean_snow_cover_days": 196.7,
+      "weeks": 28.1,
+      "class": "25+ veckor",
+      "pixels": 8099
+    },
+    {
+      "cell_id": 11,
+      "mean_snow_cover_days": 198.9,
+      "weeks": 28.4,
+      "class": "25+ veckor",
+      "pixels": 15581
+    },
+    {
+      "cell_id": 12,
+      "mean_snow_cover_days": 203.8,
+      "weeks": 29.1,
+      "class": "25+ veckor",
+      "pixels": 15002
+    },
+    {
+      "cell_id": 13,
+      "mean_snow_cover_days": 211.4,
+      "weeks": 30.2,
+      "class": "25+ veckor",
+      "pixels": 15539
+    },
+    {
+      "cell_id": 14,
+      "mean_snow_cover_days": 214.5,
+      "weeks": 30.6,
+      "class": "25+ veckor",
+      "pixels": 3796
+    },
+    {
+      "cell_id": 15,
+      "mean_snow_cover_days": 195.8,
+      "weeks": 28.0,
+      "class": "25+ veckor",
+      "pixels": 4285
+    },
+    {
+      "cell_id": 16,
+      "mean_snow_cover_days": 188.6,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 15235
+    },
+    {
+      "cell_id": 17,
+      "mean_snow_cover_days": 186.2,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 15081
+    },
+    {
+      "cell_id": 18,
+      "mean_snow_cover_days": 179.9,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 15664
+    },
+    {
+      "cell_id": 19,
+      "mean_snow_cover_days": 191.5,
+      "weeks": 27.4,
+      "class": "25+ veckor",
+      "pixels": 13525
+    },
+    {
+      "cell_id": 20,
+      "mean_snow_cover_days": 187.0,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 713
+    },
+    {
+      "cell_id": 21,
+      "mean_snow_cover_days": 179.5,
+      "weeks": 25.6,
+      "class": "25+ veckor",
+      "pixels": 3442
+    },
+    {
+      "cell_id": 22,
+      "mean_snow_cover_days": 183.9,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 15101
+    },
+    {
+      "cell_id": 23,
+      "mean_snow_cover_days": 184.4,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 15669
+    },
+    {
+      "cell_id": 24,
+      "mean_snow_cover_days": 180.2,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 15078
+    },
+    {
+      "cell_id": 25,
+      "mean_snow_cover_days": 185.6,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 14935
+    },
+    {
+      "cell_id": 26,
+      "mean_snow_cover_days": 186.0,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 8676
+    },
+    {
+      "cell_id": 27,
+      "mean_snow_cover_days": 172.0,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 1184
+    },
+    {
+      "cell_id": 28,
+      "mean_snow_cover_days": 179.8,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 10944
+    },
+    {
+      "cell_id": 29,
+      "mean_snow_cover_days": 191.8,
+      "weeks": 27.4,
+      "class": "25+ veckor",
+      "pixels": 14397
+    },
+    {
+      "cell_id": 30,
+      "mean_snow_cover_days": 181.2,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 14959
+    },
+    {
+      "cell_id": 31,
+      "mean_snow_cover_days": 183.1,
+      "weeks": 26.2,
+      "class": "25+ veckor",
+      "pixels": 15602
+    },
+    {
+      "cell_id": 32,
+      "mean_snow_cover_days": 183.9,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 13201
+    },
+    {
+      "cell_id": 33,
+      "mean_snow_cover_days": 159.4,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 4385
+    },
+    {
+      "cell_id": 34,
+      "mean_snow_cover_days": 172.3,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 4015
+    },
+    {
+      "cell_id": 35,
+      "mean_snow_cover_days": 190.7,
+      "weeks": 27.2,
+      "class": "25+ veckor",
+      "pixels": 7888
+    },
+    {
+      "cell_id": 36,
+      "mean_snow_cover_days": 182.2,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 13880
+    },
+    {
+      "cell_id": 37,
+      "mean_snow_cover_days": 193.9,
+      "weeks": 27.7,
+      "class": "25+ veckor",
+      "pixels": 15667
+    },
+    {
+      "cell_id": 38,
+      "mean_snow_cover_days": 190.0,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 15329
+    },
+    {
+      "cell_id": 39,
+      "mean_snow_cover_days": 182.4,
+      "weeks": 26.1,
+      "class": "25+ veckor",
+      "pixels": 13645
+    },
+    {
+      "cell_id": 40,
+      "mean_snow_cover_days": 174.1,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 8945
+    },
+    {
+      "cell_id": 41,
+      "mean_snow_cover_days": 165.5,
+      "weeks": 23.6,
+      "class": "21–24 veckor",
+      "pixels": 8094
+    },
+    {
+      "cell_id": 42,
+      "mean_snow_cover_days": 167.6,
+      "weeks": 23.9,
+      "class": "21–24 veckor",
+      "pixels": 730
+    },
+    {
+      "cell_id": 43,
+      "mean_snow_cover_days": 174.1,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 1515
+    },
+    {
+      "cell_id": 44,
+      "mean_snow_cover_days": 184.3,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 8473
+    },
+    {
+      "cell_id": 45,
+      "mean_snow_cover_days": 186.9,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 15673
+    },
+    {
+      "cell_id": 46,
+      "mean_snow_cover_days": 187.8,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 15600
+    },
+    {
+      "cell_id": 47,
+      "mean_snow_cover_days": 180.3,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 14847
+    },
+    {
+      "cell_id": 48,
+      "mean_snow_cover_days": 172.2,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 15463
+    },
+    {
+      "cell_id": 49,
+      "mean_snow_cover_days": 172.4,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 14778
+    },
+    {
+      "cell_id": 50,
+      "mean_snow_cover_days": 203.9,
+      "weeks": 29.1,
+      "class": "25+ veckor",
+      "pixels": 8986
+    },
+    {
+      "cell_id": 51,
+      "mean_snow_cover_days": 180.5,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 5301
+    },
+    {
+      "cell_id": 52,
+      "mean_snow_cover_days": 186.0,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 14674
+    },
+    {
+      "cell_id": 53,
+      "mean_snow_cover_days": 180.0,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 15623
+    },
+    {
+      "cell_id": 54,
+      "mean_snow_cover_days": 168.5,
+      "weeks": 24.1,
+      "class": null,
+      "pixels": 15420
+    },
+    {
+      "cell_id": 55,
+      "mean_snow_cover_days": 173.4,
+      "weeks": 24.8,
+      "class": "25+ veckor",
+      "pixels": 15614
+    },
+    {
+      "cell_id": 56,
+      "mean_snow_cover_days": 188.3,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 15504
+    },
+    {
+      "cell_id": 57,
+      "mean_snow_cover_days": 191.5,
+      "weeks": 27.4,
+      "class": "25+ veckor",
+      "pixels": 15515
+    },
+    {
+      "cell_id": 58,
+      "mean_snow_cover_days": 187.5,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 2405
+    },
+    {
+      "cell_id": 59,
+      "mean_snow_cover_days": 169.8,
+      "weeks": 24.3,
+      "class": "25+ veckor",
+      "pixels": 3083
+    },
+    {
+      "cell_id": 60,
+      "mean_snow_cover_days": 180.2,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 13534
+    },
+    {
+      "cell_id": 61,
+      "mean_snow_cover_days": 180.1,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 15535
+    },
+    {
+      "cell_id": 62,
+      "mean_snow_cover_days": 159.7,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 15663
+    },
+    {
+      "cell_id": 63,
+      "mean_snow_cover_days": 161.0,
+      "weeks": 23.0,
+      "class": "21–24 veckor",
+      "pixels": 15197
+    },
+    {
+      "cell_id": 64,
+      "mean_snow_cover_days": 181.3,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 15585
+    },
+    {
+      "cell_id": 65,
+      "mean_snow_cover_days": 186.0,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 15549
+    },
+    {
+      "cell_id": 66,
+      "mean_snow_cover_days": 189.8,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 15306
+    },
+    {
+      "cell_id": 67,
+      "mean_snow_cover_days": 189.9,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 11332
+    },
+    {
+      "cell_id": 68,
+      "mean_snow_cover_days": 168.7,
+      "weeks": 24.1,
+      "class": null,
+      "pixels": 1768
+    },
+    {
+      "cell_id": 69,
+      "mean_snow_cover_days": 170.0,
+      "weeks": 24.3,
+      "class": "25+ veckor",
+      "pixels": 13613
+    },
+    {
+      "cell_id": 70,
+      "mean_snow_cover_days": 161.6,
+      "weeks": 23.1,
+      "class": "21–24 veckor",
+      "pixels": 14674
+    },
+    {
+      "cell_id": 71,
+      "mean_snow_cover_days": 153.5,
+      "weeks": 21.9,
+      "class": "21–24 veckor",
+      "pixels": 14786
+    },
+    {
+      "cell_id": 72,
+      "mean_snow_cover_days": 153.2,
+      "weeks": 21.9,
+      "class": "21–24 veckor",
+      "pixels": 15662
+    },
+    {
+      "cell_id": 73,
+      "mean_snow_cover_days": 174.2,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 15649
+    },
+    {
+      "cell_id": 74,
+      "mean_snow_cover_days": 186.8,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 15659
+    },
+    {
+      "cell_id": 75,
+      "mean_snow_cover_days": 186.5,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 15673
+    },
+    {
+      "cell_id": 76,
+      "mean_snow_cover_days": 191.1,
+      "weeks": 27.3,
+      "class": "25+ veckor",
+      "pixels": 15669
+    },
+    {
+      "cell_id": 77,
+      "mean_snow_cover_days": 177.5,
+      "weeks": 25.4,
+      "class": "25+ veckor",
+      "pixels": 15663
+    },
+    {
+      "cell_id": 78,
+      "mean_snow_cover_days": 163.7,
+      "weeks": 23.4,
+      "class": "21–24 veckor",
+      "pixels": 3427
+    },
+    {
+      "cell_id": 79,
+      "mean_snow_cover_days": 149.0,
+      "weeks": 21.3,
+      "class": "21–24 veckor",
+      "pixels": 4414
+    },
+    {
+      "cell_id": 80,
+      "mean_snow_cover_days": 147.1,
+      "weeks": 21.0,
+      "class": "21–24 veckor",
+      "pixels": 14881
+    },
+    {
+      "cell_id": 81,
+      "mean_snow_cover_days": 146.8,
+      "weeks": 21.0,
+      "class": "21–24 veckor",
+      "pixels": 14788
+    },
+    {
+      "cell_id": 82,
+      "mean_snow_cover_days": 158.8,
+      "weeks": 22.7,
+      "class": "21–24 veckor",
+      "pixels": 10774
+    },
+    {
+      "cell_id": 83,
+      "mean_snow_cover_days": 166.8,
+      "weeks": 23.8,
+      "class": "21–24 veckor",
+      "pixels": 14299
+    },
+    {
+      "cell_id": 84,
+      "mean_snow_cover_days": 170.0,
+      "weeks": 24.3,
+      "class": "25+ veckor",
+      "pixels": 15179
+    },
+    {
+      "cell_id": 85,
+      "mean_snow_cover_days": 174.5,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 15619
+    },
+    {
+      "cell_id": 86,
+      "mean_snow_cover_days": 185.5,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 15661
+    },
+    {
+      "cell_id": 87,
+      "mean_snow_cover_days": 187.5,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 15673
+    },
+    {
+      "cell_id": 88,
+      "mean_snow_cover_days": 159.9,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 15675
+    },
+    {
+      "cell_id": 89,
+      "mean_snow_cover_days": 158.8,
+      "weeks": 22.7,
+      "class": "21–24 veckor",
+      "pixels": 11185
+    },
+    {
+      "cell_id": 90,
+      "mean_snow_cover_days": 162.8,
+      "weeks": 23.3,
+      "class": "21–24 veckor",
+      "pixels": 8
+    },
+    {
+      "cell_id": 91,
+      "mean_snow_cover_days": 148.9,
+      "weeks": 21.3,
+      "class": "21–24 veckor",
+      "pixels": 390
+    },
+    {
+      "cell_id": 92,
+      "mean_snow_cover_days": 152.9,
+      "weeks": 21.8,
+      "class": "21–24 veckor",
+      "pixels": 12200
+    },
+    {
+      "cell_id": 93,
+      "mean_snow_cover_days": 146.9,
+      "weeks": 21.0,
+      "class": "21–24 veckor",
+      "pixels": 14531
+    },
+    {
+      "cell_id": 94,
+      "mean_snow_cover_days": 157.3,
+      "weeks": 22.5,
+      "class": "21–24 veckor",
+      "pixels": 12350
+    },
+    {
+      "cell_id": 95,
+      "mean_snow_cover_days": 169.9,
+      "weeks": 24.3,
+      "class": "25+ veckor",
+      "pixels": 15559
+    },
+    {
+      "cell_id": 96,
+      "mean_snow_cover_days": 165.1,
+      "weeks": 23.6,
+      "class": "21–24 veckor",
+      "pixels": 13611
+    },
+    {
+      "cell_id": 97,
+      "mean_snow_cover_days": 169.2,
+      "weeks": 24.2,
+      "class": "25+ veckor",
+      "pixels": 11867
+    },
+    {
+      "cell_id": 98,
+      "mean_snow_cover_days": 177.3,
+      "weeks": 25.3,
+      "class": "25+ veckor",
+      "pixels": 14822
+    },
+    {
+      "cell_id": 99,
+      "mean_snow_cover_days": 184.4,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 15671
+    },
+    {
+      "cell_id": 100,
+      "mean_snow_cover_days": 155.5,
+      "weeks": 22.2,
+      "class": "21–24 veckor",
+      "pixels": 15674
+    },
+    {
+      "cell_id": 101,
+      "mean_snow_cover_days": 155.3,
+      "weeks": 22.2,
+      "class": "21–24 veckor",
+      "pixels": 15596
+    },
+    {
+      "cell_id": 102,
+      "mean_snow_cover_days": 155.6,
+      "weeks": 22.2,
+      "class": "21–24 veckor",
+      "pixels": 15676
+    },
+    {
+      "cell_id": 103,
+      "mean_snow_cover_days": 155.6,
+      "weeks": 22.2,
+      "class": "21–24 veckor",
+      "pixels": 6506
+    },
+    {
+      "cell_id": 104,
+      "mean_snow_cover_days": 151.6,
+      "weeks": 21.7,
+      "class": "21–24 veckor",
+      "pixels": 8346
+    },
+    {
+      "cell_id": 105,
+      "mean_snow_cover_days": 156.2,
+      "weeks": 22.3,
+      "class": "21–24 veckor",
+      "pixels": 15402
+    },
+    {
+      "cell_id": 106,
+      "mean_snow_cover_days": 153.6,
+      "weeks": 21.9,
+      "class": "21–24 veckor",
+      "pixels": 15530
+    },
+    {
+      "cell_id": 107,
+      "mean_snow_cover_days": 158.7,
+      "weeks": 22.7,
+      "class": "21–24 veckor",
+      "pixels": 14841
+    },
+    {
+      "cell_id": 108,
+      "mean_snow_cover_days": 167.6,
+      "weeks": 23.9,
+      "class": "21–24 veckor",
+      "pixels": 14322
+    },
+    {
+      "cell_id": 109,
+      "mean_snow_cover_days": 167.9,
+      "weeks": 24.0,
+      "class": "21–24 veckor",
+      "pixels": 11758
+    },
+    {
+      "cell_id": 110,
+      "mean_snow_cover_days": 159.8,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 14437
+    },
+    {
+      "cell_id": 111,
+      "mean_snow_cover_days": 164.5,
+      "weeks": 23.5,
+      "class": "21–24 veckor",
+      "pixels": 14718
+    },
+    {
+      "cell_id": 112,
+      "mean_snow_cover_days": 161.5,
+      "weeks": 23.1,
+      "class": "21–24 veckor",
+      "pixels": 15485
+    },
+    {
+      "cell_id": 113,
+      "mean_snow_cover_days": 146.3,
+      "weeks": 20.9,
+      "class": "21–24 veckor",
+      "pixels": 15673
+    },
+    {
+      "cell_id": 114,
+      "mean_snow_cover_days": 146.3,
+      "weeks": 20.9,
+      "class": "21–24 veckor",
+      "pixels": 15677
+    },
+    {
+      "cell_id": 115,
+      "mean_snow_cover_days": 149.0,
+      "weeks": 21.3,
+      "class": "21–24 veckor",
+      "pixels": 15247
+    },
+    {
+      "cell_id": 116,
+      "mean_snow_cover_days": 148.2,
+      "weeks": 21.2,
+      "class": "21–24 veckor",
+      "pixels": 14951
+    },
+    {
+      "cell_id": 117,
+      "mean_snow_cover_days": 172.4,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 2498
+    },
+    {
+      "cell_id": 118,
+      "mean_snow_cover_days": 160.0,
+      "weeks": 22.9,
+      "class": "21–24 veckor",
+      "pixels": 10622
+    },
+    {
+      "cell_id": 119,
+      "mean_snow_cover_days": 158.9,
+      "weeks": 22.7,
+      "class": "21–24 veckor",
+      "pixels": 13855
+    },
+    {
+      "cell_id": 120,
+      "mean_snow_cover_days": 161.0,
+      "weeks": 23.0,
+      "class": "21–24 veckor",
+      "pixels": 15404
+    },
+    {
+      "cell_id": 121,
+      "mean_snow_cover_days": 164.6,
+      "weeks": 23.5,
+      "class": "21–24 veckor",
+      "pixels": 15229
+    },
+    {
+      "cell_id": 122,
+      "mean_snow_cover_days": 171.2,
+      "weeks": 24.5,
+      "class": "25+ veckor",
+      "pixels": 14652
+    },
+    {
+      "cell_id": 123,
+      "mean_snow_cover_days": 159.7,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 15617
+    },
+    {
+      "cell_id": 124,
+      "mean_snow_cover_days": 177.6,
+      "weeks": 25.4,
+      "class": "25+ veckor",
+      "pixels": 14386
+    },
+    {
+      "cell_id": 125,
+      "mean_snow_cover_days": 169.3,
+      "weeks": 24.2,
+      "class": "25+ veckor",
+      "pixels": 15364
+    },
+    {
+      "cell_id": 126,
+      "mean_snow_cover_days": 150.7,
+      "weeks": 21.5,
+      "class": "21–24 veckor",
+      "pixels": 15678
+    },
+    {
+      "cell_id": 127,
+      "mean_snow_cover_days": 142.5,
+      "weeks": 20.4,
+      "class": "21–24 veckor",
+      "pixels": 15672
+    },
+    {
+      "cell_id": 128,
+      "mean_snow_cover_days": 143.5,
+      "weeks": 20.5,
+      "class": "21–24 veckor",
+      "pixels": 5376
+    },
+    {
+      "cell_id": 129,
+      "mean_snow_cover_days": 148.7,
+      "weeks": 21.2,
+      "class": "21–24 veckor",
+      "pixels": 15286
+    },
+    {
+      "cell_id": 130,
+      "mean_snow_cover_days": 148.9,
+      "weeks": 21.3,
+      "class": "21–24 veckor",
+      "pixels": 2183
+    },
+    {
+      "cell_id": 131,
+      "mean_snow_cover_days": 197.4,
+      "weeks": 28.2,
+      "class": "25+ veckor",
+      "pixels": 605
+    },
+    {
+      "cell_id": 132,
+      "mean_snow_cover_days": 163.0,
+      "weeks": 23.3,
+      "class": "21–24 veckor",
+      "pixels": 12743
+    },
+    {
+      "cell_id": 133,
+      "mean_snow_cover_days": 152.8,
+      "weeks": 21.8,
+      "class": "21–24 veckor",
+      "pixels": 14745
+    },
+    {
+      "cell_id": 134,
+      "mean_snow_cover_days": 163.3,
+      "weeks": 23.3,
+      "class": "21–24 veckor",
+      "pixels": 12257
+    },
+    {
+      "cell_id": 135,
+      "mean_snow_cover_days": 162.1,
+      "weeks": 23.2,
+      "class": "21–24 veckor",
+      "pixels": 12898
+    },
+    {
+      "cell_id": 136,
+      "mean_snow_cover_days": 153.4,
+      "weeks": 21.9,
+      "class": "21–24 veckor",
+      "pixels": 14845
+    },
+    {
+      "cell_id": 137,
+      "mean_snow_cover_days": 150.8,
+      "weeks": 21.5,
+      "class": "21–24 veckor",
+      "pixels": 10614
+    },
+    {
+      "cell_id": 138,
+      "mean_snow_cover_days": 157.9,
+      "weeks": 22.6,
+      "class": "21–24 veckor",
+      "pixels": 15673
+    },
+    {
+      "cell_id": 139,
+      "mean_snow_cover_days": 148.8,
+      "weeks": 21.3,
+      "class": "21–24 veckor",
+      "pixels": 14056
+    },
+    {
+      "cell_id": 140,
+      "mean_snow_cover_days": 144.5,
+      "weeks": 20.6,
+      "class": "21–24 veckor",
+      "pixels": 13494
+    },
+    {
+      "cell_id": 141,
+      "mean_snow_cover_days": 149.4,
+      "weeks": 21.3,
+      "class": "21–24 veckor",
+      "pixels": 12186
+    },
+    {
+      "cell_id": 142,
+      "mean_snow_cover_days": 151.6,
+      "weeks": 21.7,
+      "class": "21–24 veckor",
+      "pixels": 8863
+    },
+    {
+      "cell_id": 143,
+      "mean_snow_cover_days": 166.5,
+      "weeks": 23.8,
+      "class": "21–24 veckor",
+      "pixels": 2989
+    },
+    {
+      "cell_id": 144,
+      "mean_snow_cover_days": 161.6,
+      "weeks": 23.1,
+      "class": "21–24 veckor",
+      "pixels": 15462
+    },
+    {
+      "cell_id": 145,
+      "mean_snow_cover_days": 165.9,
+      "weeks": 23.7,
+      "class": "21–24 veckor",
+      "pixels": 15663
+    },
+    {
+      "cell_id": 146,
+      "mean_snow_cover_days": 159.6,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 14718
+    },
+    {
+      "cell_id": 147,
+      "mean_snow_cover_days": 162.5,
+      "weeks": 23.2,
+      "class": "21–24 veckor",
+      "pixels": 14099
+    },
+    {
+      "cell_id": 148,
+      "mean_snow_cover_days": 149.7,
+      "weeks": 21.4,
+      "class": "21–24 veckor",
+      "pixels": 14411
+    },
+    {
+      "cell_id": 149,
+      "mean_snow_cover_days": 150.6,
+      "weeks": 21.5,
+      "class": "21–24 veckor",
+      "pixels": 15478
+    },
+    {
+      "cell_id": 150,
+      "mean_snow_cover_days": 151.0,
+      "weeks": 21.6,
+      "class": "21–24 veckor",
+      "pixels": 12744
+    },
+    {
+      "cell_id": 151,
+      "mean_snow_cover_days": 145.2,
+      "weeks": 20.7,
+      "class": "21–24 veckor",
+      "pixels": 15476
+    },
+    {
+      "cell_id": 152,
+      "mean_snow_cover_days": 142.5,
+      "weeks": 20.4,
+      "class": "21–24 veckor",
+      "pixels": 12734
+    },
+    {
+      "cell_id": 153,
+      "mean_snow_cover_days": 175.4,
+      "weeks": 25.1,
+      "class": "25+ veckor",
+      "pixels": 14195
+    },
+    {
+      "cell_id": 154,
+      "mean_snow_cover_days": 187.1,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 339
+    },
+    {
+      "cell_id": 155,
+      "mean_snow_cover_days": 138.7,
+      "weeks": 19.8,
+      "class": "17–20 veckor",
+      "pixels": 16
+    },
+    {
+      "cell_id": 156,
+      "mean_snow_cover_days": 164.5,
+      "weeks": 23.5,
+      "class": "21–24 veckor",
+      "pixels": 27
+    },
+    {
+      "cell_id": 157,
+      "mean_snow_cover_days": 158.4,
+      "weeks": 22.6,
+      "class": "21–24 veckor",
+      "pixels": 8875
+    },
+    {
+      "cell_id": 158,
+      "mean_snow_cover_days": 156.7,
+      "weeks": 22.4,
+      "class": "21–24 veckor",
+      "pixels": 15612
+    },
+    {
+      "cell_id": 159,
+      "mean_snow_cover_days": 157.9,
+      "weeks": 22.6,
+      "class": "21–24 veckor",
+      "pixels": 15403
+    },
+    {
+      "cell_id": 160,
+      "mean_snow_cover_days": 149.1,
+      "weeks": 21.3,
+      "class": "21–24 veckor",
+      "pixels": 13790
+    },
+    {
+      "cell_id": 161,
+      "mean_snow_cover_days": 154.4,
+      "weeks": 22.1,
+      "class": "21–24 veckor",
+      "pixels": 13457
+    },
+    {
+      "cell_id": 162,
+      "mean_snow_cover_days": 151.6,
+      "weeks": 21.7,
+      "class": "21–24 veckor",
+      "pixels": 15502
+    },
+    {
+      "cell_id": 163,
+      "mean_snow_cover_days": 151.3,
+      "weeks": 21.6,
+      "class": "21–24 veckor",
+      "pixels": 10297
+    },
+    {
+      "cell_id": 164,
+      "mean_snow_cover_days": 147.2,
+      "weeks": 21.0,
+      "class": "21–24 veckor",
+      "pixels": 10693
+    },
+    {
+      "cell_id": 165,
+      "mean_snow_cover_days": 141.1,
+      "weeks": 20.2,
+      "class": "21–24 veckor",
+      "pixels": 14525
+    },
+    {
+      "cell_id": 166,
+      "mean_snow_cover_days": 186.8,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 15395
+    },
+    {
+      "cell_id": 167,
+      "mean_snow_cover_days": 194.4,
+      "weeks": 27.8,
+      "class": "25+ veckor",
+      "pixels": 4822
+    },
+    {
+      "cell_id": 168,
+      "mean_snow_cover_days": 184.5,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 294
+    },
+    {
+      "cell_id": 169,
+      "mean_snow_cover_days": 151.2,
+      "weeks": 21.6,
+      "class": "21–24 veckor",
+      "pixels": 8110
+    },
+    {
+      "cell_id": 170,
+      "mean_snow_cover_days": 165.3,
+      "weeks": 23.6,
+      "class": "21–24 veckor",
+      "pixels": 11283
+    },
+    {
+      "cell_id": 171,
+      "mean_snow_cover_days": 157.6,
+      "weeks": 22.5,
+      "class": "21–24 veckor",
+      "pixels": 13833
+    },
+    {
+      "cell_id": 172,
+      "mean_snow_cover_days": 153.5,
+      "weeks": 21.9,
+      "class": "21–24 veckor",
+      "pixels": 15679
+    },
+    {
+      "cell_id": 173,
+      "mean_snow_cover_days": 154.2,
+      "weeks": 22.0,
+      "class": "21–24 veckor",
+      "pixels": 15178
+    },
+    {
+      "cell_id": 174,
+      "mean_snow_cover_days": 151.2,
+      "weeks": 21.6,
+      "class": "21–24 veckor",
+      "pixels": 14984
+    },
+    {
+      "cell_id": 175,
+      "mean_snow_cover_days": 147.7,
+      "weeks": 21.1,
+      "class": "21–24 veckor",
+      "pixels": 5149
+    },
+    {
+      "cell_id": 176,
+      "mean_snow_cover_days": 137.1,
+      "weeks": 19.6,
+      "class": "17–20 veckor",
+      "pixels": 618
+    },
+    {
+      "cell_id": 177,
+      "mean_snow_cover_days": 150.1,
+      "weeks": 21.4,
+      "class": "21–24 veckor",
+      "pixels": 10999
+    },
+    {
+      "cell_id": 178,
+      "mean_snow_cover_days": 197.1,
+      "weeks": 28.2,
+      "class": "25+ veckor",
+      "pixels": 14972
+    },
+    {
+      "cell_id": 179,
+      "mean_snow_cover_days": 202.2,
+      "weeks": 28.9,
+      "class": "25+ veckor",
+      "pixels": 10858
+    },
+    {
+      "cell_id": 180,
+      "mean_snow_cover_days": 162.5,
+      "weeks": 23.2,
+      "class": "21–24 veckor",
+      "pixels": 8590
+    },
+    {
+      "cell_id": 181,
+      "mean_snow_cover_days": 165.1,
+      "weeks": 23.6,
+      "class": "21–24 veckor",
+      "pixels": 15665
+    },
+    {
+      "cell_id": 182,
+      "mean_snow_cover_days": 163.0,
+      "weeks": 23.3,
+      "class": "21–24 veckor",
+      "pixels": 15678
+    },
+    {
+      "cell_id": 183,
+      "mean_snow_cover_days": 159.8,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 15678
+    },
+    {
+      "cell_id": 184,
+      "mean_snow_cover_days": 152.5,
+      "weeks": 21.8,
+      "class": "21–24 veckor",
+      "pixels": 15985
+    },
+    {
+      "cell_id": 185,
+      "mean_snow_cover_days": 149.9,
+      "weeks": 21.4,
+      "class": "21–24 veckor",
+      "pixels": 17354
+    },
+    {
+      "cell_id": 186,
+      "mean_snow_cover_days": 149.8,
+      "weeks": 21.4,
+      "class": "21–24 veckor",
+      "pixels": 6232
+    },
+    {
+      "cell_id": 187,
+      "mean_snow_cover_days": 156.7,
+      "weeks": 22.4,
+      "class": "21–24 veckor",
+      "pixels": 631
+    },
+    {
+      "cell_id": 188,
+      "mean_snow_cover_days": 168.4,
+      "weeks": 24.1,
+      "class": null,
+      "pixels": 4902
+    },
+    {
+      "cell_id": 189,
+      "mean_snow_cover_days": 189.5,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 15737
+    },
+    {
+      "cell_id": 190,
+      "mean_snow_cover_days": 197.3,
+      "weeks": 28.2,
+      "class": "25+ veckor",
+      "pixels": 21075
+    },
+    {
+      "cell_id": 191,
+      "mean_snow_cover_days": 184.4,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 1818
+    },
+    {
+      "cell_id": 192,
+      "mean_snow_cover_days": 138.3,
+      "weeks": 19.8,
+      "class": "17–20 veckor",
+      "pixels": 1346
+    },
+    {
+      "cell_id": 193,
+      "mean_snow_cover_days": 168.1,
+      "weeks": 24.0,
+      "class": null,
+      "pixels": 14904
+    },
+    {
+      "cell_id": 194,
+      "mean_snow_cover_days": 167.4,
+      "weeks": 23.9,
+      "class": "21–24 veckor",
+      "pixels": 23708
+    },
+    {
+      "cell_id": 195,
+      "mean_snow_cover_days": 175.0,
+      "weeks": 25.0,
+      "class": "25+ veckor",
+      "pixels": 27109
+    },
+    {
+      "cell_id": 196,
+      "mean_snow_cover_days": 167.8,
+      "weeks": 24.0,
+      "class": "21–24 veckor",
+      "pixels": 28655
+    },
+    {
+      "cell_id": 197,
+      "mean_snow_cover_days": 172.4,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 30110
+    },
+    {
+      "cell_id": 198,
+      "mean_snow_cover_days": 179.0,
+      "weeks": 25.6,
+      "class": "25+ veckor",
+      "pixels": 31267
+    },
+    {
+      "cell_id": 199,
+      "mean_snow_cover_days": 176.6,
+      "weeks": 25.2,
+      "class": "25+ veckor",
+      "pixels": 29438
+    },
+    {
+      "cell_id": 200,
+      "mean_snow_cover_days": 169.8,
+      "weeks": 24.3,
+      "class": "25+ veckor",
+      "pixels": 14666
+    },
+    {
+      "cell_id": 201,
+      "mean_snow_cover_days": 143.2,
+      "weeks": 20.5,
+      "class": "21–24 veckor",
+      "pixels": 7056
+    },
+    {
+      "cell_id": 202,
+      "mean_snow_cover_days": 186.3,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 5606
+    },
+    {
+      "cell_id": 203,
+      "mean_snow_cover_days": 186.8,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 24694
+    },
+    {
+      "cell_id": 204,
+      "mean_snow_cover_days": 190.3,
+      "weeks": 27.2,
+      "class": "25+ veckor",
+      "pixels": 8824
+    },
+    {
+      "cell_id": 205,
+      "mean_snow_cover_days": 164.1,
+      "weeks": 23.4,
+      "class": "21–24 veckor",
+      "pixels": 6328
+    },
+    {
+      "cell_id": 206,
+      "mean_snow_cover_days": 184.6,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 596
+    },
+    {
+      "cell_id": 207,
+      "mean_snow_cover_days": 164.8,
+      "weeks": 23.5,
+      "class": "21–24 veckor",
+      "pixels": 27386
+    },
+    {
+      "cell_id": 208,
+      "mean_snow_cover_days": 159.1,
+      "weeks": 22.7,
+      "class": "21–24 veckor",
+      "pixels": 31348
+    },
+    {
+      "cell_id": 209,
+      "mean_snow_cover_days": 176.0,
+      "weeks": 25.1,
+      "class": "25+ veckor",
+      "pixels": 25208
+    },
+    {
+      "cell_id": 210,
+      "mean_snow_cover_days": 170.4,
+      "weeks": 24.3,
+      "class": "25+ veckor",
+      "pixels": 23786
+    },
+    {
+      "cell_id": 211,
+      "mean_snow_cover_days": 173.5,
+      "weeks": 24.8,
+      "class": "25+ veckor",
+      "pixels": 29296
+    },
+    {
+      "cell_id": 212,
+      "mean_snow_cover_days": 169.7,
+      "weeks": 24.2,
+      "class": "25+ veckor",
+      "pixels": 31362
+    },
+    {
+      "cell_id": 213,
+      "mean_snow_cover_days": 178.8,
+      "weeks": 25.5,
+      "class": "25+ veckor",
+      "pixels": 30904
+    },
+    {
+      "cell_id": 214,
+      "mean_snow_cover_days": 174.7,
+      "weeks": 25.0,
+      "class": "25+ veckor",
+      "pixels": 23256
+    },
+    {
+      "cell_id": 215,
+      "mean_snow_cover_days": 165.3,
+      "weeks": 23.6,
+      "class": "21–24 veckor",
+      "pixels": 3978
+    },
+    {
+      "cell_id": 216,
+      "mean_snow_cover_days": 159.9,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 636
+    },
+    {
+      "cell_id": 217,
+      "mean_snow_cover_days": 189.9,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 2248
+    },
+    {
+      "cell_id": 218,
+      "mean_snow_cover_days": 193.1,
+      "weeks": 27.6,
+      "class": "25+ veckor",
+      "pixels": 3076
+    },
+    {
+      "cell_id": 219,
+      "mean_snow_cover_days": 175.6,
+      "weeks": 25.1,
+      "class": "25+ veckor",
+      "pixels": 544
+    },
+    {
+      "cell_id": 220,
+      "mean_snow_cover_days": 170.4,
+      "weeks": 24.3,
+      "class": "25+ veckor",
+      "pixels": 3004
+    },
+    {
+      "cell_id": 221,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 222,
+      "mean_snow_cover_days": 160.4,
+      "weeks": 22.9,
+      "class": "21–24 veckor",
+      "pixels": 22634
+    },
+    {
+      "cell_id": 223,
+      "mean_snow_cover_days": 160.0,
+      "weeks": 22.9,
+      "class": "21–24 veckor",
+      "pixels": 31172
+    },
+    {
+      "cell_id": 224,
+      "mean_snow_cover_days": 165.2,
+      "weeks": 23.6,
+      "class": "21–24 veckor",
+      "pixels": 31356
+    },
+    {
+      "cell_id": 225,
+      "mean_snow_cover_days": 172.6,
+      "weeks": 24.7,
+      "class": "25+ veckor",
+      "pixels": 25130
+    },
+    {
+      "cell_id": 226,
+      "mean_snow_cover_days": 177.6,
+      "weeks": 25.4,
+      "class": "25+ veckor",
+      "pixels": 10436
+    },
+    {
+      "cell_id": 227,
+      "mean_snow_cover_days": 178.4,
+      "weeks": 25.5,
+      "class": "25+ veckor",
+      "pixels": 29878
+    },
+    {
+      "cell_id": 228,
+      "mean_snow_cover_days": 172.3,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 29288
+    },
+    {
+      "cell_id": 229,
+      "mean_snow_cover_days": 174.1,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 30666
+    },
+    {
+      "cell_id": 230,
+      "mean_snow_cover_days": 170.1,
+      "weeks": 24.3,
+      "class": "25+ veckor",
+      "pixels": 7848
+    },
+    {
+      "cell_id": 231,
+      "mean_snow_cover_days": 165.2,
+      "weeks": 23.6,
+      "class": "21–24 veckor",
+      "pixels": 266
+    },
+    {
+      "cell_id": 232,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 233,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 234,
+      "mean_snow_cover_days": 194.1,
+      "weeks": 27.7,
+      "class": "25+ veckor",
+      "pixels": 56
+    },
+    {
+      "cell_id": 235,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 236,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 237,
+      "mean_snow_cover_days": 202.8,
+      "weeks": 29.0,
+      "class": "25+ veckor",
+      "pixels": 44
+    },
+    {
+      "cell_id": 238,
+      "mean_snow_cover_days": 165.7,
+      "weeks": 23.7,
+      "class": "21–24 veckor",
+      "pixels": 12474
+    },
+    {
+      "cell_id": 239,
+      "mean_snow_cover_days": 174.6,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 31356
+    },
+    {
+      "cell_id": 240,
+      "mean_snow_cover_days": 169.4,
+      "weeks": 24.2,
+      "class": "25+ veckor",
+      "pixels": 31362
+    },
+    {
+      "cell_id": 241,
+      "mean_snow_cover_days": 172.8,
+      "weeks": 24.7,
+      "class": "25+ veckor",
+      "pixels": 31362
+    },
+    {
+      "cell_id": 242,
+      "mean_snow_cover_days": 182.0,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 30472
+    },
+    {
+      "cell_id": 243,
+      "mean_snow_cover_days": 179.4,
+      "weeks": 25.6,
+      "class": "25+ veckor",
+      "pixels": 30624
+    },
+    {
+      "cell_id": 244,
+      "mean_snow_cover_days": 173.2,
+      "weeks": 24.7,
+      "class": "25+ veckor",
+      "pixels": 15149
+    },
+    {
+      "cell_id": 245,
+      "mean_snow_cover_days": 173.5,
+      "weeks": 24.8,
+      "class": "25+ veckor",
+      "pixels": 27026
+    },
+    {
+      "cell_id": 246,
+      "mean_snow_cover_days": 156.3,
+      "weeks": 22.3,
+      "class": "21–24 veckor",
+      "pixels": 9348
+    },
+    {
+      "cell_id": 247,
+      "mean_snow_cover_days": 170.7,
+      "weeks": 24.4,
+      "class": "25+ veckor",
+      "pixels": 731
+    },
+    {
+      "cell_id": 248,
+      "mean_snow_cover_days": 194.6,
+      "weeks": 27.8,
+      "class": "25+ veckor",
+      "pixels": 279
+    },
+    {
+      "cell_id": 249,
+      "mean_snow_cover_days": 207.3,
+      "weeks": 29.6,
+      "class": "25+ veckor",
+      "pixels": 36
+    },
+    {
+      "cell_id": 250,
+      "mean_snow_cover_days": 185.2,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 3807
+    },
+    {
+      "cell_id": 251,
+      "mean_snow_cover_days": 193.5,
+      "weeks": 27.6,
+      "class": "25+ veckor",
+      "pixels": 920
+    },
+    {
+      "cell_id": 252,
+      "mean_snow_cover_days": 202.6,
+      "weeks": 28.9,
+      "class": "25+ veckor",
+      "pixels": 18
+    },
+    {
+      "cell_id": 253,
+      "mean_snow_cover_days": 194.5,
+      "weeks": 27.8,
+      "class": "25+ veckor",
+      "pixels": 271
+    },
+    {
+      "cell_id": 254,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 255,
+      "mean_snow_cover_days": 187.4,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 9549
+    },
+    {
+      "cell_id": 256,
+      "mean_snow_cover_days": 178.8,
+      "weeks": 25.5,
+      "class": "25+ veckor",
+      "pixels": 22872
+    },
+    {
+      "cell_id": 257,
+      "mean_snow_cover_days": 175.6,
+      "weeks": 25.1,
+      "class": "25+ veckor",
+      "pixels": 21573
+    },
+    {
+      "cell_id": 258,
+      "mean_snow_cover_days": 173.5,
+      "weeks": 24.8,
+      "class": "25+ veckor",
+      "pixels": 20118
+    },
+    {
+      "cell_id": 259,
+      "mean_snow_cover_days": 179.2,
+      "weeks": 25.6,
+      "class": "25+ veckor",
+      "pixels": 18656
+    },
+    {
+      "cell_id": 260,
+      "mean_snow_cover_days": 177.9,
+      "weeks": 25.4,
+      "class": "25+ veckor",
+      "pixels": 17187
+    },
+    {
+      "cell_id": 261,
+      "mean_snow_cover_days": 187.8,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 15885
+    },
+    {
+      "cell_id": 262,
+      "mean_snow_cover_days": 180.4,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 14081
+    },
+    {
+      "cell_id": 263,
+      "mean_snow_cover_days": 178.3,
+      "weeks": 25.5,
+      "class": "25+ veckor",
+      "pixels": 14228
+    },
+    {
+      "cell_id": 264,
+      "mean_snow_cover_days": 186.5,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 6723
+    },
+    {
+      "cell_id": 265,
+      "mean_snow_cover_days": 171.5,
+      "weeks": 24.5,
+      "class": "25+ veckor",
+      "pixels": 5172
+    },
+    {
+      "cell_id": 266,
+      "mean_snow_cover_days": 182.2,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 1534
+    },
+    {
+      "cell_id": 267,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 268,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 269,
+      "mean_snow_cover_days": 169.6,
+      "weeks": 24.2,
+      "class": "25+ veckor",
+      "pixels": 356
+    },
+    {
+      "cell_id": 270,
+      "mean_snow_cover_days": 171.2,
+      "weeks": 24.5,
+      "class": "25+ veckor",
+      "pixels": 450
+    },
+    {
+      "cell_id": 271,
+      "mean_snow_cover_days": 189.9,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 695
+    },
+    {
+      "cell_id": 272,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 273,
+      "mean_snow_cover_days": 203.9,
+      "weeks": 29.1,
+      "class": "25+ veckor",
+      "pixels": 60
+    },
+    {
+      "cell_id": 274,
+      "mean_snow_cover_days": 198.6,
+      "weeks": 28.4,
+      "class": "25+ veckor",
+      "pixels": 121
+    },
+    {
+      "cell_id": 275,
+      "mean_snow_cover_days": 201.4,
+      "weeks": 28.8,
+      "class": "25+ veckor",
+      "pixels": 145
+    },
+    {
+      "cell_id": 276,
+      "mean_snow_cover_days": 172.5,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 3291
+    },
+    {
+      "cell_id": 277,
+      "mean_snow_cover_days": 174.7,
+      "weeks": 25.0,
+      "class": "25+ veckor",
+      "pixels": 15498
+    },
+    {
+      "cell_id": 278,
+      "mean_snow_cover_days": 184.6,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 15679
+    },
+    {
+      "cell_id": 279,
+      "mean_snow_cover_days": 195.8,
+      "weeks": 28.0,
+      "class": "25+ veckor",
+      "pixels": 15639
+    },
+    {
+      "cell_id": 280,
+      "mean_snow_cover_days": 190.0,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 15643
+    },
+    {
+      "cell_id": 281,
+      "mean_snow_cover_days": 187.6,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 15668
+    },
+    {
+      "cell_id": 282,
+      "mean_snow_cover_days": 184.2,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 15682
+    },
+    {
+      "cell_id": 283,
+      "mean_snow_cover_days": 187.3,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 15677
+    },
+    {
+      "cell_id": 284,
+      "mean_snow_cover_days": 184.5,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 15675
+    },
+    {
+      "cell_id": 285,
+      "mean_snow_cover_days": 182.9,
+      "weeks": 26.1,
+      "class": "25+ veckor",
+      "pixels": 7419
+    },
+    {
+      "cell_id": 286,
+      "mean_snow_cover_days": 183.5,
+      "weeks": 26.2,
+      "class": "25+ veckor",
+      "pixels": 15249
+    },
+    {
+      "cell_id": 287,
+      "mean_snow_cover_days": 185.7,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 1336
+    },
+    {
+      "cell_id": 288,
+      "mean_snow_cover_days": 178.6,
+      "weeks": 25.5,
+      "class": "25+ veckor",
+      "pixels": 1296
+    },
+    {
+      "cell_id": 289,
+      "mean_snow_cover_days": 181.5,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 1019
+    },
+    {
+      "cell_id": 290,
+      "mean_snow_cover_days": 201.3,
+      "weeks": 28.8,
+      "class": "25+ veckor",
+      "pixels": 15
+    },
+    {
+      "cell_id": 291,
+      "mean_snow_cover_days": 180.8,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 4007
+    },
+    {
+      "cell_id": 292,
+      "mean_snow_cover_days": 182.1,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 3532
+    },
+    {
+      "cell_id": 293,
+      "mean_snow_cover_days": 184.6,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 4181
+    },
+    {
+      "cell_id": 294,
+      "mean_snow_cover_days": 157.3,
+      "weeks": 22.5,
+      "class": "21–24 veckor",
+      "pixels": 3973
+    },
+    {
+      "cell_id": 295,
+      "mean_snow_cover_days": 159.5,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 1557
+    },
+    {
+      "cell_id": 296,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 297,
+      "mean_snow_cover_days": 199.7,
+      "weeks": 28.5,
+      "class": "25+ veckor",
+      "pixels": 2560
+    },
+    {
+      "cell_id": 298,
+      "mean_snow_cover_days": 190.0,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 7157
+    },
+    {
+      "cell_id": 299,
+      "mean_snow_cover_days": 202.0,
+      "weeks": 28.9,
+      "class": "25+ veckor",
+      "pixels": 2
+    },
+    {
+      "cell_id": 300,
+      "mean_snow_cover_days": 187.6,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 1889
+    },
+    {
+      "cell_id": 301,
+      "mean_snow_cover_days": 194.9,
+      "weeks": 27.8,
+      "class": "25+ veckor",
+      "pixels": 7999
+    },
+    {
+      "cell_id": 302,
+      "mean_snow_cover_days": 185.7,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 10448
+    },
+    {
+      "cell_id": 303,
+      "mean_snow_cover_days": 175.5,
+      "weeks": 25.1,
+      "class": "25+ veckor",
+      "pixels": 15683
+    },
+    {
+      "cell_id": 304,
+      "mean_snow_cover_days": 172.3,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 15679
+    },
+    {
+      "cell_id": 305,
+      "mean_snow_cover_days": 189.5,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 15683
+    },
+    {
+      "cell_id": 306,
+      "mean_snow_cover_days": 188.9,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 15587
+    },
+    {
+      "cell_id": 307,
+      "mean_snow_cover_days": 192.0,
+      "weeks": 27.4,
+      "class": "25+ veckor",
+      "pixels": 15679
+    },
+    {
+      "cell_id": 308,
+      "mean_snow_cover_days": 187.6,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 15653
+    },
+    {
+      "cell_id": 309,
+      "mean_snow_cover_days": 184.3,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 14233
+    },
+    {
+      "cell_id": 310,
+      "mean_snow_cover_days": 180.4,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 6528
+    },
+    {
+      "cell_id": 311,
+      "mean_snow_cover_days": 168.9,
+      "weeks": 24.1,
+      "class": null,
+      "pixels": 9547
+    },
+    {
+      "cell_id": 312,
+      "mean_snow_cover_days": 174.8,
+      "weeks": 25.0,
+      "class": "25+ veckor",
+      "pixels": 3321
+    },
+    {
+      "cell_id": 313,
+      "mean_snow_cover_days": 175.4,
+      "weeks": 25.1,
+      "class": "25+ veckor",
+      "pixels": 918
+    },
+    {
+      "cell_id": 314,
+      "mean_snow_cover_days": 188.5,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 187
+    },
+    {
+      "cell_id": 315,
+      "mean_snow_cover_days": 194.7,
+      "weeks": 27.8,
+      "class": "25+ veckor",
+      "pixels": 46
+    },
+    {
+      "cell_id": 316,
+      "mean_snow_cover_days": 189.6,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 2640
+    },
+    {
+      "cell_id": 317,
+      "mean_snow_cover_days": 191.8,
+      "weeks": 27.4,
+      "class": "25+ veckor",
+      "pixels": 4073
+    },
+    {
+      "cell_id": 318,
+      "mean_snow_cover_days": 186.2,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 813
+    },
+    {
+      "cell_id": 319,
+      "mean_snow_cover_days": 156.3,
+      "weeks": 22.3,
+      "class": "21–24 veckor",
+      "pixels": 591
+    },
+    {
+      "cell_id": 320,
+      "mean_snow_cover_days": 174.0,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 885
+    },
+    {
+      "cell_id": 321,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 322,
+      "mean_snow_cover_days": 192.3,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 136
+    },
+    {
+      "cell_id": 323,
+      "mean_snow_cover_days": 190.9,
+      "weeks": 27.3,
+      "class": "25+ veckor",
+      "pixels": 5149
+    },
+    {
+      "cell_id": 324,
+      "mean_snow_cover_days": 180.4,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 5627
+    },
+    {
+      "cell_id": 325,
+      "mean_snow_cover_days": 200.2,
+      "weeks": 28.6,
+      "class": "25+ veckor",
+      "pixels": 8299
+    },
+    {
+      "cell_id": 326,
+      "mean_snow_cover_days": 192.9,
+      "weeks": 27.6,
+      "class": "25+ veckor",
+      "pixels": 14813
+    },
+    {
+      "cell_id": 327,
+      "mean_snow_cover_days": 189.0,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 7380
+    },
+    {
+      "cell_id": 328,
+      "mean_snow_cover_days": 187.4,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 7416
+    },
+    {
+      "cell_id": 329,
+      "mean_snow_cover_days": 182.7,
+      "weeks": 26.1,
+      "class": "25+ veckor",
+      "pixels": 14601
+    },
+    {
+      "cell_id": 330,
+      "mean_snow_cover_days": 177.2,
+      "weeks": 25.3,
+      "class": "25+ veckor",
+      "pixels": 15660
+    },
+    {
+      "cell_id": 331,
+      "mean_snow_cover_days": 179.6,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 9890
+    },
+    {
+      "cell_id": 332,
+      "mean_snow_cover_days": 183.5,
+      "weeks": 26.2,
+      "class": "25+ veckor",
+      "pixels": 5513
+    },
+    {
+      "cell_id": 333,
+      "mean_snow_cover_days": 191.0,
+      "weeks": 27.3,
+      "class": "25+ veckor",
+      "pixels": 13189
+    },
+    {
+      "cell_id": 334,
+      "mean_snow_cover_days": 179.4,
+      "weeks": 25.6,
+      "class": "25+ veckor",
+      "pixels": 15652
+    },
+    {
+      "cell_id": 335,
+      "mean_snow_cover_days": 176.8,
+      "weeks": 25.3,
+      "class": "25+ veckor",
+      "pixels": 15681
+    },
+    {
+      "cell_id": 336,
+      "mean_snow_cover_days": 174.2,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 15684
+    },
+    {
+      "cell_id": 337,
+      "mean_snow_cover_days": 182.7,
+      "weeks": 26.1,
+      "class": "25+ veckor",
+      "pixels": 15680
+    },
+    {
+      "cell_id": 338,
+      "mean_snow_cover_days": 189.5,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 15443
+    },
+    {
+      "cell_id": 339,
+      "mean_snow_cover_days": 186.6,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 11370
+    },
+    {
+      "cell_id": 340,
+      "mean_snow_cover_days": 182.8,
+      "weeks": 26.1,
+      "class": "25+ veckor",
+      "pixels": 10819
+    },
+    {
+      "cell_id": 341,
+      "mean_snow_cover_days": 172.1,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 3018
+    },
+    {
+      "cell_id": 342,
+      "mean_snow_cover_days": 159.8,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 681
+    },
+    {
+      "cell_id": 343,
+      "mean_snow_cover_days": 174.3,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 4097
+    },
+    {
+      "cell_id": 344,
+      "mean_snow_cover_days": 181.5,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 467
+    },
+    {
+      "cell_id": 345,
+      "mean_snow_cover_days": 188.9,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 433
+    },
+    {
+      "cell_id": 346,
+      "mean_snow_cover_days": 188.7,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 2664
+    },
+    {
+      "cell_id": 347,
+      "mean_snow_cover_days": 173.7,
+      "weeks": 24.8,
+      "class": "25+ veckor",
+      "pixels": 14
+    },
+    {
+      "cell_id": 348,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 349,
+      "mean_snow_cover_days": 181.7,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 879
+    },
+    {
+      "cell_id": 350,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 351,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 352,
+      "mean_snow_cover_days": 195.0,
+      "weeks": 27.9,
+      "class": "25+ veckor",
+      "pixels": 3639
+    },
+    {
+      "cell_id": 353,
+      "mean_snow_cover_days": 186.6,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 15398
+    },
+    {
+      "cell_id": 354,
+      "mean_snow_cover_days": 190.5,
+      "weeks": 27.2,
+      "class": "25+ veckor",
+      "pixels": 14563
+    },
+    {
+      "cell_id": 355,
+      "mean_snow_cover_days": 194.7,
+      "weeks": 27.8,
+      "class": "25+ veckor",
+      "pixels": 14711
+    },
+    {
+      "cell_id": 356,
+      "mean_snow_cover_days": 188.8,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 15472
+    },
+    {
+      "cell_id": 357,
+      "mean_snow_cover_days": 189.0,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 14225
+    },
+    {
+      "cell_id": 358,
+      "mean_snow_cover_days": 186.1,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 15566
+    },
+    {
+      "cell_id": 359,
+      "mean_snow_cover_days": 191.4,
+      "weeks": 27.3,
+      "class": "25+ veckor",
+      "pixels": 15682
+    },
+    {
+      "cell_id": 360,
+      "mean_snow_cover_days": 181.6,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 15541
+    },
+    {
+      "cell_id": 361,
+      "mean_snow_cover_days": 180.4,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 15680
+    },
+    {
+      "cell_id": 362,
+      "mean_snow_cover_days": 180.3,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 14315
+    },
+    {
+      "cell_id": 363,
+      "mean_snow_cover_days": 180.7,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 6888
+    },
+    {
+      "cell_id": 364,
+      "mean_snow_cover_days": 184.0,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 4591
+    },
+    {
+      "cell_id": 365,
+      "mean_snow_cover_days": 178.3,
+      "weeks": 25.5,
+      "class": "25+ veckor",
+      "pixels": 14728
+    },
+    {
+      "cell_id": 366,
+      "mean_snow_cover_days": 176.8,
+      "weeks": 25.3,
+      "class": "25+ veckor",
+      "pixels": 12084
+    },
+    {
+      "cell_id": 367,
+      "mean_snow_cover_days": 185.1,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 14289
+    },
+    {
+      "cell_id": 368,
+      "mean_snow_cover_days": 178.2,
+      "weeks": 25.5,
+      "class": "25+ veckor",
+      "pixels": 13883
+    },
+    {
+      "cell_id": 369,
+      "mean_snow_cover_days": 185.1,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 9762
+    },
+    {
+      "cell_id": 370,
+      "mean_snow_cover_days": 185.3,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 14790
+    },
+    {
+      "cell_id": 371,
+      "mean_snow_cover_days": 179.3,
+      "weeks": 25.6,
+      "class": "25+ veckor",
+      "pixels": 8124
+    },
+    {
+      "cell_id": 372,
+      "mean_snow_cover_days": 190.2,
+      "weeks": 27.2,
+      "class": "25+ veckor",
+      "pixels": 2544
+    },
+    {
+      "cell_id": 373,
+      "mean_snow_cover_days": 182.9,
+      "weeks": 26.1,
+      "class": "25+ veckor",
+      "pixels": 1476
+    },
+    {
+      "cell_id": 374,
+      "mean_snow_cover_days": 174.4,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 283
+    },
+    {
+      "cell_id": 375,
+      "mean_snow_cover_days": 180.7,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 12615
+    },
+    {
+      "cell_id": 376,
+      "mean_snow_cover_days": 177.3,
+      "weeks": 25.3,
+      "class": "25+ veckor",
+      "pixels": 2511
+    },
+    {
+      "cell_id": 377,
+      "mean_snow_cover_days": 201.9,
+      "weeks": 28.8,
+      "class": "25+ veckor",
+      "pixels": 11
+    },
+    {
+      "cell_id": 378,
+      "mean_snow_cover_days": 196.8,
+      "weeks": 28.1,
+      "class": "25+ veckor",
+      "pixels": 701
+    },
+    {
+      "cell_id": 379,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 380,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 381,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 382,
+      "mean_snow_cover_days": 192.4,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 9264
+    },
+    {
+      "cell_id": 383,
+      "mean_snow_cover_days": 189.4,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 15256
+    },
+    {
+      "cell_id": 384,
+      "mean_snow_cover_days": 189.5,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 14409
+    },
+    {
+      "cell_id": 385,
+      "mean_snow_cover_days": 188.9,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 15514
+    },
+    {
+      "cell_id": 386,
+      "mean_snow_cover_days": 181.1,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 15596
+    },
+    {
+      "cell_id": 387,
+      "mean_snow_cover_days": 191.4,
+      "weeks": 27.3,
+      "class": "25+ veckor",
+      "pixels": 15671
+    },
+    {
+      "cell_id": 388,
+      "mean_snow_cover_days": 192.4,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 15683
+    },
+    {
+      "cell_id": 389,
+      "mean_snow_cover_days": 181.7,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 15676
+    },
+    {
+      "cell_id": 390,
+      "mean_snow_cover_days": 175.1,
+      "weeks": 25.0,
+      "class": "25+ veckor",
+      "pixels": 10347
+    },
+    {
+      "cell_id": 391,
+      "mean_snow_cover_days": 177.0,
+      "weeks": 25.3,
+      "class": "25+ veckor",
+      "pixels": 12960
+    },
+    {
+      "cell_id": 392,
+      "mean_snow_cover_days": 189.4,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 15272
+    },
+    {
+      "cell_id": 393,
+      "mean_snow_cover_days": 185.0,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 3856
+    },
+    {
+      "cell_id": 394,
+      "mean_snow_cover_days": 179.8,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 12004
+    },
+    {
+      "cell_id": 395,
+      "mean_snow_cover_days": 181.0,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 8989
+    },
+    {
+      "cell_id": 396,
+      "mean_snow_cover_days": 183.6,
+      "weeks": 26.2,
+      "class": "25+ veckor",
+      "pixels": 13965
+    },
+    {
+      "cell_id": 397,
+      "mean_snow_cover_days": 183.6,
+      "weeks": 26.2,
+      "class": "25+ veckor",
+      "pixels": 15235
+    },
+    {
+      "cell_id": 398,
+      "mean_snow_cover_days": 171.4,
+      "weeks": 24.5,
+      "class": "25+ veckor",
+      "pixels": 15490
+    },
+    {
+      "cell_id": 399,
+      "mean_snow_cover_days": 174.2,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 11054
+    },
+    {
+      "cell_id": 400,
+      "mean_snow_cover_days": 167.2,
+      "weeks": 23.9,
+      "class": "21–24 veckor",
+      "pixels": 3731
+    },
+    {
+      "cell_id": 401,
+      "mean_snow_cover_days": 170.1,
+      "weeks": 24.3,
+      "class": "25+ veckor",
+      "pixels": 1768
+    },
+    {
+      "cell_id": 402,
+      "mean_snow_cover_days": 208.7,
+      "weeks": 29.8,
+      "class": "25+ veckor",
+      "pixels": 6
+    },
+    {
+      "cell_id": 403,
+      "mean_snow_cover_days": 182.6,
+      "weeks": 26.1,
+      "class": "25+ veckor",
+      "pixels": 2537
+    },
+    {
+      "cell_id": 404,
+      "mean_snow_cover_days": 184.4,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 8135
+    },
+    {
+      "cell_id": 405,
+      "mean_snow_cover_days": 177.6,
+      "weeks": 25.4,
+      "class": "25+ veckor",
+      "pixels": 10696
+    },
+    {
+      "cell_id": 406,
+      "mean_snow_cover_days": 202.8,
+      "weeks": 29.0,
+      "class": "25+ veckor",
+      "pixels": 42
+    },
+    {
+      "cell_id": 407,
+      "mean_snow_cover_days": 192.2,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 128
+    },
+    {
+      "cell_id": 408,
+      "mean_snow_cover_days": 146.5,
+      "weeks": 20.9,
+      "class": "21–24 veckor",
+      "pixels": 1997
+    },
+    {
+      "cell_id": 409,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 410,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 411,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 412,
+      "mean_snow_cover_days": 192.3,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 2985
+    },
+    {
+      "cell_id": 413,
+      "mean_snow_cover_days": 175.5,
+      "weeks": 25.1,
+      "class": "25+ veckor",
+      "pixels": 12260
+    },
+    {
+      "cell_id": 414,
+      "mean_snow_cover_days": 180.9,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 12440
+    },
+    {
+      "cell_id": 415,
+      "mean_snow_cover_days": 185.9,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 15506
+    },
+    {
+      "cell_id": 416,
+      "mean_snow_cover_days": 188.5,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 15681
+    },
+    {
+      "cell_id": 417,
+      "mean_snow_cover_days": 183.6,
+      "weeks": 26.2,
+      "class": "25+ veckor",
+      "pixels": 15686
+    },
+    {
+      "cell_id": 418,
+      "mean_snow_cover_days": 180.3,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 15635
+    },
+    {
+      "cell_id": 419,
+      "mean_snow_cover_days": 180.1,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 15681
+    },
+    {
+      "cell_id": 420,
+      "mean_snow_cover_days": 176.6,
+      "weeks": 25.2,
+      "class": "25+ veckor",
+      "pixels": 15386
+    },
+    {
+      "cell_id": 421,
+      "mean_snow_cover_days": 179.9,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 13291
+    },
+    {
+      "cell_id": 422,
+      "mean_snow_cover_days": 187.8,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 13236
+    },
+    {
+      "cell_id": 423,
+      "mean_snow_cover_days": 180.7,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 14699
+    },
+    {
+      "cell_id": 424,
+      "mean_snow_cover_days": 184.6,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 11415
+    },
+    {
+      "cell_id": 425,
+      "mean_snow_cover_days": 178.9,
+      "weeks": 25.6,
+      "class": "25+ veckor",
+      "pixels": 8273
+    },
+    {
+      "cell_id": 426,
+      "mean_snow_cover_days": 179.9,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 6796
+    },
+    {
+      "cell_id": 427,
+      "mean_snow_cover_days": 185.3,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 13253
+    },
+    {
+      "cell_id": 428,
+      "mean_snow_cover_days": 182.0,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 13403
+    },
+    {
+      "cell_id": 429,
+      "mean_snow_cover_days": 172.0,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 14720
+    },
+    {
+      "cell_id": 430,
+      "mean_snow_cover_days": 183.5,
+      "weeks": 26.2,
+      "class": "25+ veckor",
+      "pixels": 13980
+    },
+    {
+      "cell_id": 431,
+      "mean_snow_cover_days": 181.7,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 812
+    },
+    {
+      "cell_id": 432,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 433,
+      "mean_snow_cover_days": 189.7,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 2174
+    },
+    {
+      "cell_id": 434,
+      "mean_snow_cover_days": 185.6,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 11908
+    },
+    {
+      "cell_id": 435,
+      "mean_snow_cover_days": 174.7,
+      "weeks": 25.0,
+      "class": "25+ veckor",
+      "pixels": 5341
+    },
+    {
+      "cell_id": 436,
+      "mean_snow_cover_days": 175.6,
+      "weeks": 25.1,
+      "class": "25+ veckor",
+      "pixels": 7989
+    },
+    {
+      "cell_id": 437,
+      "mean_snow_cover_days": 162.7,
+      "weeks": 23.2,
+      "class": "21–24 veckor",
+      "pixels": 2821
+    },
+    {
+      "cell_id": 438,
+      "mean_snow_cover_days": 141.9,
+      "weeks": 20.3,
+      "class": "21–24 veckor",
+      "pixels": 10953
+    },
+    {
+      "cell_id": 439,
+      "mean_snow_cover_days": 156.2,
+      "weeks": 22.3,
+      "class": "21–24 veckor",
+      "pixels": 172
+    },
+    {
+      "cell_id": 440,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 441,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 442,
+      "mean_snow_cover_days": 185.6,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 110
+    },
+    {
+      "cell_id": 443,
+      "mean_snow_cover_days": 183.5,
+      "weeks": 26.2,
+      "class": "25+ veckor",
+      "pixels": 6296
+    },
+    {
+      "cell_id": 444,
+      "mean_snow_cover_days": 188.1,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 13344
+    },
+    {
+      "cell_id": 445,
+      "mean_snow_cover_days": 180.8,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 15684
+    },
+    {
+      "cell_id": 446,
+      "mean_snow_cover_days": 180.0,
+      "weeks": 25.7,
+      "class": "25+ veckor",
+      "pixels": 15681
+    },
+    {
+      "cell_id": 447,
+      "mean_snow_cover_days": 181.3,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 15685
+    },
+    {
+      "cell_id": 448,
+      "mean_snow_cover_days": 189.6,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 15685
+    },
+    {
+      "cell_id": 449,
+      "mean_snow_cover_days": 181.2,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 15680
+    },
+    {
+      "cell_id": 450,
+      "mean_snow_cover_days": 186.2,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 15684
+    },
+    {
+      "cell_id": 451,
+      "mean_snow_cover_days": 184.6,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 15423
+    },
+    {
+      "cell_id": 452,
+      "mean_snow_cover_days": 189.5,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 15485
+    },
+    {
+      "cell_id": 453,
+      "mean_snow_cover_days": 192.4,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 13069
+    },
+    {
+      "cell_id": 454,
+      "mean_snow_cover_days": 193.5,
+      "weeks": 27.6,
+      "class": "25+ veckor",
+      "pixels": 14689
+    },
+    {
+      "cell_id": 455,
+      "mean_snow_cover_days": 181.3,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 8987
+    },
+    {
+      "cell_id": 456,
+      "mean_snow_cover_days": 174.5,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 6297
+    },
+    {
+      "cell_id": 457,
+      "mean_snow_cover_days": 161.8,
+      "weeks": 23.1,
+      "class": "21–24 veckor",
+      "pixels": 10894
+    },
+    {
+      "cell_id": 458,
+      "mean_snow_cover_days": 187.8,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 8868
+    },
+    {
+      "cell_id": 459,
+      "mean_snow_cover_days": 188.2,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 8873
+    },
+    {
+      "cell_id": 460,
+      "mean_snow_cover_days": 176.5,
+      "weeks": 25.2,
+      "class": "25+ veckor",
+      "pixels": 8834
+    },
+    {
+      "cell_id": 461,
+      "mean_snow_cover_days": 188.4,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 247
+    },
+    {
+      "cell_id": 462,
+      "mean_snow_cover_days": 207.3,
+      "weeks": 29.6,
+      "class": "25+ veckor",
+      "pixels": 54
+    },
+    {
+      "cell_id": 463,
+      "mean_snow_cover_days": 178.0,
+      "weeks": 25.4,
+      "class": "25+ veckor",
+      "pixels": 3306
+    },
+    {
+      "cell_id": 464,
+      "mean_snow_cover_days": 173.9,
+      "weeks": 24.8,
+      "class": "25+ veckor",
+      "pixels": 2083
+    },
+    {
+      "cell_id": 465,
+      "mean_snow_cover_days": 174.3,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 2466
+    },
+    {
+      "cell_id": 466,
+      "mean_snow_cover_days": 193.4,
+      "weeks": 27.6,
+      "class": "25+ veckor",
+      "pixels": 3061
+    },
+    {
+      "cell_id": 467,
+      "mean_snow_cover_days": 146.8,
+      "weeks": 21.0,
+      "class": "21–24 veckor",
+      "pixels": 3363
+    },
+    {
+      "cell_id": 468,
+      "mean_snow_cover_days": 155.9,
+      "weeks": 22.3,
+      "class": "21–24 veckor",
+      "pixels": 844
+    },
+    {
+      "cell_id": 469,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 470,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 471,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 472,
+      "mean_snow_cover_days": 182.1,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 4349
+    },
+    {
+      "cell_id": 473,
+      "mean_snow_cover_days": 178.1,
+      "weeks": 25.4,
+      "class": "25+ veckor",
+      "pixels": 15076
+    },
+    {
+      "cell_id": 474,
+      "mean_snow_cover_days": 181.3,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 15682
+    },
+    {
+      "cell_id": 475,
+      "mean_snow_cover_days": 181.2,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 15683
+    },
+    {
+      "cell_id": 476,
+      "mean_snow_cover_days": 178.4,
+      "weeks": 25.5,
+      "class": "25+ veckor",
+      "pixels": 15683
+    },
+    {
+      "cell_id": 477,
+      "mean_snow_cover_days": 181.3,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 15683
+    },
+    {
+      "cell_id": 478,
+      "mean_snow_cover_days": 190.2,
+      "weeks": 27.2,
+      "class": "25+ veckor",
+      "pixels": 15673
+    },
+    {
+      "cell_id": 479,
+      "mean_snow_cover_days": 189.3,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 15683
+    },
+    {
+      "cell_id": 480,
+      "mean_snow_cover_days": 190.9,
+      "weeks": 27.3,
+      "class": "25+ veckor",
+      "pixels": 15659
+    },
+    {
+      "cell_id": 481,
+      "mean_snow_cover_days": 192.3,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 15394
+    },
+    {
+      "cell_id": 482,
+      "mean_snow_cover_days": 191.2,
+      "weeks": 27.3,
+      "class": "25+ veckor",
+      "pixels": 15422
+    },
+    {
+      "cell_id": 483,
+      "mean_snow_cover_days": 186.3,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 15027
+    },
+    {
+      "cell_id": 484,
+      "mean_snow_cover_days": 183.6,
+      "weeks": 26.2,
+      "class": "25+ veckor",
+      "pixels": 8786
+    },
+    {
+      "cell_id": 485,
+      "mean_snow_cover_days": 185.6,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 12306
+    },
+    {
+      "cell_id": 486,
+      "mean_snow_cover_days": 182.1,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 4574
+    },
+    {
+      "cell_id": 487,
+      "mean_snow_cover_days": 185.5,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 3283
+    },
+    {
+      "cell_id": 488,
+      "mean_snow_cover_days": 172.4,
+      "weeks": 24.6,
+      "class": "25+ veckor",
+      "pixels": 2190
+    },
+    {
+      "cell_id": 489,
+      "mean_snow_cover_days": 206.6,
+      "weeks": 29.5,
+      "class": "25+ veckor",
+      "pixels": 28
+    },
+    {
+      "cell_id": 490,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 491,
+      "mean_snow_cover_days": 192.2,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 6410
+    },
+    {
+      "cell_id": 492,
+      "mean_snow_cover_days": 184.6,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 6239
+    },
+    {
+      "cell_id": 493,
+      "mean_snow_cover_days": 189.5,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 2727
+    },
+    {
+      "cell_id": 494,
+      "mean_snow_cover_days": 189.3,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 4623
+    },
+    {
+      "cell_id": 495,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 496,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 497,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 498,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 499,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 500,
+      "mean_snow_cover_days": 181.6,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 3475
+    },
+    {
+      "cell_id": 501,
+      "mean_snow_cover_days": 187.2,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 10473
+    },
+    {
+      "cell_id": 502,
+      "mean_snow_cover_days": 184.9,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 15198
+    },
+    {
+      "cell_id": 503,
+      "mean_snow_cover_days": 179.1,
+      "weeks": 25.6,
+      "class": "25+ veckor",
+      "pixels": 15685
+    },
+    {
+      "cell_id": 504,
+      "mean_snow_cover_days": 188.6,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 15683
+    },
+    {
+      "cell_id": 505,
+      "mean_snow_cover_days": 176.4,
+      "weeks": 25.2,
+      "class": "25+ veckor",
+      "pixels": 15027
+    },
+    {
+      "cell_id": 506,
+      "mean_snow_cover_days": 188.8,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 11434
+    },
+    {
+      "cell_id": 507,
+      "mean_snow_cover_days": 188.4,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 11750
+    },
+    {
+      "cell_id": 508,
+      "mean_snow_cover_days": 187.3,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 12840
+    },
+    {
+      "cell_id": 509,
+      "mean_snow_cover_days": 184.4,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 10092
+    },
+    {
+      "cell_id": 510,
+      "mean_snow_cover_days": 186.9,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 10022
+    },
+    {
+      "cell_id": 511,
+      "mean_snow_cover_days": 180.7,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 1686
+    },
+    {
+      "cell_id": 512,
+      "mean_snow_cover_days": 182.6,
+      "weeks": 26.1,
+      "class": "25+ veckor",
+      "pixels": 12984
+    },
+    {
+      "cell_id": 513,
+      "mean_snow_cover_days": 170.6,
+      "weeks": 24.4,
+      "class": "25+ veckor",
+      "pixels": 7975
+    },
+    {
+      "cell_id": 514,
+      "mean_snow_cover_days": 175.8,
+      "weeks": 25.1,
+      "class": "25+ veckor",
+      "pixels": 8967
+    },
+    {
+      "cell_id": 515,
+      "mean_snow_cover_days": 192.2,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 2611
+    },
+    {
+      "cell_id": 516,
+      "mean_snow_cover_days": 201.9,
+      "weeks": 28.8,
+      "class": "25+ veckor",
+      "pixels": 133
+    },
+    {
+      "cell_id": 517,
+      "mean_snow_cover_days": 196.2,
+      "weeks": 28.0,
+      "class": "25+ veckor",
+      "pixels": 6296
+    },
+    {
+      "cell_id": 518,
+      "mean_snow_cover_days": 197.0,
+      "weeks": 28.1,
+      "class": "25+ veckor",
+      "pixels": 11410
+    },
+    {
+      "cell_id": 519,
+      "mean_snow_cover_days": 201.2,
+      "weeks": 28.7,
+      "class": "25+ veckor",
+      "pixels": 237
+    },
+    {
+      "cell_id": 520,
+      "mean_snow_cover_days": 183.9,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 1815
+    },
+    {
+      "cell_id": 521,
+      "mean_snow_cover_days": 159.9,
+      "weeks": 22.8,
+      "class": "21–24 veckor",
+      "pixels": 6018
+    },
+    {
+      "cell_id": 522,
+      "mean_snow_cover_days": 154.6,
+      "weeks": 22.1,
+      "class": "21–24 veckor",
+      "pixels": 2133
+    },
+    {
+      "cell_id": 523,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 524,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 525,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 526,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 527,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 528,
+      "mean_snow_cover_days": 190.9,
+      "weeks": 27.3,
+      "class": "25+ veckor",
+      "pixels": 2287
+    },
+    {
+      "cell_id": 529,
+      "mean_snow_cover_days": 183.0,
+      "weeks": 26.1,
+      "class": "25+ veckor",
+      "pixels": 13514
+    },
+    {
+      "cell_id": 530,
+      "mean_snow_cover_days": 186.2,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 15683
+    },
+    {
+      "cell_id": 531,
+      "mean_snow_cover_days": 184.9,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 15677
+    },
+    {
+      "cell_id": 532,
+      "mean_snow_cover_days": 184.1,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 14925
+    },
+    {
+      "cell_id": 533,
+      "mean_snow_cover_days": 177.1,
+      "weeks": 25.3,
+      "class": "25+ veckor",
+      "pixels": 11703
+    },
+    {
+      "cell_id": 534,
+      "mean_snow_cover_days": 178.3,
+      "weeks": 25.5,
+      "class": "25+ veckor",
+      "pixels": 5290
+    },
+    {
+      "cell_id": 535,
+      "mean_snow_cover_days": 181.6,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 5045
+    },
+    {
+      "cell_id": 536,
+      "mean_snow_cover_days": 184.1,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 4653
+    },
+    {
+      "cell_id": 537,
+      "mean_snow_cover_days": 190.1,
+      "weeks": 27.2,
+      "class": "25+ veckor",
+      "pixels": 4553
+    },
+    {
+      "cell_id": 538,
+      "mean_snow_cover_days": 192.4,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 581
+    },
+    {
+      "cell_id": 539,
+      "mean_snow_cover_days": 178.5,
+      "weeks": 25.5,
+      "class": "25+ veckor",
+      "pixels": 1053
+    },
+    {
+      "cell_id": 540,
+      "mean_snow_cover_days": 174.4,
+      "weeks": 24.9,
+      "class": "25+ veckor",
+      "pixels": 7994
+    },
+    {
+      "cell_id": 541,
+      "mean_snow_cover_days": 183.9,
+      "weeks": 26.3,
+      "class": "25+ veckor",
+      "pixels": 1827
+    },
+    {
+      "cell_id": 542,
+      "mean_snow_cover_days": 205.0,
+      "weeks": 29.3,
+      "class": "25+ veckor",
+      "pixels": 546
+    },
+    {
+      "cell_id": 543,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 544,
+      "mean_snow_cover_days": 193.8,
+      "weeks": 27.7,
+      "class": "25+ veckor",
+      "pixels": 1583
+    },
+    {
+      "cell_id": 545,
+      "mean_snow_cover_days": 197.0,
+      "weeks": 28.1,
+      "class": "25+ veckor",
+      "pixels": 7384
+    },
+    {
+      "cell_id": 546,
+      "mean_snow_cover_days": 190.9,
+      "weeks": 27.3,
+      "class": "25+ veckor",
+      "pixels": 2332
+    },
+    {
+      "cell_id": 547,
+      "mean_snow_cover_days": 191.6,
+      "weeks": 27.4,
+      "class": "25+ veckor",
+      "pixels": 2180
+    },
+    {
+      "cell_id": 548,
+      "mean_snow_cover_days": 153.4,
+      "weeks": 21.9,
+      "class": "21–24 veckor",
+      "pixels": 1928
+    },
+    {
+      "cell_id": 549,
+      "mean_snow_cover_days": 155.1,
+      "weeks": 22.2,
+      "class": "21–24 veckor",
+      "pixels": 1127
+    },
+    {
+      "cell_id": 550,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 551,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 552,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 553,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 554,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 555,
+      "mean_snow_cover_days": 174.7,
+      "weeks": 25.0,
+      "class": "25+ veckor",
+      "pixels": 1103
+    },
+    {
+      "cell_id": 556,
+      "mean_snow_cover_days": 185.9,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 12188
+    },
+    {
+      "cell_id": 557,
+      "mean_snow_cover_days": 189.2,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 15689
+    },
+    {
+      "cell_id": 558,
+      "mean_snow_cover_days": 186.8,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 15683
+    },
+    {
+      "cell_id": 559,
+      "mean_snow_cover_days": 189.2,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 15543
+    },
+    {
+      "cell_id": 560,
+      "mean_snow_cover_days": 190.1,
+      "weeks": 27.2,
+      "class": "25+ veckor",
+      "pixels": 12950
+    },
+    {
+      "cell_id": 561,
+      "mean_snow_cover_days": 186.5,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 3364
+    },
+    {
+      "cell_id": 562,
+      "mean_snow_cover_days": 187.0,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 1064
+    },
+    {
+      "cell_id": 563,
+      "mean_snow_cover_days": 184.7,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 71
+    },
+    {
+      "cell_id": 564,
+      "mean_snow_cover_days": 185.3,
+      "weeks": 26.5,
+      "class": "25+ veckor",
+      "pixels": 8185
+    },
+    {
+      "cell_id": 565,
+      "mean_snow_cover_days": 189.6,
+      "weeks": 27.1,
+      "class": "25+ veckor",
+      "pixels": 4294
+    },
+    {
+      "cell_id": 566,
+      "mean_snow_cover_days": 177.5,
+      "weeks": 25.4,
+      "class": "25+ veckor",
+      "pixels": 1078
+    },
+    {
+      "cell_id": 567,
+      "mean_snow_cover_days": 194.4,
+      "weeks": 27.8,
+      "class": "25+ veckor",
+      "pixels": 1267
+    },
+    {
+      "cell_id": 568,
+      "mean_snow_cover_days": 182.0,
+      "weeks": 26.0,
+      "class": "25+ veckor",
+      "pixels": 7109
+    },
+    {
+      "cell_id": 569,
+      "mean_snow_cover_days": 189.3,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 1696
+    },
+    {
+      "cell_id": 570,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 571,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 572,
+      "mean_snow_cover_days": 194.4,
+      "weeks": 27.8,
+      "class": "25+ veckor",
+      "pixels": 2068
+    },
+    {
+      "cell_id": 573,
+      "mean_snow_cover_days": 197.4,
+      "weeks": 28.2,
+      "class": "25+ veckor",
+      "pixels": 822
+    },
+    {
+      "cell_id": 574,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 575,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 576,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 577,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 578,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 579,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 580,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 581,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 582,
+      "mean_snow_cover_days": 173.4,
+      "weeks": 24.8,
+      "class": "25+ veckor",
+      "pixels": 228
+    },
+    {
+      "cell_id": 583,
+      "mean_snow_cover_days": 168.7,
+      "weeks": 24.1,
+      "class": null,
+      "pixels": 5922
+    },
+    {
+      "cell_id": 584,
+      "mean_snow_cover_days": 185.1,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 13800
+    },
+    {
+      "cell_id": 585,
+      "mean_snow_cover_days": 180.4,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 14809
+    },
+    {
+      "cell_id": 586,
+      "mean_snow_cover_days": 191.2,
+      "weeks": 27.3,
+      "class": "25+ veckor",
+      "pixels": 15039
+    },
+    {
+      "cell_id": 587,
+      "mean_snow_cover_days": 193.4,
+      "weeks": 27.6,
+      "class": "25+ veckor",
+      "pixels": 13142
+    },
+    {
+      "cell_id": 588,
+      "mean_snow_cover_days": 192.0,
+      "weeks": 27.4,
+      "class": "25+ veckor",
+      "pixels": 471
+    },
+    {
+      "cell_id": 589,
+      "mean_snow_cover_days": 179.2,
+      "weeks": 25.6,
+      "class": "25+ veckor",
+      "pixels": 75
+    },
+    {
+      "cell_id": 590,
+      "mean_snow_cover_days": 187.1,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 10671
+    },
+    {
+      "cell_id": 591,
+      "mean_snow_cover_days": 192.5,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 9361
+    },
+    {
+      "cell_id": 592,
+      "mean_snow_cover_days": 196.2,
+      "weeks": 28.0,
+      "class": "25+ veckor",
+      "pixels": 698
+    },
+    {
+      "cell_id": 593,
+      "mean_snow_cover_days": 195.9,
+      "weeks": 28.0,
+      "class": "25+ veckor",
+      "pixels": 9594
+    },
+    {
+      "cell_id": 594,
+      "mean_snow_cover_days": 187.5,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 10185
+    },
+    {
+      "cell_id": 595,
+      "mean_snow_cover_days": 184.5,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 1124
+    },
+    {
+      "cell_id": 596,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 597,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 598,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 599,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 600,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 601,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 602,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 603,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 604,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 605,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 606,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 607,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 608,
+      "mean_snow_cover_days": 194.5,
+      "weeks": 27.8,
+      "class": "25+ veckor",
+      "pixels": 2079
+    },
+    {
+      "cell_id": 609,
+      "mean_snow_cover_days": 189.3,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 13545
+    },
+    {
+      "cell_id": 610,
+      "mean_snow_cover_days": 192.5,
+      "weeks": 27.5,
+      "class": "25+ veckor",
+      "pixels": 6806
+    },
+    {
+      "cell_id": 611,
+      "mean_snow_cover_days": 190.3,
+      "weeks": 27.2,
+      "class": "25+ veckor",
+      "pixels": 11461
+    },
+    {
+      "cell_id": 612,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 613,
+      "mean_snow_cover_days": 184.6,
+      "weeks": 26.4,
+      "class": "25+ veckor",
+      "pixels": 2814
+    },
+    {
+      "cell_id": 614,
+      "mean_snow_cover_days": 186.4,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 3652
+    },
+    {
+      "cell_id": 615,
+      "mean_snow_cover_days": 193.4,
+      "weeks": 27.6,
+      "class": "25+ veckor",
+      "pixels": 6554
+    },
+    {
+      "cell_id": 616,
+      "mean_snow_cover_days": 176.5,
+      "weeks": 25.2,
+      "class": "25+ veckor",
+      "pixels": 566
+    },
+    {
+      "cell_id": 617,
+      "mean_snow_cover_days": 175.1,
+      "weeks": 25.0,
+      "class": "25+ veckor",
+      "pixels": 591
+    },
+    {
+      "cell_id": 618,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 619,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 620,
+      "mean_snow_cover_days": 196.1,
+      "weeks": 28.0,
+      "class": "25+ veckor",
+      "pixels": 1024
+    },
+    {
+      "cell_id": 621,
+      "mean_snow_cover_days": 195.6,
+      "weeks": 27.9,
+      "class": "25+ veckor",
+      "pixels": 5188
+    },
+    {
+      "cell_id": 622,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 623,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 624,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 625,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 626,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 627,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 628,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 629,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 630,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 631,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 632,
+      "mean_snow_cover_days": 186.6,
+      "weeks": 26.7,
+      "class": "25+ veckor",
+      "pixels": 4025
+    },
+    {
+      "cell_id": 633,
+      "mean_snow_cover_days": 188.0,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 5989
+    },
+    {
+      "cell_id": 634,
+      "mean_snow_cover_days": 181.0,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 2372
+    },
+    {
+      "cell_id": 635,
+      "mean_snow_cover_days": 182.4,
+      "weeks": 26.1,
+      "class": "25+ veckor",
+      "pixels": 5435
+    },
+    {
+      "cell_id": 636,
+      "mean_snow_cover_days": 165.8,
+      "weeks": 23.7,
+      "class": "21–24 veckor",
+      "pixels": 995
+    },
+    {
+      "cell_id": 637,
+      "mean_snow_cover_days": 198.4,
+      "weeks": 28.3,
+      "class": "25+ veckor",
+      "pixels": 29
+    },
+    {
+      "cell_id": 638,
+      "mean_snow_cover_days": 181.0,
+      "weeks": 25.9,
+      "class": "25+ veckor",
+      "pixels": 108
+    },
+    {
+      "cell_id": 639,
+      "mean_snow_cover_days": 204.0,
+      "weeks": 29.1,
+      "class": "25+ veckor",
+      "pixels": 4
+    },
+    {
+      "cell_id": 640,
+      "mean_snow_cover_days": 201.4,
+      "weeks": 28.8,
+      "class": "25+ veckor",
+      "pixels": 976
+    },
+    {
+      "cell_id": 641,
+      "mean_snow_cover_days": 194.3,
+      "weeks": 27.8,
+      "class": "25+ veckor",
+      "pixels": 1586
+    },
+    {
+      "cell_id": 642,
+      "mean_snow_cover_days": 197.3,
+      "weeks": 28.2,
+      "class": "25+ veckor",
+      "pixels": 1201
+    },
+    {
+      "cell_id": 643,
+      "mean_snow_cover_days": 188.9,
+      "weeks": 27.0,
+      "class": "25+ veckor",
+      "pixels": 4288
+    },
+    {
+      "cell_id": 644,
+      "mean_snow_cover_days": 199.5,
+      "weeks": 28.5,
+      "class": "25+ veckor",
+      "pixels": 130
+    },
+    {
+      "cell_id": 645,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 646,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 647,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 648,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 649,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 650,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 651,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 652,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 653,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 654,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 655,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 656,
+      "mean_snow_cover_days": 180.3,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 658
+    },
+    {
+      "cell_id": 657,
+      "mean_snow_cover_days": 187.3,
+      "weeks": 26.8,
+      "class": "25+ veckor",
+      "pixels": 7898
+    },
+    {
+      "cell_id": 658,
+      "mean_snow_cover_days": 188.0,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 3574
+    },
+    {
+      "cell_id": 659,
+      "mean_snow_cover_days": 200.8,
+      "weeks": 28.7,
+      "class": "25+ veckor",
+      "pixels": 146
+    },
+    {
+      "cell_id": 660,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 661,
+      "mean_snow_cover_days": 186.2,
+      "weeks": 26.6,
+      "class": "25+ veckor",
+      "pixels": 101
+    },
+    {
+      "cell_id": 662,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 663,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 664,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 665,
+      "mean_snow_cover_days": 197.8,
+      "weeks": 28.3,
+      "class": "25+ veckor",
+      "pixels": 5086
+    },
+    {
+      "cell_id": 666,
+      "mean_snow_cover_days": 202.0,
+      "weeks": 28.9,
+      "class": "25+ veckor",
+      "pixels": 5968
+    },
+    {
+      "cell_id": 667,
+      "mean_snow_cover_days": 197.2,
+      "weeks": 28.2,
+      "class": "25+ veckor",
+      "pixels": 42
+    },
+    {
+      "cell_id": 668,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 669,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 670,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 671,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 672,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 673,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 674,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 675,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 676,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 677,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 678,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 679,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 680,
+      "mean_snow_cover_days": 180.6,
+      "weeks": 25.8,
+      "class": "25+ veckor",
+      "pixels": 1564
+    },
+    {
+      "cell_id": 681,
+      "mean_snow_cover_days": 188.6,
+      "weeks": 26.9,
+      "class": "25+ veckor",
+      "pixels": 2605
+    },
+    {
+      "cell_id": 682,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 683,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 684,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 685,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 686,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 687,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 688,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 689,
+      "mean_snow_cover_days": 199.6,
+      "weeks": 28.5,
+      "class": "25+ veckor",
+      "pixels": 1327
+    },
+    {
+      "cell_id": 690,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 691,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 692,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 693,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 694,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 695,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 696,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 697,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 698,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 699,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 700,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 701,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 702,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 703,
+      "mean_snow_cover_days": 197.3,
+      "weeks": 28.2,
+      "class": "25+ veckor",
+      "pixels": 133
+    },
+    {
+      "cell_id": 704,
+      "mean_snow_cover_days": 195.1,
+      "weeks": 27.9,
+      "class": "25+ veckor",
+      "pixels": 229
+    },
+    {
+      "cell_id": 705,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 706,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 707,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 708,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 709,
+      "mean_snow_cover_days": 200.7,
+      "weeks": 28.7,
+      "class": "25+ veckor",
+      "pixels": 440
+    },
+    {
+      "cell_id": 710,
+      "mean_snow_cover_days": 198.1,
+      "weeks": 28.3,
+      "class": "25+ veckor",
+      "pixels": 862
+    },
+    {
+      "cell_id": 711,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 712,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 713,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 714,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 715,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 716,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 717,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 718,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 719,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 720,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 721,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 722,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 723,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 724,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 725,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 726,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 727,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 728,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 729,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 730,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 731,
+      "mean_snow_cover_days": 202.2,
+      "weeks": 28.9,
+      "class": "25+ veckor",
+      "pixels": 304
+    },
+    {
+      "cell_id": 732,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 733,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 734,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 735,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 736,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 737,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 738,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 739,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 740,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 741,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 742,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 743,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 744,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 745,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 746,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 747,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 748,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 749,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 750,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 751,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 752,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 753,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 754,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 755,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 756,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 757,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 758,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 759,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 760,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 761,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 762,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 763,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 764,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 765,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 766,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 767,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 768,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 769,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 770,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 771,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 772,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 773,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 774,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 775,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 776,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 777,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 778,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 779,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 780,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 781,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 782,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 783,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 784,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 785,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 786,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 787,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 788,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 789,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 790,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 791,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 792,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 793,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 794,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 795,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 796,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 797,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 798,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 799,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 800,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 801,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 802,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 803,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 804,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 805,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 806,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 807,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 808,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 809,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 810,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 811,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 812,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 813,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 814,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 815,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 816,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 817,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 818,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 819,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 820,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 821,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 822,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 823,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 824,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 825,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 826,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 827,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 828,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 829,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 830,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 831,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 832,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 833,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 834,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 835,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 836,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 837,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 838,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 839,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 840,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 841,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 842,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 843,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 844,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 845,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 846,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 847,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 848,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 849,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 850,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 851,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 852,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 853,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 854,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 855,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 856,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 857,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 858,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 859,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 860,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 861,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 862,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 863,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 864,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 865,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 866,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 867,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 868,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 869,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 870,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 871,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 872,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 873,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 874,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 875,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 876,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 877,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 878,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 879,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 880,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 881,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 882,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 883,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    },
+    {
+      "cell_id": 884,
+      "mean_snow_cover_days": null,
+      "weeks": null,
+      "class": null,
+      "pixels": 0
+    }
+  ]
+}
