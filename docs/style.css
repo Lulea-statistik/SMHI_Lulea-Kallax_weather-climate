@@ -92,3 +92,18 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
   #page-snowmap .snowmap-map-card{height:auto;min-height:0}
   #page-snowmap .snowmap-map{height:520px;min-height:520px;flex:none}
 }
+
+/* Global loading indicator */
+.topbar-status{display:flex;align-items:center;gap:12px;margin-left:auto}
+.global-loading{display:flex;align-items:center;gap:7px;font-size:13px;color:#475569;visibility:visible;opacity:1;transition:opacity .15s ease}
+.global-loading.is-hidden{visibility:hidden;opacity:0}
+.loading-spinner{width:14px;height:14px;border:2px solid #cbd5e1;border-top-color:#246b9c;border-radius:50%;display:inline-block;animation:report-spin .8s linear infinite}
+@keyframes report-spin{to{transform:rotate(360deg)}}
+
+/* Snow duration chart */
+#page-snowmap .snowmap-duration-card{grid-column:1/-1;min-height:340px}
+#page-snowmap .snowmap-duration-card canvas{height:280px!important;max-height:280px;width:100%!important}
+@media(max-width:700px){
+  .topbar-status{gap:8px}
+  .global-loading{font-size:12px}
+}
