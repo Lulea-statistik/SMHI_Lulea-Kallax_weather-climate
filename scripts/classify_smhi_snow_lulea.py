@@ -101,44 +101,53 @@ def main():
         exact_pixel_area=float(geom_px.area)
         area_from_exact_pixel_geom_km2=exact_pixel_area*(metres_per_pixel**2)/1e6
 
-        # Raster mask at native 249x570 resolution.
-        mask_img=Image.new("1",(w,h),0)
-        d=ImageDraw.Draw(mask_img)
+        # Fractional native-pixel coverage using supersampling.
+        # This avoids treating every boundary-touching ~2.8 km pixel as 100% Lulea.
+        SS=16
+        hi=Image.new("L",(w*SS,h*SS),0)
+        hd=ImageDraw.Draw(hi)
         polys=list(geom_px.geoms) if isinstance(geom_px,MultiPolygon) else [geom_px]
         for poly in polys:
-            ext=[(float(x),float(y)) for x,y in poly.exterior.coords]
-            d.polygon(ext,fill=1)
+            ext=[(float(x)*SS,float(y)*SS) for x,y in poly.exterior.coords]
+            hd.polygon(ext,fill=255)
             for hole in poly.interiors:
-                d.polygon([(float(x),float(y)) for x,y in hole.coords],fill=0)
-        mask=np.asarray(mask_img,dtype=bool)
-        raster_pixels=int(mask.sum())
-        raster_area_km2=raster_pixels*(metres_per_pixel**2)/1e6
+                hd.polygon([(float(x)*SS,float(y)*SS) for x,y in hole.coords],fill=0)
+        hi_arr=np.asarray(hi,dtype=float)/255.0
+        coverage=hi_arr.reshape(h,SS,w,SS).mean(axis=(1,3))
+        mask=coverage>0
+        coverage_sum=float(coverage.sum())
+        raster_area_km2=coverage_sum*(metres_per_pixel**2)/1e6
 
-        # Color classification inside Lulea.
+        # Color classification, weighted by the fraction of each native pixel inside Lulea.
         rgb=arr[:,:,:3].astype(float)
-        alpha=arr[:,:,3]
         palette=np.array([x[1] for x in PALETTE],dtype=float)
         flat=rgb[mask]
+        weights=coverage[mask]
         dists=np.sqrt(((flat[:,None,:]-palette[None,:,:])**2).sum(axis=2))
         nearest=dists.argmin(axis=1)
         mind=dists.min(axis=1)
         accepted=mind<=MAX_COLOR_DIST
 
         counts=[]
-        total_accept=int(accepted.sum())
+        total_accept_weight=float(weights[accepted].sum())
+        total_accept_pixels=int(accepted.sum())
         for i,(label,color,lower) in enumerate(PALETTE):
-            n=int(((nearest==i)&accepted).sum())
+            sel=(nearest==i)&accepted
+            n=int(sel.sum())
+            wt=float(weights[sel].sum())
             counts.append({
                 "class":label,"legend_rgb":list(color),"lower_cm":lower,
-                "pixels":n,
-                "share_of_classified_pct":round(100*n/total_accept,2) if total_accept else None
+                "native_pixels_touched":n,
+                "weighted_pixel_equivalents":round(wt,3),
+                "share_of_classified_area_pct":round(100*wt/total_accept_weight,2) if total_accept_weight else None
             })
 
-        # Diagnostic preview: snow image + semi-transparent outside mask + boundary.
+        # Diagnostic preview: snow image + semi-transparent outside/partial coverage + boundary.
         preview=snow.copy()
         rgba=np.asarray(preview).copy()
-        rgba[~mask,:3]=(rgba[~mask,:3]*0.35).astype(np.uint8)
-        rgba[~mask,3]=255
+        fade=0.30+0.70*coverage
+        rgba[:,:,:3]=(rgba[:,:,:3]*fade[:,:,None]).clip(0,255).astype(np.uint8)
+        rgba[:,:,3]=255
         preview=Image.fromarray(rgba,"RGBA")
         pd=ImageDraw.Draw(preview)
         for poly in polys:
@@ -161,21 +170,25 @@ def main():
                 "official_polygon_area_km2_epsg3006_coords":round(official_area_km2,3),
                 "polygon_area_km2_after_transform_epsg3013":round(area3013_km2,3),
                 "exact_pixel_geometry_area_km2":round(area_from_exact_pixel_geom_km2,3),
-                "native_raster_mask_area_km2":round(raster_area_km2,3),
-                "native_raster_area_error_pct_vs_official":round(100*(raster_area_km2-official_area_km2)/official_area_km2,2),
+                "fractional_raster_mask_area_km2":round(raster_area_km2,3),
+                "fractional_raster_area_error_pct_vs_official":round(100*(raster_area_km2-official_area_km2)/official_area_km2,2),
+                "supersampling_factor":SS,
                 "exact_pixel_geometry_area_error_pct_vs_official":round(100*(area_from_exact_pixel_geom_km2-official_area_km2)/official_area_km2,2),
                 "lulea_pixel_bbox":[round(minx,3),round(miny,3),round(maxx,3),round(maxy,3)],
                 "lulea_pixel_width":round(maxx-minx,3),
                 "lulea_pixel_height":round(maxy-miny,3),
-                "native_mask_pixels":raster_pixels
+                "native_pixels_touched":int(mask.sum()),
+                "weighted_pixel_equivalents":round(coverage_sum,3)
             },
             "classification":{
                 "palette_source":"SMHI snow-depth app legend",
                 "max_rgb_distance":MAX_COLOR_DIST,
-                "inside_mask_pixels":int(len(flat)),
-                "classified_pixels":total_accept,
-                "unclassified_pixels":int(len(flat)-total_accept),
-                "classified_share_pct":round(100*total_accept/len(flat),2) if len(flat) else None,
+                "inside_native_pixels_touched":int(len(flat)),
+                "classified_native_pixels":total_accept_pixels,
+                "unclassified_native_pixels":int(len(flat)-total_accept_pixels),
+                "classified_weighted_pixel_equivalents":round(total_accept_weight,3),
+                "total_weighted_pixel_equivalents":round(float(weights.sum()),3),
+                "classified_area_share_pct":round(100*total_accept_weight/float(weights.sum()),2) if float(weights.sum()) else None,
                 "classes":counts
             },
             "warning":"Derived from rendered SMHI PNG. Classes are map legend categories, not an original numeric raster. Native image resolution is coarse."
