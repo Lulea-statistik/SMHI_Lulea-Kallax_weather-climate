@@ -19,7 +19,7 @@ BOUNDARY_OUT = OUT / "boundary.geojson"
 
 TO_3006 = Transformer.from_crs("EPSG:4326", "EPSG:3006", always_xy=True)
 TO_4326 = Transformer.from_crs("EPSG:3006", "EPSG:4326", always_xy=True)
-CELL = 2000.0
+GRID_SIZES = (1000, 2000, 4000)
 
 SURFACES = {"mainland", "islands", "sea", "inland_water", "uncertain"}
 
@@ -31,9 +31,9 @@ def as_float(v):
         return None
 
 
-def cell_polygon(x0, y0):
+def cell_polygon(x0, y0, cell):
     coords = []
-    for x, y in [(x0,y0),(x0+CELL,y0),(x0+CELL,y0+CELL),(x0,y0+CELL),(x0,y0)]:
+    for x, y in [(x0,y0),(x0+cell,y0),(x0+cell,y0+cell),(x0,y0+cell),(x0,y0)]:
         lon, lat = TO_4326.transform(x, y)
         coords.append([round(lon, 6), round(lat, 6)])
     return coords
@@ -59,8 +59,7 @@ def main():
                 encoding="utf-8",
             )
 
-    index = {"cell_size_m": 2000, "years": []}
-    annual_grids = []
+    index = {"grid_sizes_m": list(GRID_SIZES), "default_grid_size_m": 2000, "years": []}
 
     for path in sorted(SRC.glob("20??.csv")):
         try:
@@ -69,7 +68,10 @@ def main():
             continue
 
         points = []
-        cells = defaultdict(lambda: {"count":0, "by_surface":defaultdict(int), "by_month":defaultdict(int), "by_surface_month":defaultdict(lambda: defaultdict(int))})
+        grids = {
+            cell: defaultdict(lambda: {"count":0, "by_surface":defaultdict(int), "by_month":defaultdict(int), "by_surface_month":defaultdict(lambda: defaultdict(int))})
+            for cell in GRID_SIZES
+        }
         with path.open("r", encoding="utf-8-sig", newline="") as f:
             for row in csv.DictReader(f):
                 lat = as_float(row.get("lat"))
@@ -89,108 +91,53 @@ def main():
                     "datetime_utc": dt,
                 })
                 x, y = TO_3006.transform(lon, lat)
-                x0 = math.floor(x / CELL) * CELL
-                y0 = math.floor(y / CELL) * CELL
-                c = cells[(x0, y0)]
-                c["count"] += 1
-                c["by_surface"][surface] += 1
-                if 1 <= month <= 12:
-                    c["by_month"][str(month)] += 1
-                    c["by_surface_month"][surface][str(month)] += 1
+                for cell in GRID_SIZES:
+                    x0 = math.floor(x / cell) * cell
+                    y0 = math.floor(y / cell) * cell
+                    c = grids[cell][(x0, y0)]
+                    c["count"] += 1
+                    c["by_surface"][surface] += 1
+                    if 1 <= month <= 12:
+                        c["by_month"][str(month)] += 1
+                        c["by_surface_month"][surface][str(month)] += 1
 
-        grid = []
-        for (x0, y0), c in cells.items():
-            lonc, latc = TO_4326.transform(x0 + CELL/2, y0 + CELL/2)
-            grid.append({
-                "count": c["count"],
-                "by_surface": dict(c["by_surface"]),
-                "by_month": dict(c["by_month"]),
-                "by_surface_month": {k: dict(v) for k, v in c["by_surface_month"].items()},
-                "lat": round(latc, 6),
-                "lon": round(lonc, 6),
-                "polygon": cell_polygon(x0, y0),
-            })
+        grid_payloads = {}
+        for cell in GRID_SIZES:
+            grid = []
+            for (x0, y0), c in grids[cell].items():
+                lonc, latc = TO_4326.transform(x0 + cell/2, y0 + cell/2)
+                grid.append({
+                    "count": c["count"],
+                    "by_surface": dict(c["by_surface"]),
+                    "by_month": dict(c["by_month"]),
+                    "by_surface_month": {k: dict(v) for k, v in c["by_surface_month"].items()},
+                    "lat": round(latc, 6),
+                    "lon": round(lonc, 6),
+                    "polygon": cell_polygon(x0, y0, cell),
+                })
+            grid.sort(key=lambda x: (-x["count"], x["lat"], x["lon"]))
+            grid_payloads[str(cell)] = grid
 
-        grid.sort(key=lambda x: (-x["count"], x["lat"], x["lon"]))
         payload = {
             "year": year,
-            "cell_size_m": 2000,
+            "grid_sizes_m": list(GRID_SIZES),
             "points": points,
-            "grid": grid,
+            "grids": grid_payloads,
         }
         out_name = f"{year}.json"
         (OUT / out_name).write_text(json.dumps(payload, ensure_ascii=False, separators=(",",":")), encoding="utf-8")
+        default_grid = grid_payloads["2000"]
         index["years"].append({
             "year": year,
             "file": out_name,
             "lightning_count": len(points),
-            "grid_cells": len(grid),
-            "max_cell_count": max((c["count"] for c in grid), default=0),
+            "grid_cells": {str(cell): len(grid_payloads[str(cell)]) for cell in GRID_SIZES},
+            "max_cell_count": {str(cell): max((c["count"] for c in grid_payloads[str(cell)]), default=0) for cell in GRID_SIZES},
         })
-        annual_grids.append({
-            "year": year,
-            "cells": {
-                (round(c["lon"], 6), round(c["lat"], 6)): c
-                for c in grid
-            },
-        })
-        print(f"Lightning map {year}: {len(points)} flashes, {len(grid)} occupied 2 km cells")
-
-    # Mean annual lightning density per fixed 2 km cell across all available years.
-    # Missing cells in a year count as zero, so values are directly comparable.
-    n_years = len(annual_grids)
-    avg_cells = {}
-    for annual in annual_grids:
-        for key, c in annual["cells"].items():
-            if key not in avg_cells:
-                avg_cells[key] = {
-                    "lat": c["lat"],
-                    "lon": c["lon"],
-                    "polygon": c["polygon"],
-                    "sum": 0.0,
-                    "by_surface_sum": defaultdict(float),
-                }
-            a = avg_cells[key]
-            a["sum"] += c["count"]
-            for surface, value in (c.get("by_surface") or {}).items():
-                a["by_surface_sum"][surface] += value
-
-    avg_grid = []
-    if n_years:
-        for a in avg_cells.values():
-            avg_grid.append({
-                "count": round(a["sum"] / n_years, 3),
-                "by_surface": {
-                    k: round(v / n_years, 3)
-                    for k, v in sorted(a["by_surface_sum"].items())
-                },
-                "lat": a["lat"],
-                "lon": a["lon"],
-                "polygon": a["polygon"],
-            })
-        avg_grid.sort(key=lambda x: (-x["count"], x["lat"], x["lon"]))
-
-    average_payload = {
-        "year": "average",
-        "label": "Medel",
-        "years_included": [x["year"] for x in annual_grids],
-        "year_count": n_years,
-        "cell_size_m": 1000,
-        "points": [],
-        "grid": avg_grid,
-    }
-    (OUT / "average.json").write_text(
-        json.dumps(average_payload, ensure_ascii=False, separators=(",",":")),
-        encoding="utf-8",
-    )
-    index["average"] = {
-        "file": "average.json",
-        "year_count": n_years,
-        "first_year": annual_grids[0]["year"] if annual_grids else None,
-        "last_year": annual_grids[-1]["year"] if annual_grids else None,
-        "grid_cells": len(avg_grid),
-        "max_cell_count": max((c["count"] for c in avg_grid), default=0),
-    }
+        print(
+            f"Lightning map {year}: {len(points)} flashes; "
+            + ", ".join(f"{cell//1000} km={len(grid_payloads[str(cell)])} cells" for cell in GRID_SIZES)
+        )
 
     index["years"].sort(key=lambda x: x["year"])
     (OUT / "index.json").write_text(json.dumps(index, ensure_ascii=False, indent=2), encoding="utf-8")
