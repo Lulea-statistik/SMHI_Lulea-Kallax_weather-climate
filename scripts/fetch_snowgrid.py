@@ -16,6 +16,8 @@ from datetime import date, timedelta
 from pathlib import Path
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 import rasterio
 from rasterio.features import geometry_mask
 from rasterio.windows import from_bounds
@@ -35,6 +37,15 @@ END_YEAR = int(os.getenv("SNOWGRID_END_YEAR", str(START_YEAR)))
 
 SESSION = requests.Session()
 SESSION.headers.update({"User-Agent": "Lulea-statistik-SMHI-snowgrid/1.0"})
+_retry = Retry(
+    total=5,
+    connect=5,
+    read=5,
+    backoff_factor=2,
+    status_forcelist=(429, 500, 502, 503, 504),
+    allowed_methods=frozenset(["GET", "HEAD"]),
+)
+SESSION.mount("https://", HTTPAdapter(max_retries=_retry))
 
 
 def load_municipality():
@@ -62,19 +73,43 @@ def month_url(year: int, month: int) -> str:
 
 
 def open_snd(url: str):
-    """Prefer GDAL /vsicurl range reads; fall back to a temporary full download."""
-    vsi = f'NETCDF:"/vsicurl/{url}":snd'
-    try:
-        return rasterio.open(vsi), None
-    except Exception as first:
-        print(f"Remote NetCDF window open failed, downloading file: {first}")
-        r = SESSION.get(url, timeout=TIMEOUT)
-        r.raise_for_status()
+    """Download the monthly NetCDF robustly, then open it locally.
+
+    SMHI's large NetCDF responses can occasionally close mid-transfer. A full
+    local file is more reliable than GDAL /vsicurl for these monthly archives.
+    """
+    last_error = None
+    for attempt in range(1, 6):
         tmp = tempfile.NamedTemporaryFile(suffix=".nc", delete=False)
-        tmp.write(r.content)
-        tmp.close()
         path = tmp.name
-        return rasterio.open(f'NETCDF:"{path}":snd'), path
+        tmp.close()
+        try:
+            print(f"Downloading NetCDF attempt {attempt}/5")
+            with SESSION.get(url, timeout=(30, TIMEOUT), stream=True) as r:
+                r.raise_for_status()
+                expected = int(r.headers.get("Content-Length") or 0)
+                written = 0
+                with open(path, "wb") as out:
+                    for chunk in r.iter_content(chunk_size=1024 * 1024):
+                        if not chunk:
+                            continue
+                        out.write(chunk)
+                        written += len(chunk)
+                if expected and written != expected:
+                    raise IOError(f"Incomplete download: {written} of {expected} bytes")
+            ds = rasterio.open(f'NETCDF:"{path}":snd')
+            return ds, path
+        except Exception as exc:
+            last_error = exc
+            print(f"Download/open attempt {attempt} failed: {exc}")
+            try:
+                os.unlink(path)
+            except OSError:
+                pass
+            if attempt < 5:
+                import time
+                time.sleep(2 ** attempt)
+    raise RuntimeError(f"Could not download/open GridClim NetCDF after 5 attempts: {last_error}")
 
 
 def iso_dates(year: int, month: int):
