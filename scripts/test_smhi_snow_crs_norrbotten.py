@@ -88,15 +88,22 @@ def main():
             p=res.x
             col=p[0]*xy[:,0]+p[1]; row=-p[0]*xy[:,1]+p[2]
             inside=(col>=0)&(col<w)&(row>=0)&(row<h)
-            rr=np.clip(np.rint(row[inside]).astype(int),0,h-1)
-            cc=np.clip(np.rint(col[inside]).astype(int),0,w-1)
-            vals=dist[rr,cc]
+            if inside.any():
+                rr=np.clip(np.rint(row[inside]).astype(int),0,h-1)
+                cc=np.clip(np.rint(col[inside]).astype(int),0,w-1)
+                vals=dist[rr,cc]
+                med=round(float(np.median(vals)),3)
+                p90=round(float(np.percentile(vals,90)),3)
+            else:
+                med=None
+                p90=None
             results.append({
                 "crs":crs,
                 "objective":round(float(obj(p)),4),
                 "inside_pct":round(float(inside.mean()*100),2),
-                "median_pixel_error":round(float(np.median(vals)),3),
-                "p90_pixel_error":round(float(np.percentile(vals,90)),3),
+                "valid":bool(inside.any()),
+                "median_pixel_error":med,
+                "p90_pixel_error":p90,
                 "params":{"scale":float(p[0]),"ox":float(p[1]),"oy":float(p[2])}
             })
         results.sort(key=lambda r:r["objective"])
