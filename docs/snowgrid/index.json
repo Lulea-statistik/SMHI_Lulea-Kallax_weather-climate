@@ -255,6 +255,99 @@
       "last_date": "2018-07-31",
       "dates": 365,
       "cells": 885
+    },
+    {
+      "season": "2018-19",
+      "file": "2018-19.json",
+      "grid_file": "2018-19_grid.geojson",
+      "first_date": "2018-08-01",
+      "last_date": "2019-07-31",
+      "dates": 365,
+      "cells": 885,
+      "source": "SMHI MetObs IDW interpolation",
+      "source_type": "observations_interpolated"
+    },
+    {
+      "season": "2019-20",
+      "file": "2019-20.json",
+      "grid_file": "2019-20_grid.geojson",
+      "first_date": "2019-08-01",
+      "last_date": "2020-07-31",
+      "dates": 366,
+      "cells": 885,
+      "source": "SMHI MetObs IDW interpolation",
+      "source_type": "observations_interpolated"
+    },
+    {
+      "season": "2020-21",
+      "file": "2020-21.json",
+      "grid_file": "2020-21_grid.geojson",
+      "first_date": "2020-08-01",
+      "last_date": "2021-07-31",
+      "dates": 365,
+      "cells": 885,
+      "source": "SMHI MetObs IDW interpolation",
+      "source_type": "observations_interpolated"
+    },
+    {
+      "season": "2021-22",
+      "file": "2021-22.json",
+      "grid_file": "2021-22_grid.geojson",
+      "first_date": "2021-08-01",
+      "last_date": "2022-07-31",
+      "dates": 365,
+      "cells": 885,
+      "source": "SMHI MetObs IDW interpolation",
+      "source_type": "observations_interpolated"
+    },
+    {
+      "season": "2022-23",
+      "file": "2022-23.json",
+      "grid_file": "2022-23_grid.geojson",
+      "first_date": "2022-08-01",
+      "last_date": "2023-07-31",
+      "dates": 365,
+      "cells": 885,
+      "source": "SMHI MetObs IDW interpolation",
+      "source_type": "observations_interpolated"
+    },
+    {
+      "season": "2023-24",
+      "file": "2023-24.json",
+      "grid_file": "2023-24_grid.geojson",
+      "first_date": "2023-08-01",
+      "last_date": "2024-07-31",
+      "dates": 366,
+      "cells": 885,
+      "source": "SMHI MetObs IDW interpolation",
+      "source_type": "observations_interpolated"
+    },
+    {
+      "season": "2024-25",
+      "file": "2024-25.json",
+      "grid_file": "2024-25_grid.geojson",
+      "first_date": "2024-08-01",
+      "last_date": "2025-07-31",
+      "dates": 365,
+      "cells": 885,
+      "source": "SMHI MetObs IDW interpolation",
+      "source_type": "observations_interpolated"
+    },
+    {
+      "season": "2025-26",
+      "file": "2025-26.json",
+      "grid_file": "2025-26_grid.geojson",
+      "first_date": "2025-08-01",
+      "last_date": "2026-07-01",
+      "dates": 335,
+      "cells": 885,
+      "source": "SMHI MetObs IDW interpolation",
+      "source_type": "observations_interpolated"
     }
-  ]
+  ],
+  "recent_extension": {
+    "source": "SMHI MetObs snow-depth observations",
+    "method": "IDW interpolation onto existing 2.5 km Lulea grid",
+    "from_season": "2018-19"
+  }
 }
