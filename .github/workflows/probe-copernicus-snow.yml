@@ -1,0 +1,37 @@
+name: Probe Copernicus snow phenology
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/probe-copernicus-snow.yml"
+      - "scripts/probe_copernicus_snow.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Probe Copernicus Snow Phenology
+        run: python scripts/probe_copernicus_snow.py
+      - name: Commit probe result
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid/copernicus_snow_probe.json
+          git commit -m "Record Copernicus snow phenology probe"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
