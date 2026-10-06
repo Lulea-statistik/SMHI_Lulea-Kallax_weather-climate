@@ -69,12 +69,12 @@
   <section id="page-temp2" class="page">
     <div class="temp2-window">
       <div class="temp2-window-head">
-        <div><strong>10-årsperiod</strong><div class="hint">Perioden är alltid 10 år. Dragpunkten visar periodens mitt och flyttar hela 10-årsfönstret.</div></div>
+        <div><strong>30-årig klimatperiod</strong><div class="hint">Perioden är alltid 30 år. Dragpunkten visar periodens mitt och flyttar hela 30-årsfönstret.</div></div>
         <strong id="temp2PeriodLabel"></strong>
       </div>
       <input id="temp2Start" type="range">
     </div>
-    <div class="chart-card tall"><h2>Månadsprofil temperatur – 10-årsperiod</h2><canvas id="tempProfiles"></canvas></div>
+    <div class="chart-card tall"><h2>Månadsprofil temperatur – 30-årig klimatperiod</h2><canvas id="tempProfiles"></canvas></div>
   </section>
 
   <section id="page-precip" class="page">
@@ -193,7 +193,7 @@
         <h2>Blixtnedslag i Luleå kommun</h2>
         <p class="hint">Kartan följer sidans filter för <b>Från år</b>, <b>Till år</b> och <b>Månad</b>. Vid flera valda år visar varje fast 2 × 2 km-ruta genomsnittligt antal registrerade urladdningar per år; vid ett enda år visas årets antal.</p>
         <div class="page-tools lightning-map-tools">
-          <label>Kartläge<select id="lightningMapMode"><option value="grid">2 km-rutnät</option><option value="points">Enskilda blixtar</option><option value="none">Inget lager</option></select></label>
+          <label>Kartläge<select id="lightningMapMode"><option value="grid2000">2 × 2 km-rutnät</option><option value="grid1000">1 × 1 km-rutnät</option><option value="grid4000">4 × 4 km-rutnät</option><option value="points">Enskilda blixtar</option><option value="none">Inget lager</option></select></label>
           <label>Yttyp<select id="lightningMapSurface"><option value="all">Alla yttyper</option><option value="mainland">Fastland</option><option value="islands">Öar</option><option value="sea">Hav</option><option value="inland_water">Inlandsvatten</option><option value="uncertain">Osäkert område</option></select></label>
         </div>
         <div id="lightningMap" class="seaice-map lightning-map" aria-label="Interaktiv karta över blixttäthet i Luleå kommun"></div>
@@ -283,5 +283,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=71"></script>
+<script src="app.js?v=72"></script>
 </body></html>
