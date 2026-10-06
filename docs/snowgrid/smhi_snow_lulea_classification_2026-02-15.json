@@ -15,8 +15,9 @@
     "official_polygon_area_km2_epsg3006_coords": 2028.694,
     "polygon_area_km2_after_transform_epsg3013": 2029.284,
     "exact_pixel_geometry_area_km2": 2029.284,
-    "native_raster_mask_area_km2": 2390.221,
-    "native_raster_area_error_pct_vs_official": 17.82,
+    "fractional_raster_mask_area_km2": 2052.427,
+    "fractional_raster_area_error_pct_vs_official": 1.17,
+    "supersampling_factor": 16,
     "exact_pixel_geometry_area_error_pct_vs_official": 0.03,
     "lulea_pixel_bbox": [
       195.204,
@@ -26,15 +27,18 @@
     ],
     "lulea_pixel_width": 19.989,
     "lulea_pixel_height": 35.048,
-    "native_mask_pixels": 302
+    "native_pixels_touched": 330,
+    "weighted_pixel_equivalents": 259.32
   },
   "classification": {
     "palette_source": "SMHI snow-depth app legend",
     "max_rgb_distance": 34.0,
-    "inside_mask_pixels": 302,
-    "classified_pixels": 294,
-    "unclassified_pixels": 8,
-    "classified_share_pct": 97.35,
+    "inside_native_pixels_touched": 330,
+    "classified_native_pixels": 320,
+    "unclassified_native_pixels": 10,
+    "classified_weighted_pixel_equivalents": 253.289,
+    "total_weighted_pixel_equivalents": 259.32,
+    "classified_area_share_pct": 97.67,
     "classes": [
       {
         "class": "200+",
@@ -44,8 +48,9 @@
           124
         ],
         "lower_cm": 200,
-        "pixels": 0,
-        "share_of_classified_pct": 0.0
+        "native_pixels_touched": 0,
+        "weighted_pixel_equivalents": 0.0,
+        "share_of_classified_area_pct": 0.0
       },
       {
         "class": "150-199",
@@ -55,8 +60,9 @@
           177
         ],
         "lower_cm": 150,
-        "pixels": 0,
-        "share_of_classified_pct": 0.0
+        "native_pixels_touched": 0,
+        "weighted_pixel_equivalents": 0.0,
+        "share_of_classified_area_pct": 0.0
       },
       {
         "class": "100-149",
@@ -66,8 +72,9 @@
           198
         ],
         "lower_cm": 100,
-        "pixels": 11,
-        "share_of_classified_pct": 3.74
+        "native_pixels_touched": 12,
+        "weighted_pixel_equivalents": 5.727,
+        "share_of_classified_area_pct": 2.26
       },
       {
         "class": "75-99",
@@ -77,8 +84,9 @@
           185
         ],
         "lower_cm": 75,
-        "pixels": 1,
-        "share_of_classified_pct": 0.34
+        "native_pixels_touched": 1,
+        "weighted_pixel_equivalents": 0.992,
+        "share_of_classified_area_pct": 0.39
       },
       {
         "class": "50-74",
@@ -88,8 +96,9 @@
           220
         ],
         "lower_cm": 50,
-        "pixels": 136,
-        "share_of_classified_pct": 46.26
+        "native_pixels_touched": 151,
+        "weighted_pixel_equivalents": 117.875,
+        "share_of_classified_area_pct": 46.54
       },
       {
         "class": "30-49",
@@ -99,8 +108,9 @@
           243
         ],
         "lower_cm": 30,
-        "pixels": 140,
-        "share_of_classified_pct": 47.62
+        "native_pixels_touched": 150,
+        "weighted_pixel_equivalents": 125.527,
+        "share_of_classified_area_pct": 49.56
       },
       {
         "class": "10-29",
@@ -110,8 +120,9 @@
           247
         ],
         "lower_cm": 10,
-        "pixels": 0,
-        "share_of_classified_pct": 0.0
+        "native_pixels_touched": 0,
+        "weighted_pixel_equivalents": 0.0,
+        "share_of_classified_area_pct": 0.0
       },
       {
         "class": "3-9",
@@ -121,8 +132,9 @@
           255
         ],
         "lower_cm": 3,
-        "pixels": 1,
-        "share_of_classified_pct": 0.34
+        "native_pixels_touched": 1,
+        "weighted_pixel_equivalents": 0.477,
+        "share_of_classified_area_pct": 0.19
       },
       {
         "class": "1-2",
@@ -132,8 +144,9 @@
           198
         ],
         "lower_cm": 1,
-        "pixels": 3,
-        "share_of_classified_pct": 1.02
+        "native_pixels_touched": 3,
+        "weighted_pixel_equivalents": 1.438,
+        "share_of_classified_area_pct": 0.57
       },
       {
         "class": "barmark",
@@ -143,8 +156,9 @@
           143
         ],
         "lower_cm": 0,
-        "pixels": 2,
-        "share_of_classified_pct": 0.68
+        "native_pixels_touched": 2,
+        "weighted_pixel_equivalents": 1.254,
+        "share_of_classified_area_pct": 0.5
       }
     ]
   },
