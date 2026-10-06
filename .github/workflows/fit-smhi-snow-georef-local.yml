@@ -1,0 +1,37 @@
+name: Fit SMHI snow georeference local
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/fit-smhi-snow-georef-local.yml"
+      - "scripts/fit_smhi_snow_georef_local.py"
+      - "docs/snowgrid/smhi_snow_georef_fit.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests pillow numpy scipy pyshp
+      - run: python scripts/fit_smhi_snow_georef_local.py
+      - name: Commit local fit
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid/smhi_snow_georef_local.json
+          git commit -m "Record local Norrbotten SMHI georeference fit"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
