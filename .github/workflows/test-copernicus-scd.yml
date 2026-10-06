@@ -1,0 +1,65 @@
+name: Test Copernicus snow duration
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/test-copernicus-scd.yml"
+      - "scripts/build_copernicus_scd_test.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+      - run: pip install boto3
+
+      - name: Load official HR-WSI connection settings
+        shell: bash
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/eea/clms-hrwsi-api-client-python/main/s3_hrwsi_downloader.py -o /tmp/hrwsi.py
+          python - <<'PY' >> "$GITHUB_ENV"
+          import ast
+          from pathlib import Path
+          tree=ast.parse(Path("/tmp/hrwsi.py").read_text())
+          wanted={"ENDPOINT_URL":"HRWSI_ENDPOINT","ACCESS_KEY":"HRWSI_ACCESS_KEY","SECRET_KEY":"HRWSI_SECRET_KEY","BUCKET":"HRWSI_BUCKET"}
+          vals={}
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Assign):
+                  for target in node.targets:
+                      if isinstance(target, ast.Name) and target.id in wanted and isinstance(node.value, ast.Constant):
+                          vals[wanted[target.id]]=node.value.value
+          missing=[k for k in wanted.values() if k not in vals]
+          if missing:
+              raise SystemExit("Missing official HR-WSI settings: "+", ".join(missing))
+          for k,v in vals.items():
+              print(f"{k}={v}")
+          PY
+
+      - name: Build 2023/24 Snow Cover Duration test
+        run: python scripts/build_copernicus_scd_test.py
+
+      - name: Commit SCD test result
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/snowgrid/copernicus_scd_2023_test.json
+          git commit -m "Record Copernicus SCD aggregation test"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
