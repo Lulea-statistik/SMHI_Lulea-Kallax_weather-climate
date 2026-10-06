@@ -29,6 +29,7 @@
   <button data-page="humidity">Luftfuktighet</button>
   <button data-page="sunshine">Solskenstid</button>
   <button data-page="snow">Snödjup</button>
+  <button data-page="snowmap">Snötäckeskarta</button>
   <button data-page="zerocross">Nollgenomgångar</button>
   <button data-page="vegetation">Vegetationsperiod</button>
   <button data-page="lightning">Blixt</button>
@@ -135,6 +136,40 @@
     <div class="chart-card"><h2>Snötäckessäsongens längd</h2><p class="hint">Antal kalenderdygn från den stabila säsongens första till sista dag enligt samma 1 cm / 7-observationersregel som används för snödjupsmåtten ovan.</p><p id="snowSeasonTrendText" class="hint"></p><canvas id="snowSeason"></canvas></div>
   </section>
 
+  <section id="page-snowmap" class="page">
+    <div class="source-note"><b>Snötäckeskarta:</b> Kartan bygger på SMHI:s observerade dygnsvärden för snödjup (parameter 8) vid stationer inom och nära Luleå kommun. Klassgränserna följer nivåerna som används på SMHI:s snödjupskarta: barmark, 1, 3, 10, 30, 50, 75, 100, 150 och 200+ cm. Färgerna är rapportens egna. Kartan visar observationer och interpolerar inte mellan stationerna, vilket undviker falsk geografisk precision.</div>
+    <div class="page-tools">
+      <label>Snösäsong<select id="snowMapSeason"></select></label>
+    </div>
+    <div class="chart-card full seaice-map-card">
+      <h2>Observerat snödjup i och nära Luleå kommun</h2>
+      <p class="hint">Välj säsong och datum. Fyllda cirklar är stationer inom kommunen; ringmarkerade stationer ligger utanför kommunen men inom 60 km och visas som geografiskt sammanhang.</p>
+      <div id="snowMap" class="seaice-map" aria-label="Interaktiv karta över observerat snödjup i Luleå kommun"></div>
+      <div class="seaice-season-controls">
+        <div class="seaice-season-control-row">
+          <label for="snowMapDateSlider"><b id="snowMapSeasonLabel">Snösäsong</b></label>
+          <span id="snowMapDateLabel">Laddar datum…</span>
+        </div>
+        <input id="snowMapDateSlider" type="range" min="0" max="0" value="0" step="1" disabled>
+        <div class="seaice-season-nav">
+          <button id="snowMapPrevDate" type="button" disabled>Föregående</button>
+          <button id="snowMapNextDate" type="button" disabled>Nästa</button>
+        </div>
+      </div>
+      <p id="snowMapStatus" class="hint"></p>
+    </div>
+    <div class="chart-card">
+      <h2>Genomsnittligt observerat snödjup per datum</h2>
+      <p class="hint">Medelvärde för tillgängliga stationer inom Luleå kommun. Om inga kommunstationer rapporterar den dagen används de närliggande stationerna och detta framgår i kartstatusen.</p>
+      <canvas id="snowMapMean"></canvas>
+    </div>
+    <div class="chart-card">
+      <h2>Andel stationer med mätbart snötäcke</h2>
+      <p class="hint">Andel av rapporterande stationer med minst 1 cm snödjup.</p>
+      <canvas id="snowMapCoverage"></canvas>
+    </div>
+  </section>
+
   <section id="page-zerocross" class="page">
     <div class="chart-card"><h2>Dygn med nollgenomgång per år</h2><p class="hint">Ett dygn räknas när temperaturserien byter sida om 0 °C minst en gång.</p><p id="zeroAnnualTrendText" class="hint"></p><canvas id="zeroAnnual"></canvas></div>
     <div class="chart-card"><h2>Genomsnittligt antal dygn med nollgenomgång per månad</h2><canvas id="zeroMonthly"></canvas></div>
@@ -234,5 +269,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=63"></script>
+<script src="app.js?v=64"></script>
 </body></html>
