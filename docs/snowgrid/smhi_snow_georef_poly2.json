@@ -1,0 +1,64 @@
+{
+  "method": "second-order polynomial EPSG:3006 -> SMHI image pixels",
+  "source_crs": "EPSG:3006 from SCB SWEREF99TM package",
+  "image_size": [
+    249,
+    570
+  ],
+  "normalization": {
+    "x0": 555095.3012117184,
+    "y0": 6644521.067864914,
+    "sx": 141935.69712070294,
+    "sy": 326787.49846859986
+  },
+  "coefficients_col": [
+    104.24765616880424,
+    40.81129956509781,
+    1.6604675133393558,
+    -1.570298078884367e-07,
+    -8.828390703064079e-10,
+    -3.017361256662029e-10
+  ],
+  "coefficients_row": [
+    375.82865810775587,
+    -9.316871589327013,
+    -115.18498340893032,
+    -0.05073128241754711,
+    -1.3744189866863392e-09,
+    -1.614200317354665e-11
+  ],
+  "optimizer": {
+    "success": true,
+    "message": "Optimization terminated successfully.",
+    "objective": 16.0309485508609
+  },
+  "fit_all_counties": {
+    "n": 8265,
+    "inside_pct": 100.0,
+    "median_pixel_error": 2.236,
+    "p90_pixel_error": 11.18,
+    "approx_metres_per_pixel_near_lulea": 3087.6,
+    "median_error_km_approx": 6.9,
+    "p90_error_km_approx": 34.52
+  },
+  "fit_norrbotten": {
+    "n": 628,
+    "inside_pct": 100.0,
+    "median_pixel_error": 6.708,
+    "p90_pixel_error": 24.083,
+    "approx_metres_per_pixel_near_lulea": 3087.6,
+    "median_error_km_approx": 20.71,
+    "p90_error_km_approx": 74.36
+  },
+  "lulea_record": {
+    "KnKod": "2580",
+    "KnNamn": "Luleå"
+  },
+  "lulea_pixel_bbox": {
+    "min_col": 175.71298388120903,
+    "max_col": 191.91221421393166,
+    "min_row": 102.07097645904577,
+    "max_row": 136.73005184982364
+  },
+  "lulea_all_vertices_inside_image": true
+}
