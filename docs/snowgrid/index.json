@@ -5,6 +5,96 @@
   "available_period": "1961-01-01–2018-12-31",
   "seasons": [
     {
+      "season": "1990-91",
+      "file": "1990-91.json",
+      "grid_file": "1990-91_grid.geojson",
+      "first_date": "1990-08-01",
+      "last_date": "1991-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "1991-92",
+      "file": "1991-92.json",
+      "grid_file": "1991-92_grid.geojson",
+      "first_date": "1991-08-01",
+      "last_date": "1992-07-31",
+      "dates": 366,
+      "cells": 885
+    },
+    {
+      "season": "1992-93",
+      "file": "1992-93.json",
+      "grid_file": "1992-93_grid.geojson",
+      "first_date": "1992-08-01",
+      "last_date": "1993-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "1993-94",
+      "file": "1993-94.json",
+      "grid_file": "1993-94_grid.geojson",
+      "first_date": "1993-08-01",
+      "last_date": "1994-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "1994-95",
+      "file": "1994-95.json",
+      "grid_file": "1994-95_grid.geojson",
+      "first_date": "1994-08-01",
+      "last_date": "1995-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "1995-96",
+      "file": "1995-96.json",
+      "grid_file": "1995-96_grid.geojson",
+      "first_date": "1995-08-01",
+      "last_date": "1996-07-31",
+      "dates": 366,
+      "cells": 885
+    },
+    {
+      "season": "1996-97",
+      "file": "1996-97.json",
+      "grid_file": "1996-97_grid.geojson",
+      "first_date": "1996-08-01",
+      "last_date": "1997-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "1997-98",
+      "file": "1997-98.json",
+      "grid_file": "1997-98_grid.geojson",
+      "first_date": "1997-08-01",
+      "last_date": "1998-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "1998-99",
+      "file": "1998-99.json",
+      "grid_file": "1998-99_grid.geojson",
+      "first_date": "1998-08-01",
+      "last_date": "1999-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "1999-00",
+      "file": "1999-00.json",
+      "grid_file": "1999-00_grid.geojson",
+      "first_date": "1999-08-01",
+      "last_date": "2000-07-31",
+      "dates": 366,
+      "cells": 885
+    },
+    {
       "season": "2000-01",
       "file": "2000-01.json",
       "grid_file": "2000-01_grid.geojson",
