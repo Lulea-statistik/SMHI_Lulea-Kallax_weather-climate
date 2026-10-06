@@ -1,0 +1,314 @@
+{
+  "smhi_layer": "https://www.smhi.se/pd/klimat/snow_depth/layer_imgs/lan2425.png",
+  "scb_source": "https://www.scb.se/contentassets/3443fea3fa6640f7a57ea15d9a372d33/shape_svenska_260225.zip",
+  "scb_crs": "EPSG:3006 (source page states SWEREF 99 TM)",
+  "image_size": [
+    249,
+    570
+  ],
+  "mask_mode": "alpha>20",
+  "mask_pixels": 7265,
+  "selected_shapefile": "Lan_Sweref99TM_region.shp",
+  "shapefile_feature_count": 21,
+  "shapefile_fields": [
+    "lnkod",
+    "lnnamn"
+  ],
+  "candidate_shapefiles": [
+    {
+      "score": 50,
+      "features": 21,
+      "name": "Lan_Sweref99TM_region.shp",
+      "fields": [
+        "lnkod",
+        "lnnamn"
+      ]
+    },
+    {
+      "score": 0,
+      "features": 66,
+      "name": "LAomraden_2024.shp",
+      "fields": [
+        "lakod",
+        "namn"
+      ]
+    },
+    {
+      "score": 0,
+      "features": 290,
+      "name": "Kommun_Sweref99TM.shp",
+      "fields": [
+        "knkod",
+        "knnamn"
+      ]
+    }
+  ],
+  "affine_epsg3006_to_pixel": {
+    "col": "a*x + b*y + c",
+    "row": "d*x + e*y + f",
+    "a": 0.00026887492465564475,
+    "b": 5.081184320302474e-06,
+    "c": -80.25067800727773,
+    "d": -7.002827935587573e-05,
+    "e": -0.00035234761570189564,
+    "f": 2755.5086180502885
+  },
+  "approx_metres_per_pixel": 3309.0,
+  "fit_all_counties": {
+    "n": 8048,
+    "inside_pct": 100.0,
+    "median_pixel_error": 2.236,
+    "p90_pixel_error": 10.817,
+    "mean_pixel_error": 4.4,
+    "median_error_km_approx": 7.4,
+    "p90_error_km_approx": 35.79
+  },
+  "fit_norrbotten": {
+    "record": {
+      "LnKod": "25",
+      "LnNamn": "Norrbottens"
+    },
+    "n": 594,
+    "inside_pct": 100.0,
+    "median_pixel_error": 7.81,
+    "p90_pixel_error": 29.017,
+    "mean_pixel_error": 11.686,
+    "median_error_km_approx": 25.84,
+    "p90_error_km_approx": 96.02
+  },
+  "county_evaluations": [
+    {
+      "record": {
+        "LnKod": "01",
+        "LnNamn": "Stockholms"
+      },
+      "n": 1945,
+      "inside_pct": 100.0,
+      "median_pixel_error": 1.414,
+      "p90_pixel_error": 5.0,
+      "mean_pixel_error": 2.059
+    },
+    {
+      "record": {
+        "LnKod": "03",
+        "LnNamn": "Uppsala"
+      },
+      "n": 223,
+      "inside_pct": 100.0,
+      "median_pixel_error": 3.606,
+      "p90_pixel_error": 8.05,
+      "mean_pixel_error": 3.983
+    },
+    {
+      "record": {
+        "LnKod": "04",
+        "LnNamn": "Södermanlands"
+      },
+      "n": 197,
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.828,
+      "p90_pixel_error": 8.098,
+      "mean_pixel_error": 3.377
+    },
+    {
+      "record": {
+        "LnKod": "05",
+        "LnNamn": "Östergötlands"
+      },
+      "n": 260,
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 6.484,
+      "mean_pixel_error": 2.918
+    },
+    {
+      "record": {
+        "LnKod": "06",
+        "LnNamn": "Jönköpings"
+      },
+      "n": 293,
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.828,
+      "p90_pixel_error": 8.448,
+      "mean_pixel_error": 3.684
+    },
+    {
+      "record": {
+        "LnKod": "07",
+        "LnNamn": "Kronobergs"
+      },
+      "n": 236,
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.0,
+      "p90_pixel_error": 6.364,
+      "mean_pixel_error": 2.599
+    },
+    {
+      "record": {
+        "LnKod": "08",
+        "LnNamn": "Kalmar"
+      },
+      "n": 377,
+      "inside_pct": 100.0,
+      "median_pixel_error": 4.0,
+      "p90_pixel_error": 13.992,
+      "mean_pixel_error": 5.512
+    },
+    {
+      "record": {
+        "LnKod": "09",
+        "LnNamn": "Gotlands"
+      },
+      "n": 158,
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.0,
+      "p90_pixel_error": 7.232,
+      "mean_pixel_error": 3.169
+    },
+    {
+      "record": {
+        "LnKod": "10",
+        "LnNamn": "Blekinge"
+      },
+      "n": 155,
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.0,
+      "p90_pixel_error": 9.0,
+      "mean_pixel_error": 3.45
+    },
+    {
+      "record": {
+        "LnKod": "12",
+        "LnNamn": "Skåne"
+      },
+      "n": 303,
+      "inside_pct": 100.0,
+      "median_pixel_error": 4.0,
+      "p90_pixel_error": 11.18,
+      "mean_pixel_error": 5.083
+    },
+    {
+      "record": {
+        "LnKod": "13",
+        "LnNamn": "Hallands"
+      },
+      "n": 254,
+      "inside_pct": 100.0,
+      "median_pixel_error": 4.123,
+      "p90_pixel_error": 8.526,
+      "mean_pixel_error": 4.355
+    },
+    {
+      "record": {
+        "LnKod": "14",
+        "LnNamn": "Västra Götalands"
+      },
+      "n": 938,
+      "inside_pct": 100.0,
+      "median_pixel_error": 5.0,
+      "p90_pixel_error": 13.585,
+      "mean_pixel_error": 6.093
+    },
+    {
+      "record": {
+        "LnKod": "17",
+        "LnNamn": "Värmlands"
+      },
+      "n": 266,
+      "inside_pct": 100.0,
+      "median_pixel_error": 1.707,
+      "p90_pixel_error": 9.899,
+      "mean_pixel_error": 3.159
+    },
+    {
+      "record": {
+        "LnKod": "18",
+        "LnNamn": "Örebro"
+      },
+      "n": 200,
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.0,
+      "p90_pixel_error": 4.0,
+      "mean_pixel_error": 1.906
+    },
+    {
+      "record": {
+        "LnKod": "19",
+        "LnNamn": "Västmanlands"
+      },
+      "n": 159,
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.236,
+      "p90_pixel_error": 6.401,
+      "mean_pixel_error": 2.831
+    },
+    {
+      "record": {
+        "LnKod": "20",
+        "LnNamn": "Dalarnas"
+      },
+      "n": 309,
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.828,
+      "p90_pixel_error": 19.251,
+      "mean_pixel_error": 4.883
+    },
+    {
+      "record": {
+        "LnKod": "21",
+        "LnNamn": "Gävleborgs"
+      },
+      "n": 222,
+      "inside_pct": 100.0,
+      "median_pixel_error": 3.0,
+      "p90_pixel_error": 13.601,
+      "mean_pixel_error": 4.905
+    },
+    {
+      "record": {
+        "LnKod": "22",
+        "LnNamn": "Västernorrlands"
+      },
+      "n": 258,
+      "inside_pct": 100.0,
+      "median_pixel_error": 3.606,
+      "p90_pixel_error": 12.0,
+      "mean_pixel_error": 5.108
+    },
+    {
+      "record": {
+        "LnKod": "23",
+        "LnNamn": "Jämtlands"
+      },
+      "n": 381,
+      "inside_pct": 100.0,
+      "median_pixel_error": 3.162,
+      "p90_pixel_error": 14.318,
+      "mean_pixel_error": 5.27
+    },
+    {
+      "record": {
+        "LnKod": "24",
+        "LnNamn": "Västerbottens"
+      },
+      "n": 320,
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.828,
+      "p90_pixel_error": 10.825,
+      "mean_pixel_error": 4.355
+    },
+    {
+      "record": {
+        "LnKod": "25",
+        "LnNamn": "Norrbottens"
+      },
+      "n": 594,
+      "inside_pct": 100.0,
+      "median_pixel_error": 7.81,
+      "p90_pixel_error": 29.017,
+      "mean_pixel_error": 11.686,
+      "median_error_km_approx": 25.84,
+      "p90_error_km_approx": 96.02
+    }
+  ]
+}
