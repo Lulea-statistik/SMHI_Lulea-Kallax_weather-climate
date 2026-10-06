@@ -5,6 +5,96 @@
   "available_period": "1961-01-01–2018-12-31",
   "seasons": [
     {
+      "season": "2000-01",
+      "file": "2000-01.json",
+      "grid_file": "2000-01_grid.geojson",
+      "first_date": "2000-08-01",
+      "last_date": "2001-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2001-02",
+      "file": "2001-02.json",
+      "grid_file": "2001-02_grid.geojson",
+      "first_date": "2001-08-01",
+      "last_date": "2002-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2002-03",
+      "file": "2002-03.json",
+      "grid_file": "2002-03_grid.geojson",
+      "first_date": "2002-08-01",
+      "last_date": "2003-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2003-04",
+      "file": "2003-04.json",
+      "grid_file": "2003-04_grid.geojson",
+      "first_date": "2003-08-01",
+      "last_date": "2004-07-31",
+      "dates": 366,
+      "cells": 885
+    },
+    {
+      "season": "2004-05",
+      "file": "2004-05.json",
+      "grid_file": "2004-05_grid.geojson",
+      "first_date": "2004-08-01",
+      "last_date": "2005-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2005-06",
+      "file": "2005-06.json",
+      "grid_file": "2005-06_grid.geojson",
+      "first_date": "2005-08-01",
+      "last_date": "2006-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2006-07",
+      "file": "2006-07.json",
+      "grid_file": "2006-07_grid.geojson",
+      "first_date": "2006-08-01",
+      "last_date": "2007-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2007-08",
+      "file": "2007-08.json",
+      "grid_file": "2007-08_grid.geojson",
+      "first_date": "2007-08-01",
+      "last_date": "2008-07-31",
+      "dates": 366,
+      "cells": 885
+    },
+    {
+      "season": "2008-09",
+      "file": "2008-09.json",
+      "grid_file": "2008-09_grid.geojson",
+      "first_date": "2008-08-01",
+      "last_date": "2009-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
+      "season": "2009-10",
+      "file": "2009-10.json",
+      "grid_file": "2009-10_grid.geojson",
+      "first_date": "2009-08-01",
+      "last_date": "2010-07-31",
+      "dates": 365,
+      "cells": 885
+    },
+    {
       "season": "2010-11",
       "file": "2010-11.json",
       "grid_file": "2010-11_grid.geojson",
