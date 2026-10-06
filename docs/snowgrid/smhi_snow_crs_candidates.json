@@ -1,0 +1,250 @@
+{
+  "source_shapefile": "Lan_Sweref99TM_region.shp",
+  "source_prj_epsg_verified": null,
+  "source_prj_wkt_prefix": "PROJCS[\"SWEREF99_TM\",GEOGCS[\"GCS_SWEREF99\",DATUM[\"D_SWEREF99\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"False_Easting\",500000.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",15.0],PARAMETER[\"Scale_Factor\",0.9996],PARAMETER[\"Latitude_Of_Origin\",0.0],UNIT[\"Meter\",1.0],AUTHORITY[\"EPSG\",3006]]",
+  "image_size": [
+    249,
+    570
+  ],
+  "model": "candidate CRS + independent x/y scale and offset only; no rotation/shear/polynomial",
+  "results": [
+    {
+      "crs": "EPSG:3006",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.000375661848633167,
+        "ox": -78.6292845836539,
+        "sy": -0.0003127413757434094,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3007",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.00039863257052702824,
+        "ox": -78.6292845836539,
+        "sy": -0.00030973622206583156,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3008",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.0003866432722042979,
+        "ox": -78.6292845836539,
+        "sy": -0.0003111103109201432,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3009",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.00037551158389371363,
+        "ox": -78.6292845836539,
+        "sy": -0.00031261627919311214,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3010",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.00036514933475079864,
+        "ox": -78.6292845836539,
+        "sy": -0.0003142577462782405,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3011",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.0003554803055983387,
+        "ox": -78.6292845836539,
+        "sy": -0.00031603904767101487,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3012",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.00038097604283490857,
+        "ox": -78.6292845836539,
+        "sy": -0.00031184660026097944,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3013",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.0003702392988826682,
+        "ox": -78.6292845836539,
+        "sy": -0.0003134198216523808,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3014",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.00036023251942966507,
+        "ox": -78.6292845836539,
+        "sy": -0.0003151306176562156,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3015",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.0003508847199658684,
+        "ox": -78.6292845836539,
+        "sy": -0.0003169836969760515,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3016",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.0003415122346878323,
+        "ox": -78.6292845836539,
+        "sy": -0.00031898434890061713,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3017",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.0003326883515608852,
+        "ox": -78.6292845836539,
+        "sy": -0.0003208856264920517,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3018",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.0003244164151070078,
+        "ox": -78.6292845836539,
+        "sy": -0.0003229401454774637,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3021",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.00036984903821409774,
+        "ox": -78.6292845836539,
+        "sy": -0.0003134798001839073,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3035",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.0004132491393906335,
+        "ox": -78.6292845836539,
+        "sy": -0.0003102356882285219,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:3857",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 0.0001659103595336885,
+        "ox": -78.6292845836539,
+        "sy": -0.00014392834903262505,
+        "oy": 448.8221151096689
+      }
+    },
+    {
+      "crs": "EPSG:4326",
+      "objective": 1959.0,
+      "inside_pct": 0.0,
+      "valid": false,
+      "median_pixel_error": null,
+      "p90_pixel_error": null,
+      "params": {
+        "sx": 18.46905674061915,
+        "ox": -78.6292845836539,
+        "sy": -35.043090772131585,
+        "oy": 448.8221151096689
+      }
+    }
+  ]
+}
