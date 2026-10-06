@@ -1,0 +1,55 @@
+{
+  "region": "Norrbotten county (lnkod 25)",
+  "method": "evaluate national isotropic CRS fits from #5 on Norrbotten only; no local refit",
+  "image_size": [
+    249,
+    570
+  ],
+  "results": [
+    {
+      "crs": "EPSG:4326",
+      "inside_pct": 100.0,
+      "median_pixel_error": 2.236,
+      "mean_pixel_error": 3.235,
+      "p90_pixel_error": 8.025,
+      "national_objective": 3.5,
+      "national_median_pixel_error": 2.0,
+      "national_p90_pixel_error": 7.211,
+      "params": {
+        "scale": 9.388355490170358,
+        "ox": -81.54385001233868,
+        "oy": 1042.762947720799
+      }
+    },
+    {
+      "crs": "EPSG:3857",
+      "inside_pct": 100.0,
+      "median_pixel_error": 3.606,
+      "mean_pixel_error": 4.457,
+      "p90_pixel_error": 11.402,
+      "national_objective": 4.0361,
+      "national_median_pixel_error": 2.236,
+      "national_p90_pixel_error": 9.0,
+      "params": {
+        "scale": 8.234417339871502e-05,
+        "ox": -61.14370003852112,
+        "oy": 1139.1427547226654
+      }
+    },
+    {
+      "crs": "EPSG:3006",
+      "inside_pct": 100.0,
+      "median_pixel_error": 6.708,
+      "mean_pixel_error": 9.304,
+      "p90_pixel_error": 22.804,
+      "national_objective": 4.9497,
+      "national_median_pixel_error": 2.828,
+      "national_p90_pixel_error": 10.0,
+      "params": {
+        "scale": 0.00021387002150141223,
+        "ox": -10.41625562770993,
+        "oy": 1856.7339587285514
+      }
+    }
+  ]
+}
