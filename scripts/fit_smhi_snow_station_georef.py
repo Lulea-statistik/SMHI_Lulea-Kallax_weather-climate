@@ -31,8 +31,9 @@ def fit_affine(xy,uv):
 
 def main():
     comps=json.loads(COMP.read_text(encoding="utf-8"))["components"]
-    # Small repeated 9x7-ish objects are treated as station markers.
-    marks=[c for c in comps if 8<=c["width"]<=10 and 6<=c["height"]<=8 and c["visible_pixels"]>=18]
+    # Observation symbols/labels are rendered at several sizes. Use the larger
+    # compact objects as candidate station anchors instead of assuming 9x7 markers.
+    marks=[c for c in comps if 12<=c["width"]<=21 and 12<=c["height"]<=21 and c["visible_pixels"]>=70]
     uv=np.array([[c["centroid_col"],c["centroid_row"]] for c in marks],float)
 
     idx=json.loads(INDEX.read_text(encoding="utf-8"))
@@ -58,7 +59,7 @@ def main():
         pred=aff_apply(p,xy)
         D=np.sqrt(((pred[:,None,:]-uv[None,:,:])**2).sum(axis=2))
         rr,cc=linear_sum_assignment(D)
-        cand=[(int(i),int(j),float(D[i,j])) for i,j in zip(rr,cc) if D[i,j] <= 18.0]
+        cand=[(int(i),int(j),float(D[i,j])) for i,j in zip(rr,cc) if D[i,j] <= 28.0]
         if len(cand)<3: break
         src=np.array([xy[i] for i,j,d in cand],float)
         dst=np.array([uv[j] for i,j,d in cand],float)
@@ -76,7 +77,28 @@ def main():
         p=pnew; pairs=cand
 
     if not pairs or len(pairs)<3:
-        raise RuntimeError(f"Too few marker/station matches: {0 if not pairs else len(pairs)}")
+        pred=aff_apply(p,xy)
+        D=np.sqrt(((pred[:,None,:]-uv[None,:,:])**2).sum(axis=2))
+        diagnostics=[]
+        for i,st in enumerate(stations):
+            j=int(np.argmin(D[i]))
+            diagnostics.append({
+                "station_id":st["id"],"station_name":st["name"],
+                "pred_col":round(float(pred[i,0]),3),"pred_row":round(float(pred[i,1]),3),
+                "nearest_component_id":marks[j]["id"],
+                "nearest_component_col":marks[j]["centroid_col"],
+                "nearest_component_row":marks[j]["centroid_row"],
+                "distance_px":round(float(D[i,j]),3)
+            })
+        report={
+            "date":DATE,"candidate_component_count":len(marks),
+            "observing_local_station_count":len(stations),
+            "matched_control_points":0 if not pairs else len(pairs),
+            "status":"too_few_matches","nearest_diagnostics":diagnostics
+        }
+        OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+        print(json.dumps(report,ensure_ascii=False,indent=2))
+        return
 
     src=np.array([xy[i] for i,j,d in pairs],float)
     dst=np.array([uv[j] for i,j,d in pairs],float)
