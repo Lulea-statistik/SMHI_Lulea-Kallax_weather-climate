@@ -1,0 +1,967 @@
+{
+  "runtime": "https://www.smhi.se/snowdepth/41a20.js?proxy=fodl-klimat",
+  "runtime_size": 3051,
+  "hashes": [
+    [
+      "68",
+      "f657f"
+    ],
+    [
+      "279",
+      "cb148"
+    ]
+  ],
+  "candidates": [
+    {
+      "name": "279.cb148.js",
+      "url": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+      "status": 200,
+      "size": 53699,
+      "hits": [
+        {
+          "token": "fetch(",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": ",s=Q((0,n.useState)(\"\"),2),l=s[0],c=s[1];return(0,n.useEffect)((function(){var n=function(){var n,a=(n=regeneratorRuntime.mark((function n(){var a,o,s,l,m;return regeneratorRuntime.wrap((function(n){for(;;)switch(n.prev=n.next){case 0:return n.prev=0,n.next=3,fetch(\"\".concat(e));case 3:if(!(a=n.sent).ok){n.next=9;break}return n.next=7,a.json();case 7:o=n.sent,\"MenuSeason\"==t&&(o.selectOptions&&(s=[],o.selectOptions.map((function(e){return s.push([e.val,H.t(e.label)])})),i(s),c(H.t(\"period\"))),o.img&&(l=[],m=[],o.img.map((function(e){return l.push(e)})),o.img.map((function(e,t){return m.push(t)})),setImagesTitle(l),setStepsTitle(m)));case 9:n.next=14;break;case 11:n.prev=11,n.t0=n.catch(0),r({title:\"Fel vid laddning\",content:\"Något gick fel när kartan skulle laddas.\"});c"
+        },
+        {
+          "token": "fetch(",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ow new TypeError(\"Cannot call a class as a function\")}(this,u),(t=m.call(this,e)).getIdMapping=function(){var e,t=(e=regeneratorRuntime.mark((function e(t){var r,n;return regeneratorRuntime.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,fetch(\"\".concat(t));case 2:if(!(r=e.sent).ok){e.next=8;break}return e.next=6,r.json();case 6:return n=e.sent,e.abrupt(\"return\",n);case 8:return e.abrupt(\"return\",!1);case 9:case\"end\":return e.stop()}}),e)})),function(){var t=this,r=arguments;return new Promise((function(n,a){var o=e.apply(t,r);function i(e){dt(o,n,a,i,s,\"next\",e)}function s(e){dt(o,n,a,i,s,\"throw\",e)}i(void 0)}))});return function(e){return t.apply(this,arguments)}}(),t.setCurrentTime=function(e){t.setState({currentTime:e})},t.togglePlay=function()"
+        },
+        {
+          "token": "/api/",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "esourceBundle(\"sv\",\"ks\",_);var J=function(e){return e.slice(0).reverse().map((function(e,t){return{key:t,value:e[1]}}))},$=function(e){var t=e.showError,r=e.setParameter,a=e.menuParameter,o=e.parameter,i=e.parameterId,s=e.season,l=e.seasonId,c=\"/pd/fodl-klimat/api/snowdepth/season/2021\";s&&(c=\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\"+(s=2021));var m=function(e,t,r){var a=Q((0,n.useState)([]),2),o=a[0],i=a[1],s=Q((0,n.useState)(\"\"),2),l=s[0],c=s[1];return(0,n.useEffect)((function(){var n=function(){var n,a=(n=regeneratorRuntime.mark((function n(){var a,o,s,l,m;return regeneratorRuntime.wrap((function(n){for(;;)switch(n.prev=n.next){case 0:return n.prev=0,n.next=3,fetch(\"\".concat(e));case 3:if(!(a=n.sent).ok){n.next=9;break}return n.next=7,a.json();case 7"
+        },
+        {
+          "token": "/api/",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "e().map((function(e,t){return{key:t,value:e[1]}}))},$=function(e){var t=e.showError,r=e.setParameter,a=e.menuParameter,o=e.parameter,i=e.parameterId,s=e.season,l=e.seasonId,c=\"/pd/fodl-klimat/api/snowdepth/season/2021\";s&&(c=\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\"+(s=2021));var m=function(e,t,r){var a=Q((0,n.useState)([]),2),o=a[0],i=a[1],s=Q((0,n.useState)(\"\"),2),l=s[0],c=s[1];return(0,n.useEffect)((function(){var n=function(){var n,a=(n=regeneratorRuntime.mark((function n(){var a,o,s,l,m;return regeneratorRuntime.wrap((function(n){for(;;)switch(n.prev=n.next){case 0:return n.prev=0,n.next=3,fetch(\"\".concat(e));case 3:if(!(a=n.sent).ok){n.next=9;break}return n.next=7,a.json();case 7:o=n.sent,\"MenuSeason\"==t&&(o.selectOptions&&(s=[],o.selectOptions.ma"
+        },
+        {
+          "token": "/api/",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "{t.setState({isOrtName:!t.state.isOrtName})},t.setParameter=function(e,r,n,a){t.setState({parameter:e}),t.setState({parameter2:n}),t.setState({seasonId:r}),t.setState({season:a}),t.setCurrentTime(0),(\"week\"==a?t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(a)):t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\".concat(a))).then((function(e){var r=[],n=[],a=[];Object.entries(e.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(e.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),t.setState({images:r}),t.setState({obs:n}),t.setState({steps:a})}))},t.state={parameter:\"valueNrSeason\",parameter2:\"season\",seasonId:0,season:\"week\",images:{},obs:{},steps:[],currentTime"
+        },
+        {
+          "token": "/api/",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "t.setState({parameter:e}),t.setState({parameter2:n}),t.setState({seasonId:r}),t.setState({season:a}),t.setCurrentTime(0),(\"week\"==a?t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(a)):t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\".concat(a))).then((function(e){var r=[],n=[],a=[];Object.entries(e.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(e.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),t.setState({images:r}),t.setState({obs:n}),t.setState({steps:a})}))},t.state={parameter:\"valueNrSeason\",parameter2:\"season\",seasonId:0,season:\"week\",images:{},obs:{},steps:[],currentTime:0,isDownloading:!1,isPlaying:!1,isWater:!0,isLan:!1,isObs:!0,isStationName:!1"
+        },
+        {
+          "token": "/api/",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": ":[],currentTime:0,isDownloading:!1,isPlaying:!1,isWater:!0,isLan:!1,isObs:!0,isStationName:!1,isOrtName:!1,infoTxt:\"\"},t}return t=u,r=[{key:\"componentDidMount\",value:function(){var e=this;this.state.season&&this.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(this.state.season)).then((function(t){var r=[],n=[],a=[];Object.entries(t.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(t.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),e.setState({images:r}),e.setState({obs:n}),e.setState({steps:a}),e.setState({infoTxt:t.addInfo}),e.setCurrentTime(a.length-1)}))}},{key:\"genInfoBox\",value:function(e){if(e.infoText){var t=\"\",r=\"\";return\"sv\"===H.language.split(\"-\")[0]&&e.infoText.se_hdr&&e."
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ction(e){return{type:\"error/show\",error:e}},M=r(7593),V=r(9503),L=r(1818);M.ZP.use(V.Z).use(L.Db).init({resources:{},fallbackLng:\"sv\",debug:!1,ns:[\"ks\"],defaultNS:\"ks\",keySeparator:!1,interpolation:{escapeValue:!1},detection:{order:[\"htmlTag\"]}});var H=M.ZP,G=JSON.parse('{\"period\":\"Pick period\",\"week\":\"Last 7 days\"}'),_=JSON.parse('{\"period\":\"Välj period\",\"week\":\"Senaste veckan\"}');function W(e,t,r,n,a,o,i){try{var s=e[o](i),l=s.value}catch(e){return void r(e)}s.done?t(l):Promise.resolve(l).then(n,a)}function Q(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=null==e?null:\"undefined\"!=typeof Symbol&&e[Symbol.iterator]||e[\"@@iterator\"];if(null!=r){var n,a,o,i,s=[],l=!0,c=!1;try{if(o=(r=r.call(e)).next,0===t){if(Object(r)!==r)return;l=!1}else "
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "),L=r(1818);M.ZP.use(V.Z).use(L.Db).init({resources:{},fallbackLng:\"sv\",debug:!1,ns:[\"ks\"],defaultNS:\"ks\",keySeparator:!1,interpolation:{escapeValue:!1},detection:{order:[\"htmlTag\"]}});var H=M.ZP,G=JSON.parse('{\"period\":\"Pick period\",\"week\":\"Last 7 days\"}'),_=JSON.parse('{\"period\":\"Välj period\",\"week\":\"Senaste veckan\"}');function W(e,t,r,n,a,o,i){try{var s=e[o](i),l=s.value}catch(e){return void r(e)}s.done?t(l):Promise.resolve(l).then(n,a)}function Q(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=null==e?null:\"undefined\"!=typeof Symbol&&e[Symbol.iterator]||e[\"@@iterator\"];if(null!=r){var n,a,o,i,s=[],l=!0,c=!1;try{if(o=(r=r.call(e)).next,0===t){if(Object(r)!==r)return;l=!1}else for(;!(l=(n=o.call(r)).done)&&(s.push(n.value),s.length!==t);l"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "n=function(){var n,a=(n=regeneratorRuntime.mark((function n(){var a,o,s,l,m;return regeneratorRuntime.wrap((function(n){for(;;)switch(n.prev=n.next){case 0:return n.prev=0,n.next=3,fetch(\"\".concat(e));case 3:if(!(a=n.sent).ok){n.next=9;break}return n.next=7,a.json();case 7:o=n.sent,\"MenuSeason\"==t&&(o.selectOptions&&(s=[],o.selectOptions.map((function(e){return s.push([e.val,H.t(e.label)])})),i(s),c(H.t(\"period\"))),o.img&&(l=[],m=[],o.img.map((function(e){return l.push(e)})),o.img.map((function(e,t){return m.push(t)})),setImagesTitle(l),setStepsTitle(m)));case 9:n.next=14;break;case 11:n.prev=11,n.t0=n.catch(0),r({title:\"Fel vid laddning\",content:\"Något gick fel när kartan skulle laddas.\"});case 14:case\"end\":return n.stop()}}),n,null,[[0,11]])})),function(){var e=this,t"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "mitive value.\")}return String(e)}(e,\"string\");return\"symbol\"===ue(t)?t:String(t)}(r))in t?Object.defineProperty(t,r,{value:a,enumerable:!0,configurable:!0,writable:!0}):t[r]=a,t))},o)};de.propTypes={children:c().any,condition:c().bool};var fe=de,be=r(6588),ge=JSON.parse('{\"today\":\"Today\",\"tomorrow\":\"Tomorrow\",\"yesterday\":\"Yesterday\",\"chosenTime\":\"Chosen time\"}'),pe=JSON.parse('{\"today\":\"Idag\",\"tomorrow\":\"Imorgon\",\"yesterday\":\"Igår\",\"chosenTime\":\"Vald tid\"}'),he=r(6197),we=r(1835),ve=r(3370),ye=r(7340),ke=r(253),Se=r(1091),Pe=r(6391),Ce=r(9477),xe=r(2969),Ee=r(1530),Te=r(1999),De={};De.styleTagTransform=P(),De.setAttributes=v(),De.insert=h().bind(null,\"head\"),De.domAPI=g(),De.insertStyleElement=k(),f()(Te.Z,De);var Oe=Te.Z&&Te.Z.locals?Te.Z.locals:void 0;function je(e){r"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "rty(t,r,{value:a,enumerable:!0,configurable:!0,writable:!0}):t[r]=a,t))},o)};de.propTypes={children:c().any,condition:c().bool};var fe=de,be=r(6588),ge=JSON.parse('{\"today\":\"Today\",\"tomorrow\":\"Tomorrow\",\"yesterday\":\"Yesterday\",\"chosenTime\":\"Chosen time\"}'),pe=JSON.parse('{\"today\":\"Idag\",\"tomorrow\":\"Imorgon\",\"yesterday\":\"Igår\",\"chosenTime\":\"Vald tid\"}'),he=r(6197),we=r(1835),ve=r(3370),ye=r(7340),ke=r(253),Se=r(1091),Pe=r(6391),Ce=r(9477),xe=r(2969),Ee=r(1530),Te=r(1999),De={};De.styleTagTransform=P(),De.setAttributes=v(),De.insert=h().bind(null,\"head\"),De.domAPI=g(),De.insertStyleElement=k(),f()(Te.Z,De);var Oe=Te.Z&&Te.Z.locals?Te.Z.locals:void 0;function je(e){return je=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(e){return typeof e}:function(e"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "Element(\"div\",{key:\"tick-\".concat(t),className:Me.tick,style:{background:e.color,borderLeft:\"0.0625rem solid #647078\",borderRight:\"0.0625rem solid #647078\"}}))})))))))},Le=r(4453),He=r(2941),Ge=r(8131),_e=r(5836),We=r(8674),Qe=r(3743),Ue=r(5079),Je=r(9302),$e=JSON.parse('{\"legend\":\"Show/hide legend\",\"vatten\":\"Show/hide lakes and rivers\",\"lan\":\"Show/hide counties\",\"obs\":\"Show/hide observations\",\"stationName\":\"Show/hide station names\",\"ortName\":\"Show/hide place names\"}'),et=JSON.parse('{\"legend\":\"Visa/dölj legenden\",\"vatten\":\"Visa/dölj sjöar och vattendrag\",\"lan\":\"Visa/dölj län\",\"obs\":\"Visa/dölj observationer\",\"stationName\":\"Visa/dölj stationsnamn\",\"ortName\":\"Visa/dölj ortnamn\"}');function tt(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=nu"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "(8674),Qe=r(3743),Ue=r(5079),Je=r(9302),$e=JSON.parse('{\"legend\":\"Show/hide legend\",\"vatten\":\"Show/hide lakes and rivers\",\"lan\":\"Show/hide counties\",\"obs\":\"Show/hide observations\",\"stationName\":\"Show/hide station names\",\"ortName\":\"Show/hide place names\"}'),et=JSON.parse('{\"legend\":\"Visa/dölj legenden\",\"vatten\":\"Visa/dölj sjöar och vattendrag\",\"lan\":\"Visa/dölj län\",\"obs\":\"Visa/dölj observationer\",\"stationName\":\"Visa/dölj stationsnamn\",\"ortName\":\"Visa/dölj ortnamn\"}');function tt(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=null==e?null:\"undefined\"!=typeof Symbol&&e[Symbol.iterator]||e[\"@@iterator\"];if(null!=r){var n,a,o,i,s=[],l=!0,c=!1;try{if(o=(r=r.call(e)).next,0===t){if(Object(r)!==r)return;l=!1}else for(;!(l=(n=o.call(r)).done)&&(s.p"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ationName:t.selectedParameters.toggleStationName,isStationName:t.selectedParameters.isStationName,toggleOrtName:t.selectedParameters.toggleOrtName,isOrtName:t.selectedParameters.isOrtName}}),(function(e){return{showError:function(t){return e(K(t))}}}))(at),st=JSON.parse('{\"ingress\":\"The snow depth map is intended to give a momentary overview of the observed snow depth in Sweden. This page shows snow depth maps from the 2009-2010 season onwards.\",\"legendTitle\":\"Snow depth (cm)\",\"barmark\":\"Bare ground\",\"infoTitle\":\"About the snow depth map\",\"infoTxt\":\"The analysis is nowadays automatically performed around {{updHour}} am. The analysis is based on the snow depth observations that are done at {{obsHour}} am. The snow depth can vary greatly even within small areas. Because o"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "tainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": ")).getIdMapping=function(){var e,t=(e=regeneratorRuntime.mark((function e(t){var r,n;return regeneratorRuntime.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,fetch(\"\".concat(t));case 2:if(!(r=e.sent).ok){e.next=8;break}return e.next=6,r.json();case 6:return n=e.sent,e.abrupt(\"return\",n);case 8:return e.abrupt(\"return\",!1);case 9:case\"end\":return e.stop()}}),e)})),function(){var t=this,r=arguments;return new Promise((function(n,a){var o=e.apply(t,r);function i(e){dt(o,n,a,i,s,\"next\",e)}function s(e){dt(o,n,a,i,s,\"throw\",e)}i(void 0)}))});return function(e){return t.apply(this,arguments)}}(),t.setCurrentTime=function(e){t.setState({currentTime:e})},t.togglePlay=function(){var e=t.state.isPlaying;t.setState({isPlaying:!e},(function(){t.state.isPlayin"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "3.400,27.432 13.400,27.432 15.052,26.647 16.927,26.532 18.700,26.180 19.711,25.979 21.537,25.589 22.279,24.867 23.232,23.940 23.100,22.602 23.100,21.400 23.100,21.400 23.100,13.600 23.100,13.600 23.100,13.600 12.400,13.600 12.400,13.600 Z\"})),C=nt+\"obsort2425.png\";\"1011\"==r||\"1112\"==r?C=nt+\"obsort.gif\":\"1213\"==r?C=nt+\"obsort1213.gif\":\"1314\"==r||\"1415\"==r?C=nt+\"obsort1314.gif\":\"1516\"==r?C=nt+\"obsort1516.gif\":\"1617\"==r?C=nt+\"obsort1617.png\":\"1718\"==r?C=nt+\"obsort1718.png\":\"1819\"==r?C=nt+\"obsort1819.png\":\"1920\"==r||\"2021\"==r?C=nt+\"obsort1920.png\":\"2122\"==r?C=nt+\"obsort2122.png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":par"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "00 23.100,13.600 23.100,13.600 12.400,13.600 12.400,13.600 Z\"})),C=nt+\"obsort2425.png\";\"1011\"==r||\"1112\"==r?C=nt+\"obsort.gif\":\"1213\"==r?C=nt+\"obsort1213.gif\":\"1314\"==r||\"1415\"==r?C=nt+\"obsort1314.gif\":\"1516\"==r?C=nt+\"obsort1516.gif\":\"1617\"==r?C=nt+\"obsort1617.png\":\"1718\"==r?C=nt+\"obsort1718.png\":\"1819\"==r?C=nt+\"obsort1819.png\":\"1920\"==r||\"2021\"==r?C=nt+\"obsort1920.png\":\"2122\"==r?C=nt+\"obsort2122.png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"l"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "2.400,13.600 12.400,13.600 Z\"})),C=nt+\"obsort2425.png\";\"1011\"==r||\"1112\"==r?C=nt+\"obsort.gif\":\"1213\"==r?C=nt+\"obsort1213.gif\":\"1314\"==r||\"1415\"==r?C=nt+\"obsort1314.gif\":\"1516\"==r?C=nt+\"obsort1516.gif\":\"1617\"==r?C=nt+\"obsort1617.png\":\"1718\"==r?C=nt+\"obsort1718.png\":\"1819\"==r?C=nt+\"obsort1819.png\":\"1920\"==r||\"2021\"==r?C=nt+\"obsort1920.png\":\"2122\"==r?C=nt+\"obsort2122.png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{c"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": ",C=nt+\"obsort2425.png\";\"1011\"==r||\"1112\"==r?C=nt+\"obsort.gif\":\"1213\"==r?C=nt+\"obsort1213.gif\":\"1314\"==r||\"1415\"==r?C=nt+\"obsort1314.gif\":\"1516\"==r?C=nt+\"obsort1516.gif\":\"1617\"==r?C=nt+\"obsort1617.png\":\"1718\"==r?C=nt+\"obsort1718.png\":\"1819\"==r?C=nt+\"obsort1819.png\":\"1920\"==r||\"2021\"==r?C=nt+\"obsort1920.png\":\"2122\"==r?C=nt+\"obsort2122.png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doub"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "?C=nt+\"obsort.gif\":\"1213\"==r?C=nt+\"obsort1213.gif\":\"1314\"==r||\"1415\"==r?C=nt+\"obsort1314.gif\":\"1516\"==r?C=nt+\"obsort1516.gif\":\"1617\"==r?C=nt+\"obsort1617.png\":\"1718\"==r?C=nt+\"obsort1718.png\":\"1819\"==r?C=nt+\"obsort1819.png\":\"1920\"==r||\"2021\"==r?C=nt+\"obsort1920.png\":\"2122\"==r?C=nt+\"obsort2122.png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doubleClickZoom:!1,zoomControl:!1,maxZoom:j,min"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "t+\"obsort1213.gif\":\"1314\"==r||\"1415\"==r?C=nt+\"obsort1314.gif\":\"1516\"==r?C=nt+\"obsort1516.gif\":\"1617\"==r?C=nt+\"obsort1617.png\":\"1718\"==r?C=nt+\"obsort1718.png\":\"1819\"==r?C=nt+\"obsort1819.png\":\"1920\"==r||\"2021\"==r?C=nt+\"obsort1920.png\":\"2122\"==r?C=nt+\"obsort2122.png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doubleClickZoom:!1,zoomControl:!1,maxZoom:j,minZoom:j,zoom:j,crs:re().CRS.Simpl"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "415\"==r?C=nt+\"obsort1314.gif\":\"1516\"==r?C=nt+\"obsort1516.gif\":\"1617\"==r?C=nt+\"obsort1617.png\":\"1718\"==r?C=nt+\"obsort1718.png\":\"1819\"==r?C=nt+\"obsort1819.png\":\"1920\"==r||\"2021\"==r?C=nt+\"obsort1920.png\":\"2122\"==r?C=nt+\"obsort2122.png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doubleClickZoom:!1,zoomControl:!1,maxZoom:j,minZoom:j,zoom:j,crs:re().CRS.Simple,scrollWheelZoom:!1,maxBounds:d"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "6\"==r?C=nt+\"obsort1516.gif\":\"1617\"==r?C=nt+\"obsort1617.png\":\"1718\"==r?C=nt+\"obsort1718.png\":\"1819\"==r?C=nt+\"obsort1819.png\":\"1920\"==r||\"2021\"==r?C=nt+\"obsort1920.png\":\"2122\"==r?C=nt+\"obsort2122.png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doubleClickZoom:!1,zoomControl:!1,maxZoom:j,minZoom:j,zoom:j,crs:re().CRS.Simple,scrollWheelZoom:!1,maxBounds:d,maxBoundsViscosity:1,dragging:!1}"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "\":\"1617\"==r?C=nt+\"obsort1617.png\":\"1718\"==r?C=nt+\"obsort1718.png\":\"1819\"==r?C=nt+\"obsort1819.png\":\"1920\"==r||\"2021\"==r?C=nt+\"obsort1920.png\":\"2122\"==r?C=nt+\"obsort2122.png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doubleClickZoom:!1,zoomControl:!1,maxZoom:j,minZoom:j,zoom:j,crs:re().CRS.Simple,scrollWheelZoom:!1,maxBounds:d,maxBoundsViscosity:1,dragging:!1},n.createElement(\"div\",{cl"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "122\"==r?C=nt+\"obsort2122.png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doubleClickZoom:!1,zoomControl:!1,maxZoom:j,minZoom:j,zoom:j,crs:re().CRS.Simple,scrollWheelZoom:!1,maxBounds:d,maxBoundsViscosity:1,dragging:!1},n.createElement(\"div\",{className:\"leaflet-top leaflet-left\"},n.createElement(\"div\",{className:(0,m.Z)(\"leaflet-control\",se.m15)},n.createElement(Le.Z,{vertical:!0,float"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "png\":\"2223\"==r?C=nt+\"obsort2223.png\":\"2324\"==r&&(C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doubleClickZoom:!1,zoomControl:!1,maxZoom:j,minZoom:j,zoom:j,crs:re().CRS.Simple,scrollWheelZoom:!1,maxBounds:d,maxBoundsViscosity:1,dragging:!1},n.createElement(\"div\",{className:\"leaflet-top leaflet-left\"},n.createElement(\"div\",{className:(0,m.Z)(\"leaflet-control\",se.m15)},n.createElement(Le.Z,{vertical:!0,floating:!0},n.createElement(H"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "C=nt+\"obsort2324.png\");var T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doubleClickZoom:!1,zoomControl:!1,maxZoom:j,minZoom:j,zoom:j,crs:re().CRS.Simple,scrollWheelZoom:!1,maxBounds:d,maxBoundsViscosity:1,dragging:!1},n.createElement(\"div\",{className:\"leaflet-top leaflet-left\"},n.createElement(\"div\",{className:(0,m.Z)(\"leaflet-control\",se.m15)},n.createElement(Le.Z,{vertical:!0,floating:!0},n.createElement(He.Z,{vertical:!0,className:se.toolbar},o&&n.creat"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ar T=nt+\"orter2425.png\";\"week\"!=r&&(\"1011\"==r||\"1112\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doubleClickZoom:!1,zoomControl:!1,maxZoom:j,minZoom:j,zoom:j,crs:re().CRS.Simple,scrollWheelZoom:!1,maxBounds:d,maxBoundsViscosity:1,dragging:!1},n.createElement(\"div\",{className:\"leaflet-top leaflet-left\"},n.createElement(\"div\",{className:(0,m.Z)(\"leaflet-control\",se.m15)},n.createElement(Le.Z,{vertical:!0,floating:!0},n.createElement(He.Z,{vertical:!0,className:se.toolbar},o&&n.createElement(ye.Z,{icon:x?n."
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "2\"==r?T=nt+\"orter.gif\":\"1213\"==r||\"1314\"==r||\"1516\"==r?T=nt+\"orter1213.gif\":parseInt(r)<2425&&(T=nt+\"orter1617.png\"));var D=nt+\"h2o2425.png\";\"week\"!=r&&parseInt(r)<2425&&(D=nt+\"h2o1617.png\");var O=nt+\"lan2425.png\";return\"week\"!=r&&parseInt(r)<2425&&(O=nt+\"lan.png\"),n.createElement(ne.Z,{className:i,center:[u/2,s/2],doubleClickZoom:!1,zoomControl:!1,maxZoom:j,minZoom:j,zoom:j,crs:re().CRS.Simple,scrollWheelZoom:!1,maxBounds:d,maxBoundsViscosity:1,dragging:!1},n.createElement(\"div\",{className:\"leaflet-top leaflet-left\"},n.createElement(\"div\",{className:(0,m.Z)(\"leaflet-control\",se.m15)},n.createElement(Le.Z,{vertical:!0,floating:!0},n.createElement(He.Z,{vertical:!0,className:se.toolbar},o&&n.createElement(ye.Z,{icon:x?n.createElement(Ge.Z,null):n.createElement(_e.Z,null)"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ceBundle(\"sv\",\"ks\",_);var J=function(e){return e.slice(0).reverse().map((function(e,t){return{key:t,value:e[1]}}))},$=function(e){var t=e.showError,r=e.setParameter,a=e.menuParameter,o=e.parameter,i=e.parameterId,s=e.season,l=e.seasonId,c=\"/pd/fodl-klimat/api/snowdepth/season/2021\";s&&(c=\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\"+(s=2021));var m=function(e,t,r){var a=Q((0,n.useState)([]),2),o=a[0],i=a[1],s=Q((0,n.useState)(\"\"),2),l=s[0],c=s[1];return(0,n.useEffect)((function(){var n=function(){var n,a=(n=regeneratorRuntime.mark((function n(){var a,o,s,l,m;return regeneratorRuntime.wrap((function(n){for(;;)switch(n.prev=n.next){case 0:return n.prev=0,n.next=3,fetch(\"\".concat(e));case 3:if(!(a=n.sent).ok){n.next=9;break}return n.next=7,a.json();case 7:o=n."
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ap((function(e,t){return{key:t,value:e[1]}}))},$=function(e){var t=e.showError,r=e.setParameter,a=e.menuParameter,o=e.parameter,i=e.parameterId,s=e.season,l=e.seasonId,c=\"/pd/fodl-klimat/api/snowdepth/season/2021\";s&&(c=\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\"+(s=2021));var m=function(e,t,r){var a=Q((0,n.useState)([]),2),o=a[0],i=a[1],s=Q((0,n.useState)(\"\"),2),l=s[0],c=s[1];return(0,n.useEffect)((function(){var n=function(){var n,a=(n=regeneratorRuntime.mark((function n(){var a,o,s,l,m;return regeneratorRuntime.wrap((function(n){for(;;)switch(n.prev=n.next){case 0:return n.prev=0,n.next=3,fetch(\"\".concat(e));case 3:if(!(a=n.sent).ok){n.next=9;break}return n.next=7,a.json();case 7:o=n.sent,\"MenuSeason\"==t&&(o.selectOptions&&(s=[],o.selectOptions.map((fu"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "s must have a [Symbol.iterator]() method.\")}()}function rt(e,t){(null==t||t>e.length)&&(t=e.length);for(var r=0,n=new Array(t);r<t;r++)n[r]=e[r];return n}H.addResourceBundle(\"en\",\"ks\",$e),H.addResourceBundle(\"sv\",\"ks\",et);var nt=\"https://www.smhi.se/pd/klimat/snow_depth/layer_imgs/\",at=function(e){var t=e.currentTime,r=e.season,a=e.legendTitle,o=e.legend,i=e.setCurrentTime,s=e.steps,l=e.images,c=e.obs,u=e.togglePlay,d=e.isPlaying,f=e.toggleWater,b=e.isWater,g=e.toggleLan,p=e.isLan,h=e.toggleObs,w=e.isObs,v=e.toggleStationName,y=e.isStationName,k=e.toggleOrtName,S=e.isOrtName,P=(0,n.useRef)(),C=tt((0,n.useState)(!1),2),x=C[0],E=C[1];(0,n.useEffect)((function(){\"week\"===r?(l.forEach((function(e){(new Image).src=e.url})),c.forEach((function(e){(new Image).src=e.url}))):(l."
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "rs.toggleStationName,isStationName:t.selectedParameters.isStationName,toggleOrtName:t.selectedParameters.toggleOrtName,isOrtName:t.selectedParameters.isOrtName}}),(function(e){return{showError:function(t){return e(K(t))}}}))(at),st=JSON.parse('{\"ingress\":\"The snow depth map is intended to give a momentary overview of the observed snow depth in Sweden. This page shows snow depth maps from the 2009-2010 season onwards.\",\"legendTitle\":\"Snow depth (cm)\",\"barmark\":\"Bare ground\",\"infoTitle\":\"About the snow depth map\",\"infoTxt\":\"The analysis is nowadays automatically performed around {{updHour}} am. The analysis is based on the snow depth observations that are done at {{obsHour}} am. The snow depth can vary greatly even within small areas. Because of the large distances betwee"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ggleOrtName:t.selectedParameters.toggleOrtName,isOrtName:t.selectedParameters.isOrtName}}),(function(e){return{showError:function(t){return e(K(t))}}}))(at),st=JSON.parse('{\"ingress\":\"The snow depth map is intended to give a momentary overview of the observed snow depth in Sweden. This page shows snow depth maps from the 2009-2010 season onwards.\",\"legendTitle\":\"Snow depth (cm)\",\"barmark\":\"Bare ground\",\"infoTitle\":\"About the snow depth map\",\"infoTxt\":\"The analysis is nowadays automatically performed around {{updHour}} am. The analysis is based on the snow depth observations that are done at {{obsHour}} am. The snow depth can vary greatly even within small areas. Because of the large distances between the observation stations the uncertainties in the estimated snow depth"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "eOrtName,isOrtName:t.selectedParameters.isOrtName}}),(function(e){return{showError:function(t){return e(K(t))}}}))(at),st=JSON.parse('{\"ingress\":\"The snow depth map is intended to give a momentary overview of the observed snow depth in Sweden. This page shows snow depth maps from the 2009-2010 season onwards.\",\"legendTitle\":\"Snow depth (cm)\",\"barmark\":\"Bare ground\",\"infoTitle\":\"About the snow depth map\",\"infoTxt\":\"The analysis is nowadays automatically performed around {{updHour}} am. The analysis is based on the snow depth observations that are done at {{obsHour}} am. The snow depth can vary greatly even within small areas. Because of the large distances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\""
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "eturn{showError:function(t){return e(K(t))}}}))(at),st=JSON.parse('{\"ingress\":\"The snow depth map is intended to give a momentary overview of the observed snow depth in Sweden. This page shows snow depth maps from the 2009-2010 season onwards.\",\"legendTitle\":\"Snow depth (cm)\",\"barmark\":\"Bare ground\",\"infoTitle\":\"About the snow depth map\",\"infoTxt\":\"The analysis is nowadays automatically performed around {{updHour}} am. The analysis is based on the snow depth observations that are done at {{obsHour}} am. The snow depth can vary greatly even within small areas. Because of the large distances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDay"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "e('{\"ingress\":\"The snow depth map is intended to give a momentary overview of the observed snow depth in Sweden. This page shows snow depth maps from the 2009-2010 season onwards.\",\"legendTitle\":\"Snow depth (cm)\",\"barmark\":\"Bare ground\",\"infoTitle\":\"About the snow depth map\",\"infoTxt\":\"The analysis is nowadays automatically performed around {{updHour}} am. The analysis is based on the snow depth observations that are done at {{obsHour}} am. The snow depth can vary greatly even within small areas. Because of the large distances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": " snow depth maps from the 2009-2010 season onwards.\",\"legendTitle\":\"Snow depth (cm)\",\"barmark\":\"Bare ground\",\"infoTitle\":\"About the snow depth map\",\"infoTxt\":\"The analysis is nowadays automatically performed around {{updHour}} am. The analysis is based on the snow depth observations that are done at {{obsHour}} am. The snow depth can vary greatly even within small areas. Because of the large distances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ög"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "itle\":\"Snow depth (cm)\",\"barmark\":\"Bare ground\",\"infoTitle\":\"About the snow depth map\",\"infoTxt\":\"The analysis is nowadays automatically performed around {{updHour}} am. The analysis is based on the snow depth observations that are done at {{obsHour}} am. The snow depth can vary greatly even within small areas. Because of the large distances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "d {{updHour}} am. The analysis is based on the snow depth observations that are done at {{obsHour}} am. The snow depth can vary greatly even within small areas. Because of the large distances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTx"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "re done at {{obsHour}} am. The snow depth can vary greatly even within small areas. Because of the large distances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddag"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "pth can vary greatly even within small areas. Because of the large distances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobs"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ven within small areas. Because of the large distances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts "
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "he large distances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snö"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "stances between the observation stations the uncertainties in the estimated snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan "
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskartorna\",\"linkDaySnow\":\"Dagens största snödjup\",\"linkAllDaySnow\":\"Alla dagens snödjupsobservationer\"}');function ct(e){return ct=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&\"function\"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?\"symbol\":typeof e},ct(e)}function mt(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=null==e?null:\"undefined\"!=typeof Symbol&&e[Symbol.iterator]||e[\"@@iterator\"];if(null!=r){var n,a,o,i,s=[],l=!0"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "pet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskartorna\",\"linkDaySnow\":\"Dagens största snödjup\",\"linkAllDaySnow\":\"Alla dagens snödjupsobservationer\"}');function ct(e){return ct=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&\"function\"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?\"symbol\":typeof e},ct(e)}function mt(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=null==e?null:\"undefined\"!=typeof Symbol&&e[Symbol.iterator]||e[\"@@iterator\"];if(null!=r){var n,a,o,i,s=[],l=!0,c=!1;try{if(o=(r=r.call(e)).next,0===t){i"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "tState({isOrtName:!t.state.isOrtName})},t.setParameter=function(e,r,n,a){t.setState({parameter:e}),t.setState({parameter2:n}),t.setState({seasonId:r}),t.setState({season:a}),t.setCurrentTime(0),(\"week\"==a?t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(a)):t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\".concat(a))).then((function(e){var r=[],n=[],a=[];Object.entries(e.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(e.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),t.setState({images:r}),t.setState({obs:n}),t.setState({steps:a})}))},t.state={parameter:\"valueNrSeason\",parameter2:\"season\",seasonId:0,season:\"week\",images:{},obs:{},steps:[],currentTime:0,is"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "State({parameter:e}),t.setState({parameter2:n}),t.setState({seasonId:r}),t.setState({season:a}),t.setCurrentTime(0),(\"week\"==a?t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(a)):t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\".concat(a))).then((function(e){var r=[],n=[],a=[];Object.entries(e.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(e.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),t.setState({images:r}),t.setState({obs:n}),t.setState({steps:a})}))},t.state={parameter:\"valueNrSeason\",parameter2:\"season\",seasonId:0,season:\"week\",images:{},obs:{},steps:[],currentTime:0,isDownloading:!1,isPlaying:!1,isWater:!0,isLan:!1,isObs:!0,isStationName:!1,isOr"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "urrentTime:0,isDownloading:!1,isPlaying:!1,isWater:!0,isLan:!1,isObs:!0,isStationName:!1,isOrtName:!1,infoTxt:\"\"},t}return t=u,r=[{key:\"componentDidMount\",value:function(){var e=this;this.state.season&&this.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(this.state.season)).then((function(t){var r=[],n=[],a=[];Object.entries(t.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(t.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),e.setState({images:r}),e.setState({obs:n}),e.setState({steps:a}),e.setState({infoTxt:t.addInfo}),e.setCurrentTime(a.length-1)}))}},{key:\"genInfoBox\",value:function(e){if(e.infoText){var t=\"\",r=\"\";return\"sv\"===H.language.split(\"-\")[0]&&e.infoText.se_hdr&&e.infoT"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "sv\"===H.language.split(\"-\")[0]&&e.infoText.se_hdr&&e.infoText.se_text?(t=e.infoText.se_text,r=e.infoText.se_hdr):\"en\"===H.language.split(\"-\")[0]&&e.infoText.en_hdr&&e.infoText.en_text&&(t=e.infoText.en_text,r=e.infoText.en_hdr),n.createElement(a.Z,{className:\"snowdepth-infoBox\"},n.createElement(\"div\",{style:{fontWeight:700}},r),t)}}},{key:\"getHour\",value:function(e,t){return e.setUTCHours(t),e.getHours()}},{key:\"render\",value:function(){var e=this.state,t=e.steps,r=e.images,a=e.obs,l=e.currentTime;r[l]&&(this.getHour(new Date(r[l].title),6),this.getHour(new Date,9));var c,m=[{legend:\"200\",color:\"#810F7C\"},{legend:\"150\",color:\"#8C6BB1\"},{legend:\"100\",color:\"#8C96C6\"},{legend:\"75\",color:\"#3874B9\"},{legend:\"50\",color:\"#3B9DDC\"},{legend:\"30\",color:\"#9ED0F3\"},{legend:\"10\",co"
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "d snow depth are also quite large.\",\"linkMoreInfo\":\"More information about the snow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan station"
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ow depth maps (in Swedish)\",\"linkDaySnow\":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkM"
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": ":\"Todays maximum snow depth (in Swedish)\",\"linkAllDaySnow\":\"All snow depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskart"
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "w depth observations today (in Swedish)\"}'),lt=JSON.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskartorna\",\"linkDaySnow\":\"Dagens största snödjup\",\"linkAllDaySnow\":\"Alla"
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "N.parse('{\"ingress\":\"Snödjupskartan är avsedd att ge en översiktlig ögonblicksbild av det observerade snödjupet i Sverige. På denna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskartorna\",\"linkDaySnow\":\"Dagens största snödjup\",\"linkAllDaySnow\":\"Alla dagens snödjupsobservationer\"}');function ct(e){r"
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "enna sida visas snödjupskartor från säsongen 2009-2010 och framåt.\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskartorna\",\"linkDaySnow\":\"Dagens största snödjup\",\"linkAllDaySnow\":\"Alla dagens snödjupsobservationer\"}');function ct(e){return ct=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&\"functi"
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "\",\"legendTitle\":\"Snödjup (cm)\",\"barmark\":\"Barmark\",\"infoTitle\":\"Om snödjupskartan\",\"infoTxt\":\"Analysen görs numera automatiskt omkring klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskartorna\",\"linkDaySnow\":\"Dagens största snödjup\",\"linkAllDaySnow\":\"Alla dagens snödjupsobservationer\"}');function ct(e){return ct=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&\"function\"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?\""
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ng klockan {{updHour}} på förmiddagen. Analysen baseras på de snödjupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskartorna\",\"linkDaySnow\":\"Dagens största snödjup\",\"linkAllDaySnow\":\"Alla dagens snödjupsobservationer\"}');function ct(e){return ct=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&\"function\"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?\"symbol\":typeof e},ct(e)}function mt(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=null==e?null:\"unde"
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "jupsobservationer som gjorts klockan {{obsHour}} på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskartorna\",\"linkDaySnow\":\"Dagens största snödjup\",\"linkAllDaySnow\":\"Alla dagens snödjupsobservationer\"}');function ct(e){return ct=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&\"function\"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?\"symbol\":typeof e},ct(e)}function mt(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=null==e?null:\"undefined\"!=typeof Symbol&&e[Symbol.iterator]||e[\"@@iterator\"];if(null"
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": " på morgonen. Snödjupet kan variera mycket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskartorna\",\"linkDaySnow\":\"Dagens största snödjup\",\"linkAllDaySnow\":\"Alla dagens snödjupsobservationer\"}');function ct(e){return ct=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&\"function\"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?\"symbol\":typeof e},ct(e)}function mt(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=null==e?null:\"undefined\"!=typeof Symbol&&e[Symbol.iterator]||e[\"@@iterator\"];if(null!=r){var n,a,o,i,s=[],l=!0,c=!1;try{if(o=(r=r.ca"
+        },
+        {
+          "token": "snödjup",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ket även inom små områden. Eftersom det är glest mellan stationerna i observationsnätet blir osäkerheten i snödjupet stor på många håll.\",\"linkMoreInfo\":\"Mer information om snödjupskartorna\",\"linkDaySnow\":\"Dagens största snödjup\",\"linkAllDaySnow\":\"Alla dagens snödjupsobservationer\"}');function ct(e){return ct=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&\"function\"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?\"symbol\":typeof e},ct(e)}function mt(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=null==e?null:\"undefined\"!=typeof Symbol&&e[Symbol.iterator]||e[\"@@iterator\"];if(null!=r){var n,a,o,i,s=[],l=!0,c=!1;try{if(o=(r=r.call(e)).next,0===t){if(Object(r)!==r)ret"
+        },
+        {
+          "token": "fodl-klimat",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "\",G),H.addResourceBundle(\"sv\",\"ks\",_);var J=function(e){return e.slice(0).reverse().map((function(e,t){return{key:t,value:e[1]}}))},$=function(e){var t=e.showError,r=e.setParameter,a=e.menuParameter,o=e.parameter,i=e.parameterId,s=e.season,l=e.seasonId,c=\"/pd/fodl-klimat/api/snowdepth/season/2021\";s&&(c=\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\"+(s=2021));var m=function(e,t,r){var a=Q((0,n.useState)([]),2),o=a[0],i=a[1],s=Q((0,n.useState)(\"\"),2),l=s[0],c=s[1];return(0,n.useEffect)((function(){var n=function(){var n,a=(n=regeneratorRuntime.mark((function n(){var a,o,s,l,m;return regeneratorRuntime.wrap((function(n){for(;;)switch(n.prev=n.next){case 0:return n.prev=0,n.next=3,fetch(\"\".concat(e));case 3:if(!(a=n.sent).ok){n.next=9;break}return n.next=7,a.js"
+        },
+        {
+          "token": "fodl-klimat",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "e(0).reverse().map((function(e,t){return{key:t,value:e[1]}}))},$=function(e){var t=e.showError,r=e.setParameter,a=e.menuParameter,o=e.parameter,i=e.parameterId,s=e.season,l=e.seasonId,c=\"/pd/fodl-klimat/api/snowdepth/season/2021\";s&&(c=\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\"+(s=2021));var m=function(e,t,r){var a=Q((0,n.useState)([]),2),o=a[0],i=a[1],s=Q((0,n.useState)(\"\"),2),l=s[0],c=s[1];return(0,n.useEffect)((function(){var n=function(){var n,a=(n=regeneratorRuntime.mark((function n(){var a,o,s,l,m;return regeneratorRuntime.wrap((function(n){for(;;)switch(n.prev=n.next){case 0:return n.prev=0,n.next=3,fetch(\"\".concat(e));case 3:if(!(a=n.sent).ok){n.next=9;break}return n.next=7,a.json();case 7:o=n.sent,\"MenuSeason\"==t&&(o.selectOptions&&(s=[],o.selec"
+        },
+        {
+          "token": "fodl-klimat",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "=function(){t.setState({isOrtName:!t.state.isOrtName})},t.setParameter=function(e,r,n,a){t.setState({parameter:e}),t.setState({parameter2:n}),t.setState({seasonId:r}),t.setState({season:a}),t.setCurrentTime(0),(\"week\"==a?t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(a)):t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\".concat(a))).then((function(e){var r=[],n=[],a=[];Object.entries(e.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(e.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),t.setState({images:r}),t.setState({obs:n}),t.setState({steps:a})}))},t.state={parameter:\"valueNrSeason\",parameter2:\"season\",seasonId:0,season:\"week\",images:{},obs:{},steps:[],"
+        },
+        {
+          "token": "fodl-klimat",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "n(e,r,n,a){t.setState({parameter:e}),t.setState({parameter2:n}),t.setState({seasonId:r}),t.setState({season:a}),t.setCurrentTime(0),(\"week\"==a?t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(a)):t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\".concat(a))).then((function(e){var r=[],n=[],a=[];Object.entries(e.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(e.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),t.setState({images:r}),t.setState({obs:n}),t.setState({steps:a})}))},t.state={parameter:\"valueNrSeason\",parameter2:\"season\",seasonId:0,season:\"week\",images:{},obs:{},steps:[],currentTime:0,isDownloading:!1,isPlaying:!1,isWater:!0,isLan:!1,isObs:!0,isSta"
+        },
+        {
+          "token": "fodl-klimat",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "bs:{},steps:[],currentTime:0,isDownloading:!1,isPlaying:!1,isWater:!0,isLan:!1,isObs:!0,isStationName:!1,isOrtName:!1,infoTxt:\"\"},t}return t=u,r=[{key:\"componentDidMount\",value:function(){var e=this;this.state.season&&this.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(this.state.season)).then((function(t){var r=[],n=[],a=[];Object.entries(t.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(t.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),e.setState({images:r}),e.setState({obs:n}),e.setState({steps:a}),e.setState({infoTxt:t.addInfo}),e.setCurrentTime(a.length-1)}))}},{key:\"genInfoBox\",value:function(e){if(e.infoText){var t=\"\",r=\"\";return\"sv\"===H.language.split(\"-\")[0]&&e.infoText"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "nction(e){return e.slice(0).reverse().map((function(e,t){return{key:t,value:e[1]}}))},$=function(e){var t=e.showError,r=e.setParameter,a=e.menuParameter,o=e.parameter,i=e.parameterId,s=e.season,l=e.seasonId,c=\"/pd/fodl-klimat/api/snowdepth/season/2021\";s&&(c=\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\"+(s=2021));var m=function(e,t,r){var a=Q((0,n.useState)([]),2),o=a[0],i=a[1],s=Q((0,n.useState)(\"\"),2),l=s[0],c=s[1];return(0,n.useEffect)((function(){var n=function(){var n,a=(n=regeneratorRuntime.mark((function n(){var a,o,s,l,m;return regeneratorRuntime.wrap((function(n){for(;;)switch(n.prev=n.next){case 0:return n.prev=0,n.next=3,fetch(\"\".concat(e));case 3:if(!(a=n.sent).ok){n.next=9;break}return n.next=7,a.json();case 7:o=n.sent,\"MenuSeason\"==t&&(o.selec"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": " be iterable, non-array objects must have a [Symbol.iterator]() method.\")}()}function rt(e,t){(null==t||t>e.length)&&(t=e.length);for(var r=0,n=new Array(t);r<t;r++)n[r]=e[r];return n}H.addResourceBundle(\"en\",\"ks\",$e),H.addResourceBundle(\"sv\",\"ks\",et);var nt=\"https://www.smhi.se/pd/klimat/snow_depth/layer_imgs/\",at=function(e){var t=e.currentTime,r=e.season,a=e.legendTitle,o=e.legend,i=e.setCurrentTime,s=e.steps,l=e.images,c=e.obs,u=e.togglePlay,d=e.isPlaying,f=e.toggleWater,b=e.isWater,g=e.toggleLan,p=e.isLan,h=e.toggleObs,w=e.isObs,v=e.toggleStationName,y=e.isStationName,k=e.toggleOrtName,S=e.isOrtName,P=(0,n.useRef)(),C=tt((0,n.useState)(!1),2),x=C[0],E=C[1];(0,n.useEffect)((function(){\"week\"===r?(l.forEach((function(e){(new Image).src=e.url})),c.forEach((function(e)"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "(function(){\"week\"!==r&&(l.slice(t,t+7).forEach((function(e){(new Image).src=e.url})),c.slice(t,t+7).forEach((function(e){(new Image).src=e.url})))}),[t]);var T=function(e){var i=e.className,s=e.width,u=e.height,d=[[0,0],[u,s]],P=n.createElement(\"svg\",{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 25 32\",height:\"32\",width:\"32\",className:\"iTYkT cjmVx auIcon auIcon32\"},n.createElement(\"path\",{fill:\"currentColor\",d:\"M 24.8,0.00 C 24.8,0.00 24.800,22.300 24.800,22.300 24.799,22.932 24.737,23.390 24.556,24.000 23.403,27.896 18.796,27.545 15.600,28.388 14.832,28.591 14.171,28.836 13.500,29.270 13.233,29.443 12.681,29.937 12.400,29.937 12.169,29.937 11.063,29.109 10.700,28.927 9.867,28.510 8.431,28.165 7.500,28.008 4.610,27.521 1.237,27.352 0.244,24.000 0.063,23.391 0.001,22"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "Name})},t.toggleOrtName=function(){t.setState({isOrtName:!t.state.isOrtName})},t.setParameter=function(e,r,n,a){t.setState({parameter:e}),t.setState({parameter2:n}),t.setState({seasonId:r}),t.setState({season:a}),t.setCurrentTime(0),(\"week\"==a?t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(a)):t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\".concat(a))).then((function(e){var r=[],n=[],a=[];Object.entries(e.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(e.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),t.setState({images:r}),t.setState({obs:n}),t.setState({steps:a})}))},t.state={parameter:\"valueNrSeason\",parameter2:\"season\",seasonId:0,season:\"week\",ima"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": ",t.setParameter=function(e,r,n,a){t.setState({parameter:e}),t.setState({parameter2:n}),t.setState({seasonId:r}),t.setState({season:a}),t.setCurrentTime(0),(\"week\"==a?t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(a)):t.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/season/\".concat(a))).then((function(e){var r=[],n=[],a=[];Object.entries(e.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(e.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),t.setState({images:r}),t.setState({obs:n}),t.setState({steps:a})}))},t.state={parameter:\"valueNrSeason\",parameter2:\"season\",seasonId:0,season:\"week\",images:{},obs:{},steps:[],currentTime:0,isDownloading:!1,isPlaying:!1,isWater:!0,"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/279.cb148.js?proxy=fodl-klimat",
+          "context": "ason:\"week\",images:{},obs:{},steps:[],currentTime:0,isDownloading:!1,isPlaying:!1,isWater:!0,isLan:!1,isObs:!0,isStationName:!1,isOrtName:!1,infoTxt:\"\"},t}return t=u,r=[{key:\"componentDidMount\",value:function(){var e=this;this.state.season&&this.getIdMapping(\"https://www.smhi.se/pd/fodl-klimat/api/snowdepth/\".concat(this.state.season)).then((function(t){var r=[],n=[],a=[];Object.entries(t.depths).map((function(e){var t=mt(e,2),n=t[0],o=t[1];r.push(o),a.push(parseInt(n))})),Object.entries(t.obs).map((function(e){var t=mt(e,2),r=(t[0],t[1]);n.push(r)})),e.setState({images:r}),e.setState({obs:n}),e.setState({steps:a}),e.setState({infoTxt:t.addInfo}),e.setCurrentTime(a.length-1)}))}},{key:\"genInfoBox\",value:function(e){if(e.infoText){var t=\"\",r=\"\";return\"sv\"===H.language.sp"
+        }
+      ]
+    },
+    {
+      "name": "68.f657f.js",
+      "url": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+      "status": 200,
+      "size": 505387,
+      "hits": [
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ar d=In({geometry:a.geometries[o],type:\"Feature\",properties:t.properties},e);d&&l.push(d)}return new Hn(l);case\"FeatureCollection\":for(o=0,i=a.features.length;o<i;o++){var f=In(a.features[o],e);f&&l.push(f)}return new Hn(l);default:throw new Error(\"Invalid GeoJSON object.\")}}function Dn(t,e,n,r){return t?t(e,n):new Cn(n,r&&r.markersInheritOptions&&r)}function Nn(t){return new z(t[1],t[0],t[2])}function Mn(t,e,n){for(var r,o=[],i=0,a=t.length;i<a;i++)r=e?Mn(t[i],e-1,n):(n||Nn)(t[i]),o.push(r);return o}function Gn(t,e){return void 0!==(t=I(t)).alt?[u(t.lng,e),u(t.lat,e),u(t.alt,e)]:[u(t.lng,e),u(t.lat,e)]}function An(t,e,n,r){for(var o=[],i=0,a=t.length;i<a;i++)o.push(e?An(t[i],bn(t[i])?0:e-1,n,r):Gn(t[i],r));return!e&&n&&o.length>0&&o.push(o[0].slice()),o}function Vn(t,n"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": ",r):Gn(t[i],r));return!e&&n&&o.length>0&&o.push(o[0].slice()),o}function Vn(t,n){return t.feature?e({},t.feature,{geometry:n}):Wn(n)}function Wn(t){return\"Feature\"===t.type||\"FeatureCollection\"===t.type?t:{type:\"Feature\",properties:{},geometry:t}}var Fn={toGeoJSON:function(t){return Vn(this,{type:\"Point\",coordinates:Gn(this.getLatLng(),t)})}};function Yn(t,e){return new zn(t,e)}Cn.include(Fn),Zn.include(Fn),Xn.include(Fn),Un.include({toGeoJSON:function(t){var e=!bn(this._latlngs);return Vn(this,{type:(e?\"Multi\":\"\")+\"LineString\",coordinates:An(this._latlngs,e?1:0,!1,t)})}}),Bn.include({toGeoJSON:function(t){var e=!bn(this._latlngs),n=e&&!bn(this._latlngs[0]),r=An(this._latlngs,n?2:e?1:0,!0,t);return e||(r=[r]),Vn(this,{type:(n?\"Multi\":\"\")+\"Polygon\",coordinates:r})}}),jn."
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ollection\"===t.type?t:{type:\"Feature\",properties:{},geometry:t}}var Fn={toGeoJSON:function(t){return Vn(this,{type:\"Point\",coordinates:Gn(this.getLatLng(),t)})}};function Yn(t,e){return new zn(t,e)}Cn.include(Fn),Zn.include(Fn),Xn.include(Fn),Un.include({toGeoJSON:function(t){var e=!bn(this._latlngs);return Vn(this,{type:(e?\"Multi\":\"\")+\"LineString\",coordinates:An(this._latlngs,e?1:0,!1,t)})}}),Bn.include({toGeoJSON:function(t){var e=!bn(this._latlngs),n=e&&!bn(this._latlngs[0]),r=An(this._latlngs,n?2:e?1:0,!0,t);return e||(r=[r]),Vn(this,{type:(n?\"Multi\":\"\")+\"Polygon\",coordinates:r})}}),jn.include({toMultiPoint:function(t){var e=[];return this.eachLayer((function(n){e.push(n.toGeoJSON(t).geometry.coordinates)})),Vn(this,{type:\"MultiPoint\",coordinates:e})},toGeoJSON:func"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": ",t)})}};function Yn(t,e){return new zn(t,e)}Cn.include(Fn),Zn.include(Fn),Xn.include(Fn),Un.include({toGeoJSON:function(t){var e=!bn(this._latlngs);return Vn(this,{type:(e?\"Multi\":\"\")+\"LineString\",coordinates:An(this._latlngs,e?1:0,!1,t)})}}),Bn.include({toGeoJSON:function(t){var e=!bn(this._latlngs),n=e&&!bn(this._latlngs[0]),r=An(this._latlngs,n?2:e?1:0,!0,t);return e||(r=[r]),Vn(this,{type:(n?\"Multi\":\"\")+\"Polygon\",coordinates:r})}}),jn.include({toMultiPoint:function(t){var e=[];return this.eachLayer((function(n){e.push(n.toGeoJSON(t).geometry.coordinates)})),Vn(this,{type:\"MultiPoint\",coordinates:e})},toGeoJSON:function(t){var e=this.feature&&this.feature.geometry&&this.feature.geometry.type;if(\"MultiPoint\"===e)return this.toMultiPoint(t);var n=\"GeometryCollection\"=="
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "){var e=!bn(this._latlngs),n=e&&!bn(this._latlngs[0]),r=An(this._latlngs,n?2:e?1:0,!0,t);return e||(r=[r]),Vn(this,{type:(n?\"Multi\":\"\")+\"Polygon\",coordinates:r})}}),jn.include({toMultiPoint:function(t){var e=[];return this.eachLayer((function(n){e.push(n.toGeoJSON(t).geometry.coordinates)})),Vn(this,{type:\"MultiPoint\",coordinates:e})},toGeoJSON:function(t){var e=this.feature&&this.feature.geometry&&this.feature.geometry.type;if(\"MultiPoint\"===e)return this.toMultiPoint(t);var n=\"GeometryCollection\"===e,r=[];return this.eachLayer((function(e){if(e.toGeoJSON){var o=e.toGeoJSON(t);if(n)r.push(o.geometry);else{var i=Wn(o);\"FeatureCollection\"===i.type?r.push.apply(r,i.features):r.push(i)}}})),n?Vn(this,{geometries:r,type:\"GeometryCollection\"}):{type:\"FeatureCollection\",featu"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": ",!0,t);return e||(r=[r]),Vn(this,{type:(n?\"Multi\":\"\")+\"Polygon\",coordinates:r})}}),jn.include({toMultiPoint:function(t){var e=[];return this.eachLayer((function(n){e.push(n.toGeoJSON(t).geometry.coordinates)})),Vn(this,{type:\"MultiPoint\",coordinates:e})},toGeoJSON:function(t){var e=this.feature&&this.feature.geometry&&this.feature.geometry.type;if(\"MultiPoint\"===e)return this.toMultiPoint(t);var n=\"GeometryCollection\"===e,r=[];return this.eachLayer((function(e){if(e.toGeoJSON){var o=e.toGeoJSON(t);if(n)r.push(o.geometry);else{var i=Wn(o);\"FeatureCollection\"===i.type?r.push.apply(r,i.features):r.push(i)}}})),n?Vn(this,{geometries:r,type:\"GeometryCollection\"}):{type:\"FeatureCollection\",features:r}}});var Kn=Yn,Qn=Ln.extend({options:{opacity:1,alt:\"\",interactive:!1,crossOr"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "is,{type:\"MultiPoint\",coordinates:e})},toGeoJSON:function(t){var e=this.feature&&this.feature.geometry&&this.feature.geometry.type;if(\"MultiPoint\"===e)return this.toMultiPoint(t);var n=\"GeometryCollection\"===e,r=[];return this.eachLayer((function(e){if(e.toGeoJSON){var o=e.toGeoJSON(t);if(n)r.push(o.geometry);else{var i=Wn(o);\"FeatureCollection\"===i.type?r.push.apply(r,i.features):r.push(i)}}})),n?Vn(this,{geometries:r,type:\"GeometryCollection\"}):{type:\"FeatureCollection\",features:r}}});var Kn=Yn,Qn=Ln.extend({options:{opacity:1,alt:\"\",interactive:!1,crossOrigin:!1,errorOverlayUrl:\"\",zIndex:1,className:\"\"},initialize:function(t,e,n){this._url=t,this._bounds=B(e),h(this,n)},onAdd:function(){this._image||(this._initImage(),this.options.opacity<1&&this._updateOpacity()),th"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "t\",coordinates:e})},toGeoJSON:function(t){var e=this.feature&&this.feature.geometry&&this.feature.geometry.type;if(\"MultiPoint\"===e)return this.toMultiPoint(t);var n=\"GeometryCollection\"===e,r=[];return this.eachLayer((function(e){if(e.toGeoJSON){var o=e.toGeoJSON(t);if(n)r.push(o.geometry);else{var i=Wn(o);\"FeatureCollection\"===i.type?r.push.apply(r,i.features):r.push(i)}}})),n?Vn(this,{geometries:r,type:\"GeometryCollection\"}):{type:\"FeatureCollection\",features:r}}});var Kn=Yn,Qn=Ln.extend({options:{opacity:1,alt:\"\",interactive:!1,crossOrigin:!1,errorOverlayUrl:\"\",zIndex:1,className:\"\"},initialize:function(t,e,n){this._url=t,this._bounds=B(e),h(this,n)},onAdd:function(){this._image||(this._initImage(),this.options.opacity<1&&this._updateOpacity()),this.options.interact"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "d=wr,We.ScrollWheelZoom=_r,We.TapHold=xr,We.TouchZoom=Or,t.Bounds=X,t.Browser=Zt,t.CRS=N,t.Canvas=cr,t.Circle=Zn,t.CircleMarker=Xn,t.Class=H,t.Control=Fe,t.DivIcon=rr,t.DivOverlay=tr,t.DomEvent=Ae,t.DomUtil=Le,t.Draggable=rn,t.Evented=q,t.FeatureGroup=Hn,t.GeoJSON=zn,t.GridLayer=or,t.Handler=tn,t.Icon=Rn,t.ImageOverlay=Qn,t.LatLng=z,t.LatLngBounds=U,t.Layer=Ln,t.LayerGroup=jn,t.LineUtil=wn,t.Map=We,t.Marker=Cn,t.Mixin=en,t.Path=En,t.Point=T,t.PolyUtil=cn,t.Polygon=Bn,t.Polyline=Un,t.Popup=er,t.PosAnimation=Ve,t.Projection=On,t.Rectangle=gr,t.Renderer=lr,t.SVG=pr,t.SVGOverlay=$n,t.TileLayer=ir,t.Tooltip=nr,t.Transformation=V,t.Util=j,t.VideoOverlay=Jn,t.bind=r,t.bounds=Z,t.canvas=ur,t.circle=function(t,e,n){return new Zn(t,e,n)},t.circleMarker=function(t,e){return new Xn"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "deoOverlay=Jn,t.bind=r,t.bounds=Z,t.canvas=ur,t.circle=function(t,e,n){return new Zn(t,e,n)},t.circleMarker=function(t,e){return new Xn(t,e)},t.control=Ye,t.divIcon=function(t){return new rr(t)},t.extend=e,t.featureGroup=function(t,e){return new Hn(t,e)},t.geoJSON=Yn,t.geoJson=Kn,t.gridLayer=function(t){return new or(t)},t.icon=function(t){return new Rn(t)},t.imageOverlay=function(t,e,n){return new Qn(t,e,n)},t.latLng=I,t.latLngBounds=B,t.layerGroup=function(t,e){return new jn(t,e)},t.map=function(t,e){return new We(t,e)},t.marker=function(t,e){return new Cn(t,e)},t.point=E,t.polygon=function(t,e){return new Bn(t,e)},t.polyline=function(t,e){return new Un(t,e)},t.popup=function(t,e){return new er(t,e)},t.rectangle=function(t,e){return new gr(t,e)},t.setOptions=h,t.stamp"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": ",t.bind=r,t.bounds=Z,t.canvas=ur,t.circle=function(t,e,n){return new Zn(t,e,n)},t.circleMarker=function(t,e){return new Xn(t,e)},t.control=Ye,t.divIcon=function(t){return new rr(t)},t.extend=e,t.featureGroup=function(t,e){return new Hn(t,e)},t.geoJSON=Yn,t.geoJson=Kn,t.gridLayer=function(t){return new or(t)},t.icon=function(t){return new Rn(t)},t.imageOverlay=function(t,e,n){return new Qn(t,e,n)},t.latLng=I,t.latLngBounds=B,t.layerGroup=function(t,e){return new jn(t,e)},t.map=function(t,e){return new We(t,e)},t.marker=function(t,e){return new Cn(t,e)},t.point=E,t.polygon=function(t,e){return new Bn(t,e)},t.polyline=function(t,e){return new Un(t,e)},t.popup=function(t,e){return new er(t,e)},t.rectangle=function(t,e){return new gr(t,e)},t.setOptions=h,t.stamp=i,t.svg=mr,t"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ength>1&&void 0!==arguments[1]?arguments[1]:{ns:[\"translation\"],defaultNS:\"translation\"};return(0,o.Z)(this,s),e=r.call(this),R&&y.call((0,a.Z)(e)),e.data=t||{},e.options=n,void 0===e.options.keySeparator&&(e.options.keySeparator=\".\"),void 0===e.options.ignoreJSONStructure&&(e.options.ignoreJSONStructure=!0),e}return(0,i.Z)(s,[{key:\"addNamespaces\",value:function(t){this.options.ns.indexOf(t)<0&&this.options.ns.push(t)}},{key:\"removeNamespaces\",value:function(t){var e=this.options.ns.indexOf(t);e>-1&&this.options.ns.splice(e,1)}},{key:\"getResource\",value:function(t,e,n){var r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:{},o=void 0!==r.keySeparator?r.keySeparator:this.options.keySeparator,i=void 0!==r.ignoreJSONStructure?r.ignoreJSONStructure:this.options.ignor"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "rguments[1]:{ns:[\"translation\"],defaultNS:\"translation\"};return(0,o.Z)(this,s),e=r.call(this),R&&y.call((0,a.Z)(e)),e.data=t||{},e.options=n,void 0===e.options.keySeparator&&(e.options.keySeparator=\".\"),void 0===e.options.ignoreJSONStructure&&(e.options.ignoreJSONStructure=!0),e}return(0,i.Z)(s,[{key:\"addNamespaces\",value:function(t){this.options.ns.indexOf(t)<0&&this.options.ns.push(t)}},{key:\"removeNamespaces\",value:function(t){var e=this.options.ns.indexOf(t);e>-1&&this.options.ns.splice(e,1)}},{key:\"getResource\",value:function(t,e,n){var r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:{},o=void 0!==r.keySeparator?r.keySeparator:this.options.keySeparator,i=void 0!==r.ignoreJSONStructure?r.ignoreJSONStructure:this.options.ignoreJSONStructure,a=[t,e];n&&\"strin"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "var e=this.options.ns.indexOf(t);e>-1&&this.options.ns.splice(e,1)}},{key:\"getResource\",value:function(t,e,n){var r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:{},o=void 0!==r.keySeparator?r.keySeparator:this.options.keySeparator,i=void 0!==r.ignoreJSONStructure?r.ignoreJSONStructure:this.options.ignoreJSONStructure,a=[t,e];n&&\"string\"!=typeof n&&(a=a.concat(n)),n&&\"string\"==typeof n&&(a=a.concat(o?n.split(o):n)),t.indexOf(\".\")>-1&&(a=t.split(\".\"));var s=P(this.data,a);return s||!i||\"string\"!=typeof n?s:T(this.data&&this.data[t]&&this.data[t][e],n,o)}},{key:\"addResource\",value:function(t,e,n,r){var o=arguments.length>4&&void 0!==arguments[4]?arguments[4]:{silent:!1},i=void 0!==o.keySeparator?o.keySeparator:this.options.keySeparator,a=[t,e];n&&(a=a.concat(i?n."
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "indexOf(t);e>-1&&this.options.ns.splice(e,1)}},{key:\"getResource\",value:function(t,e,n){var r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:{},o=void 0!==r.keySeparator?r.keySeparator:this.options.keySeparator,i=void 0!==r.ignoreJSONStructure?r.ignoreJSONStructure:this.options.ignoreJSONStructure,a=[t,e];n&&\"string\"!=typeof n&&(a=a.concat(n)),n&&\"string\"==typeof n&&(a=a.concat(o?n.split(o):n)),t.indexOf(\".\")>-1&&(a=t.split(\".\"));var s=P(this.data,a);return s||!i||\"string\"!=typeof n?s:T(this.data&&this.data[t]&&this.data[t][e],n,o)}},{key:\"addResource\",value:function(t,e,n,r){var o=arguments.length>4&&void 0!==arguments[4]?arguments[4]:{silent:!1},i=void 0!==o.keySeparator?o.keySeparator:this.options.keySeparator,a=[t,e];n&&(a=a.concat(i?n.split(i):n)),t.indexOf"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "splice(e,1)}},{key:\"getResource\",value:function(t,e,n){var r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:{},o=void 0!==r.keySeparator?r.keySeparator:this.options.keySeparator,i=void 0!==r.ignoreJSONStructure?r.ignoreJSONStructure:this.options.ignoreJSONStructure,a=[t,e];n&&\"string\"!=typeof n&&(a=a.concat(n)),n&&\"string\"==typeof n&&(a=a.concat(o?n.split(o):n)),t.indexOf(\".\")>-1&&(a=t.split(\".\"));var s=P(this.data,a);return s||!i||\"string\"!=typeof n?s:T(this.data&&this.data[t]&&this.data[t][e],n,o)}},{key:\"addResource\",value:function(t,e,n,r){var o=arguments.length>4&&void 0!==arguments[4]?arguments[4]:{silent:!1},i=void 0!==o.keySeparator?o.keySeparator:this.options.keySeparator,a=[t,e];n&&(a=a.concat(i?n.split(i):n)),t.indexOf(\".\")>-1&&(r=e,e=(a=t.split(\".\"))"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "t,e)}},{key:\"getDataByLanguage\",value:function(t){return this.data[t]}},{key:\"hasLanguageSomeTranslations\",value:function(t){var e=this.getDataByLanguage(t);return!!(e&&Object.keys(e)||[]).find((function(t){return e[t]&&Object.keys(e[t]).length>0}))}},{key:\"toJSON\",value:function(){return this.data}}]),s}(y),Z={processors:{},addPostProcessor:function(t){this.processors[t.name]=t},handle:function(t,e,n,r,o){var i=this;return t.forEach((function(t){i.processors[t]&&(e=i.processors[t].process(e,n,r,o))})),e}};function U(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,r)}return n}function B(t){for(var e=1;e<arguments.length;e"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ToKey,U=Z&&q?void 0:g,z=C&&X!==g&&this.options.updateMissing;if(q||R||z){if(this.logger.log(z?\"updateKey\":\"missingKey\",f,u,l,z?X:g),a){var I=this.resolve(l,B(B({},e),{},{keySeparator:!1}));I&&I.res&&this.logger.warn(\"Seems the loaded translations were in flat JSON format instead of nested. Either set keySeparator: false on init or make sure your translations are published in nested format.\")}var D=[],N=this.languageUtils.getFallbackCodes(this.options.fallbackLng,e.lng||this.language);if(\"fallback\"===this.options.saveMissingTo&&N&&N[0])for(var M=0;M<N.length;M++)D.push(N[M]);else\"all\"===this.options.saveMissingTo?D=this.languageUtils.toResolveHierarchy(e.lng||this.language):D.push(e.lng||this.language);var G=function(t,n,r){var i=C&&r!==g?r:U;o.options.missingKeyHandler?"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "(n){t[n]={numbers:e.nr,plurals:G[e.fc]}}))})),t}var F=function(){function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};(0,o.Z)(this,t),this.languageUtils=e,this.options=n,this.logger=b.create(\"pluralResolver\"),this.options.compatibilityJSON&&\"v4\"!==this.options.compatibilityJSON||\"undefined\"!=typeof Intl&&Intl.PluralRules||(this.options.compatibilityJSON=\"v3\",this.logger.error(\"Your environment seems not to be Intl API compatible, use an Intl.PluralRules polyfill. Will fallback to the compatibilityJSON v3 format handling.\")),this.rules=W()}return(0,i.Z)(t,[{key:\"addRule\",value:function(t,e){this.rules[t]=e}},{key:\"getRule\",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};if(this.shouldUseIntlApi())try{return new I"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "}))})),t}var F=function(){function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};(0,o.Z)(this,t),this.languageUtils=e,this.options=n,this.logger=b.create(\"pluralResolver\"),this.options.compatibilityJSON&&\"v4\"!==this.options.compatibilityJSON||\"undefined\"!=typeof Intl&&Intl.PluralRules||(this.options.compatibilityJSON=\"v3\",this.logger.error(\"Your environment seems not to be Intl API compatible, use an Intl.PluralRules polyfill. Will fallback to the compatibilityJSON v3 format handling.\")),this.rules=W()}return(0,i.Z)(t,[{key:\"addRule\",value:function(t,e){this.rules[t]=e}},{key:\"getRule\",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};if(this.shouldUseIntlApi())try{return new Intl.PluralRules(t,{type:e.ordinal?\"ordi"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "guments[1]?arguments[1]:{};(0,o.Z)(this,t),this.languageUtils=e,this.options=n,this.logger=b.create(\"pluralResolver\"),this.options.compatibilityJSON&&\"v4\"!==this.options.compatibilityJSON||\"undefined\"!=typeof Intl&&Intl.PluralRules||(this.options.compatibilityJSON=\"v3\",this.logger.error(\"Your environment seems not to be Intl API compatible, use an Intl.PluralRules polyfill. Will fallback to the compatibilityJSON v3 format handling.\")),this.rules=W()}return(0,i.Z)(t,[{key:\"addRule\",value:function(t,e){this.rules[t]=e}},{key:\"getRule\",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};if(this.shouldUseIntlApi())try{return new Intl.PluralRules(t,{type:e.ordinal?\"ordinal\":\"cardinal\"})}catch(t){return}return this.rules[t]||this.rules[this.langu"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "v4\"!==this.options.compatibilityJSON||\"undefined\"!=typeof Intl&&Intl.PluralRules||(this.options.compatibilityJSON=\"v3\",this.logger.error(\"Your environment seems not to be Intl API compatible, use an Intl.PluralRules polyfill. Will fallback to the compatibilityJSON v3 format handling.\")),this.rules=W()}return(0,i.Z)(t,[{key:\"addRule\",value:function(t,e){this.rules[t]=e}},{key:\"getRule\",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};if(this.shouldUseIntlApi())try{return new Intl.PluralRules(t,{type:e.ordinal?\"ordinal\":\"cardinal\"})}catch(t){return}return this.rules[t]||this.rules[this.languageUtils.getLanguagePartFromCode(t)]}},{key:\"needsPlural\",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=this.getR"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": ".numbers[r];this.options.simplifyPluralSuffix&&2===t.numbers.length&&1===t.numbers[0]&&(2===o?o=\"plural\":1===o&&(o=\"\"));var i=function(){return n.options.prepend&&o.toString()?n.options.prepend+o.toString():o.toString()};return\"v1\"===this.options.compatibilityJSON?1===o?\"\":\"number\"==typeof o?\"_plural_\".concat(o.toString()):i():\"v2\"===this.options.compatibilityJSON||this.options.simplifyPluralSuffix&&2===t.numbers.length&&1===t.numbers[0]?i():this.options.prepend&&r.toString()?this.options.prepend+r.toString():r.toString()}},{key:\"shouldUseIntlApi\",value:function(){return!A.includes(this.options.compatibilityJSON)}}]),t}();function Y(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object."
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "l\":1===o&&(o=\"\"));var i=function(){return n.options.prepend&&o.toString()?n.options.prepend+o.toString():o.toString()};return\"v1\"===this.options.compatibilityJSON?1===o?\"\":\"number\"==typeof o?\"_plural_\".concat(o.toString()):i():\"v2\"===this.options.compatibilityJSON||this.options.simplifyPluralSuffix&&2===t.numbers.length&&1===t.numbers[0]?i():this.options.prepend&&r.toString()?this.options.prepend+r.toString():r.toString()}},{key:\"shouldUseIntlApi\",value:function(){return!A.includes(this.options.compatibilityJSON)}}]),t}();function Y(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,r)}return n}function K(t){for(var e=1;e<ar"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ibilityJSON||this.options.simplifyPluralSuffix&&2===t.numbers.length&&1===t.numbers[0]?i():this.options.prepend&&r.toString()?this.options.prepend+r.toString():r.toString()}},{key:\"shouldUseIntlApi\",value:function(){return!A.includes(this.options.compatibilityJSON)}}]),t}();function Y(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,r)}return n}function K(t){for(var e=1;e<arguments.length;e++){var n=null!=arguments[e]?arguments[e]:{};e%2?Y(Object(n),!0).forEach((function(e){(0,d.Z)(t,e,n[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(n)):Y(Object(n)).forEach((function(e){"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "var o,i,a,s=this,l=this.options&&this.options.interpolation&&this.options.interpolation.defaultVariables||{};function c(t){return t.replace(/\\$/g,\"$$$$\")}var u=function(t){if(t.indexOf(s.formatSeparator)<0){var o=Q(e,l,t,s.options.keySeparator,s.options.ignoreJSONStructure);return s.alwaysFormat?s.format(o,void 0,n,K(K(K({},r),e),{},{interpolationkey:t})):o}var i=t.split(s.formatSeparator),a=i.shift().trim(),c=i.join(s.formatSeparator).trim();return s.format(Q(e,l,a,s.options.keySeparator,s.options.ignoreJSONStructure),c,n,K(K(K({},r),e),{},{interpolationkey:a}))};this.resetRegExp();var d=r&&r.missingInterpolationHandler||this.options.missingInterpolationHandler,f=r&&r.interpolation&&void 0!==r.interpolation.skipOnVariables?r.interpolation.skipOnVariables:this.options.i"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ons.ignoreJSONStructure);return s.alwaysFormat?s.format(o,void 0,n,K(K(K({},r),e),{},{interpolationkey:t})):o}var i=t.split(s.formatSeparator),a=i.shift().trim(),c=i.join(s.formatSeparator).trim();return s.format(Q(e,l,a,s.options.keySeparator,s.options.ignoreJSONStructure),c,n,K(K(K({},r),e),{},{interpolationkey:a}))};this.resetRegExp();var d=r&&r.missingInterpolationHandler||this.options.missingInterpolationHandler,f=r&&r.interpolation&&void 0!==r.interpolation.skipOnVariables?r.interpolation.skipOnVariables:this.options.interpolation.skipOnVariables;return[{regex:this.regexpUnescape,safeValue:function(t){return c(t)}},{regex:this.regexp,safeValue:function(t){return s.escapeValue?c(s.escape(t)):c(t)}}].forEach((function(e){for(a=0;o=e.regex.exec(t);){var n=o[1].trim()"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "=this.nestingOptionsSeparator;if(t.indexOf(n)<0)return t;var r=t.split(new RegExp(\"\".concat(n,\"[ ]*{\"))),i=\"{\".concat(r[1]);t=r[0];var a=(i=this.interpolate(i,o)).match(/'/g),s=i.match(/\"/g);(a&&a.length%2==0&&!s||s.length%2!=0)&&(i=i.replace(/'/g,'\"'));try{o=JSON.parse(i),e&&(o=K(K({},e),o))}catch(e){return this.logger.warn(\"failed parsing options string in nesting for key \".concat(t),e),\"\".concat(t).concat(n).concat(i)}return delete o.defaultValue,t}for(;n=this.nestingRegexp.exec(t);){var l=[];(o=(o=K({},a)).replace&&\"string\"!=typeof o.replace?o.replace:o).applyPostProcessor=!1,delete o.defaultValue;var c=!1;if(-1!==n[0].indexOf(this.formatSeparator)&&!/{.*}/.test(n[1])){var u=n[1].split(this.formatSeparator).map((function(t){return t.trim()}));n[1]=u.shift(),l=u,c=!0"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": ").trim().replace(/^'+|'+$/g,\"\");n[r.trim()]||(n[r.trim()]=o),\"false\"===o&&(n[r.trim()]=!1),\"true\"===o&&(n[r.trim()]=!0),isNaN(o)||(n[r.trim()]=parseInt(o,10))}var i}))}return{formatName:e,formatOptions:n}}function nt(t){var e={};return function(n,r,o){var i=r+JSON.stringify(o),a=e[i];return a||(a=t(r,o),e[i]=a),a(n)}}var rt=function(){function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};(0,o.Z)(this,t),this.logger=b.create(\"formatter\"),this.options=e,this.formats={number:nt((function(t,e){var n=new Intl.NumberFormat(t,tt({},e));return function(t){return n.format(t)}})),currency:nt((function(t,e){var n=new Intl.NumberFormat(t,tt(tt({},e),{},{style:\"currency\"}));return function(t){return n.format(t)}})),datetime:nt((function(t,e){var n=new Intl.Dat"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "fined\"!=typeof Intl&&(i=rt);var a=new N(this.options);this.store=new X(this.options.resources,this.options);var s=this.services;s.logger=b,s.resourceStore=this.store,s.languageUtils=a,s.pluralResolver=new F(a,{prepend:this.options.pluralSeparator,compatibilityJSON:this.options.compatibilityJSON,simplifyPluralSuffix:this.options.simplifyPluralSuffix}),!i||this.options.interpolation.format&&this.options.interpolation.format!==r.interpolation.format||(s.formatter=o(i),s.formatter.init(s,this.options),this.options.interpolation.format=s.formatter.format.bind(s.formatter)),s.interpolator=new J(this.options),s.utils={hasLoadedNamespace:this.hasLoadedNamespace.bind(this)},s.backendConnector=new at(o(this.modules.backend),s.resourceStore,s,this.options),s.backendConnector.on(\"*"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": " a=new N(this.options);this.store=new X(this.options.resources,this.options);var s=this.services;s.logger=b,s.resourceStore=this.store,s.languageUtils=a,s.pluralResolver=new F(a,{prepend:this.options.pluralSeparator,compatibilityJSON:this.options.compatibilityJSON,simplifyPluralSuffix:this.options.simplifyPluralSuffix}),!i||this.options.interpolation.format&&this.options.interpolation.format!==r.interpolation.format||(s.formatter=o(i),s.formatter.init(s,this.options),this.options.interpolation.format=s.formatter.format.bind(s.formatter)),s.interpolator=new J(this.options),s.utils={hasLoadedNamespace:this.hasLoadedNamespace.bind(this)},s.backendConnector=new at(o(this.modules.backend),s.resourceStore,s,this.options),s.backendConnector.on(\"*\",(function(e){for(var n=argume"
+        },
+        {
+          "token": "json",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ar e=arguments.length,n=new Array(e>1?e-1:0),r=1;r<e;r++)n[r-1]=arguments[r];o.emit.apply(o,[t].concat(n))})),o.init(r,n),o.translator.options=o.options,o.translator.backendConnector.services.utils={hasLoadedNamespace:o.hasLoadedNamespace.bind(o)},o}},{key:\"toJSON\",value:function(){return{options:this.options,store:this.store,language:this.language,languages:this.languages,resolvedLanguage:this.resolvedLanguage}}}]),d}(y);(0,d.Z)(ht,\"createInstance\",(function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1?arguments[1]:void 0;return new ht(t,e)}));var pt=ht.createInstance();pt.createInstance=ht.createInstance,pt.createInstance,pt.dir,pt.init,pt.loadResources,pt.reloadResources,pt.use,pt.changeLanguage,pt.getFixedT,pt.t,pt.exists,pt"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "e.width=o.x+\"px\",t.style.height=o.y+\"px\")},_createImg:function(t,e){return(e=e||document.createElement(\"img\")).src=t,e},_getIconUrl:function(t){return Zt.retina&&this.options[t+\"RetinaUrl\"]||this.options[t+\"Url\"]}}),qn=Rn.extend({options:{iconUrl:\"marker-icon.png\",iconRetinaUrl:\"marker-icon-2x.png\",shadowUrl:\"marker-shadow.png\",iconSize:[25,41],iconAnchor:[12,41],popupAnchor:[1,-34],tooltipAnchor:[16,-28],shadowSize:[41,41]},_getIconUrl:function(t){return\"string\"!=typeof qn.imagePath&&(qn.imagePath=this._detectIconPath()),(this.options.imagePath||qn.imagePath)+Rn.prototype._getIconUrl.call(this,t)},_stripUrl:function(t){var e=function(t,e,n){var r=e.exec(t);return r&&r[n]};return(t=e(t,/^url\\((['\"])?(.+)\\1\\)$/,2))&&e(t,/^(.*)marker-icon\\.png$/,1)},_detectIconPath:functi"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "+\"px\")},_createImg:function(t,e){return(e=e||document.createElement(\"img\")).src=t,e},_getIconUrl:function(t){return Zt.retina&&this.options[t+\"RetinaUrl\"]||this.options[t+\"Url\"]}}),qn=Rn.extend({options:{iconUrl:\"marker-icon.png\",iconRetinaUrl:\"marker-icon-2x.png\",shadowUrl:\"marker-shadow.png\",iconSize:[25,41],iconAnchor:[12,41],popupAnchor:[1,-34],tooltipAnchor:[16,-28],shadowSize:[41,41]},_getIconUrl:function(t){return\"string\"!=typeof qn.imagePath&&(qn.imagePath=this._detectIconPath()),(this.options.imagePath||qn.imagePath)+Rn.prototype._getIconUrl.call(this,t)},_stripUrl:function(t){var e=function(t,e,n){var r=e.exec(t);return r&&r[n]};return(t=e(t,/^url\\((['\"])?(.+)\\1\\)$/,2))&&e(t,/^(.*)marker-icon\\.png$/,1)},_detectIconPath:function(){var t=ie(\"div\",\"leaflet-defaul"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "e){return(e=e||document.createElement(\"img\")).src=t,e},_getIconUrl:function(t){return Zt.retina&&this.options[t+\"RetinaUrl\"]||this.options[t+\"Url\"]}}),qn=Rn.extend({options:{iconUrl:\"marker-icon.png\",iconRetinaUrl:\"marker-icon-2x.png\",shadowUrl:\"marker-shadow.png\",iconSize:[25,41],iconAnchor:[12,41],popupAnchor:[1,-34],tooltipAnchor:[16,-28],shadowSize:[41,41]},_getIconUrl:function(t){return\"string\"!=typeof qn.imagePath&&(qn.imagePath=this._detectIconPath()),(this.options.imagePath||qn.imagePath)+Rn.prototype._getIconUrl.call(this,t)},_stripUrl:function(t){var e=function(t,e,n){var r=e.exec(t);return r&&r[n]};return(t=e(t,/^url\\((['\"])?(.+)\\1\\)$/,2))&&e(t,/^(.*)marker-icon\\.png$/,1)},_detectIconPath:function(){var t=ie(\"div\",\"leaflet-default-icon-path\",document.body),e="
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "&&(qn.imagePath=this._detectIconPath()),(this.options.imagePath||qn.imagePath)+Rn.prototype._getIconUrl.call(this,t)},_stripUrl:function(t){var e=function(t,e,n){var r=e.exec(t);return r&&r[n]};return(t=e(t,/^url\\((['\"])?(.+)\\1\\)$/,2))&&e(t,/^(.*)marker-icon\\.png$/,1)},_detectIconPath:function(){var t=ie(\"div\",\"leaflet-default-icon-path\",document.body),e=oe(t,\"background-image\")||oe(t,\"backgroundImage\");if(document.body.removeChild(t),e=this._stripUrl(e))return e;var n=document.querySelector('link[href$=\"leaflet.css\"]');return n?n.href.substring(0,n.href.length-\"leaflet.css\".length-1):\"\"}}),Tn=tn.extend({initialize:function(t){this._marker=t},addHooks:function(){var t=this._marker._icon;this._draggable||(this._draggable=new rn(t,t,!0)),this._draggable.on({dragstart:this"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "4136),p=n.n(h),m=n(5448),g={};g.styleTagTransform=p(),g.setAttributes=u(),g.insert=l().bind(null,\"head\"),g.domAPI=a(),g.insertStyleElement=f(),o()(m.Z,g),m.Z&&m.Z.locals&&m.Z.locals},6422:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/8f2c4d11474275fbc161.png?proxy=fodl-klimat\"},8139:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/416d91365b44e4b4f477.png?proxy=fodl-klimat\"},2619:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/2b3e1faf89f94a483539.png?proxy=fodl-klimat\"},1091:function(t,e,n){\"use strict\";n.d(e,{Z:function(){return h}});var r=n(310),o=n(3788),i=[\"size\"];function a(t){return a=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbo"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "d\"),g.domAPI=a(),g.insertStyleElement=f(),o()(m.Z,g),m.Z&&m.Z.locals&&m.Z.locals},6422:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/8f2c4d11474275fbc161.png?proxy=fodl-klimat\"},8139:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/416d91365b44e4b4f477.png?proxy=fodl-klimat\"},2619:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/2b3e1faf89f94a483539.png?proxy=fodl-klimat\"},1091:function(t,e,n){\"use strict\";n.d(e,{Z:function(){return h}});var r=n(310),o=n(3788),i=[\"size\"];function a(t){return a=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},a(t)}function s(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymb"
+        },
+        {
+          "token": "png",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "){\"use strict\";t.exports=n.p+\"assets/8f2c4d11474275fbc161.png?proxy=fodl-klimat\"},8139:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/416d91365b44e4b4f477.png?proxy=fodl-klimat\"},2619:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/2b3e1faf89f94a483539.png?proxy=fodl-klimat\"},1091:function(t,e,n){\"use strict\";n.d(e,{Z:function(){return h}});var r=n(310),o=n(3788),i=[\"size\"];function a(t){return a=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},a(t)}function s(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDe"
+        },
+        {
+          "token": "tif",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "Verdana, Arial, sans-serif',fontFamilyHeading:'\"SMHI Sans\", \"Futura\", \"futura-pt\", Verdana, Arial, sans-serif',fontFamilyMono:'\"Noto Sans Mono\", monospace',auFlexGrid:\"PnBiB\",auFlexGridLeft:\"KMHNq\",auFlexGridRight:\"vhpSb\",auFlexGridCenter:\"Tkcsd\",auFlexGridJustify:\"uAJHM\",auFlexGridTop:\"HkZYK\",auFlexGridBottom:\"WfSHb\",auFlexGridMiddle:\"ootjr\",auFlexGridStretch:\"CnfZq\",auFlexGridHorizontal:\"kYsSM\",auFlexGridVertical:\"kVXQr\",auFlexGridWrap:\"wTHeZ\"};function l(t){return l=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},l(t)}(0,a.Z)(\".PnBiB{display:flex;margin:-.5rem}.PnBiB.KMHNq{justify-content:flex-start}.PnBiB.vhpSb{jus"
+        },
+        {
+          "token": "tif",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ion\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},l(t)}(0,a.Z)(\".PnBiB{display:flex;margin:-.5rem}.PnBiB.KMHNq{justify-content:flex-start}.PnBiB.vhpSb{justify-content:flex-end}.PnBiB.Tkcsd{justify-content:center}.PnBiB.uAJHM{justify-content:space-between}.PnBiB.HkZYK{align-items:flex-start}.PnBiB.WfSHb{align-items:flex-end}.PnBiB.ootjr{align-items:center}.PnBiB.CnfZq{align-items:stretch}.PnBiB.kYsSM{flex-direction:row}.PnBiB.kVXQr{flex-direction:column}.PnBiB.wTHeZ{flex-wrap:wrap}.PnBiB>*{margin:.5rem;max-width:calc(100% - 1rem)}\");var c=[\"alignment\",\"verticalAlignment\",\"direction\",\"wrap\",\"className\",\"children\"];function u(t,e"
+        },
+        {
+          "token": "tif",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "mbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},l(t)}(0,a.Z)(\".PnBiB{display:flex;margin:-.5rem}.PnBiB.KMHNq{justify-content:flex-start}.PnBiB.vhpSb{justify-content:flex-end}.PnBiB.Tkcsd{justify-content:center}.PnBiB.uAJHM{justify-content:space-between}.PnBiB.HkZYK{align-items:flex-start}.PnBiB.WfSHb{align-items:flex-end}.PnBiB.ootjr{align-items:center}.PnBiB.CnfZq{align-items:stretch}.PnBiB.kYsSM{flex-direction:row}.PnBiB.kVXQr{flex-direction:column}.PnBiB.wTHeZ{flex-wrap:wrap}.PnBiB>*{margin:.5rem;max-width:calc(100% - 1rem)}\");var c=[\"alignment\",\"verticalAlignment\",\"direction\",\"wrap\",\"className\",\"children\"];function u(t,e){var n=Object.keys(t);if(Object.getOwnP"
+        },
+        {
+          "token": "tif",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "f t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},l(t)}(0,a.Z)(\".PnBiB{display:flex;margin:-.5rem}.PnBiB.KMHNq{justify-content:flex-start}.PnBiB.vhpSb{justify-content:flex-end}.PnBiB.Tkcsd{justify-content:center}.PnBiB.uAJHM{justify-content:space-between}.PnBiB.HkZYK{align-items:flex-start}.PnBiB.WfSHb{align-items:flex-end}.PnBiB.ootjr{align-items:center}.PnBiB.CnfZq{align-items:stretch}.PnBiB.kYsSM{flex-direction:row}.PnBiB.kVXQr{flex-direction:column}.PnBiB.wTHeZ{flex-wrap:wrap}.PnBiB>*{margin:.5rem;max-width:calc(100% - 1rem)}\");var c=[\"alignment\",\"verticalAlignment\",\"direction\",\"wrap\",\"className\",\"children\"];function u(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPro"
+        },
+        {
+          "token": "tif",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},l(t)}(0,a.Z)(\".PnBiB{display:flex;margin:-.5rem}.PnBiB.KMHNq{justify-content:flex-start}.PnBiB.vhpSb{justify-content:flex-end}.PnBiB.Tkcsd{justify-content:center}.PnBiB.uAJHM{justify-content:space-between}.PnBiB.HkZYK{align-items:flex-start}.PnBiB.WfSHb{align-items:flex-end}.PnBiB.ootjr{align-items:center}.PnBiB.CnfZq{align-items:stretch}.PnBiB.kYsSM{flex-direction:row}.PnBiB.kVXQr{flex-direction:column}.PnBiB.wTHeZ{flex-wrap:wrap}.PnBiB>*{margin:.5rem;max-width:calc(100% - 1rem)}\");var c=[\"alignment\",\"verticalAlignment\",\"direction\",\"wrap\",\"className\",\"children\"];function u(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((func"
+        },
+        {
+          "token": "tif",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "imitive value.\")}return String(t)}(t,\"string\");return\"symbol\"===l(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var h={left:\"auFlexGridLeft\",right:\"auFlexGridRight\",center:\"auFlexGridCenter\",justify:\"auFlexGridJustify\"},p={top:\"auFlexGridTop\",bottom:\"auFlexGridBottom\",middle:\"auFlexGridMiddle\",stretch:\"auFlexGridStretch\"},m={horizontal:\"auFlexGridHorizontal\",vertical:\"auFlexGridVertical\"},g=(0,r.forwardRef)((function(t,e){var n=t.alignment,a=void 0===n?\"justify\":n,l=t.verticalAlignment,u=void 0===l?\"stretch\":l,f=t.direction,g=void 0===f?\"horizontal\":f,b=t.wrap,y=t.className,v=t.children,w=function(t,e){if(null==t)return{};var n,r,o=function(t,e){if(null==t)return{};var n,r,o={},i=Object.keys(t);for(r=0;r<"
+        },
+        {
+          "token": "tif",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "turn String(t)}(t,\"string\");return\"symbol\"===l(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var h={left:\"auFlexGridLeft\",right:\"auFlexGridRight\",center:\"auFlexGridCenter\",justify:\"auFlexGridJustify\"},p={top:\"auFlexGridTop\",bottom:\"auFlexGridBottom\",middle:\"auFlexGridMiddle\",stretch:\"auFlexGridStretch\"},m={horizontal:\"auFlexGridHorizontal\",vertical:\"auFlexGridVertical\"},g=(0,r.forwardRef)((function(t,e){var n=t.alignment,a=void 0===n?\"justify\":n,l=t.verticalAlignment,u=void 0===l?\"stretch\":l,f=t.direction,g=void 0===f?\"horizontal\":f,b=t.wrap,y=t.className,v=t.children,w=function(t,e){if(null==t)return{};var n,r,o=function(t,e){if(null==t)return{};var n,r,o={},i=Object.keys(t);for(r=0;r<i.length;r++)n=i[r]"
+        },
+        {
+          "token": "tif",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "uFlexGridJustify\"},p={top:\"auFlexGridTop\",bottom:\"auFlexGridBottom\",middle:\"auFlexGridMiddle\",stretch:\"auFlexGridStretch\"},m={horizontal:\"auFlexGridHorizontal\",vertical:\"auFlexGridVertical\"},g=(0,r.forwardRef)((function(t,e){var n=t.alignment,a=void 0===n?\"justify\":n,l=t.verticalAlignment,u=void 0===l?\"stretch\":l,f=t.direction,g=void 0===f?\"horizontal\":f,b=t.wrap,y=t.className,v=t.children,w=function(t,e){if(null==t)return{};var n,r,o=function(t,e){if(null==t)return{};var n,r,o={},i=Object.keys(t);for(r=0;r<i.length;r++)n=i[r],e.indexOf(n)>=0||(o[n]=t[n]);return o}(t,e);if(Object.getOwnPropertySymbols){var i=Object.getOwnPropertySymbols(t);for(r=0;r<i.length;r++)n=i[r],e.indexOf(n)>=0||Object.prototype.propertyIsEnumerable.call(t,n)&&(o[n]=t[n])}return o}(t,c),_=[s.auFl"
+        },
+        {
+          "token": "tif",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ve value.\")}return String(t)}(t,\"string\");return\"symbol\"===Ne(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}(0,$t.Z)('.WyzHW{margin-top:1.5rem}.WyzHW .YLZov{align-items:flex-end;display:flex;justify-content:space-between;margin-bottom:.5rem}.WyzHW .YLZov .vKkCV{font-size:1rem;font-weight:700}.WyzHW .YLZov .FrabJ,.WyzHW .YLZov .vKkCV{font-family:Noto Sans,Verdana,Arial,sans-serif;letter-spacing:.02rem;line-height:1.5rem;margin-bottom:0;margin-top:0}.WyzHW .YLZov .FrabJ{color:#647078;font-size:.875rem;font-weight:400}.WyzHW .BjTDh{position:relative}.WyzHW .BjTDh:before{background-color:#fff;border:.1875rem solid transparent;border-radius:.0625rem;content:\"\";height:calc(100% - .5rem);left:.0625rem;position:a"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "e)return e.el.setAttribute(\"src\",v),or.prototype._removeTile.call(this,t)},_tileReady:function(t,e,n){if(this._map&&(!n||n.getAttribute(\"src\")!==v))return or.prototype._tileReady.call(this,t,e,n)}});function ar(t,e){return new ir(t,e)}var sr=ir.extend({defaultWmsParams:{service:\"WMS\",request:\"GetMap\",layers:\"\",styles:\"\",format:\"image/jpeg\",transparent:!1,version:\"1.1.1\"},options:{crs:null,uppercase:!1},initialize:function(t,n){this._url=t;var r=e({},this.defaultWmsParams);for(var o in n)o in this.options||(r[o]=n[o]);var i=(n=h(this,n)).detectRetina&&Zt.retina?2:1,a=this.getTileSize();r.width=a.x*i,r.height=a.y*i,this.wmsParams=r},onAdd:function(t){this._crs=this.options.crs||t.options.crs,this._wmsVersion=parseFloat(this.wmsParams.version);var e=this._wmsVersion>=1.3?\""
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ribute(\"src\",v),or.prototype._removeTile.call(this,t)},_tileReady:function(t,e,n){if(this._map&&(!n||n.getAttribute(\"src\")!==v))return or.prototype._tileReady.call(this,t,e,n)}});function ar(t,e){return new ir(t,e)}var sr=ir.extend({defaultWmsParams:{service:\"WMS\",request:\"GetMap\",layers:\"\",styles:\"\",format:\"image/jpeg\",transparent:!1,version:\"1.1.1\"},options:{crs:null,uppercase:!1},initialize:function(t,n){this._url=t;var r=e({},this.defaultWmsParams);for(var o in n)o in this.options||(r[o]=n[o]);var i=(n=h(this,n)).detectRetina&&Zt.retina?2:1,a=this.getTileSize();r.width=a.x*i,r.height=a.y*i,this.wmsParams=r},onAdd:function(t){this._crs=this.options.crs||t.options.crs,this._wmsVersion=parseFloat(this.wmsParams.version);var e=this._wmsVersion>=1.3?\"crs\":\"srs\";this.wmsP"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "n ar(t,e){return new ir(t,e)}var sr=ir.extend({defaultWmsParams:{service:\"WMS\",request:\"GetMap\",layers:\"\",styles:\"\",format:\"image/jpeg\",transparent:!1,version:\"1.1.1\"},options:{crs:null,uppercase:!1},initialize:function(t,n){this._url=t;var r=e({},this.defaultWmsParams);for(var o in n)o in this.options||(r[o]=n[o]);var i=(n=h(this,n)).detectRetina&&Zt.retina?2:1,a=this.getTileSize();r.width=a.x*i,r.height=a.y*i,this.wmsParams=r},onAdd:function(t){this._crs=this.options.crs||t.options.crs,this._wmsVersion=parseFloat(this.wmsParams.version);var e=this._wmsVersion>=1.3?\"crs\":\"srs\";this.wmsParams[e]=this._crs.code,ir.prototype.onAdd.call(this,t)},getTileUrl:function(t){var e=this._tileCoordsToNwSe(t),n=this._crs,r=Z(n.project(e[0]),n.project(e[1])),o=r.min,i=r.max,a=(this._"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "1.1.1\"},options:{crs:null,uppercase:!1},initialize:function(t,n){this._url=t;var r=e({},this.defaultWmsParams);for(var o in n)o in this.options||(r[o]=n[o]);var i=(n=h(this,n)).detectRetina&&Zt.retina?2:1,a=this.getTileSize();r.width=a.x*i,r.height=a.y*i,this.wmsParams=r},onAdd:function(t){this._crs=this.options.crs||t.options.crs,this._wmsVersion=parseFloat(this.wmsParams.version);var e=this._wmsVersion>=1.3?\"crs\":\"srs\";this.wmsParams[e]=this._crs.code,ir.prototype.onAdd.call(this,t)},getTileUrl:function(t){var e=this._tileCoordsToNwSe(t),n=this._crs,r=Z(n.project(e[0]),n.project(e[1])),o=r.min,i=r.max,a=(this._wmsVersion>=1.3&&this._crs===Sn?[o.y,o.x,i.y,i.x]:[o.x,o.y,i.x,i.y]).join(\",\"),s=ir.prototype.getTileUrl.call(this,t);return s+p(this.wmsParams,s,this.options.u"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "r r=e({},this.defaultWmsParams);for(var o in n)o in this.options||(r[o]=n[o]);var i=(n=h(this,n)).detectRetina&&Zt.retina?2:1,a=this.getTileSize();r.width=a.x*i,r.height=a.y*i,this.wmsParams=r},onAdd:function(t){this._crs=this.options.crs||t.options.crs,this._wmsVersion=parseFloat(this.wmsParams.version);var e=this._wmsVersion>=1.3?\"crs\":\"srs\";this.wmsParams[e]=this._crs.code,ir.prototype.onAdd.call(this,t)},getTileUrl:function(t){var e=this._tileCoordsToNwSe(t),n=this._crs,r=Z(n.project(e[0]),n.project(e[1])),o=r.min,i=r.max,a=(this._wmsVersion>=1.3&&this._crs===Sn?[o.y,o.x,i.y,i.x]:[o.x,o.y,i.x,i.y]).join(\",\"),s=ir.prototype.getTileUrl.call(this,t);return s+p(this.wmsParams,s,this.options.uppercase)+(this.options.uppercase?\"&BBOX=\":\"&bbox=\")+a},setParams:function(t,n)"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ams);for(var o in n)o in this.options||(r[o]=n[o]);var i=(n=h(this,n)).detectRetina&&Zt.retina?2:1,a=this.getTileSize();r.width=a.x*i,r.height=a.y*i,this.wmsParams=r},onAdd:function(t){this._crs=this.options.crs||t.options.crs,this._wmsVersion=parseFloat(this.wmsParams.version);var e=this._wmsVersion>=1.3?\"crs\":\"srs\";this.wmsParams[e]=this._crs.code,ir.prototype.onAdd.call(this,t)},getTileUrl:function(t){var e=this._tileCoordsToNwSe(t),n=this._crs,r=Z(n.project(e[0]),n.project(e[1])),o=r.min,i=r.max,a=(this._wmsVersion>=1.3&&this._crs===Sn?[o.y,o.x,i.y,i.x]:[o.x,o.y,i.x,i.y]).join(\",\"),s=ir.prototype.getTileUrl.call(this,t);return s+p(this.wmsParams,s,this.options.uppercase)+(this.options.uppercase?\"&BBOX=\":\"&bbox=\")+a},setParams:function(t,n){return e(this.wmsParams,t)"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ptions||(r[o]=n[o]);var i=(n=h(this,n)).detectRetina&&Zt.retina?2:1,a=this.getTileSize();r.width=a.x*i,r.height=a.y*i,this.wmsParams=r},onAdd:function(t){this._crs=this.options.crs||t.options.crs,this._wmsVersion=parseFloat(this.wmsParams.version);var e=this._wmsVersion>=1.3?\"crs\":\"srs\";this.wmsParams[e]=this._crs.code,ir.prototype.onAdd.call(this,t)},getTileUrl:function(t){var e=this._tileCoordsToNwSe(t),n=this._crs,r=Z(n.project(e[0]),n.project(e[1])),o=r.min,i=r.max,a=(this._wmsVersion>=1.3&&this._crs===Sn?[o.y,o.x,i.y,i.x]:[o.x,o.y,i.x,i.y]).join(\",\"),s=ir.prototype.getTileUrl.call(this,t);return s+p(this.wmsParams,s,this.options.uppercase)+(this.options.uppercase?\"&BBOX=\":\"&bbox=\")+a},setParams:function(t,n){return e(this.wmsParams,t),n||this.redraw(),this}});ir.WM"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "is,n)).detectRetina&&Zt.retina?2:1,a=this.getTileSize();r.width=a.x*i,r.height=a.y*i,this.wmsParams=r},onAdd:function(t){this._crs=this.options.crs||t.options.crs,this._wmsVersion=parseFloat(this.wmsParams.version);var e=this._wmsVersion>=1.3?\"crs\":\"srs\";this.wmsParams[e]=this._crs.code,ir.prototype.onAdd.call(this,t)},getTileUrl:function(t){var e=this._tileCoordsToNwSe(t),n=this._crs,r=Z(n.project(e[0]),n.project(e[1])),o=r.min,i=r.max,a=(this._wmsVersion>=1.3&&this._crs===Sn?[o.y,o.x,i.y,i.x]:[o.x,o.y,i.x,i.y]).join(\",\"),s=ir.prototype.getTileUrl.call(this,t);return s+p(this.wmsParams,s,this.options.uppercase)+(this.options.uppercase?\"&BBOX=\":\"&bbox=\")+a},setParams:function(t,n){return e(this.wmsParams,t),n||this.redraw(),this}});ir.WMS=sr,ar.wms=function(t,e){return "
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "(this.wmsParams.version);var e=this._wmsVersion>=1.3?\"crs\":\"srs\";this.wmsParams[e]=this._crs.code,ir.prototype.onAdd.call(this,t)},getTileUrl:function(t){var e=this._tileCoordsToNwSe(t),n=this._crs,r=Z(n.project(e[0]),n.project(e[1])),o=r.min,i=r.max,a=(this._wmsVersion>=1.3&&this._crs===Sn?[o.y,o.x,i.y,i.x]:[o.x,o.y,i.x,i.y]).join(\",\"),s=ir.prototype.getTileUrl.call(this,t);return s+p(this.wmsParams,s,this.options.uppercase)+(this.options.uppercase?\"&BBOX=\":\"&bbox=\")+a},setParams:function(t,n){return e(this.wmsParams,t),n||this.redraw(),this}});ir.WMS=sr,ar.wms=function(t,e){return new sr(t,e)};var lr=Ln.extend({options:{padding:.1},initialize:function(t){h(this,t),i(this),this._layers=this._layers||{}},onAdd:function(){this._container||(this._initContainer(),de(this._"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "TileUrl:function(t){var e=this._tileCoordsToNwSe(t),n=this._crs,r=Z(n.project(e[0]),n.project(e[1])),o=r.min,i=r.max,a=(this._wmsVersion>=1.3&&this._crs===Sn?[o.y,o.x,i.y,i.x]:[o.x,o.y,i.x,i.y]).join(\",\"),s=ir.prototype.getTileUrl.call(this,t);return s+p(this.wmsParams,s,this.options.uppercase)+(this.options.uppercase?\"&BBOX=\":\"&bbox=\")+a},setParams:function(t,n){return e(this.wmsParams,t),n||this.redraw(),this}});ir.WMS=sr,ar.wms=function(t,e){return new sr(t,e)};var lr=Ln.extend({options:{padding:.1},initialize:function(t){h(this,t),i(this),this._layers=this._layers||{}},onAdd:function(){this._container||(this._initContainer(),de(this._container,\"leaflet-zoom-animated\")),this.getPane().appendChild(this._container),this._update(),this.on(\"update\",this._updatePaths,this"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "this._wmsVersion>=1.3&&this._crs===Sn?[o.y,o.x,i.y,i.x]:[o.x,o.y,i.x,i.y]).join(\",\"),s=ir.prototype.getTileUrl.call(this,t);return s+p(this.wmsParams,s,this.options.uppercase)+(this.options.uppercase?\"&BBOX=\":\"&bbox=\")+a},setParams:function(t,n){return e(this.wmsParams,t),n||this.redraw(),this}});ir.WMS=sr,ar.wms=function(t,e){return new sr(t,e)};var lr=Ln.extend({options:{padding:.1},initialize:function(t){h(this,t),i(this),this._layers=this._layers||{}},onAdd:function(){this._container||(this._initContainer(),de(this._container,\"leaflet-zoom-animated\")),this.getPane().appendChild(this._container),this._update(),this.on(\"update\",this._updatePaths,this)},onRemove:function(){this.off(\"update\",this._updatePaths,this),this._destroyContainer()},getEvents:function(){var t={v"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "y,o.x,i.y,i.x]:[o.x,o.y,i.x,i.y]).join(\",\"),s=ir.prototype.getTileUrl.call(this,t);return s+p(this.wmsParams,s,this.options.uppercase)+(this.options.uppercase?\"&BBOX=\":\"&bbox=\")+a},setParams:function(t,n){return e(this.wmsParams,t),n||this.redraw(),this}});ir.WMS=sr,ar.wms=function(t,e){return new sr(t,e)};var lr=Ln.extend({options:{padding:.1},initialize:function(t){h(this,t),i(this),this._layers=this._layers||{}},onAdd:function(){this._container||(this._initContainer(),de(this._container,\"leaflet-zoom-animated\")),this.getPane().appendChild(this._container),this._update(),this.on(\"update\",this._updatePaths,this)},onRemove:function(){this.off(\"update\",this._updatePaths,this),this._destroyContainer()},getEvents:function(){var t={viewreset:this._reset,zoom:this._onZoom,mo"
+        },
+        {
+          "token": "wms",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "i.x]:[o.x,o.y,i.x,i.y]).join(\",\"),s=ir.prototype.getTileUrl.call(this,t);return s+p(this.wmsParams,s,this.options.uppercase)+(this.options.uppercase?\"&BBOX=\":\"&bbox=\")+a},setParams:function(t,n){return e(this.wmsParams,t),n||this.redraw(),this}});ir.WMS=sr,ar.wms=function(t,e){return new sr(t,e)};var lr=Ln.extend({options:{padding:.1},initialize:function(t){h(this,t),i(this),this._layers=this._layers||{}},onAdd:function(){this._container||(this._initContainer(),de(this._container,\"leaflet-zoom-animated\")),this.getPane().appendChild(this._container),this._update(),this.on(\"update\",this._updatePaths,this)},onRemove:function(){this.off(\"update\",this._updatePaths,this),this._destroyContainer()},getEvents:function(){var t={viewreset:this._reset,zoom:this._onZoom,moveend:this"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "bject.getOwnPropertySymbols(t);for(r=0;r<i.length;r++)n=i[r],e.indexOf(n)>=0||Object.prototype.propertyIsEnumerable.call(t,n)&&(o[n]=t[n])}return o}(t,i);try{var s=d[u[o]||parseInt(o)];return s?r.createElement(s,l(l({},a),{},{ref:e})):(console.error('The icon SnowflakeOutline does not have the size \"'.concat(o,'\".')),r.createElement(r.Fragment,null))}catch(t){return console.error('The icon SnowflakeOutline does not have the size \"'.concat(o,'\".'),t),r.createElement(r.Fragment,null)}})),h=Object.assign(f,{getSizes:function(){return[\"s\",\"m\"]}})},8674:function(t,e,n){\"use strict\";n.d(e,{Z:function(){return h}});var r=n(310),o=n(3788),i=[\"size\"];function a(t){return a=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return"
+        },
+        {
+          "token": "snow",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "t[n])}return o}(t,i);try{var s=d[u[o]||parseInt(o)];return s?r.createElement(s,l(l({},a),{},{ref:e})):(console.error('The icon SnowflakeOutline does not have the size \"'.concat(o,'\".')),r.createElement(r.Fragment,null))}catch(t){return console.error('The icon SnowflakeOutline does not have the size \"'.concat(o,'\".'),t),r.createElement(r.Fragment,null)}})),h=Object.assign(f,{getSizes:function(){return[\"s\",\"m\"]}})},8674:function(t,e,n){\"use strict\";n.d(e,{Z:function(){return h}});var r=n(310),o=n(3788),i=[\"size\"];function a(t){return a=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},a(t)}function s(t,e){var n=Object.keys"
+        },
+        {
+          "token": "fodl-klimat",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "n(h),m=n(5448),g={};g.styleTagTransform=p(),g.setAttributes=u(),g.insert=l().bind(null,\"head\"),g.domAPI=a(),g.insertStyleElement=f(),o()(m.Z,g),m.Z&&m.Z.locals&&m.Z.locals},6422:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/8f2c4d11474275fbc161.png?proxy=fodl-klimat\"},8139:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/416d91365b44e4b4f477.png?proxy=fodl-klimat\"},2619:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/2b3e1faf89f94a483539.png?proxy=fodl-klimat\"},1091:function(t,e,n){\"use strict\";n.d(e,{Z:function(){return h}});var r=n(310),o=n(3788),i=[\"size\"];function a(t){return a=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototyp"
+        },
+        {
+          "token": "fodl-klimat",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "PI=a(),g.insertStyleElement=f(),o()(m.Z,g),m.Z&&m.Z.locals&&m.Z.locals},6422:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/8f2c4d11474275fbc161.png?proxy=fodl-klimat\"},8139:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/416d91365b44e4b4f477.png?proxy=fodl-klimat\"},2619:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/2b3e1faf89f94a483539.png?proxy=fodl-klimat\"},1091:function(t,e,n){\"use strict\";n.d(e,{Z:function(){return h}});var r=n(310),o=n(3788),i=[\"size\"];function a(t){return a=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},a(t)}function s(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r"
+        },
+        {
+          "token": "fodl-klimat",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ict\";t.exports=n.p+\"assets/8f2c4d11474275fbc161.png?proxy=fodl-klimat\"},8139:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/416d91365b44e4b4f477.png?proxy=fodl-klimat\"},2619:function(t,e,n){\"use strict\";t.exports=n.p+\"assets/2b3e1faf89f94a483539.png?proxy=fodl-klimat\"},1091:function(t,e,n){\"use strict\";n.d(e,{Z:function(){return h}});var r=n(310),o=n(3788),i=[\"size\"];function a(t){return a=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},a(t)}function s(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDescriptor(t"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "=\"+r.domain}if(r.path){if(!c.test(r.path))throw new TypeError(\"option path is invalid\");o+=\"; Path=\"+r.path}if(r.expires){if(\"function\"!=typeof r.expires.toUTCString)throw new TypeError(\"option expires is invalid\");o+=\"; Expires=\"+r.expires.toUTCString()}if(r.httpOnly&&(o+=\"; HttpOnly\"),r.secure&&(o+=\"; Secure\"),r.sameSite)switch(\"string\"==typeof r.sameSite?r.sameSite.toLowerCase():r.sameSite){case!0:o+=\"; SameSite=Strict\";break;case\"lax\":o+=\"; SameSite=Lax\";break;case\"strict\":o+=\"; SameSite=Strict\";break;case\"none\":o+=\"; SameSite=None\";break;default:throw new TypeError(\"option sameSite is invalid\")}return o},d={name:\"cookie\",lookup:function(t){var e;if(t.lookupCookie&&\"undefined\"!=typeof document){var n=function(t){for(var e=t+\"=\",n=document.cookie.split(\";\"),r=0;r<n.l"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "path){if(!c.test(r.path))throw new TypeError(\"option path is invalid\");o+=\"; Path=\"+r.path}if(r.expires){if(\"function\"!=typeof r.expires.toUTCString)throw new TypeError(\"option expires is invalid\");o+=\"; Expires=\"+r.expires.toUTCString()}if(r.httpOnly&&(o+=\"; HttpOnly\"),r.secure&&(o+=\"; Secure\"),r.sameSite)switch(\"string\"==typeof r.sameSite?r.sameSite.toLowerCase():r.sameSite){case!0:o+=\"; SameSite=Strict\";break;case\"lax\":o+=\"; SameSite=Lax\";break;case\"strict\":o+=\"; SameSite=Strict\";break;case\"none\":o+=\"; SameSite=None\";break;default:throw new TypeError(\"option sameSite is invalid\")}return o},d={name:\"cookie\",lookup:function(t){var e;if(t.lookupCookie&&\"undefined\"!=typeof document){var n=function(t){for(var e=t+\"=\",n=document.cookie.split(\";\"),r=0;r<n.length;r++){for(va"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "omPathIndex){if(\"string\"!=typeof n[t.lookupFromPathIndex])return;e=n[t.lookupFromPathIndex].replace(\"/\",\"\")}else e=n[0].replace(\"/\",\"\")}return e}},x={name:\"subdomain\",lookup:function(t){var e;if(\"undefined\"!=typeof window){var n=window.location.href.match(/(?:http[s]*\\:\\/\\/)*(.*?)\\.(?=[^\\/]*\\..{2,5})/gi);n instanceof Array&&(e=\"number\"==typeof t.lookupFromSubdomainIndex?n[t.lookupFromSubdomainIndex].replace(\"http://\",\"\").replace(\"https://\",\"\").replace(\".\",\"\"):n[0].replace(\"http://\",\"\").replace(\"https://\",\"\").replace(\".\",\"\"))}return e}},O=function(){function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};(0,r.Z)(this,t),this.type=\"languageDetector\",this.detectors={},this.init(e,n)}return(0,o.Z)(t,[{key:\"init\",value:function(t){var e=arguments.length"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "me:\"subdomain\",lookup:function(t){var e;if(\"undefined\"!=typeof window){var n=window.location.href.match(/(?:http[s]*\\:\\/\\/)*(.*?)\\.(?=[^\\/]*\\..{2,5})/gi);n instanceof Array&&(e=\"number\"==typeof t.lookupFromSubdomainIndex?n[t.lookupFromSubdomainIndex].replace(\"http://\",\"\").replace(\"https://\",\"\").replace(\".\",\"\"):n[0].replace(\"http://\",\"\").replace(\"https://\",\"\").replace(\".\",\"\"))}return e}},O=function(){function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};(0,r.Z)(this,t),this.type=\"languageDetector\",this.detectors={},this.init(e,n)}return(0,o.Z)(t,[{key:\"init\",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};this.services=t,this.options=l(e,this.options||{},"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "function(t){var e;if(\"undefined\"!=typeof window){var n=window.location.href.match(/(?:http[s]*\\:\\/\\/)*(.*?)\\.(?=[^\\/]*\\..{2,5})/gi);n instanceof Array&&(e=\"number\"==typeof t.lookupFromSubdomainIndex?n[t.lookupFromSubdomainIndex].replace(\"http://\",\"\").replace(\"https://\",\"\").replace(\".\",\"\"):n[0].replace(\"http://\",\"\").replace(\"https://\",\"\").replace(\".\",\"\"))}return e}},O=function(){function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};(0,r.Z)(this,t),this.type=\"languageDetector\",this.detectors={},this.init(e,n)}return(0,o.Z)(t,[{key:\"init\",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};this.services=t,this.options=l(e,this.options||{},{order:[\"querystring\","
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "dow){var n=window.location.href.match(/(?:http[s]*\\:\\/\\/)*(.*?)\\.(?=[^\\/]*\\..{2,5})/gi);n instanceof Array&&(e=\"number\"==typeof t.lookupFromSubdomainIndex?n[t.lookupFromSubdomainIndex].replace(\"http://\",\"\").replace(\"https://\",\"\").replace(\".\",\"\"):n[0].replace(\"http://\",\"\").replace(\"https://\",\"\").replace(\".\",\"\"))}return e}},O=function(){function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};(0,r.Z)(this,t),this.type=\"languageDetector\",this.detectors={},this.init(e,n)}return(0,o.Z)(t,[{key:\"init\",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};this.services=t,this.options=l(e,this.options||{},{order:[\"querystring\",\"cookie\",\"localStorage\",\"sessionStorage\",\"na"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "tion.href.match(/(?:http[s]*\\:\\/\\/)*(.*?)\\.(?=[^\\/]*\\..{2,5})/gi);n instanceof Array&&(e=\"number\"==typeof t.lookupFromSubdomainIndex?n[t.lookupFromSubdomainIndex].replace(\"http://\",\"\").replace(\"https://\",\"\").replace(\".\",\"\"):n[0].replace(\"http://\",\"\").replace(\"https://\",\"\").replace(\".\",\"\"))}return e}},O=function(){function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};(0,r.Z)(this,t),this.type=\"languageDetector\",this.detectors={},this.init(e,n)}return(0,o.Z)(t,[{key:\"init\",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};this.services=t,this.options=l(e,this.options||{},{order:[\"querystring\",\"cookie\",\"localStorage\",\"sessionStorage\",\"navigator\",\"htmlTag\"],lo"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "unction(t,e){return e=e||1,new T((t.x/e-this._b)/this._a,(t.y/e-this._d)/this._c)}};var F,Y=e({},M,{code:\"EPSG:3857\",projection:A,transformation:(F=.5/(Math.PI*A.R),W(F,.5,-F,.5))}),K=e({},Y,{code:\"EPSG:900913\"});function Q(t){return document.createElementNS(\"http://www.w3.org/2000/svg\",t)}function J(t,e){var n,r,o,i,a,s,l=\"\";for(n=0,o=t.length;n<o;n++){for(r=0,i=(a=t[n]).length;r<i;r++)l+=(r?\"L\":\"M\")+(s=a[r]).x+\" \"+s.y;l+=e?Zt.svg?\"z\":\"x\":\"\"}return l||\"M0 0\"}var $,tt=document.documentElement.style,et=\"ActiveXObject\"in window,nt=et&&!document.addEventListener,rt=\"msLaunchUri\"in navigator&&!(\"documentMode\"in document),ot=Xt(\"webkit\"),it=Xt(\"android\"),at=Xt(\"android 2\")||Xt(\"android 3\"),st=parseInt(/WebKit\\/([0-9]+)|$/.exec(navigator.userAgent)[1],10),lt=it&&Xt(\"Google\")&"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "ort\",c,e),window.removeEventListener(\"testPassiveEventSupport\",c,e)}catch(t){}return t}(),qt=!!document.createElement(\"canvas\").getContext,Tt=!(!document.createElementNS||!Q(\"svg\").createSVGRect),Ct=!!Tt&&(($=document.createElement(\"div\")).innerHTML=\"<svg/>\",\"http://www.w3.org/2000/svg\"===($.firstChild&&$.firstChild.namespaceURI)),Et=!Tt&&function(){try{var t=document.createElement(\"div\");t.innerHTML='<v:shape adj=\"1\"/>';var e=t.firstChild;return e.style.behavior=\"url(#default#VML)\",e&&\"object\"===a(e.adj)}catch(t){return!1}}();function Xt(t){return navigator.userAgent.toLowerCase().indexOf(t)>=0}var Zt={ie:et,ielt9:nt,edge:rt,webkit:ot,android:it,android23:at,androidStock:lt,opera:ct,chrome:ut,gecko:dt,safari:ft,phantom:ht,opera12:pt,win:mt,ie3d:gt,webkit3d:bt,gecko3d:y"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "n){t.style.width=Math.round(this.options.maxWidth*n)+\"px\",t.innerHTML=e},_getRoundNum:function(t){var e=Math.pow(10,(Math.floor(t)+\"\").length-1),n=t/e;return e*(n>=10?10:n>=5?5:n>=3?3:n>=2?2:1)}}),$e=Fe.extend({options:{position:\"bottomright\",prefix:'<a href=\"https://leafletjs.com\" title=\"A JavaScript library for interactive maps\">'+(Zt.inlineSvg?'<svg aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"8\" viewBox=\"0 0 12 8\" class=\"leaflet-attribution-flag\"><path fill=\"#4C7BE1\" d=\"M0 0h12v4H0z\"/><path fill=\"#FFD500\" d=\"M0 4h12v3H0z\"/><path fill=\"#E0BC00\" d=\"M0 7h12v1H0z\"/></svg> ':\"\")+\"Leaflet</a>\"},initialize:function(t){h(this,t),this._attributions={}},onAdd:function(t){for(var e in t.attributionControl=this,this._container=ie(\"div\",\"leaflet-contr"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": ".floor(t)+\"\").length-1),n=t/e;return e*(n>=10?10:n>=5?5:n>=3?3:n>=2?2:1)}}),$e=Fe.extend({options:{position:\"bottomright\",prefix:'<a href=\"https://leafletjs.com\" title=\"A JavaScript library for interactive maps\">'+(Zt.inlineSvg?'<svg aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"8\" viewBox=\"0 0 12 8\" class=\"leaflet-attribution-flag\"><path fill=\"#4C7BE1\" d=\"M0 0h12v4H0z\"/><path fill=\"#FFD500\" d=\"M0 4h12v3H0z\"/><path fill=\"#E0BC00\" d=\"M0 7h12v1H0z\"/></svg> ':\"\")+\"Leaflet</a>\"},initialize:function(t){h(this,t),this._attributions={}},onAdd:function(t){for(var e in t.attributionControl=this,this._container=ie(\"div\",\"leaflet-control-attribution\"),Ue(this._container),t._layers)t._layers[e].getAttribution&&this.addAttribution(t._layers[e].getAttributi"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "g\");return\"symbol\"===a(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var u={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},d={16:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 16 16\",width:\"16\",height:\"16\",className:[o.Z.auIcon,o.Z.auIcon16,\"auIcon\",\"auIcon16\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M9.29 13.71 3.59 8l5.7-5.71 1.42 1.42L6.41 8l4.3 4.29z\"}))})),24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.crea"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "Z.auIcon,o.Z.auIcon16,\"auIcon\",\"auIcon16\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M9.29 13.71 3.59 8l5.7-5.71 1.42 1.42L6.41 8l4.3 4.29z\"}))})),24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m8.85 10.59 6.3-6.3 1.41 1.42L10.27 12l6.29 6.29-.71.71-.7.71-6.3-6.3L7.44 12z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),foc"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "uIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m8.85 10.59 6.3-6.3 1.41 1.42L10.27 12l6.29 6.29-.71.71-.7.71-6.3-6.3L7.44 12z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m11.35 14.59 9.3-9.3 1.41 1.42L12.77 16l9.29 9.29-1.41 1.42-9.3-9.3L9.94 16z\"}))}))},f=(0,r.forwardRef)((function(t,e){var n=t.size,o=void 0===n?h.getSizes().includes(\"s\")?\"s\":h.getSizes()[0]:n,a=function(t,e){if(null==t)return{};var n,r,o=function(t,e){if(null==t)return{};var n,r,o={},i=Object.keys(t);for(r=0;r<i.length;"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "g\");return\"symbol\"===a(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var u={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},d={16:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 16 16\",width:\"16\",height:\"16\",className:[o.Z.auIcon,o.Z.auIcon16,\"auIcon\",\"auIcon16\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m6.71 13.71-1.42-1.42L9.59 8l-4.3-4.29 1.42-1.42L12.41 8z\"}))})),24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.c"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "uIcon,o.Z.auIcon16,\"auIcon\",\"auIcon16\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m6.71 13.71-1.42-1.42L9.59 8l-4.3-4.29 1.42-1.42L12.41 8z\"}))})),24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m15.15 10.59-6.3-6.3-1.41 1.42L13.73 12l-6.29 6.29.71.71.7.71 6.3-6.3L16.56 12z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),fo"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "Icon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m15.15 10.59-6.3-6.3-1.41 1.42L13.73 12l-6.29 6.29.71.71.7.71 6.3-6.3L16.56 12z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m20.65 14.59-9.3-9.3-1.41 1.42L19.23 16l-9.29 9.29 1.41 1.42 9.3-9.3L22.06 16z\"}))}))},f=(0,r.forwardRef)((function(t,e){var n=t.size,o=void 0===n?h.getSizes().includes(\"s\")?\"s\":h.getSizes()[0]:n,a=function(t,e){if(null==t)return{};var n,r,o=function(t,e){if(null==t)return{};var n,r,o={},i=Object.keys(t);for(r=0;r<i.lengt"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "g\");return\"symbol\"===a(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var u={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},d={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M20 19v-4h-2v-4.3L15.54 7H12V3H7L4 6v13H2v2h20v-2zM14.46 9l1.33 2h-3.8V9h2.46ZM6 19V6.83L7.83 5H10v14zm6 0v-6h4v2h-2v4zm4 0v-2h2v2z\"}),r.createElement(\"path\",{d:\"M7 7h2v2H7zm0 4h2v2H7zm0 4h2v2H7z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "V3H7L4 6v13H2v2h20v-2zM14.46 9l1.33 2h-3.8V9h2.46ZM6 19V6.83L7.83 5H10v14zm6 0v-6h4v2h-2v4zm4 0v-2h2v2z\"}),r.createElement(\"path\",{d:\"M7 7h2v2H7zm0 4h2v2H7zm0 4h2v2H7z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M27 26v-8h-3V9.59L20.41 6H15V4H8L5 7v19H3v2h26v-2zm-2-4h-6v-2h6zM19 8l2.59 2H15V8zM7 26V7.83L9 6h4v20zm8 0V12h7v6h-5v8zm4 0v-2h6v2z\"}),r.createElement(\"path\",{d:\"M9 9h2v2H9zm0 4h2v2H9zm0 4h2v2H9zm0 4h2v2H9zm8-7h3v2h-3z\"}))}))},f=(0,r.forwardRef)((function(t,e){var n=t.size,o=void 0===n?h.getSizes().includes(\"s\")?\"s\":h.get"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "g\");return\"symbol\"===a(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var u={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},d={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M12 17c-2.99 0-5.98-3.01-7.54-5 .42-.54.94-1.15 1.54-1.75L4.59 8.84C2.98 10.47 1.99 12 1.99 12s4.48 7 10 7c.81 0 1.59-.16 2.34-.42l-1.64-1.64c-.23.03-.47.06-.7.06Zm7.4-1.84C21.01 13.53 22 12 22 12s-4.48-7-10-7c-.81 0-1.59.16-2.34.42-.67.23-1.31.55-1.92.91L5.71 4.3 4.3 5.71l14 14 1.41-1.41-1.8-1.8c.54-.43 1.05-.88 1.49-1.3"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": ".98 3.01 7.54 5-.42.54-.94 1.15-1.54 1.75-.46.46-.97.9-1.5 1.33l-1.8-1.8c.19-.39.3-.82.3-1.29 0-1.66-1.34-3-3-3-.46 0-.89.11-1.29.3L9.2 7.78c.68-.36 1.38-.63 2.09-.73Z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M16 24c-5.15 0-9.81-5.61-11.57-8 .71-.97 1.91-2.47 3.41-3.91l-1.41-1.41C3.7 13.28 1.99 16 1.99 16s6.27 10 14 10c1.62 0 3.17-.44 4.62-1.14l-1.51-1.51c-1 .4-2.04.65-3.11.65Zm9.56-2.68C28.29 18.72 30 16 30 16S23.73 6 16 6c-1.62 0-3.17.44-4.62 1.14-.62.3-1.22.66-1.79 1.03L6.71 5.29 5.3 6.7l20 20 1.41-1.41-2.65-2.65c.53-.43 1."
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "g\");return\"symbol\"===a(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var u={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},d={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M5 22h6V2H5zM7 4h2v16H7zm6-2v20h6V2zm4 18h-2V4h2z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createEle"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "e:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M5 22h6V2H5zM7 4h2v16H7zm6-2v20h6V2zm4 18h-2V4h2z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M6 30h8V2H6zM8 4h4v24H8zm10-2v28h8V2zm6 26h-4V4h4z\"}))}))},f=(0,r.forwardRef)((function(t,e){var n=t.size,o=void 0===n?h.getSizes().includes(\"s\")?\"s\":h.getSizes()[0]:n,a=function(t,e){if(null==t)return{};var n,r,o=function(t,e){if(null==t)return{};var n,r,o={},i=Object.keys(t);for(r=0;r<i.length;r++)n=i[r],e.indexOf(n)>=0"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "g\");return\"symbol\"===a(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var u={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},d={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M6.21 6.46 15.8 12l-9.59 5.54zM4.21 3v18l15.59-9z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createEle"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "e:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M6.21 6.46 15.8 12l-9.59 5.54zM4.21 3v18l15.59-9z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M7.61 7.46 22.39 16 7.61 24.54zM5.61 4v24l20.78-12z\"}))}))},f=(0,r.forwardRef)((function(t,e){var n=t.size,o=void 0===n?h.getSizes().includes(\"s\")?\"s\":h.getSizes()[0]:n,a=function(t,e){if(null==t)return{};var n,r,o=function(t,e){if(null==t)return{};var n,r,o={},i=Object.keys(t);for(r=0;r<i.length;r++)n=i[r],e.indexOf(n)>="
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "g\");return\"symbol\"===a(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var u={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},d={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M12 5C6.48 5 2 12 2 12s4.48 7 10 7 10-7 10-7-4.48-7-10-7m0 12c-2.99 0-5.98-3.01-7.54-5C6.01 10.01 9 7 12 7s5.98 3.01 7.54 5C17.99 13.99 15 17 12 17\"}),r.createElement(\"circle\",{cx:12,cy:12,r:3}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 "
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": ".48 7 10 7 10-7 10-7-4.48-7-10-7m0 12c-2.99 0-5.98-3.01-7.54-5C6.01 10.01 9 7 12 7s5.98 3.01 7.54 5C17.99 13.99 15 17 12 17\"}),r.createElement(\"circle\",{cx:12,cy:12,r:3}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M16 6C8.27 6 2 16 2 16s6.27 10 14 10 14-10 14-10S23.73 6 16 6m0 18c-5.15 0-9.81-5.61-11.57-8C6.19 13.6 10.84 8 16 8s9.81 5.61 11.57 8c-1.76 2.4-6.41 8-11.57 8\"}),r.createElement(\"path\",{d:\"M16 10c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6m0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4\"}))}))},f=(0,r.for"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "g\");return\"symbol\"===a(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var u={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},d={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m21.04 12.94-3.7.99L14 12l3.34-1.93 3.7.99.51-1.93-3.13-.84.84-3.13-1.93-.52-.99 3.7L13 10.27V6.41l2.71-2.7-1.42-1.42L12 4.59l-2.29-2.3-1.42 1.42L11 6.41v3.86L7.66 8.34l-.99-3.7-1.93.52.84 3.13-3.13.84.51 1.93 3.7-.99L10 12l-3.34 1.93-3.7-.99-.51 1.93 3.13.84-.84 3.13 1.93.52.99-3.7L11 13.73v3.86l-2.71 2.7 1.42 1.42 2.29-"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "-.99-.51 1.93 3.13.84-.84 3.13 1.93.52.99-3.7L11 13.73v3.86l-2.71 2.7 1.42 1.42 2.29-2.3 2.29 2.3 1.42-1.42-2.71-2.7v-3.86l3.34 1.93.99 3.7 1.93-.52-.84-3.13 3.13-.84z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m28.63 16.7-6.43 1.73L18 16l4.2-2.43 6.43 1.73.52-1.94-4.5-1.2 3.97-2.29-1-1.74-3.97 2.3 1.21-4.5-1.93-.52-1.73 6.43-4.2 2.43V9.41l4.71-4.7-1.42-1.42L17 6.59V2h-2v4.59l-3.29-3.3-1.42 1.42L15 9.41v4.86l-4.2-2.43-1.73-6.43-1.93.52 1.21 4.5-3.97-2.3-1 1.74 3.97 2.29-4.5 1.2.52 1.94 6.43-1.73L14 16l-4.2 2.43-6.43-1.73-.52 1.9"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "g\");return\"symbol\"===a(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var u={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},d={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M15 12c-1.2 0-1.75-.37-2.45-.83-.78-.52-1.75-1.17-3.56-1.17s-2.77.65-3.55 1.17c-.7.46-1.25.83-2.44.83v2c1.8 0 2.77-.65 3.55-1.17.7-.46 1.25-.83 2.44-.83s1.75.37 2.45.83c.78.52 1.75 1.17 3.56 1.17s2.77-.65 3.56-1.17c.7-.46 1.25-.83 2.45-.83v-2c-1.8 0-2.77.65-3.56 1.17-.7.46-1.25.83-2.45.83m2.44-6.83c-.7.46-1.25.83-2.45.83s"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "5-1.17.7-.46 1.25-.83 2.44-.83s1.75.37 2.45.83c.78.52 1.75 1.17 3.56 1.17s2.77-.65 3.56-1.17c.7-.46 1.25-.83 2.45-.83v-2c-1.8 0-2.77.65-3.56 1.17-.7.46-1.25.83-2.45.83\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M24.96 7.23c-.56.46-.92.77-1.76.77s-1.21-.31-1.76-.77C20.78 6.68 19.96 6 18.4 6s-2.38.68-3.04 1.23c-.56.46-.92.77-1.76.77s-1.2-.31-1.76-.77C11.18 6.68 10.36 6 8.8 6s-2.38.68-3.04 1.23C5.21 7.69 4.84 8 4 8v2c1.56 0 2.38-.68 3.04-1.23.55-.46.92-.77 1.76-.77s1.2.31 1.76.77c.66.55 1.48 1.23 3.04 1.23s2.38-.68 3.04-1.23c.56-.4"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "g\");return\"symbol\"===a(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var u={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},d={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[o.Z.auIcon,o.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m17.24 1.88-1.41 1.41c.76.76 1.17 1.76 1.17 2.83 0 .99-.38 1.95-1.06 2.69l1.47 1.35A5.96 5.96 0 0 0 19 6.11c0-1.6-.62-3.11-1.76-4.24ZM7 6.12c0-1.07.42-2.07 1.17-2.83L6.76 1.88a5.97 5.97 0 0 0-.17 8.29l1.47-1.35C7.37 8.07 7 7.12 7 6.13Zm6 4V7.84c.6-.35 1-.98 1-1.72 0-1.1-.9-2-2-2s-2 .9-2 2c0 .74.4 1.38 1 1.72v2.28H9.17l-2."
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": ".98 1-1.72 0-1.1-.9-2-2-2s-2 .9-2 2c0 .74.4 1.38 1 1.72v2.28H9.17l-2.18 12h2.03l.36-2h5.24l.36 2h2.03l-2.18-12zm.17 2 .36 2h-3.06l.36-2h2.33Zm-3.43 6 .36-2h3.79l.36 2z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",l(l({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[o.Z.auIcon,o.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m23.68 2.15-1.41 1.41A5.86 5.86 0 0 1 24 7.74c0 1.46-.56 2.88-1.57 3.98l1.47 1.35A7.9 7.9 0 0 0 26 7.74c0-2.11-.82-4.1-2.32-5.59M8 7.74c0-1.58.61-3.06 1.73-4.18L8.32 2.15A7.87 7.87 0 0 0 6 7.74c0 1.97.75 3.86 2.1 5.33l1.47-1.35A5.9 5.9 0 0 1 8 7.74m9 6.11v-2.14c1.72-.45 3-2 3-3.86 0-2.21-1.79-4-4-4s-4 1.79-4 4c0 1.86 1.28"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "(r=0;r<i.length;r++)n=i[r],e.indexOf(n)>=0||Object.prototype.propertyIsEnumerable.call(t,n)&&(o[n]=t[n])}return o}(t,P),h=(0,x.Z)(u,d),p=h.focusVisible,m=h.onFocus,g=h.onBlur,b=j[s],y=[\"ikSuZ\",L({},\"hqTgq\",p),l];switch(n&&\"string\"==typeof n&&n.match(/^(\\/\\/)|(https?:\\/\\/)|(file:\\/\\/)|(mailto:)|(tel:)|(#)/)&&(b=j.a),b){case j.a:return r.createElement(i.Z,null,r.createElement(\"a\",k(k({},f),{},{ref:e,className:(0,o.Z)(y),href:n,onFocus:m,onBlur:g}),c));case j.button:return r.createElement(i.Z,null,r.createElement(\"button\",k(k({type:\"button\"},f),{},{ref:e,className:(0,o.Z)(y,\"YcyKS\"),onClick:n,onFocus:m,onBlur:g}),c));default:return r.createElement(i.Z,null,r.createElement(b,k(k({},f),{},{ref:e,className:(0,o.Z)(y),to:n,onFocus:m,onBlur:g}),c))}})),R=Object.assign(H,{types:"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "eturn\"symbol\"===St(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var Ht={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},Rt={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Lt(Lt({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[Ot.Z.auIcon,Ot.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8\"}),r.createElement(\"path\",{d:\"m10.5 13.09-1.79-1.8-1.42 1.42 3.21 3.2 6.21-6.2-1.42-1.42z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Lt(Lt({},t),{},{xmlns:\"http://www.w3."
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8\"}),r.createElement(\"path\",{d:\"m10.5 13.09-1.79-1.8-1.42 1.42 3.21 3.2 6.21-6.2-1.42-1.42z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Lt(Lt({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[Ot.Z.auIcon,Ot.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M16 2C8.27 2 2 8.27 2 16s6.27 14 14 14 14-6.27 14-14S23.73 2 16 2m0 26C9.38 28 4 22.62 4 16S9.38 4 16 4s12 5.38 12 12-5.38 12-12 12\"}),r.createElement(\"path\",{d:\"m14.5 18.09-3.79-3.8-1.42 1.42 5.21 5.2 9.21-9.2-1.42-1.42z\"}))}))},qt=(0,r.forwardRef)((function(t,e){var n=t.size,o=void 0===n?Tt.getSizes().includes(\"s\")?\"s"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "eturn\"symbol\"===Et(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var Bt={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},zt={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Zt(Zt({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[Ot.Z.auIcon,Ot.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8\"}),r.createElement(\"path\",{d:\"M6 11h12v2H6z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Zt(Zt({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",h"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8\"}),r.createElement(\"path\",{d:\"M6 11h12v2H6z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Zt(Zt({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[Ot.Z.auIcon,Ot.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M16 2C8.27 2 2 8.27 2 16s6.27 14 14 14 14-6.27 14-14S23.73 2 16 2m0 26C9.38 28 4 22.62 4 16S9.38 4 16 4s12 5.38 12 12-5.38 12-12 12\"}),r.createElement(\"path\",{d:\"M7 15h18v2H7z\"}))}))},It=(0,r.forwardRef)((function(t,e){var n=t.size,o=void 0===n?Dt.getSizes().includes(\"s\")?\"s\":Dt.getSizes()[0]:n,i=function(t,e){if(null=="
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "eturn\"symbol\"===Mt(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var Wt={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},Ft={24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",At(At({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[Ot.Z.auIcon,Ot.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8\"}),r.createElement(\"path\",{d:\"M15.29 7.29 12 10.59l-3.29-3.3-1.42 1.42 3.3 3.29-3.3 3.29 1.42 1.42 3.29-3.3 3.29 3.3 1.42-1.42-3.3-3.29 3.3-3.29z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.c"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "3.59 8 8-3.59 8-8 8\"}),r.createElement(\"path\",{d:\"M15.29 7.29 12 10.59l-3.29-3.3-1.42 1.42 3.3 3.29-3.3 3.29 1.42 1.42 3.29-3.3 3.29 3.3 1.42-1.42-3.3-3.29 3.3-3.29z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",At(At({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[Ot.Z.auIcon,Ot.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M16 2C8.27 2 2 8.27 2 16s6.27 14 14 14 14-6.27 14-14S23.73 2 16 2m0 26C9.38 28 4 22.62 4 16S9.38 4 16 4s12 5.38 12 12-5.38 12-12 12\"}),r.createElement(\"path\",{d:\"M21.29 9.29 16 14.59l-5.29-5.3-1.42 1.42 5.3 5.29-5.3 5.29 1.42 1.42 5.29-5.3 5.29 5.3 1.42-1.42-5.3-5.29 5.3-5.29z\"}))}))},Yt=(0,r.forwardRef)((function(t,e){"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "eturn\"symbol\"===ye(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var xe={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},Oe={16:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",we(we({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 16 16\",width:\"16\",height:\"16\",className:[Ot.Z.auIcon,Ot.Z.auIcon16,\"auIcon\",\"auIcon16\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M14.2 3.21 12.79 1.8l-4.8 4.79-4.78-4.78L1.8 3.23l4.78 4.78-4.78 4.78 1.41 1.41 4.78-4.78 4.78 4.78 1.42-1.41-4.78-4.78z\"}))})),24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",we(we({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[Ot.Z.auIcon,Ot.Z.auIcon2"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "usable:!1,ref:e}),r.createElement(\"path\",{d:\"M14.2 3.21 12.79 1.8l-4.8 4.79-4.78-4.78L1.8 3.23l4.78 4.78-4.78 4.78 1.41 1.41 4.78-4.78 4.78 4.78 1.42-1.41-4.78-4.78z\"}))})),24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",we(we({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[Ot.Z.auIcon,Ot.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M20.7 4.71 19.29 3.3l-7.3 7.29-7.28-7.28L3.3 4.73l7.28 7.28-7.28 7.28 1.41 1.41 7.28-7.28 7.28 7.28 1.42-1.41-7.28-7.28z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",we(we({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[Ot.Z.auIcon,Ot.Z.auIcon3"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "usable:!1,ref:e}),r.createElement(\"path\",{d:\"M20.7 4.71 19.29 3.3l-7.3 7.29-7.28-7.28L3.3 4.73l7.28 7.28-7.28 7.28 1.41 1.41 7.28-7.28 7.28 7.28 1.42-1.41-7.28-7.28z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",we(we({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[Ot.Z.auIcon,Ot.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M27.2 6.21 25.79 4.8l-9.8 9.79-9.78-9.78L4.8 6.23l9.78 9.78-9.78 9.78 1.41 1.41 9.78-9.78 9.78 9.78 1.42-1.41-9.78-9.78z\"}))}))},Pe=(0,r.forwardRef)((function(t,e){var n=t.size,o=void 0===n?Se.getSizes().includes(\"s\")?\"s\":Se.getSizes()[0]:n,i=function(t,e){if(null==t)return{};var n,r,o=function(t,e){if(null==t)return{};"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "eturn\"symbol\"===Ce(e)?e:String(e)}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var Ue={xs:\"16\",s:\"24\",m:\"32\",l:\"56\"},Be={16:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Xe(Xe({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 16 16\",width:\"16\",height:\"16\",className:[Ot.Z.auIcon,Ot.Z.auIcon16,\"auIcon\",\"auIcon16\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m8 12.41-5.71-5.7 1.42-1.42L8 9.59l4.29-4.3 1.42 1.42z\"}))})),24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Xe(Xe({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[Ot.Z.auIcon,Ot.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "uIcon,Ot.Z.auIcon16,\"auIcon\",\"auIcon16\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"m8 12.41-5.71-5.7 1.42-1.42L8 9.59l4.29-4.3 1.42 1.42z\"}))})),24:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Xe(Xe({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 24 24\",width:\"24\",height:\"24\",className:[Ot.Z.auIcon,Ot.Z.auIcon24,\"auIcon\",\"auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M13.41 15.15 12 16.56l-1.41-1.41-6.3-6.3.71-.7.71-.71L12 13.73l6.29-6.29.71.71.71.7z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Xe(Xe({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[Ot.Z.auIcon,Ot.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].j"
+        },
+        {
+          "token": "http",
+          "source": "https://www.smhi.se/snowdepth/68.f657f.js?proxy=fodl-klimat",
+          "context": "auIcon24\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M13.41 15.15 12 16.56l-1.41-1.41-6.3-6.3.71-.7.71-.71L12 13.73l6.29-6.29.71.71.71.7z\"}))})),32:(0,r.forwardRef)((function(t,e){return r.createElement(\"svg\",Xe(Xe({},t),{},{xmlns:\"http://www.w3.org/2000/svg\",viewBox:\"0 0 32 32\",width:\"32\",height:\"32\",className:[Ot.Z.auIcon,Ot.Z.auIcon32,\"auIcon\",\"auIcon32\",t.className].join(\" \"),focusable:!1,ref:e}),r.createElement(\"path\",{d:\"M16 22.06 5.29 11.35l1.42-1.41L16 19.23l9.29-9.29 1.42 1.41z\"}))}))},ze=(0,r.forwardRef)((function(t,e){var n=t.size,o=void 0===n?Ie.getSizes().includes(\"s\")?\"s\":Ie.getSizes()[0]:n,i=function(t,e){if(null==t)return{};var n,r,o=function(t,e){if(null==t)return{};var n,r,o={},i=Object.keys(t);for(r=0;r<i.length;r++)n=i[r],"
+        }
+      ]
+    }
+  ]
+}
