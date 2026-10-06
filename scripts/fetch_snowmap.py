@@ -102,9 +102,15 @@ def parse_station_csv(text):
                 if v is not None and 0 <= v <= 5000:
                     val = v
                     break
-        if val is None or val < 0:
+        if val is None:
             continue
-        rows.append((d, val))
+        # SMHI parameter 8 is published in metres. Convert physical snow
+        # depth to centimetres before storing it in the report. Negative
+        # values (-0.01 and -0.02) are SMHI special codes, not depths, so
+        # exclude them from numeric interpolation.
+        if val < 0:
+            continue
+        rows.append((d, val * 100.0))
     return rows
 
 
@@ -175,7 +181,7 @@ def main():
             })
 
     index = {
-        "source": "SMHI Meteorologiska observationer - Snodjup dygnsvarde, parameter 8",
+        "source": "SMHI Meteorologiska observationer - Snodjup dygnsvarde, parameter 8 (meter converted to cm)",
         "source_url": "https://www.smhi.se/data/sok-oppna-data-i-utforskaren/se-acmf-meteorologiska-observationer-snodjup-dygnsvarde",
         "map_reference_url": "https://www.smhi.se/vader/observationer/snodjup",
         "buffer_km": BUFFER_KM,
