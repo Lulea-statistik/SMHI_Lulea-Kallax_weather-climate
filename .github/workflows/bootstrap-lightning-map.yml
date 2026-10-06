@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - ".github/workflows/bootstrap-lightning-map.yml"
+      - "scripts/build_lightning_map.py"
   workflow_dispatch:
 
 permissions:
