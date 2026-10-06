@@ -6658,3 +6658,16 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-05T19:00:00Z,2026-10-05T21:00:00+02:00,1791226800000,,10.0,10.0,G,,latest-months
 162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-05T20:00:00Z,2026-10-05T22:00:00+02:00,1791230400000,,10.0,10.0,G,,latest-months
 162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-05T21:00:00Z,2026-10-05T23:00:00+02:00,1791234000000,,12.0,12.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-05T22:00:00Z,2026-10-06T00:00:00+02:00,1791237600000,,11.0,11.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-05T23:00:00Z,2026-10-06T01:00:00+02:00,1791241200000,,9.0,9.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T00:00:00Z,2026-10-06T02:00:00+02:00,1791244800000,,9.0,9.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T01:00:00Z,2026-10-06T03:00:00+02:00,1791248400000,,9.0,9.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T02:00:00Z,2026-10-06T04:00:00+02:00,1791252000000,,10.0,10.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T03:00:00Z,2026-10-06T05:00:00+02:00,1791255600000,,7.0,7.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T04:00:00Z,2026-10-06T06:00:00+02:00,1791259200000,,7.0,7.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T05:00:00Z,2026-10-06T07:00:00+02:00,1791262800000,,13.0,13.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T06:00:00Z,2026-10-06T08:00:00+02:00,1791266400000,,12.0,12.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T07:00:00Z,2026-10-06T09:00:00+02:00,1791270000000,,12.0,12.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T08:00:00Z,2026-10-06T10:00:00+02:00,1791273600000,,12.0,12.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T09:00:00Z,2026-10-06T11:00:00+02:00,1791277200000,,14.0,14.0,G,,latest-months
+162860,Luleå-Kallax Flygplats,21,Byvind,"max, 1 gång/tim",meter per sekund,2026-10-06T10:00:00Z,2026-10-06T12:00:00+02:00,1791280800000,,16.0,16.0,G,,latest-months

@@ -6659,3 +6659,16 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-05T19:00:00Z,2026-10-05T21:00:00+02:00,1791226800000,,200,200,G,,latest-months
 162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-05T20:00:00Z,2026-10-05T22:00:00+02:00,1791230400000,,190,190,G,,latest-months
 162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-05T21:00:00Z,2026-10-05T23:00:00+02:00,1791234000000,,200,200,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-05T22:00:00Z,2026-10-06T00:00:00+02:00,1791237600000,,210,210,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-05T23:00:00Z,2026-10-06T01:00:00+02:00,1791241200000,,210,210,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T00:00:00Z,2026-10-06T02:00:00+02:00,1791244800000,,220,220,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T01:00:00Z,2026-10-06T03:00:00+02:00,1791248400000,,220,220,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T02:00:00Z,2026-10-06T04:00:00+02:00,1791252000000,,240,240,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T03:00:00Z,2026-10-06T05:00:00+02:00,1791255600000,,260,260,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T04:00:00Z,2026-10-06T06:00:00+02:00,1791259200000,,270,270,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T05:00:00Z,2026-10-06T07:00:00+02:00,1791262800000,,280,280,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T06:00:00Z,2026-10-06T08:00:00+02:00,1791266400000,,270,270,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T07:00:00Z,2026-10-06T09:00:00+02:00,1791270000000,,270,270,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T08:00:00Z,2026-10-06T10:00:00+02:00,1791273600000,,270,270,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T09:00:00Z,2026-10-06T11:00:00+02:00,1791277200000,,280,280,G,,latest-months
+162860,Luleå-Kallax Flygplats,3,Vindriktning,"medelvärde 10 min, 1 gång/tim",grader,2026-10-06T10:00:00Z,2026-10-06T12:00:00+02:00,1791280800000,,280,280,G,,latest-months
