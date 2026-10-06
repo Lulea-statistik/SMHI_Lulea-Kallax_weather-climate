@@ -1,0 +1,64 @@
+{
+  "method": "local affine refinement using SCB counties 24+25 against SMHI lan2425.png",
+  "source_crs": "EPSG:3006 from SCB SWEREF99TM package",
+  "image_size": [
+    249,
+    570
+  ],
+  "north_search_window": {
+    "xmin": 47,
+    "xmax": 239,
+    "ymin": 0,
+    "ymax": 268
+  },
+  "global_affine": [
+    0.00026887492465564475,
+    5.081184320302474e-06,
+    -80.25067800727773,
+    -7.002827935587573e-05,
+    -0.00035234761570189564,
+    2755.5086180502885
+  ],
+  "local_affine": [
+    0.00026890705574678455,
+    5.352980173029156e-06,
+    -80.2341972214318,
+    -7.002723169271429e-05,
+    -0.0003522815255854846,
+    2755.507377279345
+  ],
+  "optimizer": {
+    "success": true,
+    "message": "Optimization terminated successfully.",
+    "objective": 8.595739760273782
+  },
+  "fit_north_counties": {
+    "n": 1086,
+    "inside_pct": 100.0,
+    "median_pixel_error": 3.162,
+    "p90_pixel_error": 24.187,
+    "median_error_km_approx": 10.47,
+    "p90_error_km_approx": 80.05,
+    "approx_metres_per_pixel": 3309.5
+  },
+  "fit_norrbotten": {
+    "n": 690,
+    "inside_pct": 100.0,
+    "median_pixel_error": 6.403,
+    "p90_pixel_error": 27.0,
+    "median_error_km_approx": 21.19,
+    "p90_error_km_approx": 89.36,
+    "approx_metres_per_pixel": 3309.5
+  },
+  "lulea_record": {
+    "KnKod": "2580",
+    "KnNamn": "Luleå"
+  },
+  "lulea_pixel_bbox": {
+    "min_col": 171.83121734410375,
+    "max_col": 186.99225647997363,
+    "min_row": 101.29606525485633,
+    "max_row": 135.9319426278007
+  },
+  "lulea_all_vertices_inside_image": true
+}
