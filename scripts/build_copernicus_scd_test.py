@@ -114,7 +114,7 @@ def main():
                     all_touched=False,
                 )
 
-                raw = np.asarray(arr.filled(-9999))
+                raw = np.asarray(arr.astype("int32").filled(-9999))
                 base = (labels > 0) & (~np.asarray(arr.mask)) & np.isfinite(raw)
                 valid = base & (raw >= 0) & (raw <= 366)
                 ids = labels[valid] - 1
