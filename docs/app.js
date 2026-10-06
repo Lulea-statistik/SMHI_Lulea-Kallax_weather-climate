@@ -1,4 +1,4 @@
-let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;const snowMapSeasonCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function lineChart(id,labels,datasets,yTitle,extra={}){destroyChart(id);charts[id]=new Chart(el(id),{type:'line',data:{labels,datasets:datasets.map(d=>({borderWidth:2,pointRadius:0,tension:.15,...d}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:datasets.length>1}},scales:{x:{grid:{display:false}},y:{title:{display:!!yTitle,text:yTitle}}},...extra}});}
@@ -736,6 +736,178 @@ async function initAlgaeMap(){
   }
 }
 
+function snowDepthClass(cm){
+  const v=Number(cm);
+  if(!Number.isFinite(v)||v<1)return {label:'Barmark',color:'#b59b78'};
+  if(v<3)return {label:'1–2 cm',color:'#dbeafe'};
+  if(v<10)return {label:'3–9 cm',color:'#bfdbfe'};
+  if(v<30)return {label:'10–29 cm',color:'#93c5fd'};
+  if(v<50)return {label:'30–49 cm',color:'#60a5fa'};
+  if(v<75)return {label:'50–74 cm',color:'#3b82f6'};
+  if(v<100)return {label:'75–99 cm',color:'#2563eb'};
+  if(v<150)return {label:'100–149 cm',color:'#4338ca'};
+  if(v<200)return {label:'150–199 cm',color:'#6d28d9'};
+  return {label:'200+ cm',color:'#7e22ce'};
+}
+
+async function loadSnowMapIndex(){
+  if(snowMapIndex)return snowMapIndex;
+  const r=await fetch('snowmap/index.json?v=1',{cache:'no-store'});
+  if(!r.ok)throw new Error('Snötäckeskartan väntar på första datahämtningen.');
+  snowMapIndex=await r.json();
+  const select=el('snowMapSeason');
+  const seasons=(snowMapIndex.seasons||[]).slice().sort((a,b)=>b.season.localeCompare(a.season));
+  if(select){
+    select.innerHTML=seasons.map(s=>'<option value="'+s.season+'">'+s.season.replace('-', '/')+'</option>').join('');
+    if(seasons.length)select.value=seasons[0].season;
+  }
+  return snowMapIndex;
+}
+
+async function loadSnowMapSeason(season=null,force=false){
+  const idx=await loadSnowMapIndex();
+  const available=(idx.seasons||[]).slice().sort((a,b)=>b.season.localeCompare(a.season));
+  season=season||el('snowMapSeason')?.value||available[0]?.season;
+  if(!season)throw new Error('Ingen snösäsong hittades.');
+  if(!force&&snowMapSeasonData&&snowMapSeasonData.season===season)return snowMapSeasonData;
+  if(snowMapSeasonCache.has(season)){
+    snowMapSeasonData=snowMapSeasonCache.get(season);
+  }else{
+    const meta=available.find(x=>x.season===season);
+    const r=await fetch('snowmap/'+(meta?.file||season+'.json')+'?v=1',{cache:'no-store'});
+    if(!r.ok)throw new Error('Snödjupsdata saknas för '+season+'.');
+    snowMapSeasonData=await r.json();
+    snowMapSeasonCache.set(season,snowMapSeasonData);
+  }
+  if(el('snowMapSeason'))el('snowMapSeason').value=season;
+  if(el('snowMapSeasonLabel'))el('snowMapSeasonLabel').textContent='Snösäsong '+season.replace('-', '/');
+  setupSnowMapSlider();
+  renderSnowMapCharts();
+  return snowMapSeasonData;
+}
+
+function snowMapDates(){
+  return [...new Set((snowMapSeasonData?.observations||[]).map(r=>r.date))].sort();
+}
+
+function setupSnowMapSlider(){
+  const slider=el('snowMapDateSlider');
+  const dates=snowMapDates();
+  if(!slider||!dates.length)return;
+  slider.min=0;slider.max=String(dates.length-1);slider.value=String(dates.length-1);slider.disabled=false;
+  el('snowMapPrevDate').disabled=false;el('snowMapNextDate').disabled=false;
+  updateSnowMapDateLabel();
+}
+
+function updateSnowMapDateLabel(){
+  const dates=snowMapDates(),slider=el('snowMapDateSlider');
+  if(!dates.length||!slider)return;
+  const d=dates[Math.max(0,Math.min(dates.length-1,Number(slider.value)||0))];
+  if(el('snowMapDateLabel'))el('snowMapDateLabel').textContent=formatSeaIceMapDate(d);
+}
+
+function renderSnowMapCharts(){
+  const rows=snowMapSeasonData?.daily||[];
+  if(!rows.length)return;
+  lineChart('snowMapMean',rows.map(r=>r.date),[
+    {label:'Medelsnödjup',data:rows.map(r=>r.mean_cm),borderColor:'#2563eb'}
+  ],'cm',{scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{beginAtZero:true,title:{display:true,text:'cm'}}}});
+  lineChart('snowMapCoverage',rows.map(r=>r.date),[
+    {label:'Stationer med snötäcke',data:rows.map(r=>r.snow_cover_share_pct),borderColor:'#6d28d9'}
+  ],'andel (%)',{scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}});
+}
+
+async function showSnowMapDate(index){
+  if(!snowMapLeaflet)return;
+  const data=await loadSnowMapSeason();
+  const dates=snowMapDates();
+  if(!dates.length)return;
+  const safe=Math.max(0,Math.min(dates.length-1,Number(index)||0));
+  const slider=el('snowMapDateSlider');slider.value=String(safe);updateSnowMapDateLabel();
+  const d=dates[safe];
+  const rows=(data.observations||[]).filter(r=>r.date===d);
+  const stationMeta=data.stations||{};
+  if(snowMapLayer)snowMapLeaflet.removeLayer(snowMapLayer);
+  snowMapLayer=L.layerGroup();
+
+  let insideCount=0;
+  rows.forEach(r=>{
+    const s=stationMeta[r.station_id];if(!s)return;
+    const cls=snowDepthClass(r.depth_cm);
+    if(s.inside_municipality)insideCount++;
+    const marker=L.circleMarker([s.latitude,s.longitude],{
+      radius:s.inside_municipality?8:6,
+      color:s.inside_municipality?'#0f172a':'#64748b',
+      weight:s.inside_municipality?1.5:2,
+      dashArray:s.inside_municipality?null:'4 3',
+      fillColor:cls.color,fillOpacity:.9
+    });
+    marker.bindPopup(
+      '<b>'+s.name+'</b><br>'+
+      'Datum: '+d+'<br>'+
+      'Snödjup: '+Number(r.depth_cm).toLocaleString('sv-SE',{maximumFractionDigits:1})+' cm<br>'+
+      'Klass: '+cls.label+
+      (s.inside_municipality?'<br>Inom Luleå kommun':'<br>Nära Luleå kommun')
+    );
+    marker.addTo(snowMapLayer);
+  });
+  snowMapLayer.addTo(snowMapLeaflet);
+  const status=el('snowMapStatus');
+  if(status){
+    const mode=insideCount?'varav '+insideCount+' inom kommunen':'inga kommunstationer rapporterade – närliggande stationer visas';
+    status.textContent=formatSeaIceMapDate(d)+': '+rows.length+' stationer · '+mode+'.';
+  }
+}
+
+function setupSnowMapControls(){
+  el('snowMapSeason')?.addEventListener('change',async e=>{
+    await loadSnowMapSeason(e.target.value,true);
+    await showSnowMapDate(el('snowMapDateSlider')?.value||0);
+  });
+  el('snowMapDateSlider')?.addEventListener('input',e=>{updateSnowMapDateLabel();showSnowMapDate(e.target.value);});
+  el('snowMapPrevDate')?.addEventListener('click',()=>showSnowMapDate(Number(el('snowMapDateSlider').value)-1));
+  el('snowMapNextDate')?.addEventListener('click',()=>showSnowMapDate(Number(el('snowMapDateSlider').value)+1));
+}
+
+async function initSnowMap(){
+  const mapEl=el('snowMap');
+  if(!mapEl||typeof L==='undefined')return;
+  const status=el('snowMapStatus');
+  if(snowMapLeaflet){
+    setTimeout(()=>snowMapLeaflet.invalidateSize(),50);
+    return;
+  }
+  try{
+    if(status)status.textContent='Laddar Luleå kommun och snödjupsstationer…';
+    snowMapLeaflet=L.map(mapEl,{zoomControl:true});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      maxZoom:18,attribution:'&copy; OpenStreetMap contributors'
+    }).addTo(snowMapLeaflet);
+
+    const br=await fetch('snowmap_boundary.geojson?v=1',{cache:'no-store'});
+    if(!br.ok)throw new Error('Kommungränsen för snötäckeskartan saknas.');
+    const boundary=await br.json();
+    snowMapBoundaryLayer=L.geoJSON(boundary,{style:{color:'#dc2626',weight:2.5,fillColor:'#ffffff',fillOpacity:.03}}).addTo(snowMapLeaflet);
+    const bounds=snowMapBoundaryLayer.getBounds();if(bounds.isValid())snowMapLeaflet.fitBounds(bounds.pad(.12));
+
+    const legend=L.control({position:'topright'});
+    legend.onAdd=()=>{
+      const div=L.DomUtil.create('div','seaice-map-legend');
+      const classes=[0,1,3,10,30,50,75,100,150,200];
+      div.innerHTML='<b>Snödjup</b>'+classes.map(v=>{const c=snowDepthClass(v);return '<div><i style="background:'+c.color+'"></i>'+c.label+'</div>';}).join('')+
+        '<div><i style="background:transparent;border:2px solid #dc2626"></i>Luleå kommun</div>';
+      return div;
+    };
+    legend.addTo(snowMapLeaflet);
+
+    await loadSnowMapIndex();
+    await loadSnowMapSeason();
+    await showSnowMapDate(el('snowMapDateSlider')?.value||0);
+  }catch(err){
+    if(status)status.textContent=err.message;
+  }
+}
+
 function setupSeaIceSeasonControls(){
   const slider=el('seaIceSeasonSlider');
   if(!slider)return;
@@ -1339,7 +1511,7 @@ function syncYear(source,value,renderNow=true){
   updateRangeTrack();
   if(renderNow)render();
 }
-function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');document.body.classList.toggle('algae-active',btn.dataset.page==='algae');if(btn.dataset.page==='seaice')initSeaIceMap();if(btn.dataset.page==='algae')initAlgaeMap();setTimeout(()=>{Object.values(charts).forEach(c=>c.resize());if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();if(algaeLeafletMap)algaeLeafletMap.invalidateSize();},80);}));}
+function setupTabs(){document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));btn.classList.add('active');el('page-'+btn.dataset.page).classList.add('active');document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');document.body.classList.toggle('algae-active',btn.dataset.page==='algae');if(btn.dataset.page==='seaice')initSeaIceMap();if(btn.dataset.page==='algae')initAlgaeMap();if(btn.dataset.page==='snowmap')initSnowMap();setTimeout(()=>{Object.values(charts).forEach(c=>c.resize());if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();if(algaeLeafletMap)algaeLeafletMap.invalidateSize();if(snowMapLeaflet)snowMapLeaflet.invalidateSize();},80);}));}
 function setupFilters(){const years=DATA.years,min=years[0],max=years[years.length-1];['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=years.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));el('yearFrom').value=min;el('yearTo').value=max;['rangeFrom','rangeTo'].forEach(id=>{el(id).min=min;el(id).max=max;el(id).step=1;});el('rangeFrom').value=min;el('rangeTo').value=max;el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;updateRangeTrack();el('yearFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
 el('yearTo').addEventListener('change',e=>syncYear('to',e.target.value,true));
 el('rangeFrom').addEventListener('input',e=>syncYear('from',e.target.value,false));
@@ -1360,4 +1532,4 @@ function setupWeatherCodes(){
   el('weatherCode').innerHTML='<option value="all">Alla vädertyper</option>'+types.map(t=>'<option value="'+t+'">'+t+'</option>').join('');
   el('weatherCode').value='all';
 }
-fetch('dashboard_data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas');return r.json();}).then(d=>{DATA=d;el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');el('weatherSource').href=d.weather.source_url;setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupFilters();setupDateWeather();render();}).catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';});
+fetch('dashboard_data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas');return r.json();}).then(d=>{DATA=d;el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');el('weatherSource').href=d.weather.source_url;setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupSnowMapControls();setupFilters();setupDateWeather();render();}).catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';});
