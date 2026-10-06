@@ -1,0 +1,31 @@
+{
+  "map_fit_crs": "EPSG:3013",
+  "fit_objective": 2.6258,
+  "fit_forward_median_px": 1.0,
+  "fit_reverse_median_px": 1.155,
+  "map_fit_params": {
+    "scale": 0.0003554548370881574,
+    "ox": 50.23394465944513,
+    "oy": 2738.8905808684353
+  },
+  "image_size": [
+    249,
+    570
+  ],
+  "municipality_record": {
+    "code": "2580",
+    "name": "Luleå"
+  },
+  "municipality_source_file": "Kommun_Sweref99TM.shp",
+  "municipality_source_crs_note": "SCB municipality PRJ operationally verified against EPSG:3006 in separate test with 0.0 m coordinate shift over Lulea vertices.",
+  "lulea_pixel_bbox": [
+    195.204,
+    118.874,
+    215.193,
+    153.921
+  ],
+  "lulea_pixel_width": 19.989,
+  "lulea_pixel_height": 35.048,
+  "lulea_vertices_inside_image_pct": 100.0,
+  "note": "Black/white outline is Lulea municipality transformed from SCB source CRS to EPSG:3013, then through the best symmetric SMHI PNG fit."
+}
