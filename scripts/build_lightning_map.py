@@ -60,6 +60,7 @@ def main():
             )
 
     index = {"cell_size_m": 1000, "years": []}
+    annual_grids = []
 
     for path in sorted(SRC.glob("20??.csv")):
         try:
@@ -119,7 +120,70 @@ def main():
             "grid_cells": len(grid),
             "max_cell_count": max((c["count"] for c in grid), default=0),
         })
+        annual_grids.append({
+            "year": year,
+            "cells": {
+                (round(c["lon"], 6), round(c["lat"], 6)): c
+                for c in grid
+            },
+        })
         print(f"Lightning map {year}: {len(points)} flashes, {len(grid)} occupied 1 km cells")
+
+    # Mean annual lightning density per fixed 1 km cell across all available years.
+    # Missing cells in a year count as zero, so values are directly comparable.
+    n_years = len(annual_grids)
+    avg_cells = {}
+    for annual in annual_grids:
+        for key, c in annual["cells"].items():
+            if key not in avg_cells:
+                avg_cells[key] = {
+                    "lat": c["lat"],
+                    "lon": c["lon"],
+                    "polygon": c["polygon"],
+                    "sum": 0.0,
+                    "by_surface_sum": defaultdict(float),
+                }
+            a = avg_cells[key]
+            a["sum"] += c["count"]
+            for surface, value in (c.get("by_surface") or {}).items():
+                a["by_surface_sum"][surface] += value
+
+    avg_grid = []
+    if n_years:
+        for a in avg_cells.values():
+            avg_grid.append({
+                "count": round(a["sum"] / n_years, 3),
+                "by_surface": {
+                    k: round(v / n_years, 3)
+                    for k, v in sorted(a["by_surface_sum"].items())
+                },
+                "lat": a["lat"],
+                "lon": a["lon"],
+                "polygon": a["polygon"],
+            })
+        avg_grid.sort(key=lambda x: (-x["count"], x["lat"], x["lon"]))
+
+    average_payload = {
+        "year": "average",
+        "label": "Medel",
+        "years_included": [x["year"] for x in annual_grids],
+        "year_count": n_years,
+        "cell_size_m": 1000,
+        "points": [],
+        "grid": avg_grid,
+    }
+    (OUT / "average.json").write_text(
+        json.dumps(average_payload, ensure_ascii=False, separators=(",",":")),
+        encoding="utf-8",
+    )
+    index["average"] = {
+        "file": "average.json",
+        "year_count": n_years,
+        "first_year": annual_grids[0]["year"] if annual_grids else None,
+        "last_year": annual_grids[-1]["year"] if annual_grids else None,
+        "grid_cells": len(avg_grid),
+        "max_cell_count": max((c["count"] for c in avg_grid), default=0),
+    }
 
     index["years"].sort(key=lambda x: x["year"])
     (OUT / "index.json").write_text(json.dumps(index, ensure_ascii=False, indent=2), encoding="utf-8")
