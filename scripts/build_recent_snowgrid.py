@@ -145,12 +145,13 @@ def main():
             "resolution_km": 2.5,
             "grid_file": grid_file,
             "days": days,
-            "daily": snow.summarize(days),
+            "daily": snow.summarize_mainland(days, base_grid),
             "daily_mainland_majority": stats["daily_mainland_majority"],
             "daily_depth_class_pct": stats["daily_depth_class_pct"],
             "snow_duration_pct": stats["snow_duration_pct"],
             "snow_duration_counts": stats["snow_duration_counts"],
             "classified_cells": stats["classified_cells"],
+            "mainland_touching_cells": stats.get("mainland_touching_cells"),
             "mainland_majority_cells": stats["mainland_majority_cells"],
         }
         data_file = f"{season}.json"
@@ -179,6 +180,7 @@ def main():
             "daily_depth_class_pct": payload["daily_depth_class_pct"],
             "snow_duration_pct": payload["snow_duration_pct"],
             "classified_cells": payload["classified_cells"],
+            "mainland_touching_cells": payload.get("mainland_touching_cells"),
             "mainland_majority_cells": payload["mainland_majority_cells"],
         }
         built += 1
