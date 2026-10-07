@@ -1305,8 +1305,10 @@ async function loadSnowMapSeason(season=null,force=false){
 }
 
 function snowMapDates(){
-  if(snowMapSource()==='grid')return (snowGridData?.days||[]).map(r=>r.date);
-  return [...new Set((snowMapSeasonData?.observations||[]).map(r=>r.date))].sort();
+  const month=Number(el('month')?.value||0);
+  const keep=d=>!month || Number(String(d).slice(5,7))===month;
+  if(snowMapSource()==='grid')return (snowGridData?.days||[]).map(r=>r.date).filter(keep);
+  return [...new Set((snowMapSeasonData?.observations||[]).map(r=>r.date).filter(keep))].sort();
 }
 
 function setupSnowMapSlider(){
@@ -1354,10 +1356,21 @@ async function renderSnowMapCharts(){
   if(grid){
     const series=await loadSnowGridSeries();
     if(series?.seasons?.length){
-      const t=buildSnowGridTimeline(series);
+      const f=currentFilters();
+      const selectedSeries={...series,seasons:(series.seasons||[])
+        .filter(x=>{
+          const sy=Number(String(x.season||'').slice(0,4));
+          return sy>=f.from&&sy<=f.to;
+        })
+        .map(x=>({...x,
+          daily:(x.daily||[]).filter(r=>!f.month||Number(String(r.date).slice(5,7))===f.month),
+          daily_mainland_majority:(x.daily_mainland_majority||[]).filter(r=>!f.month||Number(String(r.date).slice(5,7))===f.month),
+          daily_depth_class_pct:(x.daily_depth_class_pct||[]).filter(r=>!f.month||Number(String(r.date).slice(5,7))===f.month)
+        }))};
+      const t=buildSnowGridTimeline(selectedSeries);
       const meanAll=t.labels.map((_,i)=>t.meanGrid[i]??t.meanRecent[i]??null);
       const maxAll=t.labels.map((_,i)=>t.maxGrid[i]??t.maxRecent[i]??null);
-      const sourceBySeason=new Map((series.seasons||[]).map(s=>[s.season,s.source_type==='observations_interpolated'?'Interpolerat från stationsobservationer':'GridClim']));
+      const sourceBySeason=new Map((selectedSeries.seasons||[]).map(s=>[s.season,s.source_type==='observations_interpolated'?'Interpolerat från stationsobservationer':'GridClim']));
       destroyChart('snowMapMean');
       charts.snowMapMean=new Chart(el('snowMapMean'),{
         type:'line',
@@ -1392,14 +1405,17 @@ async function renderSnowMapCharts(){
           scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}
       });
 
-      const weekly=buildSnowWeeklyProfiles(series);
+      const weekly=buildSnowWeeklyProfiles(selectedSeries);
       renderSnowWeeklyProfileChart('snowWeeklyDepthProfile',weekly.depth,weekly.latestSeason,weekly.snowiestSeason,'cm');
       renderSnowWeeklyProfileChart('snowWeeklyCoverageProfile',weekly.coverage,weekly.latestSeason,weekly.snowiestSeason,'andel (%)',100);
 
       const copernicus=await loadCopernicusSnowDuration();
       const durationClasses=copernicus?.classes||[];
       const durationColors=['#e0f2fe','#bae6fd','#7dd3fc','#38bdf8','#0ea5e9','#0284c7','#0369a1','#075985','#0c4a6e'];
-      const seasons=(copernicus?.seasons||[]).filter(s=>s.class_pct&&Object.keys(s.class_pct).length);
+      const seasons=(copernicus?.seasons||[]).filter(s=>{
+        const sy=Number(String(s.season||'').slice(0,4));
+        return sy>=f.from&&sy<=f.to&&s.class_pct&&Object.keys(s.class_pct).length;
+      });
       destroyChart('snowMapDuration');
       if(seasons.length){
         charts.snowMapDuration=new Chart(el('snowMapDuration'),{
@@ -1449,9 +1465,65 @@ async function renderSnowMapCharts(){
   ],'andel (%)',{scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}});
 }
 
+function renderSelectedSnowDepthClassMean(series){
+  const canvas=el('smhiRenderedSnowDaily');
+  if(!canvas)return false;
+  const f=currentFilters();
+  const defs=[
+    {key:'Barmark',label:'Barmark',color:'#71A58F'},
+    {key:'1–2 cm',label:'1–2 cm',color:'#b7d1c6'},
+    {key:'3–9 cm',label:'3–9 cm',color:'#FFFFFF',border:'#cbd5e1'},
+    {key:'10–29 cm',label:'10–29 cm',color:'#DEEBF7'},
+    {key:'30–49 cm',label:'30–49 cm',color:'#9ED0F3'},
+    {key:'50–74 cm',label:'50–74 cm',color:'#3B9DDC'},
+    {key:'75–99 cm',label:'75–99 cm',color:'#3874B9'},
+    {key:'100–149 cm',label:'100–149 cm',color:'#8C96C6'},
+    {key:'150–199 cm',label:'150–199 cm',color:'#8C6BB1'},
+    {key:'200+ cm',label:'200+ cm',color:'#810F7C'}
+  ];
+  const byDay=new Map();
+  for(const season of (series?.seasons||[])){
+    const sy=Number(String(season.season||'').slice(0,4));
+    if(sy<f.from||sy>f.to)continue;
+    for(const row of (season.daily_depth_class_pct||[])){
+      const d=new Date(row.date+'T12:00:00Z');
+      if(f.month && d.getUTCMonth()+1!==f.month)continue;
+      const seasonDay=Math.floor((d-new Date(Date.UTC(sy,7,1,12)))/86400000);
+      if(seasonDay<0||seasonDay>365)continue;
+      if(!byDay.has(seasonDay))byDay.set(seasonDay,{n:0,sums:Object.fromEntries(defs.map(x=>[x.key,0]))});
+      const g=byDay.get(seasonDay);g.n++;
+      for(const def of defs)g.sums[def.key]+=Number(row.class_pct?.[def.key]||0);
+    }
+  }
+  const days=[...byDay.keys()].sort((a,b)=>a-b);
+  if(!days.length)return false;
+  const refYear=2025;
+  const labels=days.map(day=>new Date(Date.UTC(refYear,7,1+day)).toISOString().slice(0,10));
+  destroyChart('smhiRenderedSnowDaily');
+  charts.smhiRenderedSnowDaily=new Chart(canvas,{
+    type:'bar',
+    data:{labels,datasets:defs.map(def=>({
+      label:def.label,stack:'depth',
+      data:days.map(day=>{const g=byDay.get(day);return g.n?g.sums[def.key]/g.n:0;}),
+      backgroundColor:def.color,borderColor:def.border||def.color,borderWidth:def.border?0.5:0,
+      barPercentage:1,categoryPercentage:1
+    }))},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %'}}},
+      scales:{x:{stacked:true,grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},
+        y:{stacked:true,min:0,max:100,title:{display:true,text:'genomsnittlig andel gridceller (%)'},ticks:{callback:v=>v+' %'}}}}
+  });
+  if(el('smhiRenderedSnowQa'))el('smhiRenderedSnowQa').textContent=
+    'Medel över valda snösäsonger '+f.from+'–'+f.to+(f.month?' för '+months[f.month-1].toLowerCase():'')+
+    '. Varje datumposition visar genomsnittlig andel gridceller i respektive snödjupsklass.';
+  return true;
+}
+
 async function renderSmhiRenderedSnowDaily(){
   if(!el('smhiRenderedSnowDaily'))return;
   try{
+    const series=await loadSnowGridSeries();
+    if(renderSelectedSnowDepthClassMean(series))return;
     if(!smhiRenderedSnowDaily){
       const r=await fetch('snowgrid/smhi_snow_lulea_daily_2526.json?v=1',{cache:'no-store'});
       if(!r.ok)throw new Error('Den dagliga SMHI-kartserien saknas.');
@@ -2287,6 +2359,7 @@ function pageYearBounds(page){
     vegetation:()=>yearBoundsFromRows(DATA.vegetation?.climate_10y,'window_end'),
     lightning:()=>yearBoundsFromRows(DATA.lightning?.annual),
     seaice:()=>({min:2017,max:Math.max(2017,...(DATA.sea_ice?.seasonal||[]).map(r=>Number(r.start_year)||2017))}),
+    snowmap:()=>({min:1990,max:2025}),
     dateweather:()=>yearBoundsFromRows(DATA.temperature?.annual||DATA.temperature?.monthly)
   };
   try{return candidates[page]?.()||fallback;}catch{return fallback;}
@@ -2315,7 +2388,16 @@ function syncYear(source,value,renderNow=true){
   el('rangeFrom').value=a;el('rangeTo').value=b;
   el('rangeFromLabel').textContent=a;el('rangeToLabel').textContent=b;
   updateRangeTrack();
-  if(renderNow)render();
+  if(renderNow){
+    render();
+    const active=document.querySelector('#tabs button.active')?.dataset.page;
+    if(active==='snowmap'){
+      renderSnowMapCharts();
+      renderSmhiRenderedSnowDaily();
+      setupSnowMapSlider();
+      showSnowMapDate(0);
+    }
+  }
 }
 function setupTabs(){
   document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{
@@ -2358,7 +2440,16 @@ el('rangeFrom').addEventListener('input',e=>syncYear('from',e.target.value,false
 el('rangeTo').addEventListener('input',e=>syncYear('to',e.target.value,false));
 el('rangeFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
 el('rangeTo').addEventListener('change',e=>syncYear('to',e.target.value,true));
-el('month').addEventListener('change',render);
+el('month').addEventListener('change',()=>{
+  render();
+  const active=document.querySelector('#tabs button.active')?.dataset.page;
+  if(active==='snowmap'){
+    renderSnowMapCharts();
+    renderSmhiRenderedSnowDaily();
+    setupSnowMapSlider();
+    showSnowMapDate(0);
+  }
+});
 el('tempMetric').addEventListener('change',render);
 el('weatherCode').addEventListener('change',render);
 el('resetFilters').addEventListener('click',()=>{
