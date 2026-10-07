@@ -237,12 +237,12 @@
     </div>
     <div class="chart-card full tall">
       <h2>Veckoprofil snödjup</h2>
-      <p class="hint">Historisk variation vecka för vecka inom snösäsongen. X-axeln visar veckodatum med sju dagars mellanrum, förankrade i den senaste snösäsongens kalender. Endast veckor där snö förekommit historiskt visas. Ljusgrått band = 10:e–90:e percentilen, mörkare grått = 25:e–75:e percentilen, grå linje = median, blå linje = senaste säsongen och grön streckad linje = den snörikaste säsongen räknat på genomsnittligt snödjup.</p>
+      <p class="hint">Historisk variation vecka för vecka inom snösäsongen. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts från historiska profiler. X-axeln visar veckodatum med sju dagars mellanrum, förankrade i den senaste snösäsongens kalender. Endast veckor där snö förekommit historiskt visas. Ljusgrått band = 10:e–90:e percentilen, mörkare grått = 25:e–75:e percentilen, grå linje = median, blå linje = senaste säsongen och grön streckad linje = den snörikaste säsongen räknat på genomsnittligt snödjup.</p>
       <canvas id="snowWeeklyDepthProfile"></canvas>
     </div>
     <div class="chart-card full tall">
       <h2>Veckoprofil andel snötäcke</h2>
-      <p class="hint">Historisk variation i andelen analyserade gridceller med minst 1 cm snödjup, vecka för vecka inom snösäsongen. X-axeln visar veckodatum med sju dagars mellanrum, förankrade i den senaste snösäsongens kalender. Samma percentilband och jämförelsesäsonger används som i veckoprofilen för snödjup.</p>
+      <p class="hint">Historisk variation i andelen analyserad fastlandsyta med minst 1 cm snödjup, vecka för vecka inom snösäsongen. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts från historiska profiler. X-axeln visar veckodatum med sju dagars mellanrum, förankrade i den senaste snösäsongens kalender. Samma percentilband och jämförelsesäsonger används som i veckoprofilen för snödjup.</p>
       <canvas id="snowWeeklyCoverageProfile"></canvas>
     </div>
     <div class="chart-card full snowmap-duration-card">
@@ -252,7 +252,7 @@
     </div>
     <div class="chart-card full">
       <h2>Genomsnittlig daglig snödjupsfördelning över vald period</h2>
-      <p class="hint">Visar genomsnittlig andel gridceller i respektive snödjupsklass över de snösäsonger som omfattas av årsreglaget. Endast rasterceller som berör Luleås fastland ingår; rena havsceller och ö-celler utan kontakt med fastlandet exkluderas. Månadsfiltret begränsar beräkningen till vald månad.</p>
+      <p class="hint">Visar genomsnittlig andel av analyserad fastlandsyta i respektive snödjupsklass över de snösäsonger som omfattas av årsreglaget. Rena havsceller och ö-celler utan kontakt med fastlandet exkluderas, kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts. Månadsfiltret begränsar beräkningen till vald månad.</p>
       <p id="smhiRenderedSnowQa" class="hint">Laddar kvalitetsinformation…</p>
       <canvas id="smhiRenderedSnowDaily"></canvas>
     </div>
@@ -371,5 +371,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=43"></script>
+<script src="app.js?v=44"></script>
 </body></html>
