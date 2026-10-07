@@ -73,6 +73,7 @@ def main():
 
         seasons.append({
             "season": season,
+            "source_type": payload.get("source_type", "gridclim"),
             "daily": payload.get("daily", []),
             "daily_mainland_majority": payload.get("daily_mainland_majority", []),
             "daily_depth_class_pct": payload.get("daily_depth_class_pct", []),
