@@ -229,8 +229,8 @@
           <canvas id="snowMapMean"></canvas>
         </div>
         <div class="chart-card snowmap-chart">
-          <h2 id="snowMapCoverageTitle">Andel yta med snötäcke per snösäsong</h2>
-          <p id="snowMapCoverageHint" class="hint">Andel analyserade gridceller med minst 1 cm snödjup. Säsongerna visas kronologiskt efter varandra.</p>
+          <h2 id="snowMapCoverageTitle">Andel fastlandsyta med snötäcke per snösäsong</h2>
+          <p id="snowMapCoverageHint" class="hint">Andel analyserad fastlandsyta med minst 1 cm snödjup enligt GridClim. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts. Den senare stationsbaserade interpolationen visas inte här eftersom metoden inte är direkt jämförbar med GridClim för arealandelar.</p>
           <canvas id="snowMapCoverage"></canvas>
         </div>
       </div>
@@ -244,11 +244,6 @@
       <h2>Veckoprofil andel snötäcke</h2>
       <p class="hint">Historisk variation i andelen analyserad fastlandsyta med minst 1 cm snödjup, vecka för vecka inom snösäsongen. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts från historiska profiler. X-axeln visar veckodatum med sju dagars mellanrum, förankrade i den senaste snösäsongens kalender. Samma percentilband och jämförelsesäsonger används som i veckoprofilen för snödjup.</p>
       <canvas id="snowWeeklyCoverageProfile"></canvas>
-    </div>
-    <div class="chart-card full snowmap-duration-card">
-      <h2>Hur länge låg snötäcket kvar?</h2>
-      <p class="hint">100 % stackat för hydrologiska år september–augusti från 2016/17. Källa: Copernicus HR-WSI SP_S2 Snow Phenology, Snow Cover Duration (20 m), aggregerat till rapportens 2,5 km-celler. Endast celler med giltiga satellitpixlar ingår.</p>
-      <canvas id="snowMapDuration"></canvas>
     </div>
     <div class="chart-card full">
       <h2>Genomsnittlig daglig snödjupsfördelning över vald period</h2>
@@ -371,5 +366,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=44"></script>
+<script src="app.js?v=45"></script>
 </body></html>
