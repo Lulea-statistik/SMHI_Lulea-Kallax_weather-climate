@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/sitemap.xml
