@@ -58,11 +58,13 @@ def main():
         )
 
         stats = snow.season_cell_stats(payload.get("days", []), grid)
+        payload["daily"] = snow.summarize_mainland(payload.get("days", []), grid)
         payload["daily_mainland_majority"] = stats["daily_mainland_majority"]
         payload["daily_depth_class_pct"] = stats["daily_depth_class_pct"]
         payload["snow_duration_pct"] = stats["snow_duration_pct"]
         payload["snow_duration_counts"] = stats["snow_duration_counts"]
         payload["classified_cells"] = stats["classified_cells"]
+        payload["mainland_touching_cells"] = stats.get("mainland_touching_cells")
         payload["mainland_majority_cells"] = stats["mainland_majority_cells"]
         data_path.write_text(
             json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
@@ -76,6 +78,7 @@ def main():
             "daily_depth_class_pct": payload.get("daily_depth_class_pct", []),
             "snow_duration_pct": payload.get("snow_duration_pct", {}),
             "classified_cells": payload.get("classified_cells"),
+            "mainland_touching_cells": payload.get("mainland_touching_cells"),
             "mainland_majority_cells": payload.get("mainland_majority_cells"),
         })
         print(f"Backfilled {season}: {stats['classified_cells']} cells, {stats['mainland_majority_cells']} majority-mainland")
