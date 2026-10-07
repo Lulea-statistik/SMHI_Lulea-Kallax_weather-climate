@@ -312,6 +312,37 @@ def summarize(days):
         })
     return summary
 
+def summarize_mainland(days, grid):
+    """Summarize only cells that intersect the mainland mask.
+
+    Pure sea cells and island-only cells are excluded. Coastal cells remain
+    included even when less than half of the clipped cell is mainland.
+    """
+    features = grid.get("features", [])
+    mainland_ids = {
+        int((f.get("properties") or {}).get("cell_id", f.get("id", -1)))
+        for f in features
+        if (f.get("properties") or {}).get("touches_mainland")
+        and float((f.get("properties") or {}).get("mainland_share_pct") or 0) > 0
+    }
+    summary = []
+    for d in days:
+        vals = d.get("values_cm") or []
+        land_vals = [
+            float(v) for i, v in enumerate(vals)
+            if i in mainland_ids and v is not None
+        ]
+        summary.append({
+            "date": d["date"],
+            "mean_cm": round(sum(land_vals) / len(land_vals), 1) if land_vals else None,
+            "max_cm": round(max(land_vals), 1) if land_vals else None,
+            "snow_cover_share_pct": round(
+                100 * sum(v >= 1 for v in land_vals) / len(land_vals), 1
+            ) if land_vals else None,
+            "cells": len(land_vals),
+        })
+    return summary
+
 
 SNOW_WEEK_CLASSES = [
     ("0–4 veckor", 0, 4),
@@ -332,7 +363,8 @@ def season_cell_stats(days, grid):
     mainland_ids = {
         int((f.get("properties") or {}).get("cell_id", f.get("id", -1)))
         for f in features
-        if (f.get("properties") or {}).get("mainland_majority")
+        if (f.get("properties") or {}).get("touches_mainland")
+        and float((f.get("properties") or {}).get("mainland_share_pct") or 0) > 0
     }
 
     daily_mainland = []
@@ -353,13 +385,12 @@ def season_cell_stats(days, grid):
         vals = d.get("values_cm") or []
         mainland_vals = []
         for i, v in enumerate(vals[:n_cells]):
-            if v is None:
+            if v is None or i not in mainland_ids:
                 continue
             valid_days[i] += 1
             if v >= 1:
                 snow_days[i] += 1
-            if i in mainland_ids:
-                mainland_vals.append(v)
+            mainland_vals.append(v)
         daily_mainland.append({
             "date": d["date"],
             "snow_cover_share_pct": round(
@@ -367,7 +398,10 @@ def season_cell_stats(days, grid):
             ) if mainland_vals else None,
             "cells": len(mainland_vals),
         })
-        valid_vals = [float(v) for v in vals[:n_cells] if v is not None]
+        valid_vals = [
+            float(v) for i, v in enumerate(vals[:n_cells])
+            if i in mainland_ids and v is not None
+        ]
         counts = {label: sum(test(v) for v in valid_vals) for label, test in depth_classes}
         total_valid = len(valid_vals)
         daily_depth_classes.append({
@@ -380,8 +414,8 @@ def season_cell_stats(days, grid):
         })
 
     class_counts = {label: 0 for label, _, _ in SNOW_WEEK_CLASSES}
-    for i in range(n_cells):
-        if not valid_days[i]:
+    for i in sorted(mainland_ids):
+        if i >= n_cells or not valid_days[i]:
             continue
         weeks = snow_days[i] / 7.0
         for label, lo, hi in SNOW_WEEK_CLASSES:
@@ -398,6 +432,7 @@ def season_cell_stats(days, grid):
         "snow_duration_pct": class_pct,
         "snow_duration_counts": class_counts,
         "classified_cells": classified,
+        "mainland_touching_cells": len(mainland_ids),
         "mainland_majority_cells": len(mainland_ids),
         "daily_mainland_majority": daily_mainland,
         "daily_depth_class_pct": daily_depth_classes,
@@ -485,7 +520,7 @@ def main():
             "resolution_km":2.5,
             "grid_file":grid_file,
             "days":days,
-            "daily":summarize(days),
+            "daily":summarize_mainland(days,grid),
             "daily_mainland_majority":stats["daily_mainland_majority"],
             "daily_depth_class_pct":stats["daily_depth_class_pct"],
             "snow_duration_pct":stats["snow_duration_pct"],
