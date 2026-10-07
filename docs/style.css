@@ -107,3 +107,23 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
   .topbar-status{gap:8px}
   .global-loading{font-size:12px}
 }
+
+
+.report-intro{
+  margin:0 0 14px;
+  padding:14px 16px;
+  border:1px solid #dbe3ec;
+  border-radius:10px;
+  background:#f8fafc;
+  color:#334155;
+}
+.report-intro h2{
+  margin:0 0 6px;
+  font-size:18px;
+}
+.report-intro p{
+  margin:5px 0;
+  max-width:1100px;
+  line-height:1.5;
+  font-size:13px;
+}
