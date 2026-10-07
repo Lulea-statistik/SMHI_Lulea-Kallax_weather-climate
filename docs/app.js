@@ -1372,15 +1372,15 @@ async function renderSnowMapCharts(){
           daily_depth_class_pct:(x.daily_depth_class_pct||[]).filter(r=>!f.month||Number(String(r.date).slice(5,7))===f.month)
         }))};
       const t=buildSnowGridTimeline(selectedSeries);
-      const meanAll=t.labels.map((_,i)=>t.meanGrid[i]??t.meanRecent[i]??null);
-      const maxAll=t.labels.map((_,i)=>t.maxGrid[i]??t.maxRecent[i]??null);
       const sourceBySeason=new Map((selectedSeries.seasons||[]).map(s=>[s.season,s.source_type==='observations_interpolated'?'Interpolerat från stationsobservationer':'GridClim']));
       destroyChart('snowMapMean');
       charts.snowMapMean=new Chart(el('snowMapMean'),{
         type:'line',
         data:{labels:t.labels,datasets:[
-          {label:'Medelsnödjup',data:meanAll,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false},
-          {label:'Maxsnödjup',data:maxAll,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,tension:.08,spanGaps:false}
+          {label:'Medelsnödjup · GridClim',data:t.meanGrid,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false},
+          {label:'Maxsnödjup · GridClim',data:t.maxGrid,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,tension:.08,spanGaps:false},
+          {label:'Medelsnödjup · interpolerat',data:t.meanRecent,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,borderDash:[6,4],tension:.12,spanGaps:false},
+          {label:'Maxsnödjup · interpolerat',data:t.maxRecent,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,borderDash:[6,4],tension:.08,spanGaps:false}
         ]},
         options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
           plugins:{legend:{display:true},tooltip:{callbacks:{
@@ -1395,14 +1395,17 @@ async function renderSnowMapCharts(){
           scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{beginAtZero:true,title:{display:true,text:'cm'}}}}
       });
 
+      const gridclimSeries={...selectedSeries,seasons:(selectedSeries.seasons||[])
+        .filter(s=>s.source_type!=='observations_interpolated')};
+      const coverageTimeline=buildSnowGridTimeline(gridclimSeries);
       const coverageDatasets=[
-        {label:'Fastlandsyta · GridClim',data:t.mainGrid,borderColor:'#6d28d9',backgroundColor:'#6d28d9',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false}
+        {label:'Fastlandsyta · GridClim',data:coverageTimeline.mainGrid,borderColor:'#6d28d9',backgroundColor:'#6d28d9',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false}
       ];
 
       destroyChart('snowMapCoverage');
       charts.snowMapCoverage=new Chart(el('snowMapCoverage'),{
         type:'line',
-        data:{labels:t.labels,datasets:coverageDatasets},
+        data:{labels:coverageTimeline.labels,datasets:coverageDatasets},
         options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
           plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %'}}},
           scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}
