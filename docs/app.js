@@ -283,6 +283,9 @@ function renderVegetation(f){
   el('vegetationLengthTrendText').textContent=trendRateText(labels,lengthVals,'dygn');
 
   const startVals=climate.map(r=>r.start_doy);
+  const startFinite=startVals.filter(Number.isFinite);
+  const startAxisMin=startFinite.length?Math.min(...startFinite)-7:undefined;
+  const startAxisMax=startFinite.length?Math.max(...startFinite)+7:undefined;
   el('vegetationStartTrendText').textContent=trendRateText(labels,startVals,'dygn');
   destroyChart('vegetationStart');
   charts.vegetationStart=new Chart(el('vegetationStart'),{
@@ -292,10 +295,13 @@ function renderVegetation(f){
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label==='Start'?'Start: '+dayOfYearLabel(c.parsed.y):'Trend: '+dayOfYearLabel(c.parsed.y)}}},
-      scales:{x:{grid:{display:false}},y:{title:{display:true,text:'datum'},ticks:{callback:v=>dayOfYearLabel(v)}}}}
+      scales:{x:{grid:{display:false}},y:{min:startAxisMin,max:startAxisMax,title:{display:true,text:'datum'},ticks:{callback:v=>dayOfYearLabel(v)}}}}
   });
 
   const endVals=climate.map(r=>r.end_doy);
+  const endFinite=endVals.filter(Number.isFinite);
+  const endAxisMin=endFinite.length?Math.min(...endFinite)-7:undefined;
+  const endAxisMax=endFinite.length?Math.max(...endFinite)+7:undefined;
   el('vegetationEndTrendText').textContent=trendRateText(labels,endVals,'dygn');
   destroyChart('vegetationEnd');
   charts.vegetationEnd=new Chart(el('vegetationEnd'),{
@@ -305,7 +311,7 @@ function renderVegetation(f){
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label==='Slut'?'Slut: '+dayOfYearLabel(c.parsed.y):'Trend: '+dayOfYearLabel(c.parsed.y)}}},
-      scales:{x:{grid:{display:false}},y:{title:{display:true,text:'datum'},ticks:{callback:v=>dayOfYearLabel(v)}}}}
+      scales:{x:{grid:{display:false}},y:{min:endAxisMin,max:endAxisMax,title:{display:true,text:'datum'},ticks:{callback:v=>dayOfYearLabel(v)}}}}
   });
 
   const frost=climate.filter(r=>r.frost_days!=null);
@@ -2280,6 +2286,7 @@ function pageYearBounds(page){
     zerocross:()=>yearBoundsFromRows(DATA.zero_crossings),
     vegetation:()=>yearBoundsFromRows(DATA.vegetation?.climate_10y,'window_end'),
     lightning:()=>yearBoundsFromRows(DATA.lightning?.annual),
+    seaice:()=>({min:2017,max:Math.max(2017,...(DATA.sea_ice?.seasonal||[]).map(r=>Number(r.start_year)||2017))}),
     dateweather:()=>yearBoundsFromRows(DATA.temperature?.annual||DATA.temperature?.monthly)
   };
   try{return candidates[page]?.()||fallback;}catch{return fallback;}
@@ -2322,6 +2329,9 @@ function setupTabs(){
         document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');
         document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');
         document.body.classList.toggle('algae-active',btn.dataset.page==='algae');
+        const monthFilter=el('globalMonthFilter');
+        if(monthFilter)monthFilter.style.display=btn.dataset.page==='seaice'?'none':'';
+        if(btn.dataset.page==='seaice'&&el('month'))el('month').value='0';
         applyPageYearBounds(btn.dataset.page,true);
         render();
         if(btn.dataset.page==='seaice')await initSeaIceMap();
