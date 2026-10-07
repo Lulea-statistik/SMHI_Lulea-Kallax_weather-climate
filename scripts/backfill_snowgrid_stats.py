@@ -73,6 +73,7 @@ def main():
 
         seasons.append({
             "season": season,
+            "source": payload.get("source", "SMHIGridClim"),
             "source_type": payload.get("source_type", "gridclim"),
             "daily": payload.get("daily", []),
             "daily_mainland_majority": payload.get("daily_mainland_majority", []),
@@ -91,6 +92,11 @@ def main():
                 "resolution_km": 2.5,
                 "snow_threshold_cm": 1,
                 "duration_classes": [x[0] for x in snow.SNOW_WEEK_CLASSES],
+                "recent_extension": {
+                    "source": "SMHI MetObs snow-depth observations",
+                    "method": "IDW interpolation onto existing 2.5 km Lulea grid",
+                    "from_season": "2018-19"
+                },
                 "seasons": sorted(seasons, key=lambda x: x["season"]),
             },
             ensure_ascii=False,
