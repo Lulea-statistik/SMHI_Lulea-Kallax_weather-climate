@@ -1619,6 +1619,10 @@ async function showSnowMapDate(index){
     const day=(snowGridData.days||[]).find(x=>x.date===d);
     const values=day?.values_cm||[];
     snowMapLayer=L.geoJSON(snowGridGeometry,{
+      filter:f=>{
+        const p=f?.properties||{};
+        return Boolean(p.touches_mainland) && Number(p.mainland_share_pct||0)>0;
+      },
       style:f=>{
         const id=Number(f?.properties?.cell_id??f?.id??0);
         const v=values[id];
