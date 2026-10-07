@@ -137,6 +137,7 @@ def main():
         )
 
         stats = snow.season_cell_stats(days, base_grid)
+        threshold_stats = snow.seasonal_threshold_cover(days, base_grid)
         payload = {
             "season": season,
             "source": "SMHI MetObs IDW interpolation",
@@ -148,6 +149,8 @@ def main():
             "daily": snow.summarize_mainland(days, base_grid),
             "daily_mainland_majority": stats["daily_mainland_majority"],
             "daily_depth_class_pct": stats["daily_depth_class_pct"],
+            "seasonal_threshold_cover_pct": threshold_stats["seasonal_threshold_cover_pct"],
+            "seasonal_threshold_cover_days_used": threshold_stats["seasonal_threshold_cover_days_used"],
             "snow_duration_pct": stats["snow_duration_pct"],
             "snow_duration_counts": stats["snow_duration_counts"],
             "classified_cells": stats["classified_cells"],
@@ -178,6 +181,8 @@ def main():
             "daily": payload["daily"],
             "daily_mainland_majority": payload["daily_mainland_majority"],
             "daily_depth_class_pct": payload["daily_depth_class_pct"],
+            "seasonal_threshold_cover_pct": payload.get("seasonal_threshold_cover_pct", {}),
+            "seasonal_threshold_cover_days_used": payload.get("seasonal_threshold_cover_days_used"),
             "snow_duration_pct": payload["snow_duration_pct"],
             "classified_cells": payload["classified_cells"],
             "mainland_touching_cells": payload.get("mainland_touching_cells"),
