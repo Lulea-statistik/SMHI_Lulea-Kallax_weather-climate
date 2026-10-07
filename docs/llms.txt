@@ -23,7 +23,6 @@ Rapporten innehåller interaktiva analyser av:
 - vegetationsperiod
 - blixt
 - havsis
-- algförekomst
 
 ## Tolkning
 Enskilda år och säsonger kan avvika kraftigt från klimatets långsiktiga utveckling. För klimatjämförelser bör längre tidsperioder användas. Vissa kart- och snöprodukter använder kompletterande bearbetning eller andra öppna datakällor; metod och källa anges i respektive avsnitt. Metodbyten ska beaktas vid jämförelser över tid.
