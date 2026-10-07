@@ -1349,17 +1349,14 @@ function updateSnowMapCopy(){
   if(el('snowMapMeanHint'))el('snowMapMeanHint').textContent=grid
     ?'Säsongerna visas efter varandra. Linjerna visar analyserat medel- och maxsnödjup inom Luleå kommun.'
     :'Medelvärde för tillgängliga stationer inom Luleå kommun; närliggande stationer används om kommunstationer saknas.';
-  if(el('snowMapCoverageTitle'))el('snowMapCoverageTitle').textContent=grid?'Andel yta med snötäcke per snösäsong':'Andel stationer med mätbart snötäcke';
+  if(el('snowMapCoverageTitle'))el('snowMapCoverageTitle').textContent=grid?'Andel fastlandsyta med snötäcke per snösäsong':'Andel stationer med mätbart snötäcke';
   if(el('snowMapCoverageHint'))el('snowMapCoverageHint').textContent=grid
-    ?'Andel analyserade gridceller med minst 1 cm snödjup. GridClim och den senare observationsbaserade interpolationen visas som samma mått men med olika linjestil.'
+    ?'Andel analyserad fastlandsyta med minst 1 cm snödjup enligt GridClim. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts. Den senare stationsbaserade interpolationen visas inte eftersom den inte är direkt jämförbar för arealandelar.'
     :'Andel rapporterande stationer med minst 1 cm snödjup.';
 }
 
 async function renderSnowMapCharts(){
   const grid=snowMapSource()==='grid';
-  const durationCard=el('snowMapDuration')?.parentElement;
-  if(durationCard)durationCard.style.display=grid?'block':'none';
-
   if(grid){
     const series=await loadSnowGridSeries();
     if(series?.seasons?.length){
@@ -1399,8 +1396,7 @@ async function renderSnowMapCharts(){
       });
 
       const coverageDatasets=[
-        {label:'Alla gridceller · GridClim',data:t.coverGrid,borderColor:'#6d28d9',backgroundColor:'#6d28d9',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false},
-        {label:'Alla gridceller · interpolerat',data:t.coverRecent,borderColor:'#6d28d9',backgroundColor:'#6d28d9',borderWidth:2,pointRadius:0,borderDash:[6,4],tension:.12,spanGaps:false}
+        {label:'Fastlandsyta · GridClim',data:t.mainGrid,borderColor:'#6d28d9',backgroundColor:'#6d28d9',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false}
       ];
 
       destroyChart('snowMapCoverage');
@@ -1416,50 +1412,11 @@ async function renderSnowMapCharts(){
       renderSnowWeeklyProfileChart('snowWeeklyDepthProfile',weekly.depth,weekly.latestSeason,weekly.snowiestSeason,'cm');
       renderSnowWeeklyProfileChart('snowWeeklyCoverageProfile',weekly.coverage,weekly.latestSeason,weekly.snowiestSeason,'andel (%)',100);
 
-      const copernicus=await loadCopernicusSnowDuration();
-      const durationClasses=copernicus?.classes||[];
-      const durationColors=['#e0f2fe','#bae6fd','#7dd3fc','#38bdf8','#0ea5e9','#0284c7','#0369a1','#075985','#0c4a6e'];
-      const seasons=(copernicus?.seasons||[]).filter(s=>{
-        const sy=Number(String(s.season||'').slice(0,4));
-        return sy>=f.from&&sy<=f.to&&s.class_pct&&Object.keys(s.class_pct).length;
-      });
-      destroyChart('snowMapDuration');
-      if(seasons.length){
-        charts.snowMapDuration=new Chart(el('snowMapDuration'),{
-          type:'bar',
-          data:{
-            labels:seasons.map(s=>s.season.replace('-', '/')),
-            datasets:durationClasses.map((label,i)=>({
-              label,
-              stack:'duration',
-              backgroundColor:durationColors[i%durationColors.length],
-              borderWidth:0,
-              data:seasons.map(s=>Number(s.class_pct?.[label]||0))
-            }))
-          },
-          options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-            plugins:{
-              legend:{display:true},
-              tooltip:{callbacks:{
-                title:items=>{
-                  const idx=items?.[0]?.dataIndex;
-                  const s=seasons[idx];
-                  return s?s.season.replace('-', '/')+' · '+(s.classified_cells||0)+' giltiga 2,5 km-celler':'';
-                },
-                label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %'
-              }}
-            },
-            scales:{
-              x:{stacked:true,grid:{display:false}},
-              y:{stacked:true,min:0,max:100,title:{display:true,text:'andel giltiga 2,5 km-celler (%)'},ticks:{callback:v=>v+' %'}}
-            }}
-        });
-      }
       return;
+
     }
   }
 
-  destroyChart('snowMapDuration');
   destroyChart('snowWeeklyDepthProfile');
   destroyChart('snowWeeklyCoverageProfile');
   const rows=snowMapSeasonData?.daily||[];
