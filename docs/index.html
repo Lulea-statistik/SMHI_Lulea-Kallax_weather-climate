@@ -2,11 +2,66 @@
 <html lang="sv">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>SMHI Kallax – klimatrapport</title>
+  <title>Klimat och väder i Luleå Kommun</title>
+  <meta name="description" content="Interaktiv klimat- och väderrapport för Luleå kommun med SMHI-data från Kallax station 162860 samt kompletterande analyser av temperatur, nederbörd, vind, snö, sikt, luftfuktighet, solsken, nollgenomgångar, vegetation, blixt, havsis och alger.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sv_SE">
+  <meta property="og:title" content="Klimat och väder i Luleå Kommun">
+  <meta property="og:description" content="Interaktiv klimat- och väderrapport för Luleå kommun med SMHI-data från Kallax station 162860 samt kompletterande analyser av temperatur, nederbörd, vind, snö, sikt, luftfuktighet, solsken, nollgenomgångar, vegetation, blixt, havsis och alger.">
+  <meta property="og:url" content="https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/">
+  <meta property="og:image" content="https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/favicon.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Klimat och väder i Luleå Kommun">
+  <meta name="twitter:description" content="Interaktiv klimat- och väderrapport för Luleå kommun med SMHI-data från Kallax station 162860 samt kompletterande analyser av temperatur, nederbörd, vind, snö, sikt, luftfuktighet, solsken, nollgenomgångar, vegetation, blixt, havsis och alger.">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebSite",
+        "@id":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/#website",
+        "url":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/",
+        "name":"Klimat och väder i Luleå Kommun",
+        "inLanguage":"sv-SE"
+      },
+      {
+        "@type":"WebPage",
+        "@id":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/#webpage",
+        "url":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/",
+        "name":"Klimat och väder i Luleå Kommun",
+        "description":"Interaktiv klimat- och väderrapport för Luleå kommun med SMHI-data från Kallax station 162860 samt kompletterande analyser av temperatur, nederbörd, vind, snö, sikt, luftfuktighet, solsken, nollgenomgångar, vegetation, blixt, havsis och alger.",
+        "isPartOf":{"@id":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/#website"},
+        "inLanguage":"sv-SE",
+        "about":{"@id":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/#dataset"}
+      },
+      {
+        "@type":"Dataset",
+        "@id":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/#dataset",
+        "name":"Klimat- och väderdata för Luleå kommun och Kallax",
+        "description":"Historiska och löpande väder- och klimatdata för Luleå med SMHI Kallax station 162860 och kompletterande analyser för bland annat snö, havsis, blixt och alger.",
+        "url":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/",
+        "creator":{"@type":"Organization","name":"Luleå statistik"},
+        "spatialCoverage":{"@type":"Place","name":"Luleå kommun, Norrbottens län, Sverige"},
+        "temporalCoverage":"1944/..",
+        "keywords":["Luleå","klimat","väder","SMHI","Kallax","temperatur","nederbörd","vind","snö","snödjup","havsis","blixt","alger","klimatanalys"],
+        "distribution":[
+          {
+            "@type":"DataDownload",
+            "encodingFormat":"application/json",
+            "contentUrl":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/dashboard_data.json"
+          }
+        ],
+        "inLanguage":"sv-SE"
+      }
+    ]
+  }
+  </script>
 
   <link rel="icon" type="image/png" href="favicon.png?v=3">
 
-  <link rel="stylesheet" href="style.css?v=38">
+  <link rel="stylesheet" href="style.css?v=39">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -15,7 +70,7 @@
 <header class="topbar">
   <div class="brand">
     <img class="brandLogo" src="lulea-statistik-logo.svg" alt="" aria-hidden="true">
-    <div class="brandText"><h1>SMHI Kallax – klimatrapport</h1><p>Luleå-Kallax Flygplats · station 162860</p></div>
+    <div class="brandText"><h1>Klimat och väder i Luleå Kommun</h1><p>SMHI Kallax · station 162860 · historik och löpande uppdateringar</p></div>
   </div>
   <div class="topbar-status">
     <div id="globalLoading" class="global-loading" aria-live="polite"><span class="loading-spinner" aria-hidden="true"></span><span id="globalLoadingText">Laddar rapport…</span></div>
@@ -42,6 +97,11 @@
   <button data-page="data">Data</button>
 </nav>
 <main>
+  <section class="report-intro" aria-labelledby="reportIntroTitle">
+    <h2 id="reportIntroTitle">Klimat och väder i Luleå</h2>
+    <p>Rapporten sammanställer historiska och löpande väder- och klimatdata för Luleå kommun. Huvudkällan är SMHI:s observationsdata från Kallax station 162860. Rapporten innehåller analyser av temperatur, nederbörd, väderfenomen, vind, sikt, luftfuktighet, solskenstid, snö och snötäcke, nollgenomgångar, vegetationsperiod, blixt, havsis och alger.</p>
+    <p>Diagrammen är interaktiva och kan filtreras efter period och månad. Vissa kart- och snöanalyser använder kompletterande bearbetningar och andra öppna datakällor; metod och källa anges i respektive avsnitt. För klimatjämförelser bör längre tidsperioder användas eftersom enskilda år kan avvika kraftigt från den långsiktiga utvecklingen.</p>
+  </section>
   <section class="filters" id="globalFilters">
     <label class="filter-select year-filter">Från år<select id="yearFrom"></select></label>
     <label class="filter-select year-filter">Till år<select id="yearTo"></select></label>
@@ -134,7 +194,7 @@
   <section id="page-snow" class="page">
     <div class="source-note"><b>Metod för snötäcke:</b> Snöåret definieras augusti–juli. En stabil snötäcksäsong börjar och slutar först när minst 7 efterföljande tillgängliga observationer visar minst 1 cm snödjup, med högst 3 dagars lucka mellan observationerna. Medelsnödjup och största snödjup beräknas därefter endast inom denna sammanhängande säsong. Tillfälliga töperioder inne i säsongen ingår i medelvärdet, även om snödjupet då tillfälligt går under 1 cm.</div>
     <div class="chart-card"><h2>Medelsnödjup under snötäcksäsongen</h2><p class="hint">Genomsnitt av alla tillgängliga snödjupsobservationer mellan säsongens stabila start och slut. Det är alltså inte ett medel av bara dagar med snö.</p><p id="snowMeanTrendText" class="hint"></p><canvas id="snowMeanAnnual"></canvas></div>
-    <div class="chart-card"><h2>Genomsnittligt snödjup per månad inom snötäcksäsongen</h2><p class="hint">Månadsmedel beräknas bara från observationer som ligger inom den definierade sammanhängande snötäcksäsongen.</p><canvas id="snowMonthly"></canvas></div>
+    <div class="chart-card"><h2>Genomsnittligt snödjup per månad inom snötäcksäsongen</h2><p class="hint">Månadsmedel beräknas bara från observationer som ligger inom den definierade sammanhängande snötäcksäsongen. Månaderna visas som ett brutet snöår från augusti till juli.</p><canvas id="snowMonthly"></canvas></div>
     <div class="chart-card"><h2>Största snödjup under snötäcksäsongen</h2><p id="snowMaxTrendText" class="hint"></p><canvas id="snowMaxAnnual"></canvas></div>
     <div class="chart-card"><h2>Snötäckessäsongens längd</h2><p class="hint">Antal kalenderdygn från den stabila säsongens första till sista dag enligt samma 1 cm / 7-observationersregel som används för snödjupsmåtten ovan.</p><p id="snowSeasonTrendText" class="hint"></p><canvas id="snowSeason"></canvas></div>
   </section>
@@ -178,12 +238,12 @@
     </div>
     <div class="chart-card full tall">
       <h2>Veckoprofil snödjup</h2>
-      <p class="hint">Historisk variation vecka för vecka inom snösäsongen. Vecka 1 börjar 1 september och endast veckor där snö förekommit historiskt visas. Ljusgrått band = 10:e–90:e percentilen, mörkare grått = 25:e–75:e percentilen, grå linje = median, blå linje = senaste säsongen och grön streckad linje = den snörikaste säsongen räknat på genomsnittligt snödjup.</p>
+      <p class="hint">Historisk variation vecka för vecka inom snösäsongen. X-axeln visar veckodatum med sju dagars mellanrum, förankrade i den senaste snösäsongens kalender. Endast veckor där snö förekommit historiskt visas. Ljusgrått band = 10:e–90:e percentilen, mörkare grått = 25:e–75:e percentilen, grå linje = median, blå linje = senaste säsongen och grön streckad linje = den snörikaste säsongen räknat på genomsnittligt snödjup.</p>
       <canvas id="snowWeeklyDepthProfile"></canvas>
     </div>
     <div class="chart-card full tall">
       <h2>Veckoprofil andel snötäcke</h2>
-      <p class="hint">Historisk variation i andelen analyserade gridceller med minst 1 cm snödjup, vecka för vecka inom snösäsongen. Samma percentilband och jämförelsesäsonger används som i veckoprofilen för snödjup.</p>
+      <p class="hint">Historisk variation i andelen analyserade gridceller med minst 1 cm snödjup, vecka för vecka inom snösäsongen. X-axeln visar veckodatum med sju dagars mellanrum, förankrade i den senaste snösäsongens kalender. Samma percentilband och jämförelsesäsonger används som i veckoprofilen för snödjup.</p>
       <canvas id="snowWeeklyCoverageProfile"></canvas>
     </div>
     <div class="chart-card full snowmap-duration-card">
@@ -312,5 +372,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=81"></script>
+<script src="app.js?v=39"></script>
 </body></html>
