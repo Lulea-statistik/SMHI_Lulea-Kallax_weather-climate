@@ -336,6 +336,19 @@ def season_cell_stats(days, grid):
     }
 
     daily_mainland = []
+    daily_depth_classes = []
+    depth_classes = [
+        ("Barmark", lambda v: v < 1),
+        ("1–2 cm", lambda v: 1 <= v < 3),
+        ("3–9 cm", lambda v: 3 <= v < 10),
+        ("10–29 cm", lambda v: 10 <= v < 30),
+        ("30–49 cm", lambda v: 30 <= v < 50),
+        ("50–74 cm", lambda v: 50 <= v < 75),
+        ("75–99 cm", lambda v: 75 <= v < 100),
+        ("100–149 cm", lambda v: 100 <= v < 150),
+        ("150–199 cm", lambda v: 150 <= v < 200),
+        ("200+ cm", lambda v: v >= 200),
+    ]
     for d in days:
         vals = d.get("values_cm") or []
         mainland_vals = []
@@ -353,6 +366,17 @@ def season_cell_stats(days, grid):
                 100 * sum(v >= 1 for v in mainland_vals) / len(mainland_vals), 1
             ) if mainland_vals else None,
             "cells": len(mainland_vals),
+        })
+        valid_vals = [float(v) for v in vals[:n_cells] if v is not None]
+        counts = {label: sum(test(v) for v in valid_vals) for label, test in depth_classes}
+        total_valid = len(valid_vals)
+        daily_depth_classes.append({
+            "date": d["date"],
+            "cells": total_valid,
+            "class_pct": {
+                label: round(100.0 * count / total_valid, 2) if total_valid else 0.0
+                for label, count in counts.items()
+            },
         })
 
     class_counts = {label: 0 for label, _, _ in SNOW_WEEK_CLASSES}
@@ -376,6 +400,7 @@ def season_cell_stats(days, grid):
         "classified_cells": classified,
         "mainland_majority_cells": len(mainland_ids),
         "daily_mainland_majority": daily_mainland,
+        "daily_depth_class_pct": daily_depth_classes,
     }
 
 
@@ -462,6 +487,7 @@ def main():
             "days":days,
             "daily":summarize(days),
             "daily_mainland_majority":stats["daily_mainland_majority"],
+            "daily_depth_class_pct":stats["daily_depth_class_pct"],
             "snow_duration_pct":stats["snow_duration_pct"],
             "snow_duration_counts":stats["snow_duration_counts"],
             "classified_cells":stats["classified_cells"],
@@ -481,6 +507,7 @@ def main():
             "season":season,
             "daily":payload["daily"],
             "daily_mainland_majority":payload["daily_mainland_majority"],
+            "daily_depth_class_pct":payload["daily_depth_class_pct"],
             "snow_duration_pct":payload["snow_duration_pct"],
             "classified_cells":payload["classified_cells"],
             "mainland_majority_cells":payload["mainland_majority_cells"],
