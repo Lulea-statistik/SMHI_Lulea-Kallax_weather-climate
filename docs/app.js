@@ -1395,20 +1395,53 @@ async function renderSnowMapCharts(){
           scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{beginAtZero:true,title:{display:true,text:'cm'}}}}
       });
 
-      const gridclimSeries={...selectedSeries,seasons:(selectedSeries.seasons||[])
-        .filter(s=>s.source_type!=='observations_interpolated')};
-      const coverageTimeline=buildSnowGridTimeline(gridclimSeries);
-      const coverageDatasets=[
-        {label:'Fastlandsyta · GridClim',data:coverageTimeline.mainGrid,borderColor:'#6d28d9',backgroundColor:'#6d28d9',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false}
+      const gridclimSeasons=(selectedSeries.seasons||[])
+        .filter(s=>s.source_type!=='observations_interpolated')
+        .filter(s=>s.seasonal_threshold_cover_pct && Object.keys(s.seasonal_threshold_cover_pct).length);
+      const thresholdDefs=[
+        {key:'ge_1',label:'≥1 cm'},
+        {key:'ge_5',label:'≥5 cm'},
+        {key:'ge_10',label:'≥10 cm'},
+        {key:'ge_25',label:'≥25 cm'},
+        {key:'ge_50',label:'≥50 cm'},
+        {key:'ge_75',label:'≥75 cm'},
+        {key:'ge_100',label:'≥100 cm'},
+        {key:'ge_125',label:'≥125 cm'}
       ];
+      const coverageLabels=gridclimSeasons.map(s=>String(s.season||'').replace('-', '/'));
+      const coverageDatasets=thresholdDefs.map(def=>({
+        label:def.label,
+        data:gridclimSeasons.map(s=>{
+          const v=Number(s.seasonal_threshold_cover_pct?.[def.key]);
+          return Number.isFinite(v)?v:null;
+        }),
+        borderWidth:0,
+        borderRadius:2,
+        categoryPercentage:.82,
+        barPercentage:.9
+      }));
 
       destroyChart('snowMapCoverage');
       charts.snowMapCoverage=new Chart(el('snowMapCoverage'),{
-        type:'line',
-        data:{labels:coverageTimeline.labels,datasets:coverageDatasets},
+        type:'bar',
+        data:{labels:coverageLabels,datasets:coverageDatasets},
         options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-          plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %'}}},
-          scales:{x:{grid:{display:false},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},y:{min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}
+          plugins:{
+            legend:{display:true},
+            tooltip:{callbacks:{
+              label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %',
+              afterBody:items=>{
+                const i=items?.[0]?.dataIndex;
+                const days=gridclimSeasons[i]?.seasonal_threshold_cover_days_used;
+                return Number.isFinite(Number(days))?['Giltiga dagar: '+days,'Källa: GridClim']:[ 'Källa: GridClim' ];
+              }
+            }}
+          },
+          scales:{
+            x:{grid:{display:false},title:{display:true,text:'snösäsong'},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},
+            y:{min:0,max:100,title:{display:true,text:'genomsnittlig andel fastlandsyta (%)'},ticks:{callback:v=>v+' %'}}
+          }
+        }
       });
 
       const weekly=buildSnowWeeklyProfiles(selectedSeries);
