@@ -312,34 +312,64 @@ def summarize(days):
         })
     return summary
 
-def summarize_mainland(days, grid):
-    """Summarize only cells that intersect the mainland mask.
+MIN_MAINLAND_VALID_SHARE_PCT = 80.0
 
-    Pure sea cells and island-only cells are excluded. Coastal cells remain
-    included even when less than half of the clipped cell is mainland.
+
+def mainland_cell_weights(grid):
+    """Return land-area weights for raster cells that touch the mainland."""
+    weights = {}
+    for f in grid.get("features", []):
+        props = f.get("properties") or {}
+        cell_id = int(props.get("cell_id", f.get("id", -1)))
+        share = float(props.get("mainland_share_pct") or 0)
+        if props.get("touches_mainland") and share > 0:
+            weights[cell_id] = share / 100.0
+    return weights
+
+
+def summarize_mainland(days, grid):
+    """Area-weighted mainland summary with a data-completeness QA threshold.
+
+    Pure sea and island-only cells are excluded. Coastal cells contribute in
+    proportion to their mainland share. Days covering less than 80% of the
+    weighted mainland raster area are retained for QA metadata but their snow
+    statistics are set to null so they cannot distort historical profiles.
     """
-    features = grid.get("features", [])
-    mainland_ids = {
-        int((f.get("properties") or {}).get("cell_id", f.get("id", -1)))
-        for f in features
-        if (f.get("properties") or {}).get("touches_mainland")
-        and float((f.get("properties") or {}).get("mainland_share_pct") or 0) > 0
-    }
+    weights = mainland_cell_weights(grid)
+    total_weight = sum(weights.values())
     summary = []
+
     for d in days:
         vals = d.get("values_cm") or []
-        land_vals = [
-            float(v) for i, v in enumerate(vals)
-            if i in mainland_ids and v is not None
+        valid = [
+            (float(v), weights[i])
+            for i, v in enumerate(vals)
+            if i in weights and v is not None
         ]
+        valid_weight = sum(w for _, w in valid)
+        completeness = (
+            100.0 * valid_weight / total_weight
+            if total_weight > 0 else 0.0
+        )
+        reliable = completeness >= MIN_MAINLAND_VALID_SHARE_PCT
+
+        mean_cm = (
+            sum(v * w for v, w in valid) / valid_weight
+            if reliable and valid_weight > 0 else None
+        )
+        cover_pct = (
+            100.0 * sum(w for v, w in valid if v >= 1) / valid_weight
+            if reliable and valid_weight > 0 else None
+        )
+
         summary.append({
             "date": d["date"],
-            "mean_cm": round(sum(land_vals) / len(land_vals), 1) if land_vals else None,
-            "max_cm": round(max(land_vals), 1) if land_vals else None,
-            "snow_cover_share_pct": round(
-                100 * sum(v >= 1 for v in land_vals) / len(land_vals), 1
-            ) if land_vals else None,
-            "cells": len(land_vals),
+            "mean_cm": round(mean_cm, 1) if mean_cm is not None else None,
+            "max_cm": round(max(v for v, _ in valid), 1) if reliable and valid else None,
+            "snow_cover_share_pct": round(cover_pct, 1) if cover_pct is not None else None,
+            "cells": len(valid),
+            "mainland_valid_share_pct": round(completeness, 1),
+            "qa_reliable": reliable,
         })
     return summary
 
@@ -360,12 +390,9 @@ def season_cell_stats(days, grid):
     n_cells = len(features)
     snow_days = [0] * n_cells
     valid_days = [0] * n_cells
-    mainland_ids = {
-        int((f.get("properties") or {}).get("cell_id", f.get("id", -1)))
-        for f in features
-        if (f.get("properties") or {}).get("touches_mainland")
-        and float((f.get("properties") or {}).get("mainland_share_pct") or 0) > 0
-    }
+    mainland_weights = mainland_cell_weights(grid)
+    mainland_ids = set(mainland_weights)
+    total_mainland_weight = sum(mainland_weights.values())
 
     daily_mainland = []
     daily_depth_classes = []
@@ -391,25 +418,41 @@ def season_cell_stats(days, grid):
             if v >= 1:
                 snow_days[i] += 1
             mainland_vals.append(v)
+        valid_pairs = [
+            (i, float(v), mainland_weights[i])
+            for i, v in enumerate(vals[:n_cells])
+            if i in mainland_ids and v is not None
+        ]
+        valid_weight = sum(w for _, _, w in valid_pairs)
+        completeness = (
+            100.0 * valid_weight / total_mainland_weight
+            if total_mainland_weight > 0 else 0.0
+        )
+        reliable = completeness >= MIN_MAINLAND_VALID_SHARE_PCT
+
         daily_mainland.append({
             "date": d["date"],
             "snow_cover_share_pct": round(
-                100 * sum(v >= 1 for v in mainland_vals) / len(mainland_vals), 1
-            ) if mainland_vals else None,
-            "cells": len(mainland_vals),
+                100.0 * sum(w for _, v, w in valid_pairs if v >= 1) / valid_weight, 1
+            ) if reliable and valid_weight > 0 else None,
+            "cells": len(valid_pairs),
+            "mainland_valid_share_pct": round(completeness, 1),
+            "qa_reliable": reliable,
         })
-        valid_vals = [
-            float(v) for i, v in enumerate(vals[:n_cells])
-            if i in mainland_ids and v is not None
-        ]
-        counts = {label: sum(test(v) for v in valid_vals) for label, test in depth_classes}
-        total_valid = len(valid_vals)
+
+        weighted_counts = {
+            label: sum(w for _, v, w in valid_pairs if test(v))
+            for label, test in depth_classes
+        }
         daily_depth_classes.append({
             "date": d["date"],
-            "cells": total_valid,
+            "cells": len(valid_pairs),
+            "mainland_valid_share_pct": round(completeness, 1),
+            "qa_reliable": reliable,
             "class_pct": {
-                label: round(100.0 * count / total_valid, 2) if total_valid else 0.0
-                for label, count in counts.items()
+                label: round(100.0 * weight / valid_weight, 2)
+                if reliable and valid_weight > 0 else None
+                for label, weight in weighted_counts.items()
             },
         })
 
