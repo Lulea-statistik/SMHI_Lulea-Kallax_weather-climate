@@ -380,6 +380,50 @@ def summarize_mainland(days, grid):
     return summary
 
 
+SNOW_COVER_THRESHOLDS_CM = [1, 5, 10, 25, 50, 75, 100, 125]
+
+
+def seasonal_threshold_cover(days, grid):
+    """Season mean share of mainland area at or above snow-depth thresholds."""
+    weights = mainland_cell_weights(grid)
+    total_weight = sum(weights.values())
+    sums = {t: 0.0 for t in SNOW_COVER_THRESHOLDS_CM}
+    used_days = 0
+
+    for d in days:
+        vals = d.get("values_cm") or []
+        valid = [
+            (float(v), weights[i])
+            for i, v in enumerate(vals)
+            if i in weights and v is not None
+        ]
+        valid_weight = sum(w for _, w in valid)
+        completeness = (
+            100.0 * valid_weight / total_weight
+            if total_weight > 0 else 0.0
+        )
+        if completeness < MIN_MAINLAND_VALID_SHARE_PCT or valid_weight <= 0:
+            continue
+
+        for threshold in SNOW_COVER_THRESHOLDS_CM:
+            share = 100.0 * sum(
+                w for v, w in valid if v >= threshold
+            ) / valid_weight
+            sums[threshold] += share
+        used_days += 1
+
+    return {
+        "seasonal_threshold_cover_pct": {
+            f"ge_{threshold}": (
+                round(sums[threshold] / used_days, 1)
+                if used_days else None
+            )
+            for threshold in SNOW_COVER_THRESHOLDS_CM
+        },
+        "seasonal_threshold_cover_days_used": used_days,
+    }
+
+
 SNOW_WEEK_CLASSES = [
     ("0–4 veckor", 0, 4),
     ("5–8 veckor", 5, 8),
@@ -563,6 +607,7 @@ def main():
         data_file=f"{season}.json"
         (OUT_ROOT/grid_file).write_text(json.dumps(grid,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
         stats=season_cell_stats(days,grid)
+        threshold_stats=seasonal_threshold_cover(days,grid)
         payload={
             "season":season,
             "source":"SMHIGridClim",
@@ -572,6 +617,8 @@ def main():
             "daily":summarize_mainland(days,grid),
             "daily_mainland_majority":stats["daily_mainland_majority"],
             "daily_depth_class_pct":stats["daily_depth_class_pct"],
+            "seasonal_threshold_cover_pct":threshold_stats["seasonal_threshold_cover_pct"],
+            "seasonal_threshold_cover_days_used":threshold_stats["seasonal_threshold_cover_days_used"],
             "snow_duration_pct":stats["snow_duration_pct"],
             "snow_duration_counts":stats["snow_duration_counts"],
             "classified_cells":stats["classified_cells"],
@@ -592,6 +639,8 @@ def main():
             "daily":payload["daily"],
             "daily_mainland_majority":payload["daily_mainland_majority"],
             "daily_depth_class_pct":payload["daily_depth_class_pct"],
+            "seasonal_threshold_cover_pct":payload["seasonal_threshold_cover_pct"],
+            "seasonal_threshold_cover_days_used":payload["seasonal_threshold_cover_days_used"],
             "snow_duration_pct":payload["snow_duration_pct"],
             "classified_cells":payload["classified_cells"],
             "mainland_majority_cells":payload["mainland_majority_cells"],
