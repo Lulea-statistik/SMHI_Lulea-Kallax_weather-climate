@@ -1193,11 +1193,18 @@ function buildSnowWeeklyProfiles(series){
   return {latestSeason,snowiestSeason,depth:profile('depth'),coverage:profile('coverage')};
 }
 
+function shortSwedishDateLabel(dateLike){
+  const d=new Date(String(dateLike).slice(0,10)+'T12:00:00Z');
+  if(Number.isNaN(d.getTime()))return String(dateLike||'');
+  const monthNames=['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec'];
+  return d.getUTCDate()+'-'+monthNames[d.getUTCMonth()];
+}
+
 function snowSeasonWeekDateLabel(week,season){
   const match=String(season||'').match(/^(\d{4})-(\d{2}|\d{4})$/);
   const startYear=match?Number(match[1]):new Date().getUTCFullYear()-1;
   const date=new Date(Date.UTC(startYear,8,1+(Number(week)-1)*7));
-  return date.toISOString().slice(0,10);
+  return shortSwedishDateLabel(date.toISOString().slice(0,10));
 }
 
 function renderSnowWeeklyProfileChart(id,rows,latestSeason,snowiestSeason,yTitle,maxY=null){
@@ -1498,7 +1505,7 @@ function renderSelectedSnowDepthClassMean(series){
   const days=[...byDay.keys()].sort((a,b)=>a-b);
   if(!days.length)return false;
   const refYear=2025;
-  const labels=days.map(day=>new Date(Date.UTC(refYear,7,1+day)).toISOString().slice(0,10));
+  const labels=days.map(day=>shortSwedishDateLabel(new Date(Date.UTC(refYear,7,1+day)).toISOString().slice(0,10)));
   destroyChart('smhiRenderedSnowDaily');
   charts.smhiRenderedSnowDaily=new Chart(canvas,{
     type:'bar',
@@ -1553,7 +1560,7 @@ async function renderSmhiRenderedSnowDaily(){
     charts.smhiRenderedSnowDaily=new Chart(el('smhiRenderedSnowDaily'),{
       type:'bar',
       data:{
-        labels:rows.map(r=>r.date),
+        labels:rows.map(r=>shortSwedishDateLabel(r.date)),
         datasets:defs.map(d=>({
           label:d.label,
           stack:'depth',
