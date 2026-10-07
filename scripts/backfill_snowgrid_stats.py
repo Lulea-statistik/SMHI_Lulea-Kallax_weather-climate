@@ -59,6 +59,7 @@ def main():
 
         stats = snow.season_cell_stats(payload.get("days", []), grid)
         payload["daily_mainland_majority"] = stats["daily_mainland_majority"]
+        payload["daily_depth_class_pct"] = stats["daily_depth_class_pct"]
         payload["snow_duration_pct"] = stats["snow_duration_pct"]
         payload["snow_duration_counts"] = stats["snow_duration_counts"]
         payload["classified_cells"] = stats["classified_cells"]
@@ -72,6 +73,7 @@ def main():
             "season": season,
             "daily": payload.get("daily", []),
             "daily_mainland_majority": payload.get("daily_mainland_majority", []),
+            "daily_depth_class_pct": payload.get("daily_depth_class_pct", []),
             "snow_duration_pct": payload.get("snow_duration_pct", {}),
             "classified_cells": payload.get("classified_cells"),
             "mainland_majority_cells": payload.get("mainland_majority_cells"),
