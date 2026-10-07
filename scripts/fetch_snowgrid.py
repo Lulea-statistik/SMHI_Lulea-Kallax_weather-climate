@@ -66,10 +66,16 @@ def load_municipality():
 
 
 def load_mainland_geometry():
-    """Use the same mainland classification already produced for the lightning page."""
-    if not LIGHTNING_GEO_PATH.exists():
+    """Load the NMD mainland polygon used for snow statistics.
+
+    This must come from geography_nmd.geojson, where mainland, islands and sea
+    are explicitly separated. The older lightning geography.geojson contains a
+    legacy mainland geometry that effectively spans most of the municipality
+    and must not be used for snow-area statistics.
+    """
+    if not NMD_GEO_PATH.exists():
         return None
-    data = json.loads(LIGHTNING_GEO_PATH.read_text(encoding="utf-8"))
+    data = json.loads(NMD_GEO_PATH.read_text(encoding="utf-8"))
     geoms = []
     for feat in data.get("features", []):
         props = feat.get("properties") or {}
