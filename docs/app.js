@@ -1187,12 +1187,19 @@ function buildSnowWeeklyProfiles(series){
   return {latestSeason,snowiestSeason,depth:profile('depth'),coverage:profile('coverage')};
 }
 
+function snowSeasonWeekDateLabel(week,season){
+  const match=String(season||'').match(/^(\d{4})-(\d{2}|\d{4})$/);
+  const startYear=match?Number(match[1]):new Date().getUTCFullYear()-1;
+  const date=new Date(Date.UTC(startYear,8,1+(Number(week)-1)*7));
+  return date.toISOString().slice(0,10);
+}
+
 function renderSnowWeeklyProfileChart(id,rows,latestSeason,snowiestSeason,yTitle,maxY=null){
   if(!el(id)||!rows.length)return;
   destroyChart(id);
   charts[id]=new Chart(el(id),{
     type:'line',
-    data:{labels:rows.map(r=>'V'+r.week),datasets:[
+    data:{labels:rows.map(r=>snowSeasonWeekDateLabel(r.week,latestSeason)),datasets:[
       {label:'P10',data:rows.map(r=>r.p10),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0},
       {label:'10–90 percentil',data:rows.map(r=>r.p90),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(209,213,219,.42)',pointRadius:0,borderWidth:0,fill:'-1'},
       {label:'P25',data:rows.map(r=>r.p25),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0},
@@ -2045,7 +2052,11 @@ function render(){
   el('snowMaxTrendText').textContent=trendRateText(snowMaxYears,snowMaxVals,'cm',snowMaxLabels[0]??null,snowMaxLabels[snowMaxLabels.length-1]??null);
 
   let snowM=DATA.snow.monthly.filter(r=>r.year>=f.from&&r.year<=f.to);
-  barChart('snowMonthly',months,aggregateMonthlyMean(snowM),'cm',MONTH_GREEN);
+  const snowMonthOrder=[8,9,10,11,12,1,2,3,4,5,6,7];
+  const snowMonthlyAll=aggregateMonthlyMean(snowM);
+  const snowMonthLabels=snowMonthOrder.map(m=>months[m-1]);
+  const snowMonthlySeasonOrder=snowMonthOrder.map(m=>snowMonthlyAll[m-1]);
+  barChart('snowMonthly',snowMonthLabels,snowMonthlySeasonOrder,'cm',MONTH_GREEN);
   const snowSeasons=DATA.snow.seasons.filter(s=>s.start_year>=f.from&&s.start_year<=f.to);
   const seasonLabels=snowSeasons.map(s=>s.label),seasonVals=snowSeasons.map(s=>s.length_days);
   const seasonYears=snowSeasons.map(s=>s.start_year);
