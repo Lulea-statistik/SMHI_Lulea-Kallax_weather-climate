@@ -58,9 +58,12 @@ def main():
         )
 
         stats = snow.season_cell_stats(payload.get("days", []), grid)
+        threshold_stats = snow.seasonal_threshold_cover(payload.get("days", []), grid)
         payload["daily"] = snow.summarize_mainland(payload.get("days", []), grid)
         payload["daily_mainland_majority"] = stats["daily_mainland_majority"]
         payload["daily_depth_class_pct"] = stats["daily_depth_class_pct"]
+        payload["seasonal_threshold_cover_pct"] = threshold_stats["seasonal_threshold_cover_pct"]
+        payload["seasonal_threshold_cover_days_used"] = threshold_stats["seasonal_threshold_cover_days_used"]
         payload["snow_duration_pct"] = stats["snow_duration_pct"]
         payload["snow_duration_counts"] = stats["snow_duration_counts"]
         payload["classified_cells"] = stats["classified_cells"]
@@ -78,6 +81,8 @@ def main():
             "daily": payload.get("daily", []),
             "daily_mainland_majority": payload.get("daily_mainland_majority", []),
             "daily_depth_class_pct": payload.get("daily_depth_class_pct", []),
+            "seasonal_threshold_cover_pct": payload.get("seasonal_threshold_cover_pct", {}),
+            "seasonal_threshold_cover_days_used": payload.get("seasonal_threshold_cover_days_used"),
             "snow_duration_pct": payload.get("snow_duration_pct", {}),
             "classified_cells": payload.get("classified_cells"),
             "mainland_touching_cells": payload.get("mainland_touching_cells"),
