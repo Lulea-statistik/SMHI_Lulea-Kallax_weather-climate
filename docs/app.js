@@ -1493,13 +1493,17 @@ function renderSelectedSnowDepthClassMean(series){
     const sy=Number(String(season.season||'').slice(0,4));
     if(sy<f.from||sy>f.to)continue;
     for(const row of (season.daily_depth_class_pct||[])){
+      if(row.qa_reliable===false)continue;
       const d=new Date(row.date+'T12:00:00Z');
       if(f.month && d.getUTCMonth()+1!==f.month)continue;
       const seasonDay=Math.floor((d-new Date(Date.UTC(sy,7,1,12)))/86400000);
       if(seasonDay<0||seasonDay>365)continue;
       if(!byDay.has(seasonDay))byDay.set(seasonDay,{n:0,sums:Object.fromEntries(defs.map(x=>[x.key,0]))});
       const g=byDay.get(seasonDay);g.n++;
-      for(const def of defs)g.sums[def.key]+=Number(row.class_pct?.[def.key]||0);
+      for(const def of defs){
+        const value=Number(row.class_pct?.[def.key]);
+        if(Number.isFinite(value))g.sums[def.key]+=value;
+      }
     }
   }
   const days=[...byDay.keys()].sort((a,b)=>a-b);
