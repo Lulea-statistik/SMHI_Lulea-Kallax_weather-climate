@@ -1,0 +1,32 @@
+# Klimat och väder i Luleå Kommun
+
+> Interaktiv rapport om klimat och väder i Luleå kommun, med huvudsaklig källa SMHI Kallax station 162860.
+
+## Rapport
+- Webbadress: https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/
+- Språk: svenska
+- Geografi: Luleå kommun, Norrbottens län, Sverige
+- Huvudkälla: SMHI:s öppna observationsdata, Kallax station 162860
+- Uppdatering: löpande/dagligen för aktuella observationsserier där källan medger det
+- Strukturerad rapportdata: https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/dashboard_data.json
+
+## Innehåll
+Rapporten innehåller interaktiva analyser av:
+- temperatur och klimatperioder
+- nederbörd och nederbördstyp
+- observerade väderfenomen
+- vind och vindriktning
+- sikt och luftfuktighet
+- solskenstid och solenergi
+- snödjup, snötäcksäsong och snötäckeskartor
+- nollgenomgångar kring 0 °C
+- vegetationsperiod
+- blixt
+- havsis
+- algförekomst
+
+## Tolkning
+Enskilda år och säsonger kan avvika kraftigt från klimatets långsiktiga utveckling. För klimatjämförelser bör längre tidsperioder användas. Vissa kart- och snöprodukter använder kompletterande bearbetning eller andra öppna datakällor; metod och källa anges i respektive avsnitt. Metodbyten ska beaktas vid jämförelser över tid.
+
+## Källhänvisning
+Använd i första hand käll- och metodinformationen i respektive diagram eller avsnitt. Huvudkällan är SMHI.
