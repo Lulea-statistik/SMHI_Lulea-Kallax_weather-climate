@@ -61,7 +61,7 @@
 
   <link rel="icon" type="image/png" href="favicon.png?v=3">
 
-  <link rel="stylesheet" href="style.css?v=40">
+  <link rel="stylesheet" href="style.css?v=41">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -92,7 +92,6 @@
   <button data-page="vegetation">Vegetationsperiod</button>
   <button data-page="lightning">Blixt</button>
   <button data-page="seaice">Havsis</button>
-  <button data-page="algae">Alger</button>
   <button data-page="dateweather">Väder efter datum</button>
   <button data-page="data">Data</button>
 </nav>
@@ -105,7 +104,7 @@
   <section class="filters" id="globalFilters">
     <label class="filter-select year-filter">Från år<select id="yearFrom"></select></label>
     <label class="filter-select year-filter">Till år<select id="yearTo"></select></label>
-    <label class="filter-select">Månad<select id="month">
+    <label class="filter-select" id="globalMonthFilter">Månad<select id="month">
       <option value="0">Alla månader</option><option value="1">Januari</option><option value="2">Februari</option>
       <option value="3">Mars</option><option value="4">April</option><option value="5">Maj</option><option value="6">Juni</option>
       <option value="7">Juli</option><option value="8">Augusti</option><option value="9">September</option><option value="10">Oktober</option>
@@ -372,5 +371,5 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
-<script src="app.js?v=39"></script>
+<script src="app.js?v=40"></script>
 </body></html>
