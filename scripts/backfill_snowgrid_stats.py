@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Backfill derived GridClim snow statistics from already generated season files."""
+"""Backfill derived GridClim snow statistics, including aligned snow-depth classes, from generated season files."""
 
 from __future__ import annotations
 
