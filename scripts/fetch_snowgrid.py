@@ -446,17 +446,19 @@ def season_cell_stats(days, grid):
 
     daily_mainland = []
     daily_depth_classes = []
+    # Mutually exclusive bins aligned with the cumulative snow-cover
+    # thresholds used by the seasonal chart. These bins can therefore be
+    # stacked without double-counting mainland area.
     depth_classes = [
-        ("Barmark", lambda v: v < 1),
-        ("1–2 cm", lambda v: 1 <= v < 3),
-        ("3–9 cm", lambda v: 3 <= v < 10),
-        ("10–29 cm", lambda v: 10 <= v < 30),
-        ("30–49 cm", lambda v: 30 <= v < 50),
+        ("Barmark (0 cm)", lambda v: v < 1),
+        ("1–4 cm", lambda v: 1 <= v < 5),
+        ("5–9 cm", lambda v: 5 <= v < 10),
+        ("10–24 cm", lambda v: 10 <= v < 25),
+        ("25–49 cm", lambda v: 25 <= v < 50),
         ("50–74 cm", lambda v: 50 <= v < 75),
         ("75–99 cm", lambda v: 75 <= v < 100),
-        ("100–149 cm", lambda v: 100 <= v < 150),
-        ("150–199 cm", lambda v: 150 <= v < 200),
-        ("200+ cm", lambda v: v >= 200),
+        ("100–124 cm", lambda v: 100 <= v < 125),
+        ("≥125 cm", lambda v: v >= 125),
     ]
     for d in days:
         vals = d.get("values_cm") or []
