@@ -1246,10 +1246,8 @@ async function refreshSnowMapSeasonOptions(){
     const idx=await loadSnowGridIndex();
     const seasons=(idx.seasons||[]).slice().sort((a,b)=>b.season.localeCompare(a.season));
     select.innerHTML=seasons.map(s=>{
-      const recent=s.source_type==='observations_interpolated';
       const partial=s.last_date && !String(s.last_date).endsWith('-07-31');
-      const method=recent?' · interpolerat':' · GridClim';
-      return '<option value="'+s.season+'">'+s.season.replace('-', '/')+method+(partial?' · ofullständig':'')+'</option>';
+      return '<option value="'+s.season+'">'+s.season.replace('-', '/')+(partial?' · ofullständig':'')+'</option>';
     }).join('');
     if(seasons.length)select.value=seasons[0].season;
   }else{
@@ -1349,9 +1347,9 @@ function updateSnowMapCopy(){
   if(el('snowMapMeanHint'))el('snowMapMeanHint').textContent=grid
     ?'Säsongerna visas efter varandra. Linjerna visar analyserat medel- och maxsnödjup inom Luleå kommun.'
     :'Medelvärde för tillgängliga stationer inom Luleå kommun; närliggande stationer används om kommunstationer saknas.';
-  if(el('snowMapCoverageTitle'))el('snowMapCoverageTitle').textContent=grid?'Andel fastlandsyta med snötäcke per snösäsong':'Andel stationer med mätbart snötäcke';
+  if(el('snowMapCoverageTitle'))el('snowMapCoverageTitle').textContent=grid?'Andel fastlandsyta med olika snödjup per snösäsong':'Andel stationer med mätbart snötäcke';
   if(el('snowMapCoverageHint'))el('snowMapCoverageHint').textContent=grid
-    ?'Andel analyserad fastlandsyta med minst 1 cm snödjup enligt GridClim. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts. Den senare stationsbaserade interpolationen visas inte eftersom den inte är direkt jämförbar för arealandelar.'
+    ?'Visar säsongsmedel för hur stor andel av Luleås fastland som haft minst 1, 5, 10, 25, 50, 75, 100 respektive 125 cm snödjup. Endast GridClim-perioden visas. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts.'
     :'Andel rapporterande stationer med minst 1 cm snödjup.';
 }
 
@@ -1373,14 +1371,14 @@ async function renderSnowMapCharts(){
         }))};
       const t=buildSnowGridTimeline(selectedSeries);
       const sourceBySeason=new Map((selectedSeries.seasons||[]).map(s=>[s.season,s.source_type==='observations_interpolated'?'Interpolerat från stationsobservationer':'GridClim']));
+      const meanAll=t.labels.map((_,i)=>t.meanGrid[i]??t.meanRecent[i]??null);
+      const maxAll=t.labels.map((_,i)=>t.maxGrid[i]??t.maxRecent[i]??null);
       destroyChart('snowMapMean');
       charts.snowMapMean=new Chart(el('snowMapMean'),{
         type:'line',
         data:{labels:t.labels,datasets:[
-          {label:'Medelsnödjup · GridClim',data:t.meanGrid,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false},
-          {label:'Maxsnödjup · GridClim',data:t.maxGrid,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,tension:.08,spanGaps:false},
-          {label:'Medelsnödjup · interpolerat',data:t.meanRecent,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,borderDash:[6,4],tension:.12,spanGaps:false},
-          {label:'Maxsnödjup · interpolerat',data:t.maxRecent,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,borderDash:[6,4],tension:.08,spanGaps:false}
+          {label:'Medelsnödjup',data:meanAll,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false},
+          {label:'Maxsnödjup',data:maxAll,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,tension:.08,spanGaps:false}
         ]},
         options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
           plugins:{legend:{display:true},tooltip:{callbacks:{
@@ -1469,6 +1467,9 @@ function renderSelectedSnowDepthClassMean(series){
   const canvas=el('smhiRenderedSnowDaily');
   if(!canvas)return false;
   const f=currentFilters();
+  if(el('smhiRenderedSnowDailyTitle')){
+    el('smhiRenderedSnowDailyTitle').textContent='Genomsnittlig daglig snödjupsfördelning '+f.from+'–'+f.to;
+  }
   const defs=[
     {key:'Barmark',label:'Barmark',color:'#71A58F'},
     {key:'1–2 cm',label:'1–2 cm',color:'#b7d1c6'},
