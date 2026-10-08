@@ -1349,7 +1349,7 @@ function updateSnowMapCopy(){
     :'Medelvärde för tillgängliga stationer inom Luleå kommun; närliggande stationer används om kommunstationer saknas.';
   if(el('snowMapCoverageTitle'))el('snowMapCoverageTitle').textContent=grid?'Andel fastlandsyta med olika snödjup per snösäsong':'Andel stationer med mätbart snötäcke';
   if(el('snowMapCoverageHint'))el('snowMapCoverageHint').textContent=grid
-    ?'Visar säsongsmedel för hur stor andel av Luleås fastland som haft minst 1, 5, 10, 25, 50, 75, 100 respektive 125 cm snödjup. Endast GridClim-perioden visas. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts.'
+    ?'Visar säsongsmedel för hur Luleås fastland fördelas mellan snödjupsklasserna barmark (0 cm), 1–4, 5–9, 10–24, 25–49, 50–74, 75–99, 100–124 och ≥125 cm. Staplarna är 100 % stackade. Endast GridClim-perioden visas. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts.'
     :'Andel rapporterande stationer med minst 1 cm snödjup.';
 }
 
@@ -1396,25 +1396,29 @@ async function renderSnowMapCharts(){
       const gridclimSeasons=(selectedSeries.seasons||[])
         .filter(s=>s.source_type!=='observations_interpolated')
         .filter(s=>s.seasonal_threshold_cover_pct && Object.keys(s.seasonal_threshold_cover_pct).length);
-      const thresholdDefs=[
-        {key:'ge_1',label:'≥1 cm'},
-        {key:'ge_5',label:'≥5 cm'},
-        {key:'ge_10',label:'≥10 cm'},
-        {key:'ge_25',label:'≥25 cm'},
-        {key:'ge_50',label:'≥50 cm'},
-        {key:'ge_75',label:'≥75 cm'},
-        {key:'ge_100',label:'≥100 cm'},
-        {key:'ge_125',label:'≥125 cm'}
+      const coverageDefs=[
+        {label:'Barmark (0 cm)',color:'#71A58F',value:s=>100-Number(s.seasonal_threshold_cover_pct?.ge_1||0)},
+        {label:'1–4 cm',color:'#b7d1c6',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_1)-Number(s.seasonal_threshold_cover_pct?.ge_5)},
+        {label:'5–9 cm',color:'#FFFFFF',border:'#cbd5e1',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_5)-Number(s.seasonal_threshold_cover_pct?.ge_10)},
+        {label:'10–24 cm',color:'#DEEBF7',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_10)-Number(s.seasonal_threshold_cover_pct?.ge_25)},
+        {label:'25–49 cm',color:'#9ED0F3',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_25)-Number(s.seasonal_threshold_cover_pct?.ge_50)},
+        {label:'50–74 cm',color:'#3B9DDC',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_50)-Number(s.seasonal_threshold_cover_pct?.ge_75)},
+        {label:'75–99 cm',color:'#3874B9',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_75)-Number(s.seasonal_threshold_cover_pct?.ge_100)},
+        {label:'100–124 cm',color:'#8C96C6',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_100)-Number(s.seasonal_threshold_cover_pct?.ge_125)},
+        {label:'≥125 cm',color:'#810F7C',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_125)}
       ];
       const coverageLabels=gridclimSeasons.map(s=>String(s.season||'').replace('-', '/'));
-      const coverageDatasets=thresholdDefs.map(def=>({
+      const coverageDatasets=coverageDefs.map(def=>({
         label:def.label,
+        stack:'depth',
         data:gridclimSeasons.map(s=>{
-          const v=Number(s.seasonal_threshold_cover_pct?.[def.key]);
-          return Number.isFinite(v)?v:null;
+          const v=def.value(s);
+          return Number.isFinite(v)?Math.max(0,v):null;
         }),
-        borderWidth:0,
-        borderRadius:2,
+        backgroundColor:def.color,
+        borderColor:def.border||def.color,
+        borderWidth:def.border?0.5:0,
+        borderRadius:0,
         categoryPercentage:.82,
         barPercentage:.9
       }));
@@ -1436,8 +1440,8 @@ async function renderSnowMapCharts(){
             }}
           },
           scales:{
-            x:{grid:{display:false},title:{display:true,text:'snösäsong'},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},
-            y:{min:0,max:100,title:{display:true,text:'genomsnittlig andel fastlandsyta (%)'},ticks:{callback:v=>v+' %'}}
+            x:{stacked:true,grid:{display:false},title:{display:true,text:'snösäsong'},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},
+            y:{stacked:true,min:0,max:100,title:{display:true,text:'genomsnittlig andel fastlandsyta (%)'},ticks:{callback:v=>v+' %'}}
           }
         }
       });
@@ -1471,16 +1475,15 @@ function renderSelectedSnowDepthClassMean(series){
     el('smhiRenderedSnowDailyTitle').textContent='Genomsnittlig daglig snödjupsfördelning '+f.from+'–'+f.to;
   }
   const defs=[
-    {key:'Barmark',label:'Barmark',color:'#71A58F'},
-    {key:'1–2 cm',label:'1–2 cm',color:'#b7d1c6'},
-    {key:'3–9 cm',label:'3–9 cm',color:'#FFFFFF',border:'#cbd5e1'},
-    {key:'10–29 cm',label:'10–29 cm',color:'#DEEBF7'},
-    {key:'30–49 cm',label:'30–49 cm',color:'#9ED0F3'},
+    {key:'Barmark (0 cm)',label:'Barmark (0 cm)',color:'#71A58F'},
+    {key:'1–4 cm',label:'1–4 cm',color:'#b7d1c6'},
+    {key:'5–9 cm',label:'5–9 cm',color:'#FFFFFF',border:'#cbd5e1'},
+    {key:'10–24 cm',label:'10–24 cm',color:'#DEEBF7'},
+    {key:'25–49 cm',label:'25–49 cm',color:'#9ED0F3'},
     {key:'50–74 cm',label:'50–74 cm',color:'#3B9DDC'},
     {key:'75–99 cm',label:'75–99 cm',color:'#3874B9'},
-    {key:'100–149 cm',label:'100–149 cm',color:'#8C96C6'},
-    {key:'150–199 cm',label:'150–199 cm',color:'#8C6BB1'},
-    {key:'200+ cm',label:'200+ cm',color:'#810F7C'}
+    {key:'100–124 cm',label:'100–124 cm',color:'#8C96C6'},
+    {key:'≥125 cm',label:'≥125 cm',color:'#810F7C'}
   ];
   const byDay=new Map();
   for(const season of (series?.seasons||[])){
