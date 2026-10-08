@@ -1349,7 +1349,7 @@ function updateSnowMapCopy(){
     :'Medelvärde för tillgängliga stationer inom Luleå kommun; närliggande stationer används om kommunstationer saknas.';
   if(el('snowMapCoverageTitle'))el('snowMapCoverageTitle').textContent=grid?'Andel fastlandsyta med olika snödjup per snösäsong':'Andel stationer med mätbart snötäcke';
   if(el('snowMapCoverageHint'))el('snowMapCoverageHint').textContent=grid
-    ?'Visar säsongsmedel för hur Luleås fastland fördelas mellan snödjupsklasserna barmark (0 cm), 1–4, 5–9, 10–24, 25–49, 50–74, 75–99, 100–124 och ≥125 cm. Staplarna är 100 % stackade. Endast GridClim-perioden visas. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts.'
+    ?'Visar hur den snötäckta delen av Luleås fastland fördelas mellan snödjupsklasserna 1–4, 5–9, 10–24, 25–49, 50–74, 75–99, 100–124 och ≥125 cm. Barmark ingår inte; varje säsongs stapel normaliseras till 100 % av den snötäckta ytan. Endast GridClim-perioden visas. Kustceller viktas efter fastlandsandel och dagar med mindre än 80 % giltig fastlandstäckning utesluts.'
     :'Andel rapporterande stationer med minst 1 cm snödjup.';
 }
 
@@ -1397,7 +1397,6 @@ async function renderSnowMapCharts(){
         .filter(s=>s.source_type!=='observations_interpolated')
         .filter(s=>s.seasonal_threshold_cover_pct && Object.keys(s.seasonal_threshold_cover_pct).length);
       const coverageDefs=[
-        {label:'Barmark (0 cm)',color:'#71A58F',value:s=>100-Number(s.seasonal_threshold_cover_pct?.ge_1||0)},
         {label:'1–4 cm',color:'#b7d1c6',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_1)-Number(s.seasonal_threshold_cover_pct?.ge_5)},
         {label:'5–9 cm',color:'#FFFFFF',border:'#cbd5e1',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_5)-Number(s.seasonal_threshold_cover_pct?.ge_10)},
         {label:'10–24 cm',color:'#DEEBF7',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_10)-Number(s.seasonal_threshold_cover_pct?.ge_25)},
@@ -1412,8 +1411,11 @@ async function renderSnowMapCharts(){
         label:def.label,
         stack:'depth',
         data:gridclimSeasons.map(s=>{
+          const snowShare=Number(s.seasonal_threshold_cover_pct?.ge_1);
           const v=def.value(s);
-          return Number.isFinite(v)?Math.max(0,v):null;
+          return Number.isFinite(v)&&Number.isFinite(snowShare)&&snowShare>0
+            ?Math.max(0,100*v/snowShare)
+            :null;
         }),
         backgroundColor:def.color,
         borderColor:def.border||def.color,
