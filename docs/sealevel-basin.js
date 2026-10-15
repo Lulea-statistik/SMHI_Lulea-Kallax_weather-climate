@@ -9,12 +9,14 @@ function render(){
  const series=valid(),frequency=$('basinInterval').value;
  const start=$('basinStart').value,end=$('basinEnd').value;
  const chosen=series.filter(s=>$('basinStation'+s.id)?.checked);
+ const ref=series.find(s=>String(s.id)===$('basinReference').value);
+ const refMap=new Map((ref?.[frequency]||[]).map(r=>[r.time,r.mean_cm]));
  const keys=[...new Set(chosen.flatMap(s=>(s[frequency]||[]).map(r=>r.time).filter(t=>t>=start&&t<=end)))].sort();
- chart('basinHistory','line',keys,chosen.map((s,i)=>{let map=new Map(s[frequency].map(r=>[r.time,r.mean_cm]));return {label:s.name,data:keys.map(k=>map.get(k)??null),pointRadius:0,borderWidth:1.5,spanGaps:false,borderColor:colors[series.indexOf(s)%colors.length]};}),'cm RH 2000');
+ chart('basinHistory','line',keys,chosen.map((s,i)=>{let map=new Map(s[frequency].map(r=>[r.time,r.mean_cm]));return {label:s.name,data:keys.map(k=>map.has(k)&&refMap.has(k)?+(map.get(k)-refMap.get(k)).toFixed(2):null),pointRadius:0,borderWidth:1.5,spanGaps:false,borderColor:colors[series.indexOf(s)%colors.length]};}),'cm relativt '+(ref?.name||'referensstation'));
  const time=$('basinMoment').value;
  const rows=series.map(s=>{let r=s.daily.find(x=>x.time===time);return {s,r};});
  chart('basinProfile','line',rows.map(x=>x.s.name),[{label:'Dygnsmedel, vald dag',data:rows.map(x=>x.r?.mean_cm??null),borderColor:'#2563eb',pointRadius:5,spanGaps:false}], 'cm RH 2000');
- $('basinStatus').textContent='RH 2000 · kvalitetskod G · UTC. Bassängprofilen visar uppmätta stationsvärden, inte kontinuerlig vattenyta. Saknade värden sammanbinds inte.';
+ $('basinStatus').textContent='Tidsserie: skillnad i cm mot '+(ref?.name||'referensstation')+' vid samma datum (0 cm för referensstationen). RH 2000 · G · UTC. Saknade samtidiga värden ger luckor. Bassängprofilen visar absoluta RH 2000-värden.';
  const years=[...new Set(series.flatMap(s=>s.annual.map(x=>x.year)))].sort();
  chart('basinExtremes','line',years.map(String),chosen.flatMap(s=>['min_cm','max_cm'].map((metric,j)=>{const d=new Map(s.annual.map(r=>[r.year,(r.coverage_pct>=90?r[metric]:null)]));return {label:s.name+(j?' max':' min'),data:years.map(y=>d.get(y)??null),borderColor:colors[series.indexOf(s)%colors.length],borderDash:j?[]:[5,4],pointRadius:2,spanGaps:false};})),'cm RH 2000');
 }
@@ -23,6 +25,9 @@ async function init(){
  try{
  const response=await fetch('sealevel/basin.json',{cache:'no-store'});if(!response.ok)throw Error('Datakörningen behöver köras innan bassängdiagrammen visas');
  basin=await response.json();let stations=valid();if(!stations.length)throw Error('Inga stationsdata');
+ $('basinReference').innerHTML=stations.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('');
+ $('basinReference').value=String(stations.find(s=>s.id===2056)?.id||stations[0].id);
+ $('basinReference').addEventListener('change',render);
  $('basinStationList').innerHTML=stations.map(s=>'<label style="display:inline-flex;gap:5px;align-items:center;margin:5px"><input type="checkbox" id="basinStation'+s.id+'" checked> '+s.name+'</label>').join(' ');
  const all=stations.flatMap(s=>s.daily.map(r=>r.time)).sort(),latest=all.at(-1);
  $('basinStart').value=latest.slice(0,4)+'-01-01';$('basinEnd').value=latest;
