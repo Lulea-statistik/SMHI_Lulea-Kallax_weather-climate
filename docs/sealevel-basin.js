@@ -29,6 +29,16 @@ function intervalRows(s,frequency){
 }
 const valid=()=>basin.stations.filter(s=>s.annual?.length);
 function chart(id,type,labels,series,ylabel){if(graphs[id])graphs[id].destroy();graphs[id]=new Chart($(id),{type,data:{labels,datasets:series},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:true}},scales:{x:{ticks:{maxTicksLimit:11}},y:{title:{display:true,text:ylabel}}}}});}
+function extremeTrend(rows,key){
+ const n=rows.length;
+ if(n<3)return {values:rows.map(()=>null),slope:null};
+ const meanX=rows.reduce((a,r)=>a+r.year,0)/n;
+ const meanY=rows.reduce((a,r)=>a+r[key],0)/n;
+ const denominator=rows.reduce((a,r)=>a+(r.year-meanX)**2,0);
+ if(!denominator)return {values:rows.map(()=>null),slope:null};
+ const slope=rows.reduce((a,r)=>a+(r.year-meanX)*(r[key]-meanY),0)/denominator;
+ return {values:rows.map(r=>+(meanY+slope*(r.year-meanX)).toFixed(2)),slope};
+}
 function renderProfile(){
  if(!basin)return;
  const series=valid(),frequency=$('basinInterval').value;
@@ -60,10 +70,15 @@ function render(){
    const annual=extremeStation.annual.filter(r=>r.coverage_pct>=90);
    const keys=annual.map(r=>String(r.year));
    const color=stationColor(extremeStation);
+   const minTrend=extremeTrend(annual,'min_cm'),maxTrend=extremeTrend(annual,'max_cm');
    chart('basinExtremes','line',keys,[
      {label:'Årsminimum',data:annual.map(r=>r.min_cm),borderColor:color,borderDash:[5,4],pointRadius:3,spanGaps:false},
-     {label:'Årsmaximum',data:annual.map(r=>r.max_cm),borderColor:color,pointRadius:3,spanGaps:false}
+     {label:'Årsmaximum',data:annual.map(r=>r.max_cm),borderColor:color,pointRadius:3,spanGaps:false},
+     {label:'Linjär trend – minimum',data:minTrend.values,borderColor:'#dc2626',borderWidth:2,pointRadius:0,borderDash:[6,4],spanGaps:false},
+     {label:'Linjär trend – maximum',data:maxTrend.values,borderColor:'#dc2626',borderWidth:2,pointRadius:0,spanGaps:false}
    ],'cm RH 2000');
+   const trendText=(t)=>t.slope===null?'för få år':(t.slope*10>=0?'+':'')+(t.slope*10).toLocaleString('sv-SE',{maximumFractionDigits:2})+' cm/10 år';
+   $('basinExtremeTrend').textContent='Linjär trend '+extremeStation.name+' ('+(annual.length?annual[0].year+'–'+annual.at(-1).year:'ingen komplett period')+'): minimum '+trendText(minTrend)+' · maximum '+trendText(maxTrend)+'. Baserat på '+annual.length+' år med minst 90 % godkänd datatäckning.';
  }
 
 }
