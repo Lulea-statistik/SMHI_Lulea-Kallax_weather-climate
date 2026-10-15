@@ -2504,6 +2504,8 @@ el('month').addEventListener('change',()=>{
     showSnowMapDate(0);
   }
 });
+el('precipTimelineMode').addEventListener('change',render);
+el('precipTimelineMin').addEventListener('change',render);
 el('tempMetric').addEventListener('change',render);
 el('weatherCode').addEventListener('change',render);
 el('resetFilters').addEventListener('click',()=>{
