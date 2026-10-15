@@ -2017,7 +2017,7 @@ function render(){
     type:'bar',
     data:{labels,datasets:[{label:'Månadsnederbörd',data:values,backgroundColor:ticks.map(k=>PRECIP_MONTH_COLORS[k%12]),borderWidth:0,categoryPercentage:0.95,barPercentage:0.95}]},
     options:{responsive:true,maintainAspectRatio:false,animation:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Nederbörd: '+c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:1})+' mm'}}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Nederbörd: '+c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:1})+' mm',afterLabel:c=>{if(selectedPrecipStation!=='municipal')return '';const k=ticks[c.dataIndex];const row=precipSeries.find(r=>r.year===Math.floor(k/12)&&r.month===k%12+1);return row?'Antal stationer: '+row.stations:'';}}}},
       scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,minRotation:0,callback:function(value,index){
         const k=ticks[index];
         return (timelineMode==='minyear'||timelineMode==='maxyear')?String(Math.floor(k/12)):(k%12===0&&Math.floor(k/12)%5===0?String(Math.floor(k/12)):'');
