@@ -55,8 +55,17 @@ function render(){
  chart('basinHistory','line',keys,chosen.map((s,i)=>{let map=new Map(intervalRows(s,frequency).map(r=>[r.time,r.mean_cm]));return {label:s.name,data:keys.map(k=>map.has(k)&&refMap.has(k)?+(map.get(k)-refMap.get(k)).toFixed(2):null),pointRadius:0,borderWidth:1.5,spanGaps:false,borderColor:stationColor(s)};}),'cm relativt '+(ref?.name||'referensstation'));
  renderProfile();
  $('basinStatus').textContent='Tidsserie: skillnad i cm mot '+(ref?.name||'referensstation')+' vid samma datum (0 cm för referensstationen). RH 2000 · G · UTC. Saknade samtidiga värden ger luckor. Bassängprofilen visar absoluta RH 2000-värden.';
- const years=[...new Set(series.flatMap(s=>s.annual.map(x=>x.year)))].sort();
- chart('basinExtremes','line',years.map(String),chosen.flatMap(s=>['min_cm','max_cm'].map((metric,j)=>{const d=new Map(s.annual.map(r=>[r.year,(r.coverage_pct>=90?r[metric]:null)]));return {label:s.name+(j?' max':' min'),data:years.map(y=>d.get(y)??null),borderColor:stationColor(s),borderDash:j?[]:[5,4],pointRadius:2,spanGaps:false};})),'cm RH 2000');
+ const extremeStation=series.find(s=>String(s.id)===$('basinExtremeStation').value);
+ if(extremeStation){
+   const annual=extremeStation.annual.filter(r=>r.coverage_pct>=90);
+   const keys=annual.map(r=>String(r.year));
+   const color=stationColor(extremeStation);
+   chart('basinExtremes','line',keys,[
+     {label:'Årsminimum',data:annual.map(r=>r.min_cm),borderColor:color,borderDash:[5,4],pointRadius:3,spanGaps:false},
+     {label:'Årsmaximum',data:annual.map(r=>r.max_cm),borderColor:color,pointRadius:3,spanGaps:false}
+   ],'cm RH 2000');
+ }
+
 }
 async function init(){
  if(basin||!$('basinHistory'))return;
@@ -66,6 +75,9 @@ async function init(){
  $('basinReference').innerHTML=stations.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('');
  $('basinReference').value=String(stations.find(s=>s.id===2056)?.id||stations[0].id);
  $('basinReference').addEventListener('change',render);
+ $('basinExtremeStation').innerHTML=stations.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('');
+ $('basinExtremeStation').value=String(stations.find(s=>s.id===2056)?.id||stations[0].id);
+ $('basinExtremeStation').addEventListener('change',render);
  $('basinStationList').innerHTML=stations.map(s=>'<label style="display:inline-flex;gap:5px;align-items:center;margin:5px"><input type="checkbox" id="basinStation'+s.id+'" checked><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+stationColor(s)+'"></span> '+s.name+'</label>').join(' ');
  const all=stations.flatMap(s=>s.daily.map(r=>r.time)).sort(),latest=all.at(-1);
  $('basinStart').value=latest.slice(0,4)+'-01-01';$('basinEnd').value=latest;
