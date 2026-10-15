@@ -1967,27 +1967,43 @@ function render(){
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>Math.round(c.parsed.y)+' mm'}}},
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'mm'},ticks:{precision:0}}}}});
 
-  // A continuous calendar timeline: never sort by month alone or turn gaps into zero rainfall.
+  // Monthly data retain chronological order; annual extremes mean the lowest/highest MONTH in each year.
   const timelineRows=DATA.precipitation.monthly_total
     .filter(r=>inYears(r,f)&&Number.isInteger(Number(r.year))&&Number(r.month)>=1&&Number(r.month)<=12)
-    .sort((a,b)=>Number(a.year)-Number(b.year)||Number(a.month)-Number(b.month));
-  const timelineByMonth=new Map(timelineRows.map(r=>[Number(r.year)*12+Number(r.month)-1,Number(r.sum)]));
-  const firstMonth=timelineRows.length?Number(timelineRows[0].year)*12+Number(timelineRows[0].month)-1:null;
-  const lastRow=timelineRows[timelineRows.length-1];
-  const lastMonth=lastRow?Number(lastRow.year)*12+Number(lastRow.month)-1:null;
-  const timelineTicks=firstMonth===null?[]:Array.from({length:lastMonth-firstMonth+1},(_,i)=>firstMonth+i);
-  const timelineLabels=timelineTicks.map(k=>months[k%12]+' '+Math.floor(k/12));
-  const timelineValues=timelineTicks.map(k=>timelineByMonth.has(k)&&Number.isFinite(timelineByMonth.get(k))?timelineByMonth.get(k):null);
-  const timelineWrap=el('precipTimelineCanvasWrap');
-  if(timelineWrap){timelineWrap.style.width=Math.max(900,timelineTicks.length*10)+'px';timelineWrap.style.height='250px';}
+    .map(r=>({...r,year:Number(r.year),month:Number(r.month),sum:r.sum==null?null:Number(r.sum)}))
+    .sort((a,b)=>a.year-b.year||a.month-b.month);
+  const timelineMode=el('precipTimelineMode')?.value||'all';
+  const threshold=Math.max(0,Number(el('precipTimelineMin')?.value)||0);
+  const minLabel=el('precipTimelineMinLabel');
+  if(minLabel)minLabel.hidden=timelineMode!=='threshold';
+  const byMonth=new Map(timelineRows.map(r=>[r.year*12+r.month-1,Number.isFinite(r.sum)?r.sum:null]));
+  const first=timelineRows.length?timelineRows[0].year*12+timelineRows[0].month-1:null;
+  const last=timelineRows.length?timelineRows[timelineRows.length-1].year*12+timelineRows[timelineRows.length-1].month-1:null;
+  let ticks=first===null?[]:Array.from({length:last-first+1},(_,i)=>first+i);
+  let values=ticks.map(k=>byMonth.get(k)??null);
+  if(timelineMode==='threshold')values=values.map(v=>v!==null&&v>=threshold?v:null);
+  if(timelineMode==='minyear'||timelineMode==='maxyear'){
+    const annual=new Map();
+    timelineRows.forEach(r=>{
+      if(r.sum===null||!Number.isFinite(r.sum))return;
+      const prev=annual.get(r.year);
+      if(!prev||(timelineMode==='minyear'?r.sum<prev.sum:r.sum>prev.sum))annual.set(r.year,r);
+    });
+    const selected=[...annual.values()].sort((a,b)=>a.year-b.year);
+    ticks=selected.map(r=>r.year*12+r.month-1);
+    values=selected.map(r=>r.sum);
+  }
+  const labels=ticks.map(k=>months[k%12]+' '+Math.floor(k/12));
   destroyChart('precipTimeline');
   charts.precipTimeline=new Chart(el('precipTimeline'),{
     type:'bar',
-    data:{labels:timelineLabels,datasets:[{label:'Månadsnederbörd',data:timelineValues,backgroundColor:PRECIP_DARK_BLUE,borderWidth:0,categoryPercentage:0.94,barPercentage:0.9}]},
-    options:{responsive:true,maintainAspectRatio:false,animation:false,devicePixelRatio:1,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Nederbörd: '+(c.parsed.y==null?'saknas':c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:1})+' mm')}}},
-      scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,minRotation:0,callback:function(value,index){const k=timelineTicks[index];return k%12===0?String(Math.floor(k/12)):'';}}},
-        y:{beginAtZero:true,title:{display:true,text:'Nederbörd (mm)'},ticks:{precision:0}}}
+    data:{labels,datasets:[{label:'Månadsnederbörd',data:values,backgroundColor:PRECIP_DARK_BLUE,borderWidth:0,categoryPercentage:0.95,barPercentage:0.95}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Nederbörd: '+c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:1})+' mm'}}},
+      scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,minRotation:0,callback:function(value,index){
+        const k=ticks[index];
+        return (timelineMode==='minyear'||timelineMode==='maxyear')?String(Math.floor(k/12)):(k%12===0&&Math.floor(k/12)%5===0?String(Math.floor(k/12)):'');
+      }}},y:{beginAtZero:true,title:{display:true,text:'Nederbörd (mm)'},ticks:{precision:0}}}
     }
   });
 
