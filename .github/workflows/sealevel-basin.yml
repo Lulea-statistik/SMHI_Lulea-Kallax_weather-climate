@@ -1,5 +1,9 @@
 name: Update Gulf of Bothnia water levels
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sealevel-basin.yml'
   workflow_dispatch:
   schedule:
     - cron: '35 6 * * *'
