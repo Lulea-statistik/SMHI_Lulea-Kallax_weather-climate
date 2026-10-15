@@ -418,6 +418,25 @@
     <div class="chart-card full"><h2>Årsvis medel-, minimi- och maximivattenstånd</h2><p class="hint">Baserat på SMHI:s godkända observationer (G). År med ofullständig täckning är inte jämförbara med hela år.</p><div style="position:relative;height:350px"><canvas id="seaLevelAnnual"></canvas></div></div>
     <div class="chart-card full"><h2>Månadsvariation</h2><p class="hint">Medelvärde av godkända observationer för respektive kalendermånad inom valt årsintervall.</p><div style="position:relative;height:300px"><canvas id="seaLevelSeason"></canvas></div></div>
     <div class="chart-card full">
+      <h2>Bassängsvängningar – Bottenhavet och Bottenviken</h2>
+      <p class="hint">Jämför samtidiga vattenstånd längs kusten från Forsmark till Strömören. Hypotesen om motfas mellan söder och norr behöver prövas med mätdata och tidsförskjutningar; motsatt nivå är inte ett generellt samband.</p>
+      <p class="hint" id="basinStatus">Väntar på stationsdata från SMHI.</p>
+      <div id="basinStationList"></div>
+      <div class="page-tools"><label>Från datum <input type="date" id="basinStart"></label><label>Till datum <input type="date" id="basinEnd"></label><label>Upplösning <select id="basinInterval"><option value="daily">Dygn</option><option value="monthly">Månad</option></select></label></div>
+      <div style="position:relative;height:360px"><canvas id="basinHistory"></canvas></div>
+    </div>
+    <div class="chart-card full">
+      <h2>Bassängprofil – syd till nord</h2>
+      <p class="hint">Profilen visar stationsvärden på en utvald dag från söder mot norr. Linjen är schematisk och är inte en interpolerad eller fysiskt uppmätt havsyta.</p>
+      <div class="page-tools"><label>Vald dag <input type="date" id="basinMoment"></label></div>
+      <div style="position:relative;height:330px"><canvas id="basinProfile"></canvas></div>
+    </div>
+    <div class="chart-card full">
+      <h2>Årsvisa vattenståndsextremer längs kusten</h2>
+      <p class="hint">Heldragna linjer visar årsmaximum och streckade årsminimum. Endast år med minst 90 procent godkända timobservationer visas. Extremer påverkas av väder, havsnivå, landhöjning och mätförhållanden. Förändringar bevisar inte fler stormar.</p>
+      <div style="position:relative;height:340px"><canvas id="basinExtremes"></canvas></div>
+    </div>
+    <div class="chart-card full">
       <h2>Om tolkningen av vattenstånd</h2>
       <p>Vattenståndet i RH 2000 är en höjd över eller under en fast referensnivå. Det är inte samma sak som vattenstånd relativt årets beräknade medelvattenstånd (RW), och dessa mått ska inte blandas i samma tidsserie utan omräkning.</p>
       <p class="hint">Diagrammen visar enbart observationer med kvalitetskoden G och använder separata årsfilter. Observationer före 1 juli 2019 saknar motsvarande kvalitetskontroll och ska tolkas försiktigt. Senaste dygnet uppdateras automatiskt; äldre korrigeringar kräver ny bootstrap.</p>
@@ -440,5 +459,6 @@
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
 <script src="sealevel.js?v=1"></script>
+<script src="sealevel-basin.js?v=1"></script>
 <script src="app.js?v=48"></script>
 </body></html>
