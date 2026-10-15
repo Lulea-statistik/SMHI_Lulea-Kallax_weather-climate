@@ -1993,11 +1993,13 @@ function render(){
     ticks=selected.map(r=>r.year*12+r.month-1);
     values=selected.map(r=>r.sum);
   }
+  // Cold winter tones and warm summer tones; one consistent colour per calendar month.
+  const PRECIP_MONTH_COLORS=['#315b97','#477ac1','#669dda','#55abae','#72b877','#b3c35b','#efc45d','#f39d50','#df7657','#bf647e','#886da7','#526c9f'];
   const labels=ticks.map(k=>months[k%12]+' '+Math.floor(k/12));
   destroyChart('precipTimeline');
   charts.precipTimeline=new Chart(el('precipTimeline'),{
     type:'bar',
-    data:{labels,datasets:[{label:'Månadsnederbörd',data:values,backgroundColor:PRECIP_DARK_BLUE,borderWidth:0,categoryPercentage:0.95,barPercentage:0.95}]},
+    data:{labels,datasets:[{label:'Månadsnederbörd',data:values,backgroundColor:ticks.map(k=>PRECIP_MONTH_COLORS[k%12]),borderWidth:0,categoryPercentage:0.95,barPercentage:0.95}]},
     options:{responsive:true,maintainAspectRatio:false,animation:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Nederbörd: '+c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:1})+' mm'}}},
       scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,minRotation:0,callback:function(value,index){
