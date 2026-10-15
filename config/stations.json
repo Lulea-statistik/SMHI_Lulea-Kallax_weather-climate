@@ -15,7 +15,8 @@
       "name": "Sunderbyn",
       "parameters": [
         5
-      ]
+      ],
+      "active": false
     },
     {
       "id": "162960",
@@ -43,14 +44,16 @@
       "name": "Högsön",
       "parameters": [
         5
-      ]
+      ],
+      "active": false
     },
     {
       "id": "162980",
       "name": "Orrbyn",
       "parameters": [
         5
-      ]
+      ],
+      "active": false
     },
     {
       "id": "162990",
