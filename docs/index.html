@@ -65,6 +65,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="warnings.js" defer></script>
 </head>
 <body>
 <header class="topbar">
@@ -93,6 +94,7 @@
   <button data-page="lightning">Blixt</button>
   <button data-page="seaice">Havsis</button>
   <button data-page="dateweather">Väder efter datum</button>
+  <button data-page="warnings">Varningar</button>
   <button data-page="data">Data</button>
 </nav>
 <main>
@@ -146,6 +148,32 @@
     <div class="chart-card"><h2>Andel nederbördstyp per år</h2><p class="hint">Andel regn, snöblandat regn och snö. Rapporten använder i första hand SMHI:s direkta nederbördstyp (12-/24-timmarsvärde) när sådan finns för Kallax; annars används den tidigare klassningen från rådande väder och temperatur.</p><p id="precipTypeSourceText" class="hint"></p><canvas id="precipTypeAnnual"></canvas></div>
     <div class="chart-card"><h2>Andel nederbördstyp per månad</h2><p class="hint">Genomsnittlig fördelning inom valt årsintervall.</p><canvas id="precipTypeMonthly"></canvas></div>
     <div class="chart-card"><h2>Nederbörd månad för månad – historisk utveckling</h2><p class="hint">Varje stapel är en kalendermånad, i kronologisk ordning från första tillgängliga observationen inom valt årsintervall. Hela perioden visas kompakt i ett diagram. Använd filtret för att studera extrema månader. Luckor i datamaterialet visas som tomma månader.</p><div class="precip-timeline-controls"><label>Visa <select id="precipTimelineMode"><option value="all">Alla månader</option><option value="threshold">Minsta nederbördsmängd</option><option value="minyear">Minst per år</option><option value="maxyear">Max per år</option></select></label><label id="precipTimelineMinLabel" hidden>Minst (mm) <input id="precipTimelineMin" type="number" min="0" step="1" value="50"></label></div><div class="precip-timeline-viewport"><canvas id="precipTimeline"></canvas></div><p class="hint" style="margin-top:8px">Färgerna anger kalendermånad (blå vintertoner, gröna vårtoner och varma sommartoner); samma månad har samma färg alla år.</p></div>
+  </section>
+
+  <section id="page-warnings" class="page">
+    <div class="chart-card full" style="min-height:0">
+      <h2>SMHI – varningar och meddelanden i Luleå kommun</h2>
+      <p class="hint">Geografisk matchning mot Luleå kommuns arbetsgeometri. Områden kan omfatta både land och hav. Varningar kan ändras snabbt; kontrollera alltid SMHI för aktuella beslut.</p>
+      <div class="page-tools warning-tools">
+        <label>Kategori <select id="warningCategory"><option value="all">Alla kategorier</option><option value="weather">Vädervarningar</option><option value="fire">Brandrisk</option><option value="water">Vattenbrist</option><option value="heat">Höga temperaturer</option></select></label>
+        <label>Nivå <select id="warningLevel"><option value="all">Alla nivåer</option><option value="YELLOW">Gul</option><option value="ORANGE">Orange</option><option value="RED">Röd</option><option value="MESSAGE">Meddelande</option></select></label>
+      </div>
+      <p id="warningStatus" class="hint">Väntar på första datainsamlingen.</p>
+    </div>
+    <div class="chart-card full warning-map-card">
+      <h2>Geografisk utbredning</h2>
+      <div id="warningsMap" class="warnings-map"></div>
+      <p class="hint">Visad kommungräns är en befintlig arbetsgeometri, inte verifierad officiell administrativ gräns. Källa: SMHI.</p>
+    </div>
+    <div class="chart-card full" style="min-height:0">
+      <h2>Varningar som berör Luleå</h2>
+      <div id="warningResults">Ingen insamling har ännu verifierats.</div>
+    </div>
+    <div class="chart-card full" style="min-height:0">
+      <h2>Insamlingshistorik</h2>
+      <p class="hint">Tidsstämplade kontroller från och med första lyckade körningen. Detta är inte ett komplett historiskt SMHI-arkiv; flera kontroller av samma varning är inte flera skilda händelser.</p>
+      <div id="warningHistory">Ingen historik inläst.</div>
+    </div>
   </section>
 
   <section id="page-weather" class="page">
