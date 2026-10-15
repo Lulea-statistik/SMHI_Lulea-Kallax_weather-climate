@@ -73,6 +73,21 @@ def main():
         "national_warning_count":len(data),"municipality_warning_areas":len(result),
         "warnings":result,"history_note":"Snapshots begin when scheduled fetching starts; no retrospective warning archive is implied."}
     (OUT/"current.json").write_text(json.dumps(summary,ensure_ascii=False),encoding="utf-8")
+    history_path=OUT/"history.json"
+    try:
+        history=json.loads(history_path.read_text(encoding="utf-8")) if history_path.exists() else []
+        if not isinstance(history,list):history=[]
+    except (ValueError,OSError):
+        history=[]
+    history.append({"fetched_utc":now.isoformat(),"national_count":len(data),
+                    "lulea_area_count":len(result),
+                    "events":sorted({r["event"] for r in result}),
+                    "snapshot":stamp+".json"})
+    # Retain one historical summary per actual fetch timestamp, without inferring periods between polls.
+    history=list({x["fetched_utc"]:x for x in history}.values())
+    history.sort(key=lambda x:x["fetched_utc"])
+    history_path.write_text(json.dumps(history,ensure_ascii=False,separators=(',',':')),encoding="utf-8")
+
     print("SMHI warnings:",len(data),"national,",len(result),"overlapping Lulea. Snapshot:",stamp)
 
 if __name__=="__main__":main()
