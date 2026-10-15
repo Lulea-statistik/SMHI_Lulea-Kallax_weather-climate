@@ -1,6 +1,10 @@
 name: Bootstrap SMHI water level - Stromoren
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/bootstrap-sealevel.yml'
   schedule:
     - cron: '20 5 * * *'
   workflow_dispatch:
@@ -38,6 +42,19 @@ jobs:
         run: python scripts/fetch_sealevel_stromoren.py --mode "$RUN_MODE"
       - name: Build water-level summaries
         run: python scripts/build_sealevel.py
+      - name: Verify published summary exists and contains annual data
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('docs/sealevel/stromoren.json')
+          if not path.is_file():
+              raise SystemExit('Missing docs/sealevel/stromoren.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          if not data.get('annual') or not data.get('daily') or not data.get('monthly'):
+              raise SystemExit('Sea-level output contains no chart data')
+          print('Water-level summary verified:', len(data['annual']), 'annual rows')
+          PY
       - name: Commit only water-level data
         shell: bash
         run: |
