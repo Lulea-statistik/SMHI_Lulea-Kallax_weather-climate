@@ -409,9 +409,18 @@
       <p class="hint">På SMHI:s sida finns nedladdning av tillgängliga observationer för senaste dygnet, historiska data och valbara perioder. SMHI anger observationstider i UTC (svensk tid är UTC+1 vintertid och UTC+2 sommartid).</p>
     </div>
     <div class="chart-card full">
+      <h2>Vattenstånd – historiska observationer</h2>
+      <p class="hint" id="seaLevelStatus">Väntar på bearbetade SMHI-data. Starta bootstrap för att skapa diagramunderlaget.</p>
+      <div class="page-tools"><label>Från år <select id="seaLevelFrom"></select></label><label>Till år <select id="seaLevelTo"></select></label><label>Upplösning <select id="seaLevelResolution"><option value="daily">Dygnsmedel</option><option value="monthly">Månadsmedel</option></select></label></div>
+      <div class="sea-level-stats" id="seaLevelStats"></div>
+      <div style="position:relative;height:360px"><canvas id="seaLevelHistory"></canvas></div>
+    </div>
+    <div class="chart-card full"><h2>Årsvis medel-, minimi- och maximivattenstånd</h2><p class="hint">Baserat på SMHI:s godkända observationer (G). År med ofullständig täckning är inte jämförbara med hela år.</p><div style="position:relative;height:350px"><canvas id="seaLevelAnnual"></canvas></div></div>
+    <div class="chart-card full"><h2>Månadsvariation</h2><p class="hint">Medelvärde av godkända observationer för respektive kalendermånad inom valt årsintervall.</p><div style="position:relative;height:300px"><canvas id="seaLevelSeason"></canvas></div></div>
+    <div class="chart-card full">
       <h2>Om tolkningen av vattenstånd</h2>
       <p>Vattenståndet i RH 2000 är en höjd över eller under en fast referensnivå. Det är inte samma sak som vattenstånd relativt årets beräknade medelvattenstånd (RW), och dessa mått ska inte blandas i samma tidsserie utan omräkning.</p>
-      <p class="hint">Datadiagram och automatisk historikimport är ännu inte aktiverade på denna sida. Det kräver en verifierad datahämtning från SMHI och kontroller av tidsstämpel, kvalitetsflaggor, enheter och stationshistorik. Globala år- och månadsfilter används tills vidare inte för denna sida.</p>
+      <p class="hint">Diagrammen visar enbart observationer med kvalitetskoden G och använder separata årsfilter. Observationer före 1 juli 2019 saknar motsvarande kvalitetskontroll och ska tolkas försiktigt. Senaste dygnet uppdateras automatiskt; äldre korrigeringar kräver ny bootstrap.</p>
       <p><a href="https://opendata.smhi.se/ocobs/api" target="_blank" rel="noopener noreferrer">Dokumentation: SMHI öppna oceanografiska observations-API ↗</a></p>
     </div>
   </section>
@@ -430,5 +439,6 @@
 
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
+<script src="sealevel.js?v=1"></script>
 <script src="app.js?v=48"></script>
 </body></html>
