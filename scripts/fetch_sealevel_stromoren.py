@@ -44,21 +44,22 @@ def main():
     args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     # Never silently conflate reference systems. SMHI has multiple sea-level parameters.
-    candidates = []
-    for number in (6, 13):
-        info = get_json(f"{API}/parameter/{number}.json")
-        title = str(info.get("title", ""))
-        print(f"Parameter {number}: {title}")
-        if "rh 2000" in title.lower() or "rh2000" in title.lower():
-            candidates.append(number)
-    if len(candidates) != 1:
-        raise RuntimeError(f"Could not uniquely verify an RH 2000 sea-level parameter (matches: {candidates}); refusing to publish RW or unknown datum")
-    parameter = candidates[0]
+    # SMHI OCObs: parameter 6 is sea level in RH 2000 (hourly);
+    # parameters 12 and 14 are RW and must not be mixed with RH 2000.
+    parameter = 6
+    info = get_json(f"{API}/parameter/{parameter}.json")
+    title = str(info.get("title", ""))
+    unit = str(info.get("unit", ""))
+    if "havsvattenstånd" not in title.lower() or "rw" in title.lower() or ("cm" not in unit.lower() and unit):
+        raise RuntimeError(f"Unexpected SMHI parameter 6 metadata: title={title!r}, unit={unit!r}")
+    print(f"SMHI RH 2000 parameter verified: {parameter} ({title}, {unit})")
     station = get_json(f"{API}/parameter/{parameter}/station/{STATION}.json")
     title = str(station.get("title", station.get("name", "")))
     if "strömören" not in title.lower() and "stromoren" not in title.lower():
         raise RuntimeError(f"Station identity not confirmed: {title!r}")
     periods = station.get("period", [])
+    if not periods:
+        raise RuntimeError(f"No periods in SMHI metadata for station {STATION}")
     required = ("corrected-archive", "latest-months") if args.mode == "bootstrap" else ("latest-months",)
     manifest = {"station_id": STATION, "station_name": title, "parameter": parameter, "reference": "RH 2000",
                 "unit": "cm", "retrieved_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
