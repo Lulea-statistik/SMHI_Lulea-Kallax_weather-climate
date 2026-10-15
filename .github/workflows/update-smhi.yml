@@ -77,6 +77,9 @@ jobs:
       - name: Build GitHub Pages report data
         run: python scripts/build_dashboard_data.py
 
+      - name: Build precipitation station comparisons
+        run: python scripts/build_precip_stations.py
+
       - name: Commit updated data and report
         shell: bash
         run: |
@@ -87,7 +90,7 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data metadata docs/dashboard_data.json docs/daily docs/seaice_analysis_area.geojson docs/algae docs/snowmap docs/snowmap_boundary.geojson docs/lightning_map
+          git add data metadata docs/dashboard_data.json docs/precip_stations.json docs/daily docs/seaice_analysis_area.geojson docs/algae docs/snowmap docs/snowmap_boundary.geojson docs/lightning_map
           if [ -f docs/seaice_test_2023-12-14.geojson ]; then
             git add docs/seaice_test_2023-12-14.geojson
           fi
