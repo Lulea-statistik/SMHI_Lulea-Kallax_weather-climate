@@ -1,6 +1,10 @@
 (() => {
 const $=id=>document.getElementById(id);
-let basin=null,graphs={};
+let basin=null,graphs={},playTimer=null;
+const DAY_MS=86400000;
+function nextDay(iso){return new Date(Date.parse(iso+'T00:00:00Z')+DAY_MS).toISOString().slice(0,10);}
+function pauseProfile(){if(playTimer!==null){clearInterval(playTimer);playTimer=null;}if($('basinPlay'))$('basinPlay').disabled=false;if($('basinPause'))$('basinPause').disabled=true;}
+function playProfile(){if(playTimer!==null||!basin)return;const picker=$('basinMoment');if($('basinInterval').value!=='daily'){$('basinInterval').value='daily';render();}const max=picker.max;if(!picker.value||picker.value>=max)picker.value=picker.min||max;if(!picker.value||picker.value>=max)return; $('basinPlay').disabled=true;$('basinPause').disabled=false;playTimer=setInterval(()=>{if(!document.querySelector('#page-sealevel.active')){pauseProfile();return;}const next=nextDay(picker.value);if(next>max){pauseProfile();return;}picker.value=next;renderProfile();if(next>=max)pauseProfile();},250);}
 // Continuous latitude scale: southernmost dark blue, northernmost pale red.
 const south=[18,48,125],north=[244,156,164];
 const validLat=()=>valid().filter(s=>Number.isFinite(+s.lat));
@@ -25,6 +29,19 @@ function intervalRows(s,frequency){
 }
 const valid=()=>basin.stations.filter(s=>s.annual?.length);
 function chart(id,type,labels,series,ylabel){if(graphs[id])graphs[id].destroy();graphs[id]=new Chart($(id),{type,data:{labels,datasets:series},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:true}},scales:{x:{ticks:{maxTicksLimit:11}},y:{title:{display:true,text:ylabel}}}}});}
+function renderProfile(){
+ if(!basin)return;
+ const series=valid(),frequency=$('basinInterval').value;
+ const time=$('basinMoment').value;
+ const profileFrequency=frequency;
+ const profileKey=profileFrequency==='weekly'?weekStart(time):profileFrequency==='monthly'?time.slice(0,7):time;
+ const rows=series.map(station=>{
+   const r=intervalRows(station,profileFrequency).find(x=>x.time===profileKey);
+   return {s:station,r};
+ }).filter(x=>x.r&&Number.isFinite(x.r.mean_cm)).sort((a,b)=>Number(a.s.lat)-Number(b.s.lat));
+ const profileLabel=profileFrequency==='weekly'?'Veckomedel, vald vecka':profileFrequency==='monthly'?'Månadsmedel, vald månad':'Dygnsmedel, vald dag';
+ chart('basinProfile','line',rows.map(x=>x.s.name),[{label:profileLabel,data:rows.map(x=>x.r.mean_cm),borderColor:'#8492a6',pointRadius:5,pointBackgroundColor:rows.map(x=>stationColor(x.s)),pointBorderColor:rows.map(x=>stationColor(x.s)),spanGaps:false,tension:0}], 'cm RH 2000');
+}
 function render(){
  if(!basin)return;
  const series=valid(),frequency=$('basinInterval').value;
@@ -36,18 +53,10 @@ function render(){
  const maxKey=frequency==='weekly'?weekStart(end):end.slice(0,frequency==='monthly'?7:10);
  const keys=[...new Set(chosen.flatMap(s=>intervalRows(s,frequency).map(r=>r.time).filter(t=>t>=minKey&&t<=maxKey)))].sort();
  chart('basinHistory','line',keys,chosen.map((s,i)=>{let map=new Map(intervalRows(s,frequency).map(r=>[r.time,r.mean_cm]));return {label:s.name,data:keys.map(k=>map.has(k)&&refMap.has(k)?+(map.get(k)-refMap.get(k)).toFixed(2):null),pointRadius:0,borderWidth:1.5,spanGaps:false,borderColor:stationColor(s)};}),'cm relativt '+(ref?.name||'referensstation'));
- const time=$('basinMoment').value;
- const profileFrequency=frequency;
- const profileKey=profileFrequency==='weekly'?weekStart(time):profileFrequency==='monthly'?time.slice(0,7):time;
- const rows=series.map(station=>{
-   const r=intervalRows(station,profileFrequency).find(x=>x.time===profileKey);
-   return {s:station,r};
- }).filter(x=>x.r&&Number.isFinite(x.r.mean_cm)).sort((a,b)=>Number(a.s.lat)-Number(b.s.lat));
- const profileLabel=profileFrequency==='weekly'?'Veckomedel, vald vecka':profileFrequency==='monthly'?'Månadsmedel, vald månad':'Dygnsmedel, vald dag';
- chart('basinProfile','line',rows.map(x=>x.s.name),[{label:profileLabel,data:rows.map(x=>x.r.mean_cm),borderColor:'#8492a6',pointRadius:5,pointBackgroundColor:rows.map(x=>stationColor(x.s)),pointBorderColor:rows.map(x=>stationColor(x.s)),spanGaps:false,tension:0}], 'cm RH 2000');
+ renderProfile();
  $('basinStatus').textContent='Tidsserie: skillnad i cm mot '+(ref?.name||'referensstation')+' vid samma datum (0 cm för referensstationen). RH 2000 · G · UTC. Saknade samtidiga värden ger luckor. Bassängprofilen visar absoluta RH 2000-värden.';
  const years=[...new Set(series.flatMap(s=>s.annual.map(x=>x.year)))].sort();
- chart('basinExtremes','line',years.map(String),chosen.flatMap(s=>['min_cm','max_cm'].map((metric,j)=>{const d=new Map(s.annual.map(r=>[r.year,(r.coverage_pct>=90?r[metric]:null)]));return {label:s.name+(j?' max':' min'),data:years.map(y=>d.get(y)??null),borderColor:colors[series.indexOf(s)%colors.length],borderDash:j?[]:[5,4],pointRadius:2,spanGaps:false};})),'cm RH 2000');
+ chart('basinExtremes','line',years.map(String),chosen.flatMap(s=>['min_cm','max_cm'].map((metric,j)=>{const d=new Map(s.annual.map(r=>[r.year,(r.coverage_pct>=90?r[metric]:null)]));return {label:s.name+(j?' max':' min'),data:years.map(y=>d.get(y)??null),borderColor:stationColor(s),borderDash:j?[]:[5,4],pointRadius:2,spanGaps:false};})),'cm RH 2000');
 }
 async function init(){
  if(basin||!$('basinHistory'))return;
@@ -61,10 +70,12 @@ async function init(){
  const all=stations.flatMap(s=>s.daily.map(r=>r.time)).sort(),latest=all.at(-1);
  $('basinStart').value=latest.slice(0,4)+'-01-01';$('basinEnd').value=latest;
  const day=stations.find(s=>s.name==='Strömören')?.daily.at(-1)?.time||latest;
- $('basinMoment').value=day;$('basinMoment').max=latest;
+ $('basinMoment').value=day;$('basinMoment').min=all[0];$('basinMoment').max=latest;
+ $('basinPlay').addEventListener('click',playProfile);$('basinPause').addEventListener('click',pauseProfile);
+ $('basinMoment').addEventListener('change',pauseProfile);
  for(const id of ['basinStart','basinEnd','basinMoment','basinInterval'])$(id).addEventListener('change',render);
  $('basinStationList').addEventListener('change',render);render();
  }catch(e){$('basinStatus').textContent='Bassängdiagrammen väntar på data: '+e.message;}
 }
-document.addEventListener('DOMContentLoaded',()=>{document.querySelector('#tabs button[data-page="sealevel"]')?.addEventListener('click',()=>setTimeout(init,100));if($('page-sealevel')?.classList.contains('active'))init();});
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('#tabs button[data-page]').forEach(tab=>tab.addEventListener('click',()=>{if(tab.dataset.page!=='sealevel')pauseProfile();else setTimeout(init,100);}));if($('page-sealevel')?.classList.contains('active'))init();});
 })();
