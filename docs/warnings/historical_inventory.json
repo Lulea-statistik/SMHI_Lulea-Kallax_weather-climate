@@ -1,0 +1,751 @@
+{
+  "generated_utc": "2026-10-15T11:41:30.477483+00:00",
+  "source_page": "https://www.smhi.se/kunskapsbanken/meteorologi/varningar-och-meddelanden/uppfoljning-av-vadervarningar",
+  "source_xlsx": "https://www.smhi.se/download/18.3b0c31d719c28a35067254a/1771572701001/Konsekvensbaserade%20v%C3%A4dervarningar%2026%20okt%202021%20%2031%20dec%202025.xlsx",
+  "sha256": "73d94b4ebee958a72f058b8f952fb5baf4c3bcb8a7e1585606efbf87cb3ced57",
+  "period_start": "2021-10-26",
+  "period_end": "2025-12-31",
+  "scope": "National land weather warnings only",
+  "limitations": [
+    "Not marine warnings",
+    "Raw published warnings may include replacements and cancellations",
+    "No municipality assignment until the geographic columns and geometries have been inspected"
+  ],
+  "sheets": [
+    {
+      "sheet": "Om",
+      "rows": 3,
+      "columns": 1,
+      "first_nonempty_rows": [
+        {
+          "row": 2,
+          "cells": [
+            {
+              "column": 1,
+              "value": "Denna fil innehåller ett uttag ur SMHIs databas för konsekvensbaserade vädervarningar, och innehåller vädervarningar av landvädertyp i kategorierna gul, orange och röd från 2021-10"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sheet": "Rådata",
+      "rows": 1861,
+      "columns": 21,
+      "first_nonempty_rows": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "column": 1,
+              "value": "Första gällande datum"
+            },
+            {
+              "column": 2,
+              "value": "År"
+            },
+            {
+              "column": 3,
+              "value": "Varningstyp"
+            },
+            {
+              "column": 4,
+              "value": "Varningsbeskrivning"
+            },
+            {
+              "column": 5,
+              "value": "Varningsnivå"
+            },
+            {
+              "column": 6,
+              "value": "Starttid"
+            },
+            {
+              "column": 7,
+              "value": "Sluttid"
+            },
+            {
+              "column": 8,
+              "value": "Huvudvarningen Områdesnamn"
+            },
+            {
+              "column": 9,
+              "value": "Delvarningen Områdesnamn"
+            },
+            {
+              "column": 10,
+              "value": "Berörda områden"
+            },
+            {
+              "column": 11,
+              "value": "Huvudvarning Händelsebeskrivning"
+            },
+            {
+              "column": 12,
+              "value": "Huvudvarning Hur kan det påverka mig"
+            },
+            {
+              "column": 13,
+              "value": "Huvudvarning Kommentar"
+            },
+            {
+              "column": 14,
+              "value": "Delvarning Händelsebeskrivning"
+            },
+            {
+              "column": 15,
+              "value": "Delvarning Hur kan det påverka mig/Vad ska jag tänka på"
+            },
+            {
+              "column": 16,
+              "value": "Delvarning Var"
+            },
+            {
+              "column": 17,
+              "value": "Delvarning Vad händer"
+            },
+            {
+              "column": 18,
+              "value": "Delvarning Kommentar"
+            },
+            {
+              "column": 19,
+              "value": "Publicerad"
+            },
+            {
+              "column": 20,
+              "value": "Avpublicerad"
+            },
+            {
+              "column": 21,
+              "value": "Varnings ID"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "column": 1,
+              "value": "2021-10-26 10:00:00"
+            },
+            {
+              "column": 2,
+              "value": "2021"
+            },
+            {
+              "column": 3,
+              "value": "Isbeläggning"
+            },
+            {
+              "column": 4,
+              "value": "Plötslig ishalka"
+            },
+            {
+              "column": 5,
+              "value": "Gul"
+            },
+            {
+              "column": 6,
+              "value": "2021-10-26 10:00:00"
+            },
+            {
+              "column": 7,
+              "value": "2021-10-26 15:00"
+            },
+            {
+              "column": 8,
+              "value": ""
+            },
+            {
+              "column": 9,
+              "value": "Södra Norrbottens län, öster om fjällen utom närmast kusten."
+            },
+            {
+              "column": 10,
+              "value": "Norrbottens län"
+            },
+            {
+              "column": 11,
+              "value": ""
+            },
+            {
+              "column": 12,
+              "value": ""
+            },
+            {
+              "column": 13,
+              "value": ""
+            },
+            {
+              "column": 14,
+              "value": "Under tisdagen regn som kan vara underkylt och frysa på kalla vägar."
+            },
+            {
+              "column": 15,
+              "value": "Trafiken går långsammare på grund av halka. \nBegränsad framkomlighet på vägar på grund av trafikolyckor."
+            },
+            {
+              "column": 16,
+              "value": "Södra Norrbottens län, öster om fjällen utom närmast kusten."
+            },
+            {
+              "column": 17,
+              "value": "Under tisdagen faller både snö, regn och underkylt regn över Norrbottens län och kan ge plötslig ishalka på kalla vägar. Temperaturen i vägytorna stiger successivt under dagen till"
+            },
+            {
+              "column": 18,
+              "value": "Osäker hur länge temperaturen på vissa vägar kommer att ligga under fryspunkten."
+            },
+            {
+              "column": 19,
+              "value": "2021-10-26 12:00:00"
+            },
+            {
+              "column": 20,
+              "value": "2021-10-26 15:03:00"
+            },
+            {
+              "column": 21,
+              "value": "7"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "column": 1,
+              "value": "2021-10-28 00:00:00"
+            },
+            {
+              "column": 2,
+              "value": "2021"
+            },
+            {
+              "column": 3,
+              "value": "Isbeläggning"
+            },
+            {
+              "column": 4,
+              "value": "Plötslig ishalka"
+            },
+            {
+              "column": 5,
+              "value": "Gul"
+            },
+            {
+              "column": 6,
+              "value": "2021-10-28 00:00:00"
+            },
+            {
+              "column": 7,
+              "value": "2021-10-28 08:00"
+            },
+            {
+              "column": 8,
+              "value": ""
+            },
+            {
+              "column": 9,
+              "value": "Delar av norra Norrland."
+            },
+            {
+              "column": 10,
+              "value": "Norrbottens län. Västerbottens län"
+            },
+            {
+              "column": 11,
+              "value": ""
+            },
+            {
+              "column": 12,
+              "value": ""
+            },
+            {
+              "column": 13,
+              "value": ""
+            },
+            {
+              "column": 14,
+              "value": "Natt mot torsdag fram till torsdag morgon underkylt regn eller regn på kalla vägbanor som kan ge upphov till plötslig ishalka."
+            },
+            {
+              "column": 15,
+              "value": "Trafiken går långsammare på grund av halka. \nBegränsad framkomlighet på vägar på grund av trafikolyckor. \nRisk för förseningar inom buss-, tåg- och flygtrafiken samt inställda avgå"
+            },
+            {
+              "column": 16,
+              "value": "Nordligaste delen av Västerbottens län kust- och inland samt sydligaste delen av Norrbottens län kust- och inland."
+            },
+            {
+              "column": 17,
+              "value": "Natt mot torsdag rör sig regn eller underkylt regn in från sydväst vilket når fram till kusten tidigt torsdag morgon. Regnet väntas falla på kalla vägbanor och ge upphov till plöts"
+            },
+            {
+              "column": 18,
+              "value": "Det är osäkert om vägytorna vid kusten kommer att ligga på minussidan när regnet når fram."
+            },
+            {
+              "column": 19,
+              "value": "2021-10-27 14:29:00"
+            },
+            {
+              "column": 20,
+              "value": "2021-10-28 14:04:00"
+            },
+            {
+              "column": 21,
+              "value": "10"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "cells": [
+            {
+              "column": 1,
+              "value": "2021-10-30 00:00:00"
+            },
+            {
+              "column": 2,
+              "value": "2021"
+            },
+            {
+              "column": 3,
+              "value": "Isbeläggning"
+            },
+            {
+              "column": 4,
+              "value": "Plötslig ishalka"
+            },
+            {
+              "column": 5,
+              "value": "Gul"
+            },
+            {
+              "column": 6,
+              "value": "2021-10-30 00:00:00"
+            },
+            {
+              "column": 7,
+              "value": "2021-10-31 00:00"
+            },
+            {
+              "column": 8,
+              "value": ""
+            },
+            {
+              "column": 9,
+              "value": "Norrbottens läns inland"
+            },
+            {
+              "column": 10,
+              "value": "Norrbottens län"
+            },
+            {
+              "column": 11,
+              "value": ""
+            },
+            {
+              "column": 12,
+              "value": ""
+            },
+            {
+              "column": 13,
+              "value": ""
+            },
+            {
+              "column": 14,
+              "value": "Från natten till lördag underkylt regn som kan orsaka halka."
+            },
+            {
+              "column": 15,
+              "value": "Trafiken går långsammare på grund av halka. \nBegränsad framkomlighet på vägar på grund av trafikolyckor. \nRisk för förseningar inom buss-, tåg- och flygtrafiken samt inställda avgå"
+            },
+            {
+              "column": 16,
+              "value": "Norrbottens läns inland"
+            },
+            {
+              "column": 17,
+              "value": "Ett nederbördsområde rör sig upp över norra Norrland och ger snö och regn. I Norrbottens läns inland ger det inslag av underkylt regn."
+            },
+            {
+              "column": 18,
+              "value": ""
+            },
+            {
+              "column": 19,
+              "value": "2021-10-29 12:52:00"
+            },
+            {
+              "column": 20,
+              "value": "2021-10-31 04:42:00"
+            },
+            {
+              "column": 21,
+              "value": "14"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "cells": [
+            {
+              "column": 1,
+              "value": "2021-10-31 12:00:00"
+            },
+            {
+              "column": 2,
+              "value": "2021"
+            },
+            {
+              "column": 3,
+              "value": "Isbeläggning"
+            },
+            {
+              "column": 4,
+              "value": "Plötslig ishalka"
+            },
+            {
+              "column": 5,
+              "value": "Gul"
+            },
+            {
+              "column": 6,
+              "value": "2021-10-31 12:00:00"
+            },
+            {
+              "column": 7,
+              "value": "2021-11-01 06:00"
+            },
+            {
+              "column": 8,
+              "value": ""
+            },
+            {
+              "column": 9,
+              "value": "Norrbottens läns inland"
+            },
+            {
+              "column": 10,
+              "value": "Norrbottens län"
+            },
+            {
+              "column": 11,
+              "value": ""
+            },
+            {
+              "column": 12,
+              "value": ""
+            },
+            {
+              "column": 13,
+              "value": ""
+            },
+            {
+              "column": 14,
+              "value": "Underkylt regn eller regn på kalla vägbanor som orsakar halt väglag"
+            },
+            {
+              "column": 15,
+              "value": "Trafiken går långsammare på grund av halka. \nBegränsad framkomlighet på vägar på grund av trafikolyckor. \nRisk för förseningar inom buss-, tåg- och flygtrafiken samt inställda avgå"
+            },
+            {
+              "column": 16,
+              "value": "Norrbottens läns inland"
+            },
+            {
+              "column": 17,
+              "value": "Regn rör sig upp söderifrån från söndagskvällen. Regnet kan vara underkylt eller falla på kalla vägytor med ishalka som följd."
+            },
+            {
+              "column": 18,
+              "value": ""
+            },
+            {
+              "column": 19,
+              "value": "2021-10-30 14:50:00"
+            },
+            {
+              "column": 20,
+              "value": "2021-11-01 06:36:00"
+            },
+            {
+              "column": 21,
+              "value": "16"
+            }
+          ]
+        },
+        {
+          "row": 6,
+          "cells": [
+            {
+              "column": 1,
+              "value": "2021-11-06 02:00:00"
+            },
+            {
+              "column": 2,
+              "value": "2021"
+            },
+            {
+              "column": 3,
+              "value": "Vind i kombination med snöfall på kalfjället"
+            },
+            {
+              "column": 4,
+              "value": "Vind i kombination med snöfall på kalfjället"
+            },
+            {
+              "column": 5,
+              "value": "Gul"
+            },
+            {
+              "column": 6,
+              "value": "2021-11-06 02:00:00"
+            },
+            {
+              "column": 7,
+              "value": "2021-11-09 14:00"
+            },
+            {
+              "column": 8,
+              "value": ""
+            },
+            {
+              "column": 9,
+              "value": "Södra Jämtlandsfjällen"
+            },
+            {
+              "column": 10,
+              "value": "Jämtlands län"
+            },
+            {
+              "column": 11,
+              "value": ""
+            },
+            {
+              "column": 12,
+              "value": ""
+            },
+            {
+              "column": 13,
+              "value": ""
+            },
+            {
+              "column": 14,
+              "value": "Hård västlig vind 14-18 m/s, vridande till nordväst. Blåsigt i kombination med snöfall."
+            },
+            {
+              "column": 15,
+              "value": "Ovana besökare avråds från att ge sig ut på fjället.  \nSvårt att orientera sig på grund av nedsatt sikt. \nSvårt att resa och förankra tält."
+            },
+            {
+              "column": 16,
+              "value": "Södra Jämtlandsfjällen"
+            },
+            {
+              "column": 17,
+              "value": "Snöbyar drar in från nordväst och ger 5-10 cm snö på 12 timmar. Det blir även blåsigt med hård vind från väst, som efter hand vrider till nordväst."
+            },
+            {
+              "column": 18,
+              "value": ""
+            },
+            {
+              "column": 19,
+              "value": "2021-11-05 13:56:00"
+            },
+            {
+              "column": 20,
+              "value": "2021-11-06 13:06:00"
+            },
+            {
+              "column": 21,
+              "value": "27"
+            }
+          ]
+        },
+        {
+          "row": 7,
+          "cells": [
+            {
+              "column": 1,
+              "value": "2021-11-07 05:00:00"
+            },
+            {
+              "column": 2,
+              "value": "2021"
+            },
+            {
+              "column": 3,
+              "value": "Snöfall"
+            },
+            {
+              "column": 4,
+              "value": "Snöfall"
+            },
+            {
+              "column": 5,
+              "value": "Gul"
+            },
+            {
+              "column": 6,
+              "value": "2021-11-07 05:00:00"
+            },
+            {
+              "column": 7,
+              "value": "2021-11-07 14:00"
+            },
+            {
+              "column": 8,
+              "value": ""
+            },
+            {
+              "column": 9,
+              "value": "Delar av västra Svealand"
+            },
+            {
+              "column": 10,
+              "value": "Dalarnas län. Värmlands län. Örebro län"
+            },
+            {
+              "column": 11,
+              "value": ""
+            },
+            {
+              "column": 12,
+              "value": ""
+            },
+            {
+              "column": 13,
+              "value": ""
+            },
+            {
+              "column": 14,
+              "value": "Snöfall under söndag morgon och förmiddag kan orsaka trafikproblem."
+            },
+            {
+              "column": 15,
+              "value": "Trafiken går långsammare på grund av halka, snömodd, dålig sikt och snörök."
+            },
+            {
+              "column": 16,
+              "value": "I norra Värmland, sydvästra Dalarna och allra nordligaste Örebro län."
+            },
+            {
+              "column": 17,
+              "value": "Under natten till söndag rör sig ett snöfallsområde in västerifrån och under söndag morgon och förmiddag väntas 5 cm snö. Snöfallet avtar under eftermiddagen."
+            },
+            {
+              "column": 18,
+              "value": "Det är milt i vägytorna och osäkert hur mycket snö som lägger sig."
+            },
+            {
+              "column": 19,
+              "value": "2021-11-06 11:28:00"
+            },
+            {
+              "column": 20,
+              "value": "2021-11-07 14:16:00"
+            },
+            {
+              "column": 21,
+              "value": "31"
+            }
+          ]
+        },
+        {
+          "row": 8,
+          "cells": [
+            {
+              "column": 1,
+              "value": "2021-11-07 22:00:00"
+            },
+            {
+              "column": 2,
+              "value": "2021"
+            },
+            {
+              "column": 3,
+              "value": "Snöfall"
+            },
+            {
+              "column": 4,
+              "value": "Snöfall"
+            },
+            {
+              "column": 5,
+              "value": "Gul"
+            },
+            {
+              "column": 6,
+              "value": "2021-11-07 22:00:00"
+            },
+            {
+              "column": 7,
+              "value": "2021-11-08 09:00"
+            },
+            {
+              "column": 8,
+              "value": ""
+            },
+            {
+              "column": 9,
+              "value": "Nordvästra Uppland och sydostligaste Gästrikland"
+            },
+            {
+              "column": 10,
+              "value": "Gävleborgs län. Uppsala län"
+            },
+            {
+              "column": 11,
+              "value": ""
+            },
+            {
+              "column": 12,
+              "value": ""
+            },
+            {
+              "column": 13,
+              "value": ""
+            },
+            {
+              "column": 14,
+              "value": "Lokala snöbyar som natt mot måndag kan bli kraftiga och ge halka, snömodd och dålig sikt. Det kan ge besvär i morgontrafik."
+            },
+            {
+              "column": 15,
+              "value": "Trafiken går långsammare på grund av halka, snömodd, dålig sikt. \nBegränsad framkomlighet på vägar som till exempel inte hunnit snöröjas eller på grund av trafikolyckor.      \nRisk"
+            },
+            {
+              "column": 16,
+              "value": "Nordligaste Uppland och sydostligaste Gästrikland"
+            },
+            {
+              "column": 17,
+              "value": "Lokala snöbyar som kan bli kraftiga driver in från Bottenhavet och kan under natten mot måndag fram till måndag morgon lokalt ge mellan 5 och 10 cm."
+            },
+            {
+              "column": 18,
+              "value": "De kraftigaste snöbyarna förväntas bli mycket lokala och den exakta placeringen och intensiteten är svårbedömd."
+            },
+            {
+              "column": 19,
+              "value": "2021-11-07 12:47:00"
+            },
+            {
+              "column": 20,
+              "value": "2021-11-08 09:32:00"
+            },
+            {
+              "column": 21,
+              "value": "40"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
