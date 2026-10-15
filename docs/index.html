@@ -422,7 +422,7 @@
       <p class="hint">Jämför samtidiga vattenstånd längs kusten från Forsmark och norrut. Varje kurva visar skillnaden mot vald referensstation (standard Ratan), som blir 0 cm vid samtliga mättillfällen. Hypotesen om motfas mellan söder och norr behöver prövas med mätdata och tidsförskjutningar; motsatt nivå är inte ett generellt samband.</p>
       <p class="hint" id="basinStatus">Väntar på stationsdata från SMHI.</p>
       <div id="basinStationList"></div>
-      <div class="page-tools"><label>Referensstation (0 cm) <select id="basinReference"></select></label><label>Från datum <input type="date" id="basinStart"></label><label>Till datum <input type="date" id="basinEnd"></label><label>Upplösning <select id="basinInterval"><option value="daily">Dygn</option><option value="monthly">Månad</option></select></label></div>
+      <div class="page-tools"><label>Referensstation (0 cm) <select id="basinReference"></select></label><label>Från datum <input type="date" id="basinStart"></label><label>Till datum <input type="date" id="basinEnd"></label><label>Upplösning <select id="basinInterval"><option value="daily">Dygn</option><option value="weekly">Vecka</option><option value="monthly">Månad</option></select></label></div>
       <div style="position:relative;height:360px"><canvas id="basinHistory"></canvas></div>
     </div>
     <div class="chart-card full">
@@ -459,6 +459,6 @@
   <section id="page-data" class="page"><div class="chart-card"><h2>Datatäckning</h2><div id="coverage"></div></div></section>
 </main>
 <script src="sealevel.js?v=1"></script>
-<script src="sealevel-basin.js?v=2"></script>
+<script src="sealevel-basin.js?v=3"></script>
 <script src="app.js?v=48"></script>
 </body></html>
