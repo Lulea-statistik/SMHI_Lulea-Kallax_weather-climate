@@ -170,6 +170,17 @@
       <div id="warningResults">Ingen insamling har ännu verifierats.</div>
     </div>
     <div class="chart-card full" style="min-height:0">
+      <h2>Versionshistorik – varningsgeometrier</h2>
+      <p class="hint">Välj en varning och en observerad version. Kartan visar geometrin som sparades vid den insamlingen, klippt till Luleås arbetsgeometri. Endast observerade versioner visas.</p>
+      <div class="page-tools warning-tools">
+        <label>Varning <select id="warningVersionKey"><option value="">Välj varning</option></select></label>
+        <label>Observation <select id="warningVersionIndex"><option value="">Välj version</option></select></label>
+      </div>
+      <p id="warningVersionStatus" class="hint">Väntar på versionsdata.</p>
+      <div id="warningVersionMap" class="warnings-map"></div>
+      <div id="warningVersionTimeline"></div>
+    </div>
+    <div class="chart-card full" style="min-height:0">
       <h2>Insamlingshistorik</h2>
       <p class="hint">Tidsstämplade kontroller från och med första lyckade körningen. Detta är inte ett komplett historiskt SMHI-arkiv; flera kontroller av samma varning är inte flera skilda händelser.</p>
       <div id="warningHistory">Ingen historik inläst.</div>
