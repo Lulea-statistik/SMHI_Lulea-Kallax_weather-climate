@@ -65,7 +65,8 @@ def main():
                 "event_code":record["event_code"],"level_code":record["level_code"],
                 "previous_level":previous["record"]["level_code"] if previous else None,
                 "geometry_changed":previous is not None and record["geometry_sha256"]!=previous["record"]["geometry_sha256"],
-                "version_hash":fingerprint})
+                "version_hash":fingerprint,"geometry":record["geometry"],
+                "geography_kind":record["geography_kind"],"start":record["start"],"end":record["end"]})
         for ident,previous in sorted(last.items()):
             if ident not in now:
                 events.append({"observed_at":timestamp,"key":ident,"action":"no_longer_observed",
