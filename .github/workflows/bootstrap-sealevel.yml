@@ -1,6 +1,8 @@
 name: Bootstrap SMHI water level - Stromoren
 
 on:
+  schedule:
+    - cron: '20 5 * * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -32,12 +34,14 @@ jobs:
           python-version: "3.12"
       - name: Download water-level observations only
         env:
-          RUN_MODE: ${{ inputs.mode }}
+          RUN_MODE: ${{ inputs.mode || 'update' }}
         run: python scripts/fetch_sealevel_stromoren.py --mode "$RUN_MODE"
+      - name: Build water-level summaries
+        run: python scripts/build_sealevel.py
       - name: Commit only water-level data
         shell: bash
         run: |
-          git add data/sealevel/stromoren/
+          git add data/sealevel/stromoren/ docs/sealevel/stromoren.json
           if git diff --cached --quiet; then
             echo "No water-level changes."
             exit 0
