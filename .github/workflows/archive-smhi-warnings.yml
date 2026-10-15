@@ -1,0 +1,42 @@
+name: Archive SMHI warnings for Lulea
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: smhi-warning-snapshots
+  cancel-in-progress: false
+
+jobs:
+  archive-warnings:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install geographic libraries
+        run: pip install shapely==2.1.2 pyproj==3.7.2
+      - name: Download SMHI warnings and intersect Lulea boundary
+        run: python scripts/fetch_smhi_warnings.py
+      - name: Save current warning data and historical snapshots
+        shell: bash
+        run: |
+          git add docs/warnings/current.json data/warning_snapshots/
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Archive SMHI warning snapshot"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
