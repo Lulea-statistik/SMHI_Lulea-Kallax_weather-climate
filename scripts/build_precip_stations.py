@@ -17,6 +17,11 @@ STATIONS=[
     {'id':'162860','name':'Luleå-Kallax Flygplats'},
     {'id':'161680','name':'Sunderbyn'},
     {'id':'162960','name':'Råneå'},
+    {'id':'161900','name':'Klöverträsk D'},
+    {'id':'162790','name':'Rödkallen A'},
+    {'id':'162970','name':'Högsön'},
+    {'id':'162980','name':'Orrbyn'},
+    {'id':'162990','name':'Niemisel'},
 ]
 PARAM={'id':'5','name':'Nederbördsmängd per dygn'}
 OUT=ROOT/'docs'/'precip_stations.json'
