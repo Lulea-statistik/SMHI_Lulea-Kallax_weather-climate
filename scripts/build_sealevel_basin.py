@@ -24,9 +24,33 @@ def load(station):
         except (ValueError,IndexError):continue
         values[t]=v
     return values
+def discover_stations():
+    """Use SMHI parameter 6 catalog; keep original known stations as fallback."""
+    known={item[1]:item for item in STATIONS}
+    try:
+        catalog=json.loads(get(f"{API}/parameter/6.json").decode("utf-8-sig"))
+        entries=catalog.get("station",[])
+        if not entries:
+            raise ValueError("SMHI parameter catalog returned no stations")
+        for item in entries:
+            try:
+                sid=int(item.get("key",item.get("id")))
+                lat=float(item.get("latitude",item.get("lat")))
+                lon=float(item.get("longitude",item.get("lon")))
+                name=str(item.get("name",item.get("title",""))).strip()
+            except (TypeError,ValueError):
+                continue
+            # Sweden's Bothnian coastline, north of Forsmark; exclude other seas.
+            if 60.4086 <= lat <= 66.8 and 16.0 <= lon <= 24.5 and name:
+                known[sid]=(name,sid,lat,lon)
+        print("Catalog station candidates:",len(known))
+    except Exception as exc:
+        print("WARNING station discovery failed:",exc)
+    return sorted(known.values(),key=lambda x:(x[2],x[1]))
+
 def main():
     stations=[]
-    for name,sid,lat,lon in STATIONS:
+    for name,sid,lat,lon in discover_stations():
         try:
             rows=load(sid)
             if not rows:raise ValueError("No approved observations")
@@ -47,6 +71,8 @@ def main():
         except Exception as e:
             print(f"WARNING {name} {sid}: {e}")
             stations.append({"id":sid,"name":name,"lat":lat,"lon":lon,"error":str(e)})
+    if not any(s.get("id")==2056 and s.get("annual") for s in stations):
+        raise SystemExit("Ratan reference station 2056 has no valid observations")
     if sum("annual" in s for s in stations)<3:raise SystemExit("Fewer than three stations loaded")
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps({"reference":"RH 2000","unit":"cm","time_basis":"UTC","quality":"G","stations":stations},ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
