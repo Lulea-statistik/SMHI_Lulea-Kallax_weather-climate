@@ -5,7 +5,7 @@ from collections import defaultdict
 BASE=pathlib.Path(__file__).resolve().parents[1]
 OUT=BASE/"docs"/"sealevel"/"basin.json"
 API="https://opendata-download-ocobs.smhi.se/api/version/1.0"
-STATIONS=[("Forsmark",2179,60.4086,18.2108),("Gävle Hamn",35236,60.6967,17.2314),("Spikarna",2061,62.3633,17.5311),("Skagsudde 2",35138,63.1905,19.0123),("Furuögrund",2055,64.9156,21.2307),("Strömören",35183,65.5484,22.2380)]
+STATIONS=[("Forsmark",2179,60.4086,18.2108),("Gävle Hamn",35236,60.6967,17.2314),("Spikarna",2061,62.3633,17.5311),("Skagsudde 2",35138,63.1905,19.0123),("Furuögrund",2055,64.9156,21.2307),("Strömören",35183,65.5484,22.2380),("Ratan",2056,63.9861,20.8950)]
 def get(url):
     with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"Lulea-statistik-basin/1.0"}),timeout=120) as r:return r.read()
 def stats(a):
