@@ -1,0 +1,20 @@
+{
+  "generated_utc": "2026-10-15T11:52:16.682120+00:00",
+  "source": "SMHI official workbook, Rådata",
+  "total_records": 1860,
+  "classifications": {
+    "regional_candidate": 488,
+    "not_identified": 1368,
+    "explicit_lulea": 4
+  },
+  "interpretation": {
+    "explicit_lulea": "Luleå named in a geographic field; not confirmed polygon intersection",
+    "regional_candidate": "Broad regional wording may include Luleå; needs manual verification or historic geometry",
+    "not_identified": "No geographic indication matching the regional search; not proof Luleå is excluded"
+  },
+  "limitations": [
+    "Land weather warnings only",
+    "Textual candidate identification, not spatial intersection",
+    "Source rows need not be unique meteorological events; preserve warning IDs and publication dates"
+  ]
+}
