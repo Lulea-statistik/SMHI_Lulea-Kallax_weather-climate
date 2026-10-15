@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/sealevel-basin.yml'
+      - 'scripts/build_sealevel_basin.py'
   workflow_dispatch:
   schedule:
     - cron: '35 6 * * *'
