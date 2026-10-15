@@ -1,4 +1,4 @@
-let DATA=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;let smhiRenderedSnowDaily=null;let smhiRenderedSnowQa=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;let PRECIP_STATIONS=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;let smhiRenderedSnowDaily=null;let smhiRenderedSnowQa=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 let globalLoadingCount=0;
 function beginGlobalLoading(text='Laddar…'){
@@ -1948,7 +1948,23 @@ function render(){
   renderLightning(f);
   renderSeaIce(f);
 
-  const pa=selectedAnnualRows(DATA.precipitation.annual,DATA.precipitation.monthly_total,f);const paYears=pa.map(r=>r.year),paVals=pa.map(r=>r.sum);
+  const selectedPrecipStation=el('precipStation')?.value||'162860';
+  const precipSeries=selectedPrecipStation==='162860'&&!PRECIP_STATIONS
+    ?DATA.precipitation.monthly_total
+    :selectedPrecipStation==='municipal'
+      ?(PRECIP_STATIONS?.municipal||[])
+      :(PRECIP_STATIONS?.stations||[]).find(s=>s.id===selectedPrecipStation)?.monthly||DATA.precipitation.monthly_total;
+  const precipAnnual=Array.from(precipSeries.reduce((m,r)=>{
+    const item=m.get(r.year)||{year:r.year,sum:0,months:0};item.sum+=r.sum;item.months++;m.set(r.year,item);return m;
+  },new Map()).values()).filter(r=>r.months===12).sort((a,b)=>a.year-b.year).map(r=>({year:r.year,sum:Math.round(r.sum*100)/100}));
+  const precipInfo=el('precipStationInfo');
+  if(precipInfo){
+    const counts=precipSeries.map(r=>r.stations).filter(Number.isFinite);
+    precipInfo.textContent=selectedPrecipStation==='municipal'
+      ?'Oviktat medel av tillgängliga stationer per månad (antal stationer: '+(counts.length?Math.min(...counts)+'–'+Math.max(...counts):'saknas')+'). Endast kompletta månader ingår. Detta är ett stationsmedel, inte ett arealvägt kommunmedel. Nederbördstyp baseras fortsatt på Kallax.'
+      :'SMHI:s dygnsnederbörd (parameter 5) summerad till månader. Årstotaler visas för år med 12 kompletta månader. Nederbördstyp baseras fortsatt på Kallax.';
+  }
+  const pa=selectedAnnualRows(precipAnnual,precipSeries,f);const paYears=pa.map(r=>r.year),paVals=pa.map(r=>r.sum);
   destroyChart('precipAnnual');
   charts.precipAnnual=new Chart(el('precipAnnual'),{
     data:{labels:paYears,datasets:[
@@ -1960,7 +1976,7 @@ function render(){
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'mm'},ticks:{precision:0}}}}
   });
   el('precipAnnualTrendText').textContent=trendRateText(paYears,paVals,'mm');
-  let pm=DATA.precipitation.monthly_total.filter(r=>inYears(r,f));
+  let pm=precipSeries.filter(r=>inYears(r,f));
   const precipMonthVals=aggregateMonthlyMean(pm,'sum');
   destroyChart('precipMonthly');
   charts.precipMonthly=new Chart(el('precipMonthly'),{type:'bar',data:{labels:months,datasets:[{data:precipMonthVals,borderWidth:0,backgroundColor:MONTH_GREEN}]},
@@ -1968,7 +1984,7 @@ function render(){
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'mm'},ticks:{precision:0}}}}});
 
   // Monthly data retain chronological order; annual extremes mean the lowest/highest MONTH in each year.
-  const timelineRows=DATA.precipitation.monthly_total
+  const timelineRows=precipSeries
     .filter(r=>inYears(r,f)&&Number.isInteger(Number(r.year))&&Number(r.month)>=1&&Number(r.month)<=12)
     .map(r=>({...r,year:Number(r.year),month:Number(r.month),sum:r.sum==null?null:Number(r.sum)}))
     .sort((a,b)=>a.year-b.year||a.month-b.month);
@@ -2506,6 +2522,7 @@ el('month').addEventListener('change',()=>{
     showSnowMapDate(0);
   }
 });
+el('precipStation').addEventListener('change',render);
 el('precipTimelineMode').addEventListener('change',render);
 el('precipTimelineMin').addEventListener('change',render);
 el('tempMetric').addEventListener('change',render);
@@ -2527,6 +2544,15 @@ fetch('dashboard_data.json',{cache:'no-store'})
     DATA=d;
     el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');
     el('weatherSource').href=d.weather.source_url;
+    fetch('precip_stations.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{
+      if(!data?.stations?.length)return;
+      PRECIP_STATIONS=data;
+      const chooser=el('precipStation');
+      chooser.innerHTML='<option value="162860">Luleå-Kallax Flygplats</option>'
+        +data.stations.filter(s=>s.id!=='162860'&&s.monthly?.length).map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('')
+        +'<option value="municipal">Kommunmedel (stationsmedel)</option>';
+      render();
+    }).catch(err=>console.warn('Station precipitation unavailable',err));
     setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupSnowMapControls();setupLightningMapControls();setupFilters();setupDateWeather();render();
   })
   .catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';})
