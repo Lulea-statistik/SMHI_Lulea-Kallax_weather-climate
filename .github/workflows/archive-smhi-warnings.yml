@@ -27,10 +27,12 @@ jobs:
         run: pip install shapely==2.1.2 pyproj==3.7.2
       - name: Download SMHI warnings and intersect Lulea boundary
         run: python scripts/fetch_smhi_warnings.py
+      - name: Build preliminary observed coastal-line reference
+        run: python scripts/build_smhi_coast_reference.py
       - name: Save current warning data and historical snapshots
         shell: bash
         run: |
-          git add docs/warnings/current.json docs/warnings/history.json data/warning_snapshots/
+          git add docs/warnings/current.json docs/warnings/history.json docs/warnings/observed_coastal_lines.geojson data/warning_snapshots/
           if git diff --cached --quiet; then
             echo "No changes."
             exit 0
