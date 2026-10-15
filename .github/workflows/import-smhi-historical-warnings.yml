@@ -24,10 +24,12 @@ jobs:
         run: pip install requests==2.32.5 openpyxl==3.1.5
       - name: Download official SMHI workbook and inventory fields
         run: python scripts/import_smhi_historical_warnings.py
+      - name: Audit geographic references to Lulea
+        run: python scripts/audit_smhi_historical_locality.py
       - name: Commit source workbook and inventory
         shell: bash
         run: |
-          git add data/warning_history_smhi/official_land_warnings_2021_2025.xlsx docs/warnings/historical_inventory.json
+          git add data/warning_history_smhi/official_land_warnings_2021_2025.xlsx docs/warnings/historical_inventory.json docs/warnings/historical_locality_audit.json docs/warnings/historical_locality_summary.json
           if git diff --cached --quiet; then
             echo "No changes."
             exit 0
