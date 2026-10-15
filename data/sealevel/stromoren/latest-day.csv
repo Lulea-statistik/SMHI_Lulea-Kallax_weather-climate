@@ -5,28 +5,28 @@ Parameternamn;Enhet
 Havsvattenstånd;cm
 
 Datum Tid (UTC);Havsvattenstånd;Kvalitet;Mätdjup (m);;Tidsutsnitt
-2026-10-14 13:00:00;44.9;G;0;;Tidsperiod (fr.o.m.) = 2016-09-15 06:00:00 (UTC)
-2026-10-14 14:00:00;45.6;G;0;;Tidsperiod (t.o.m.) = 2026-10-15 14:00:00 (UTC)
-2026-10-14 15:00:00;44.7;G;0;;
-2026-10-14 16:00:00;43.4;G;0;;Höjdsystem: RH2000
-2026-10-14 17:00:00;44.2;G;0;;
-2026-10-14 18:00:00;41.9;G;0;;Kvalitetskontroll:
-2026-10-14 19:00:00;41.8;G;0;;Data före 2019-07-01 är ej kvalitetskontrollerad och felaktiga värden kan förekomma.
-2026-10-14 20:00:00;39.8;G;0;;Efter detta datum har data genomgått en automatisk kvalitetskontroll.
-2026-10-14 21:00:00;37.4;G;0;;
-2026-10-14 22:00:00;36.3;G;0;;Kvalitetskoderna:
-2026-10-14 23:00:00;34.5;G;0;;Grön (G) = Kontrollerade och godkända värden.
-2026-10-15 00:00:00;32.0;G;0;;Gul (Y) = Misstänkta eller aggregerade värden. Grovt kontrollerade arkivdata och okontrollerade realtidsdata (senaste 2 tim).
-2026-10-15 01:00:00;30.5;G;0;;Orange (O) = Okontrollerade värden.
-2026-10-15 02:00:00;28.8;G;0;;
-2026-10-15 03:00:00;28.0;G;0;;Orsaker till saknade data:
-2026-10-15 04:00:00;28.1;G;0;;  stationen eller givaren har varit ur funktion.
-2026-10-15 05:00:00;28.2;G;0;;  kvalitetskontrollerna har felmarkerat data (röd kvalitetskod). Efterföljande manuell granskning godkänner, rättar eller underkänner data.
-2026-10-15 06:00:00;27.4;G;0
-2026-10-15 07:00:00;29.0;G;0
-2026-10-15 08:00:00;30.1;G;0
+2026-10-14 16:00:00;43.4;G;0;;Tidsperiod (fr.o.m.) = 2016-09-15 06:00:00 (UTC)
+2026-10-14 17:00:00;44.2;G;0;;Tidsperiod (t.o.m.) = 2026-10-15 17:00:00 (UTC)
+2026-10-14 18:00:00;41.9;G;0;;
+2026-10-14 19:00:00;41.8;G;0;;Höjdsystem: RH2000
+2026-10-14 20:00:00;39.8;G;0;;
+2026-10-14 21:00:00;37.4;G;0;;Kvalitetskontroll:
+2026-10-14 22:00:00;36.3;G;0;;Data före 2019-07-01 är ej kvalitetskontrollerad och felaktiga värden kan förekomma.
+2026-10-14 23:00:00;34.5;G;0;;Efter detta datum har data genomgått en automatisk kvalitetskontroll.
+2026-10-15 00:00:00;32.0;G;0;;
+2026-10-15 01:00:00;30.5;G;0;;Kvalitetskoderna:
+2026-10-15 02:00:00;28.8;G;0;;Grön (G) = Kontrollerade och godkända värden.
+2026-10-15 03:00:00;28.0;G;0;;Gul (Y) = Misstänkta eller aggregerade värden. Grovt kontrollerade arkivdata och okontrollerade realtidsdata (senaste 2 tim).
+2026-10-15 04:00:00;28.1;G;0;;Orange (O) = Okontrollerade värden.
+2026-10-15 05:00:00;28.2;G;0;;
+2026-10-15 06:00:00;27.4;G;0;;Orsaker till saknade data:
+2026-10-15 07:00:00;29.0;G;0;;  stationen eller givaren har varit ur funktion.
+2026-10-15 08:00:00;30.1;G;0;;  kvalitetskontrollerna har felmarkerat data (röd kvalitetskod). Efterföljande manuell granskning godkänner, rättar eller underkänner data.
 2026-10-15 09:00:00;32.3;G;0
 2026-10-15 10:00:00;36.4;G;0
 2026-10-15 11:00:00;41.6;G;0
 2026-10-15 12:00:00;43.9;G;0
 2026-10-15 13:00:00;51.0;G;0
+2026-10-15 14:00:00;57.4;G;0
+2026-10-15 15:00:00;57.9;G;0
+2026-10-15 16:00:00;59.7;G;0
