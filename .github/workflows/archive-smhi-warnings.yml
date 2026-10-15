@@ -29,10 +29,12 @@ jobs:
         run: python scripts/fetch_smhi_warnings.py
       - name: Build preliminary observed coastal-line reference
         run: python scripts/build_smhi_coast_reference.py
+      - name: Track warning versions across snapshots
+        run: python scripts/build_warning_versions.py
       - name: Save current warning data and historical snapshots
         shell: bash
         run: |
-          git add docs/warnings/current.json docs/warnings/history.json docs/warnings/observed_coastal_lines.geojson data/warning_snapshots/
+          git add docs/warnings/current.json docs/warnings/history.json docs/warnings/observed_coastal_lines.geojson docs/warnings/versions.json data/warning_snapshots/
           if git diff --cached --quiet; then
             echo "No changes."
             exit 0
