@@ -34,7 +34,8 @@ function drawWarnings(){
   smhiWarningLayer=L.layerGroup().addTo(smhiWarningMap);
   const colors={YELLOW:'#e5bc35',ORANGE:'#ea7b22',RED:'#be3131',MESSAGE:'#4288b8'};
   matches.forEach(w=>{
-    if(!w.geometry)return;
+    // Older snapshots contain full SMHI geometries: never draw them outside Luleå.
+    if(!w.geometry||w.clipped_to_municipality!==true)return;
     L.geoJSON(w.geometry,{style:{color:colors[String(w.level_code).toUpperCase()]||'#387ba8',weight:w.geometry?.type?.includes('Line')?5:2,fillOpacity:w.geometry?.type?.includes('Line')?0:0.35}})
       .bindPopup('<strong>'+warningText(w.event||w.title)+'</strong><p>'+warningText(w.level||'')+'</p><p>'+warningDate(w.start)+'</p>').addTo(smhiWarningLayer);
   });
@@ -60,6 +61,7 @@ async function initWarningsPage(){
     if(!response.ok)throw Error('Ingen publicerad varningsfil ännu');
     smhiWarningsData=await response.json();
     drawWarnings();
+    if(smhiWarningsData.warnings_clipped_to_municipality!==true)status.textContent+=' Kartytorna visas efter nästa datainsamling med kommunavgränsning.';
   }catch(e){status.textContent='Varningsdata är inte publicerade ännu: '+e.message;document.getElementById('warningResults').textContent='Väntar på första lyckade körningen av arkiveringen.';}
   try{
     const response=await fetch('warnings/history.json',{cache:'no-store'});
