@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "description": "Independent multi-station SMHI MetObs import. Legacy Kallax data stays under data/parameter_*.",
+  "stations": [
+    {
+      "id": "162860",
+      "name": "Luleå-Kallax Flygplats",
+      "parameters": [
+        1,
+        5
+      ]
+    },
+    {
+      "id": "161680",
+      "name": "Sunderbyn",
+      "parameters": [
+        5
+      ]
+    },
+    {
+      "id": "162960",
+      "name": "Råneå",
+      "parameters": [
+        5
+      ]
+    },
+    {
+      "id": "161900",
+      "name": "Klöverträsk D",
+      "parameters": [
+        5
+      ]
+    },
+    {
+      "id": "162790",
+      "name": "Rödkallen A",
+      "parameters": [
+        5
+      ]
+    },
+    {
+      "id": "162970",
+      "name": "Högsön",
+      "parameters": [
+        5
+      ]
+    },
+    {
+      "id": "162980",
+      "name": "Orrbyn",
+      "parameters": [
+        5
+      ]
+    },
+    {
+      "id": "162990",
+      "name": "Niemisel",
+      "parameters": [
+        5
+      ]
+    }
+  ],
+  "parameter_names": {
+    "1": "Lufttemperatur",
+    "5": "Nederbörd 1 dygn"
+  }
+}
