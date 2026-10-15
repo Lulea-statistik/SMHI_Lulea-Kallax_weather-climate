@@ -1,0 +1,39 @@
+name: Update Gulf of Bothnia water levels
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 6 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: gulf-bothnia-sealevel
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/build_sealevel_basin.py
+      - name: Validate dataset
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('docs/sealevel/basin.json'))
+          assert sum('annual' in s for s in x['stations'])>=3
+          print([(s['name'],len(s.get('annual',[]))) for s in x['stations']])
+          PY
+      - name: Commit dataset
+        run: |
+          git add docs/sealevel/basin.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Update Gulf of Bothnia water-level observations'
+          git pull --rebase origin main
+          git push origin HEAD:main
