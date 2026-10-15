@@ -2492,6 +2492,7 @@ function setupTabs(){
         if(btn.dataset.page==='algae')await initAlgaeMap();
         if(btn.dataset.page==='snowmap')await initSnowMap();
         if(btn.dataset.page==='lightning')await initLightningMap();
+        if(btn.dataset.page==='warnings'&&typeof initWarningsPage==='function')await initWarningsPage();
         setTimeout(()=>{
           Object.values(charts).forEach(c=>c.resize());
           if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();
