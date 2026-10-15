@@ -37,8 +37,14 @@ function render(){
  const keys=[...new Set(chosen.flatMap(s=>intervalRows(s,frequency).map(r=>r.time).filter(t=>t>=minKey&&t<=maxKey)))].sort();
  chart('basinHistory','line',keys,chosen.map((s,i)=>{let map=new Map(intervalRows(s,frequency).map(r=>[r.time,r.mean_cm]));return {label:s.name,data:keys.map(k=>map.has(k)&&refMap.has(k)?+(map.get(k)-refMap.get(k)).toFixed(2):null),pointRadius:0,borderWidth:1.5,spanGaps:false,borderColor:stationColor(s)};}),'cm relativt '+(ref?.name||'referensstation'));
  const time=$('basinMoment').value;
- const rows=series.map(s=>{let r=s.daily.find(x=>x.time===time);return {s,r};});
- chart('basinProfile','line',rows.map(x=>x.s.name),[{label:'Dygnsmedel, vald dag',data:rows.map(x=>x.r?.mean_cm??null),borderColor:'#8492a6',pointRadius:5,pointBackgroundColor:rows.map(x=>stationColor(x.s)),pointBorderColor:rows.map(x=>stationColor(x.s)),spanGaps:false}], 'cm RH 2000');
+ const profileFrequency=frequency;
+ const profileKey=profileFrequency==='weekly'?weekStart(time):profileFrequency==='monthly'?time.slice(0,7):time;
+ const rows=series.map(station=>{
+   const r=intervalRows(station,profileFrequency).find(x=>x.time===profileKey);
+   return {s:station,r};
+ }).filter(x=>x.r&&Number.isFinite(x.r.mean_cm)).sort((a,b)=>Number(a.s.lat)-Number(b.s.lat));
+ const profileLabel=profileFrequency==='weekly'?'Veckomedel, vald vecka':profileFrequency==='monthly'?'Månadsmedel, vald månad':'Dygnsmedel, vald dag';
+ chart('basinProfile','line',rows.map(x=>x.s.name),[{label:profileLabel,data:rows.map(x=>x.r.mean_cm),borderColor:'#8492a6',pointRadius:5,pointBackgroundColor:rows.map(x=>stationColor(x.s)),pointBorderColor:rows.map(x=>stationColor(x.s)),spanGaps:false,tension:0}], 'cm RH 2000');
  $('basinStatus').textContent='Tidsserie: skillnad i cm mot '+(ref?.name||'referensstation')+' vid samma datum (0 cm för referensstationen). RH 2000 · G · UTC. Saknade samtidiga värden ger luckor. Bassängprofilen visar absoluta RH 2000-värden.';
  const years=[...new Set(series.flatMap(s=>s.annual.map(x=>x.year)))].sort();
  chart('basinExtremes','line',years.map(String),chosen.flatMap(s=>['min_cm','max_cm'].map((metric,j)=>{const d=new Map(s.annual.map(r=>[r.year,(r.coverage_pct>=90?r[metric]:null)]));return {label:s.name+(j?' max':' min'),data:years.map(y=>d.get(y)??null),borderColor:colors[series.indexOf(s)%colors.length],borderDash:j?[]:[5,4],pointRadius:2,spanGaps:false};})),'cm RH 2000');
