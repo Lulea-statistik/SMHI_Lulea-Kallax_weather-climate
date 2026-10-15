@@ -1,0 +1,65 @@
+name: Update SMHI station observations
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "update (recent observations) or bootstrap (historical archive + recent)"
+        required: true
+        default: update
+        type: choice
+        options:
+          - update
+          - bootstrap
+      stations:
+        description: "Optional comma-separated SMHI station IDs (blank = all configured)"
+        required: false
+        type: string
+      parameters:
+        description: "Optional comma-separated parameter IDs (blank = all configured)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: smhi-station-observations
+  cancel-in-progress: false
+
+jobs:
+  update-stations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Fetch configured station-parameter combinations
+        env:
+          MODE: ${{ inputs.mode }}
+          STATIONS: ${{ inputs.stations }}
+          PARAMETERS: ${{ inputs.parameters }}
+        run: |
+          args=(--mode "$MODE")
+          if [ -n "$STATIONS" ]; then args+=(--stations "$STATIONS"); fi
+          if [ -n "$PARAMETERS" ]; then args+=(--parameters "$PARAMETERS"); fi
+          python scripts/fetch_smhi_stations.py "${args[@]}"
+      - name: Commit station observations
+        shell: bash
+        run: |
+          git add data/stations metadata/stations_last_run.json
+          if git diff --cached --quiet; then
+            echo "No station data changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update configurable SMHI station observations"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
