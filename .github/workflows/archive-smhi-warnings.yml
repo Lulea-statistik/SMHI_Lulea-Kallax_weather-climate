@@ -30,7 +30,7 @@ jobs:
       - name: Save current warning data and historical snapshots
         shell: bash
         run: |
-          git add docs/warnings/current.json data/warning_snapshots/
+          git add docs/warnings/current.json docs/warnings/history.json data/warning_snapshots/
           if git diff --cached --quiet; then
             echo "No changes."
             exit 0
