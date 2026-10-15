@@ -1979,12 +1979,12 @@ function render(){
   const timelineLabels=timelineTicks.map(k=>months[k%12]+' '+Math.floor(k/12));
   const timelineValues=timelineTicks.map(k=>timelineByMonth.has(k)&&Number.isFinite(timelineByMonth.get(k))?timelineByMonth.get(k):null);
   const timelineWrap=el('precipTimelineCanvasWrap');
-  if(timelineWrap)timelineWrap.style.width=Math.max(900,timelineTicks.length*13)+'px';
+  if(timelineWrap){timelineWrap.style.width=Math.max(900,timelineTicks.length*10)+'px';timelineWrap.style.height='250px';}
   destroyChart('precipTimeline');
   charts.precipTimeline=new Chart(el('precipTimeline'),{
     type:'bar',
     data:{labels:timelineLabels,datasets:[{label:'Månadsnederbörd',data:timelineValues,backgroundColor:PRECIP_DARK_BLUE,borderWidth:0,categoryPercentage:0.94,barPercentage:0.9}]},
-    options:{responsive:true,maintainAspectRatio:false,animation:false,
+    options:{responsive:true,maintainAspectRatio:false,animation:false,devicePixelRatio:1,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Nederbörd: '+(c.parsed.y==null?'saknas':c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:1})+' mm')}}},
       scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,minRotation:0,callback:function(value,index){const k=timelineTicks[index];return k%12===0?String(Math.floor(k/12)):'';}}},
         y:{beginAtZero:true,title:{display:true,text:'Nederbörd (mm)'},ticks:{precision:0}}}
