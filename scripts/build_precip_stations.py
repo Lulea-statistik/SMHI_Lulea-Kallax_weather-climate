@@ -28,11 +28,14 @@ OUT=ROOT/'docs'/'precip_stations.json'
 
 def main():
     now=datetime.now(timezone.utc)
+    config=json.loads((ROOT/'config'/'stations.json').read_text(encoding='utf-8'))
+    active_status={str(x['id']):x.get('active') for x in config['stations']}
     station_data={}
     warnings=[]
     for station in STATIONS:
         daily={}
-        for period in ('corrected-archive','latest-months'):
+        periods=('corrected-archive',) if active_status.get(station['id']) is False else ('corrected-archive','latest-months')
+        for period in periods:
             try:
                 rows,_,_=fetch_period(PARAM,station,period)
                 for row in rows:
@@ -59,7 +62,7 @@ def main():
             if (y,m)>=(now.year,now.month):continue
             if count<days-2:continue
             monthly.append({'year':y,'month':m,'sum':round(sum(values),2),'days':count,'expected_days':days})
-        station_data[station['id']]={'id':station['id'],'name':station['name'],'monthly':monthly}
+        station_data[station['id']]={'id':station['id'],'name':station['name'],'active':active_status.get(station['id']),'monthly':monthly}
         print(station['name'],len(daily),'daily observations',len(monthly),'complete months')
     groups=defaultdict(list)
     for st in station_data.values():
