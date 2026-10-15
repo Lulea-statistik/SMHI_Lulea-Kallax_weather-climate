@@ -9,7 +9,7 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
-from shapely.geometry import shape
+from shapely.geometry import shape, mapping
 from shapely.ops import transform
 from pyproj import Transformer
 
@@ -48,7 +48,10 @@ def main():
             geometry=shape(geom_data)
             if geometry.is_empty or not geometry.is_valid:continue
             if not municipal.intersects(geometry):continue
-            intersection=municipal_metric.intersection(transform(PROJECT,geometry))
+            # Clip in original WGS84 coordinates for mapping; calculate metrics in EPSG:3006.
+            clipped=geometry.intersection(municipal)
+            if clipped.is_empty:continue
+            intersection=transform(PROJECT,clipped)
             kind="linje" if geometry.geom_type in ("LineString","MultiLineString") else "yta" if geometry.geom_type in ("Polygon","MultiPolygon") else "annan"
             result.append({
                 "id":str(warning.get("id","")),"area_id":str(item.get("id","")),
@@ -64,7 +67,9 @@ def main():
                 "overlap_length_km":round(intersection.length/1000,3) if kind=="linje" else None,
                 "overlap_km2":round(intersection.area/1e6,2) if kind=="yta" else None,
                 "overlap_percent":round(100*intersection.area/municipal_metric.area,2) if kind=="yta" else None,
-                "geometry":geom_data
+                "geometry":mapping(clipped),
+                "source_geometry_type":geometry.geom_type,
+                "clipped_to_municipality":True
             })
     OUT.mkdir(parents=True,exist_ok=True)
     ARCHIVE.mkdir(parents=True,exist_ok=True)
@@ -72,7 +77,7 @@ def main():
     (ARCHIVE/(stamp+".json")).write_text(json.dumps({"fetched_utc":now.isoformat(),"source":API,"warnings":data},ensure_ascii=False),encoding="utf-8")
     summary={"fetched_utc":now.isoformat(),"source":API,
         "boundary_source":"docs/snowmap_boundary.geojson (working geometry, not verified official administrative boundary)",
-        "boundary_crs":"EPSG:4326","intersection_crs":"EPSG:3006",
+        "boundary_crs":"EPSG:4326","intersection_crs":"EPSG:3006","warnings_clipped_to_municipality":True,
         "national_warning_count":len(data),"municipality_warning_areas":len(result),
         "warnings":result,"history_note":"Snapshots begin when scheduled fetching starts; no retrospective warning archive is implied."}
     (OUT/"current.json").write_text(json.dumps(summary,ensure_ascii=False),encoding="utf-8")
