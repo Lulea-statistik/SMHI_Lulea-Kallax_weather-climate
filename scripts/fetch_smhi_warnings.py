@@ -49,6 +49,7 @@ def main():
             if geometry.is_empty or not geometry.is_valid:continue
             if not municipal.intersects(geometry):continue
             intersection=municipal_metric.intersection(transform(PROJECT,geometry))
+            kind="linje" if geometry.geom_type in ("LineString","MultiLineString") else "yta" if geometry.geom_type in ("Polygon","MultiPolygon") else "annan"
             result.append({
                 "id":str(warning.get("id","")),"area_id":str(item.get("id","")),
                 "event":(warning.get("event") or {}).get("sv",""),
@@ -59,8 +60,10 @@ def main():
                 "area_name":(item.get("areaName") or {}).get("sv",""),
                 "start":item.get("approximateStart"),"end":item.get("approximateEnd"),
                 "published":item.get("published"),
-                "overlap_km2":round(intersection.area/1e6,2),
-                "overlap_percent":round(100*intersection.area/municipal_metric.area,2),
+                "geometry_type":geometry.geom_type,"geography_kind":kind,
+                "overlap_length_km":round(intersection.length/1000,3) if kind=="linje" else None,
+                "overlap_km2":round(intersection.area/1e6,2) if kind=="yta" else None,
+                "overlap_percent":round(100*intersection.area/municipal_metric.area,2) if kind=="yta" else None,
                 "geometry":geom_data
             })
     OUT.mkdir(parents=True,exist_ok=True)
