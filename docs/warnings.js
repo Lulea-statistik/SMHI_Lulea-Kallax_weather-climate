@@ -41,6 +41,7 @@ function drawWarnings(){
   });
 }
 async function initWarningsPage(){
+  await loadWarningVersions();
   const status=document.getElementById('warningStatus');
   if(!smhiWarningMap){
     smhiWarningMap=L.map('warningsMap',{scrollWheelZoom:false}).setView([65.6,22.1],8);
@@ -72,4 +73,56 @@ async function initWarningsPage(){
     body.innerHTML='<table class="warning-history-table"><thead><tr><th>Insamlad</th><th>Varningsområden i Luleå</th><th>Kategorier</th></tr></thead><tbody>'+
       entries.slice(-50).reverse().map(e=>'<tr><td>'+warningDate(e.fetched_utc)+'</td><td>'+Number(e.lulea_area_count||0)+'</td><td>'+warningText((e.events||[]).join(', ')||'Inga')+'</td></tr>').join('')+'</tbody></table>';
   }catch{document.getElementById('warningHistory').textContent='Ingen publicerad insamlingshistorik ännu.';}
+}
+
+let warningVersions=null,warningVersionMap=null,warningVersionLayer=null;
+function showWarningVersion(){
+  const key=document.getElementById('warningVersionKey').value;
+  const selector=document.getElementById('warningVersionIndex');
+  const events=(warningVersions?.events||[]).filter(e=>e.key===key);
+  const idx=Number(selector.value);
+  const e=events[idx];
+  const status=document.getElementById('warningVersionStatus');
+  if(warningVersionLayer){warningVersionMap.removeLayer(warningVersionLayer);warningVersionLayer=null;}
+  document.getElementById('warningVersionTimeline').innerHTML=events.map((item,i)=>
+    '<div class="warning-item">'+warningText(warningDate(item.observed_at))+' – '+
+    warningText(item.action==='first_observed'?'Först observerad':item.action==='changed'?'Ändrad':'Inte längre observerad')+
+    ' · '+warningText(item.level_code||'')+(item.geometry_changed?' · Geometrin ändrades':'')+'</div>').join('');
+  if(!e){status.textContent='Välj en observation.';return;}
+  status.textContent='Observerad '+warningDate(e.observed_at)+' · '+(e.action==='first_observed'?'Första observation':e.action==='changed'?'Ändrad version':'Försvunnen ur flödet');
+  if(e.geometry){
+    const isLine=String(e.geography_kind).includes('Line');
+    warningVersionLayer=L.geoJSON(e.geometry,{style:{color:e.level_code==='RED'?'#bb3030':e.level_code==='ORANGE'?'#ec8728':'#ddbb36',weight:isLine?5:2,fillOpacity:isLine?0:.4}}).addTo(warningVersionMap);
+    if(warningVersionLayer.getBounds().isValid())warningVersionMap.fitBounds(warningVersionLayer.getBounds().pad(.15));
+  }
+  setTimeout(()=>warningVersionMap.invalidateSize(),40);
+}
+async function loadWarningVersions(){
+  const status=document.getElementById('warningVersionStatus');
+  if(!warningVersionMap){
+    warningVersionMap=L.map('warningVersionMap',{scrollWheelZoom:false}).setView([65.6,22],8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap contributors'}).addTo(warningVersionMap);
+    document.getElementById('warningVersionKey').addEventListener('change',()=>{
+      const key=document.getElementById('warningVersionKey').value;
+      const matching=(warningVersions?.events||[]).filter(e=>e.key===key);
+      const select=document.getElementById('warningVersionIndex');
+      select.innerHTML=matching.map((e,i)=>'<option value="'+i+'">'+warningText(warningDate(e.observed_at))+' – '+warningText(e.action)+'</option>').join('');
+      select.value=matching.length?String(matching.length-1):'';
+      showWarningVersion();
+    });
+    document.getElementById('warningVersionIndex').addEventListener('change',showWarningVersion);
+  }
+  setTimeout(()=>warningVersionMap.invalidateSize(),100);
+  try{
+    const response=await fetch('warnings/versions.json',{cache:'no-store'});
+    if(!response.ok)throw Error('Versionsfil saknas');
+    warningVersions=await response.json();
+    const keys=[...new Set((warningVersions.events||[]).map(e=>e.key))];
+    const dropdown=document.getElementById('warningVersionKey');
+    const previous=dropdown.value;
+    dropdown.innerHTML=keys.map(k=>'<option value="'+warningText(k)+'">'+warningText(k)+'</option>').join('');
+    dropdown.value=keys.includes(previous)?previous:(keys[0]||'');
+    dropdown.dispatchEvent(new Event('change'));
+    if(!keys.length)status.textContent='Inga observerade versioner ännu.';
+  }catch(err){status.textContent='Kunde inte läsa versionshistorik: '+err.message;}
 }
