@@ -76,11 +76,14 @@ def main() -> int:
                     incoming.extend(archived)
                 except Exception as exc:
                     problems.append("archive: " + str(exc))
-            try:
-                recent, _, _, _ = fetch_recent(pcfg, station)
-                incoming.extend(recent)
-            except Exception as exc:
-                problems.append("recent: " + str(exc))
+            if station.get("active") is False:
+                print("Inactive station: skip recent fetch for " + station["name"])
+            else:
+                try:
+                    recent, _, _, _ = fetch_recent(pcfg, station)
+                    incoming.extend(recent)
+                except Exception as exc:
+                    problems.append("recent: " + str(exc))
             before, after = save_merged(target, incoming) if incoming else (len(load_existing(target)), len(load_existing(target)))
             status = "ok" if incoming else ("existing" if after and not problems else "unavailable")
             print(f"{station['name']} ({sid}), parameter {pid}: {status}, {before} -> {after} observations")
