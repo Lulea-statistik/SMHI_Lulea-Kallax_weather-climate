@@ -60,7 +60,7 @@ def main():
     periods = station.get("period", [])
     if not periods:
         raise RuntimeError(f"No periods in SMHI metadata for station {STATION}")
-    required = ("corrected-archive", "latest-months") if args.mode == "bootstrap" else ("latest-months",)
+    required = ("corrected-archive", "latest-day") if args.mode == "bootstrap" else ("latest-day",)
     manifest = {"station_id": STATION, "station_name": title, "parameter": parameter, "reference": "RH 2000",
                 "unit": "cm", "retrieved_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
                 "sources": {}, "mode": args.mode}
