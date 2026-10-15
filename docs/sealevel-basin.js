@@ -77,8 +77,18 @@ function render(){
      {label:'Linjär trend – minimum',data:minTrend.values,borderColor:'#dc2626',borderWidth:2,pointRadius:0,borderDash:[6,4],spanGaps:false},
      {label:'Linjär trend – maximum',data:maxTrend.values,borderColor:'#dc2626',borderWidth:2,pointRadius:0,spanGaps:false}
    ],'cm RH 2000');
-   const trendText=(t)=>t.slope===null?'för få år':(t.slope*10>=0?'+':'')+(t.slope*10).toLocaleString('sv-SE',{maximumFractionDigits:2})+' cm/10 år';
-   $('basinExtremeTrend').textContent='Linjär trend '+extremeStation.name+' ('+(annual.length?annual[0].year+'–'+annual.at(-1).year:'ingen komplett period')+'): minimum '+trendText(minTrend)+' · maximum '+trendText(maxTrend)+'. Baserat på '+annual.length+' år med minst 90 % godkänd datatäckning.';
+   const first=annual[0]?.year,last=annual.at(-1)?.year;
+   const trendText=t=>{
+     if(t.slope===null)return 'för få datapunkter för linjär trend';
+     const per10=t.slope*10,amount=Math.abs(per10),digits=amount>=100?0:amount>=10?1:2;
+     return (per10>=0?'+':'')+per10.toLocaleString('sv-SE',{minimumFractionDigits:digits,maximumFractionDigits:digits})+' cm per 10 år';
+   };
+   $('basinExtremeTrend').textContent=first===undefined
+      ?'För få fullständiga år för trendberäkning.'
+      :'Från '+first+' till '+last+': årsminimum '+trendText(minTrend)+'; årsmaximum '+trendText(maxTrend)+' (historisk linjär trend). Beräknad med faktisk kalenderårsskala utifrån '+annual.length+' år med minst 90 % godkända timvärden.';
+   const short=annual.length<10||(last-first+1)<10;
+   $('basinExtremeWarning').textContent=short?'Obs! Trendperiod kortare än 10 år ('+annual.length+' år med data).':'';
+   $('basinExtremeWarning').hidden=!short;
  }
 
 }
