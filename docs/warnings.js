@@ -27,7 +27,7 @@ function drawWarnings(){
   }
   results.innerHTML=matches.length?matches.map(w=>'<article class="warning-item"><strong>'+warningText(w.event||w.title||'Varning')+'</strong> · '+warningText(w.level||'')+
     '<div class="warning-meta">'+warningText(w.title||'')+' · '+warningText(w.area_name||'')+' · '+warningDate(w.start)+' – '+warningDate(w.end)+'</div>'+
-    '<div class="warning-meta">Överlappning: '+Number(w.overlap_km2||0).toLocaleString('sv-SE')+' km² ('+Number(w.overlap_percent||0).toLocaleString('sv-SE')+' % av arbetsgeometrin)</div></article>').join('')
+    '<div class="warning-meta">'+(w.geography_kind==='linje'?'Kuststräcka inom arbetsgeometrin: '+Number(w.overlap_length_km||0).toLocaleString('sv-SE')+' km (linjegeometri)':'Ytöverlappning: '+Number(w.overlap_km2||0).toLocaleString('sv-SE')+' km² ('+Number(w.overlap_percent||0).toLocaleString('sv-SE')+' % av arbetsgeometrin)')+'</div></article>').join('')
     :'<p>Inga varningsområden matchar valda filter i senast insamlade data.</p>';
   if(!smhiWarningMap)return;
   if(smhiWarningLayer)smhiWarningMap.removeLayer(smhiWarningLayer);
@@ -35,7 +35,7 @@ function drawWarnings(){
   const colors={YELLOW:'#e5bc35',ORANGE:'#ea7b22',RED:'#be3131',MESSAGE:'#4288b8'};
   matches.forEach(w=>{
     if(!w.geometry)return;
-    L.geoJSON(w.geometry,{style:{color:colors[String(w.level_code).toUpperCase()]||'#387ba8',weight:2,fillOpacity:0.35}})
+    L.geoJSON(w.geometry,{style:{color:colors[String(w.level_code).toUpperCase()]||'#387ba8',weight:w.geometry?.type?.includes('Line')?5:2,fillOpacity:w.geometry?.type?.includes('Line')?0:0.35}})
       .bindPopup('<strong>'+warningText(w.event||w.title)+'</strong><p>'+warningText(w.level||'')+'</p><p>'+warningDate(w.start)+'</p>').addTo(smhiWarningLayer);
   });
 }
