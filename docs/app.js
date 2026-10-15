@@ -1964,7 +1964,7 @@ function render(){
       ?'Oviktat medel av tillgängliga stationer per månad (antal stationer: '+(counts.length?Math.min(...counts)+'–'+Math.max(...counts):'saknas')+'). Endast kompletta månader ingår. Detta är ett stationsmedel, inte ett arealvägt kommunmedel. Nederbördstyp baseras fortsatt på Kallax.'
       :'SMHI:s dygnsnederbörd (parameter 5) summerad till månader. Årstotaler visas för år med 12 kompletta månader. Nederbördstyp baseras fortsatt på Kallax.';
   }
-  const pa=selectedAnnualRows(precipAnnual,precipSeries,f);const paYears=pa.map(r=>r.year),paVals=pa.map(r=>r.sum);
+  const pa=selectedAnnualRows(selectedPrecipStation==='162860'?DATA.precipitation.annual:precipAnnual,precipSeries,f);const paYears=pa.map(r=>r.year),paVals=pa.map(r=>r.sum);
   destroyChart('precipAnnual');
   charts.precipAnnual=new Chart(el('precipAnnual'),{
     data:{labels:paYears,datasets:[
