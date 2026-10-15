@@ -1967,6 +1967,30 @@ function render(){
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>Math.round(c.parsed.y)+' mm'}}},
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'mm'},ticks:{precision:0}}}}});
 
+  // A continuous calendar timeline: never sort by month alone or turn gaps into zero rainfall.
+  const timelineRows=DATA.precipitation.monthly_total
+    .filter(r=>inYears(r,f)&&Number.isInteger(Number(r.year))&&Number(r.month)>=1&&Number(r.month)<=12)
+    .sort((a,b)=>Number(a.year)-Number(b.year)||Number(a.month)-Number(b.month));
+  const timelineByMonth=new Map(timelineRows.map(r=>[Number(r.year)*12+Number(r.month)-1,Number(r.sum)]));
+  const firstMonth=timelineRows.length?Number(timelineRows[0].year)*12+Number(timelineRows[0].month)-1:null;
+  const lastRow=timelineRows[timelineRows.length-1];
+  const lastMonth=lastRow?Number(lastRow.year)*12+Number(lastRow.month)-1:null;
+  const timelineTicks=firstMonth===null?[]:Array.from({length:lastMonth-firstMonth+1},(_,i)=>firstMonth+i);
+  const timelineLabels=timelineTicks.map(k=>months[k%12]+' '+Math.floor(k/12));
+  const timelineValues=timelineTicks.map(k=>timelineByMonth.has(k)&&Number.isFinite(timelineByMonth.get(k))?timelineByMonth.get(k):null);
+  const timelineWrap=el('precipTimelineCanvasWrap');
+  if(timelineWrap)timelineWrap.style.width=Math.max(900,timelineTicks.length*13)+'px';
+  destroyChart('precipTimeline');
+  charts.precipTimeline=new Chart(el('precipTimeline'),{
+    type:'bar',
+    data:{labels:timelineLabels,datasets:[{label:'Månadsnederbörd',data:timelineValues,backgroundColor:PRECIP_DARK_BLUE,borderWidth:0,categoryPercentage:0.94,barPercentage:0.9}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Nederbörd: '+(c.parsed.y==null?'saknas':c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:1})+' mm')}}},
+      scales:{x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:0,minRotation:0,callback:function(value,index){const k=timelineTicks[index];return k%12===0?String(Math.floor(k/12)):'';}}},
+        y:{beginAtZero:true,title:{display:true,text:'Nederbörd (mm)'},ticks:{precision:0}}}
+    }
+  });
+
   let pt=DATA.precipitation.types.filter(r=>inYears(r,f));
   let ptAnnual=pt;if(f.month)ptAnnual=ptAnnual.filter(r=>r.month===f.month);
   const pta=precipTypeShares(ptAnnual,r=>r.year);
