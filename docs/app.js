@@ -2255,7 +2255,7 @@ function render(){
   const coverageByParameter={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',5:'Nederbörd 1 dygn',6:'Relativ luftfuktighet',7:'Nederbörd 1 timme',8:'Snödjup',10:'Solskenstid',11:'Global irradians',12:'Sikt',13:'Rådande väder',17:'Nederbördstyp 12 timmar',18:'Nederbördstyp 24 timmar',21:'Byvind'};
   document.querySelectorAll('.method-coverage').forEach(cell=>{
     const code=cell.dataset.coverage;
-    if(/^\\d+(,\\d+)*$/.test(code)){
+    if(/^\d+(,\d+)*$/.test(code)){
       const sources=code.split(',').map(id=>DATA.coverage.find(r=>r.name===coverageByParameter[id])).filter(r=>r&&r.rows>0);
       cell.textContent=sources.length?sources.map(r=>r.name+': '+r.min_date+'–'+r.max_date+' ('+r.rows.toLocaleString('sv-SE')+' obs.)').join('; '):'Inga observationer i aktuell datafil';
     }else{
