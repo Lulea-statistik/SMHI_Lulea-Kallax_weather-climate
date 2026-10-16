@@ -4,7 +4,7 @@ let basin=null,graphs={},playTimer=null;
 const DAY_MS=86400000;
 function nextDay(iso){return new Date(Date.parse(iso+'T00:00:00Z')+DAY_MS).toISOString().slice(0,10);}
 function pauseProfile(){if(playTimer!==null){clearInterval(playTimer);playTimer=null;}if($('basinPlay'))$('basinPlay').disabled=false;if($('basinPause'))$('basinPause').disabled=true;}
-function playProfile(){if(playTimer!==null||!basin)return;const picker=$('basinMoment');if($('basinInterval').value!=='daily'){$('basinInterval').value='daily';render();}const max=picker.max;if(!picker.value||picker.value>=max)picker.value=picker.min||max;if(!picker.value||picker.value>=max)return; $('basinPlay').disabled=true;$('basinPause').disabled=false;playTimer=setInterval(()=>{if(!document.querySelector('#page-sealevel.active')){pauseProfile();return;}const next=nextDay(picker.value);if(next>max){pauseProfile();return;}picker.value=next;renderProfile();if(next>=max)pauseProfile();},250);}
+function playProfile(){if(playTimer!==null||!basin)return;const picker=$('basinMoment');if($('basinInterval').value!=='daily'){$('basinInterval').value='daily';render();}const max=picker.max;if(!picker.value||picker.value>=max)picker.value=picker.min||max;if(!picker.value||picker.value>=max)return; $('basinPlay').disabled=true;$('basinPause').disabled=false;playTimer=setInterval(()=>{if(!document.querySelector('#page-sealevel.active')){pauseProfile();return;}const next=nextDay(picker.value);if(next>max){pauseProfile();return;}picker.value=next;renderProfile();if(next>=max)pauseProfile();},700);}
 // Continuous latitude scale: southernmost dark blue, northernmost pale red.
 const south=[18,48,125],north=[244,156,164];
 const validLat=()=>valid().filter(s=>Number.isFinite(+s.lat));
@@ -62,16 +62,36 @@ function profileBounds(series,start,end,frequency){
 }
 function renderProfile(){
  if(!basin)return;
- const series=valid(),frequency=$('basinInterval').value;
- const time=$('basinMoment').value;
- const profileFrequency=frequency;
- const profileKey=profileFrequency==='weekly'?weekStart(time):profileFrequency==='monthly'?time.slice(0,7):time;
- const rows=series.map(station=>{
-   const r=intervalRows(station,profileFrequency).find(x=>x.time===profileKey);
-   return {s:station,r};
- }).filter(x=>x.r&&Number.isFinite(x.r.mean_cm)).sort((a,b)=>Number(a.s.lat)-Number(b.s.lat));
- const profileLabel=profileFrequency==='weekly'?'Veckomedel, vald vecka':profileFrequency==='monthly'?'Månadsmedel, vald månad':'Dygnsmedel, vald dag';
- chart('basinProfile','line',rows.map(x=>x.s.name),[{label:profileLabel,data:rows.map(x=>x.r.mean_cm),borderColor:'#8492a6',pointRadius:5,pointBackgroundColor:rows.map(x=>stationColor(x.s)),pointBorderColor:rows.map(x=>stationColor(x.s)),spanGaps:false,tension:0}], 'cm RH 2000',profileBounds(series,$('basinStart').value,$('basinEnd').value,frequency));
+ const stations=valid().filter(s=>Number.isFinite(Number(s.lat))).sort((a,b)=>Number(a.lat)-Number(b.lat));
+ const frequency=$('basinInterval').value,time=$('basinMoment').value;
+ const key=frequency==='weekly'?weekStart(time):frequency==='monthly'?time.slice(0,7):time;
+ const values=stations.map(s=>{
+   const row=intervalRows(s,frequency).find(r=>r.time===key);
+   return row&&Number.isFinite(row.mean_cm)?row.mean_cm:null;
+ });
+ const label=frequency==='weekly'?'Veckomedel, vald vecka':frequency==='monthly'?'Månadsmedel, vald månad':'Dygnsmedel, vald dag';
+ const labels=stations.map(s=>s.name),colors=stations.map(stationColor);
+ const bounds=profileBounds(stations,$('basinStart').value,$('basinEnd').value,frequency);
+ const existing=graphs.basinProfile;
+ if(existing){
+   existing.data.labels=labels;
+   const ds=existing.data.datasets[0];
+   ds.label=label;ds.data=values;ds.pointBackgroundColor=colors;ds.pointBorderColor=colors;
+   if(bounds)Object.assign(existing.options.scales.y,bounds);
+   // Keep the same Chart instance so Chart.js can interpolate each station's y-value.
+   existing.update(playTimer!==null?'default':'none');
+   return;
+ }
+ const ds={label,data:values,borderColor:'#8492a6',borderWidth:2.5,
+   pointRadius:4,pointHoverRadius:6,pointBackgroundColor:colors,pointBorderColor:colors,
+   spanGaps:false,tension:0.32,cubicInterpolationMode:'monotone',fill:{target:'origin',above:'rgba(100,116,139,0.10)',below:'rgba(100,116,139,0.10)'}};
+ graphs.basinProfile=new Chart($('basinProfile'),{type:'line',data:{labels,datasets:[ds]},
+   options:{responsive:true,maintainAspectRatio:false,
+     animation:{duration:600,easing:'easeInOutCubic'},
+     transitions:{active:{animation:{duration:600}}},
+     interaction:{mode:'index',intersect:false},
+     plugins:{legend:{display:false},tooltip:{enabled:true}},
+     scales:{x:{ticks:{maxTicksLimit:11}},y:{title:{display:true,text:'cm RH 2000'},...(bounds||{})}}}});
 }
 function render(){
  if(!basin)return;
