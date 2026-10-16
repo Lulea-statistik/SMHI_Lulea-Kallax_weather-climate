@@ -159,3 +159,11 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
 body.sealevel-active #globalFilters{display:none!important}
 /* Same loading tint as the crime statistics dashboard. */
 .global-loading:not(.is-hidden){background:rgba(254,226,226,.78);border-radius:6px;padding:7px 10px;box-shadow:0 0 0 1px rgba(220,38,38,.10) inset;transition:background-color .18s ease,box-shadow .18s ease,opacity .18s ease}
+
+/* Water-level comparison charts: two across on desktop, original canvas heights. */
+@media(min-width:1050px){
+  #page-sealevel.active{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #page-sealevel .sealevel-pair{grid-column:auto;min-width:0}
+}
+@media(max-width:1049px){#page-sealevel .sealevel-pair{grid-column:1/-1;min-width:0}}
+#page-sealevel .sealevel-pair canvas{max-height:none}
