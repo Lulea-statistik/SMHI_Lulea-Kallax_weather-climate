@@ -2494,6 +2494,7 @@ function setupTabs(){
         btn.classList.add('active');
         el('page-'+btn.dataset.page).classList.add('active');
         document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');
+        document.body.classList.toggle('sealevel-active',btn.dataset.page==='sealevel');
         document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');
         document.body.classList.toggle('algae-active',btn.dataset.page==='algae');
         const monthFilter=el('globalMonthFilter');
