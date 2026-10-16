@@ -1,3 +1,11 @@
+
+/* Lulea webbtypografi: Inter for loptext, Protipo for rubriker/lankar nar fonten ar tillganglig. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+:root{--font-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;--font-heading:'protipo','Inter',system-ui,sans-serif;font-family:var(--font-body)}
+body{font-family:var(--font-body)}
+h1,h2,h3,h4,h5,h6,a,nav a{font-family:var(--font-heading)}
+button,input,select,textarea,table{font-family:var(--font-body)}
+
 :root{--bg:#f5f7fa;--card:#fff;--text:#1f2937;--muted:#6b7280;--line:#d9dee7;--accent:#1f5f8b}
 *{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
 .topbar{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;background:#fff;border-bottom:1px solid var(--line)}
