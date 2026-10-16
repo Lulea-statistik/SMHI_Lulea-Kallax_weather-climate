@@ -285,3 +285,4 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162860,Luleå-Kallax Flygplats,5,Nederbördsmängd,"summa 1 dygn, 1 gång/dygn, kl 06",millimeter,2026-10-12T06:00:01Z,2026-10-12T08:00:01+02:00,1791784801000,1791871200000,0.2,0.2,G,2026-10-12,latest-months
 162860,Luleå-Kallax Flygplats,5,Nederbördsmängd,"summa 1 dygn, 1 gång/dygn, kl 06",millimeter,2026-10-13T06:00:01Z,2026-10-13T08:00:01+02:00,1791871201000,1791957600000,10.1,10.1,G,2026-10-13,latest-months
 162860,Luleå-Kallax Flygplats,5,Nederbördsmängd,"summa 1 dygn, 1 gång/dygn, kl 06",millimeter,2026-10-14T06:00:01Z,2026-10-14T08:00:01+02:00,1791957601000,1792044000000,0.3,0.3,G,2026-10-14,latest-months
+162860,Luleå-Kallax Flygplats,5,Nederbördsmängd,"summa 1 dygn, 1 gång/dygn, kl 06",millimeter,2026-10-15T06:00:01Z,2026-10-15T08:00:01+02:00,1792044001000,1792130400000,15.2,15.2,G,2026-10-15,latest-months
