@@ -2251,6 +2251,19 @@ function render(){
   el('zeroTable').innerHTML='<table><thead><tr><th>Datum</th><th>Min °C</th><th>Max °C</th><th>Antal genomgångar</th><th>Riktning</th><th>Observationer</th></tr></thead><tbody>'+z.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(r=>'<tr><td>'+r.date+'</td><td>'+r.min+'</td><td>'+r.max+'</td><td>'+r.crossings+'</td><td>'+r.directions.join(', ')+'</td><td>'+r.observations+'</td></tr>').join('')+'</tbody></table>';
 
   el('coverage').innerHTML='<table><thead><tr><th>Parameter</th><th>Från</th><th>Till</th><th>Observationer</th></tr></thead><tbody>'+DATA.coverage.map(r=>'<tr><td>'+r.name+'</td><td>'+r.min_date+'</td><td>'+r.max_date+'</td><td>'+r.rows.toLocaleString('sv-SE')+'</td></tr>').join('')+'</tbody></table>';
+  // Data coverage in the method table is computed from the same dataset as the charts.
+  const coverageByParameter={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',5:'Nederbörd 1 dygn',6:'Relativ luftfuktighet',7:'Nederbörd 1 timme',8:'Snödjup',10:'Solskenstid',11:'Global irradians',12:'Sikt',13:'Rådande väder',17:'Nederbördstyp 12 timmar',18:'Nederbördstyp 24 timmar',21:'Byvind'};
+  document.querySelectorAll('.method-coverage').forEach(cell=>{
+    const code=cell.dataset.coverage;
+    if(/^\\d+(,\\d+)*$/.test(code)){
+      const sources=code.split(',').map(id=>DATA.coverage.find(r=>r.name===coverageByParameter[id])).filter(r=>r&&r.rows>0);
+      cell.textContent=sources.length?sources.map(r=>r.name+': '+r.min_date+'–'+r.max_date+' ('+r.rows.toLocaleString('sv-SE')+' obs.)').join('; '):'Inga observationer i aktuell datafil';
+    }else{
+      const descriptions={snowgrid:'Varierar mellan rasterkällor och snösäsonger; se snötäckeskartan.',lightning:'Varierar med insamlade blixtobservationer; se blixtdiagram.',seaice:'Varierar per issäsong och dataunderlag; se havsisdiagram.',stromoren:'Se aktuell tidsperiod för Strömören på vattenståndssidan.',basin:'Varierar per station och datum; endast samtidiga observationer jämförs.',warnings:'Från första arkiverade varningsversionen; visas i varningshistoriken.'};
+      cell.textContent=descriptions[code]||'Ej fastställd';
+    }
+  });
+
 }
 function solarTimes(dateStr,lat=65.543,lon=22.124){
   const [y,m,d]=dateStr.split('-').map(Number);
