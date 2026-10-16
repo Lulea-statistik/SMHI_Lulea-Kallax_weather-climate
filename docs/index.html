@@ -61,7 +61,7 @@
 
   <link rel="icon" type="image/x-icon" href="https://lulea-statistik.github.io/BR-brottsstatistik/kommun-favicon.ico?v=2">
 
-  <link rel="stylesheet" href="style.css?v=43">
+  <link rel="stylesheet" href="style.css?v=44">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -415,8 +415,8 @@
       <div class="sea-level-stats" id="seaLevelStats"></div>
       <div style="position:relative;height:360px"><canvas id="seaLevelHistory"></canvas></div>
     </div>
-    <div class="chart-card full"><h2>Årsvis medel-, minimi- och maximivattenstånd</h2><p class="hint">Baserat på SMHI:s godkända observationer (G). År med ofullständig täckning är inte jämförbara med hela år.</p><div style="position:relative;height:350px"><canvas id="seaLevelAnnual"></canvas></div></div>
-    <div class="chart-card full"><h2>Månadsvariation</h2><p class="hint">Medelvärde av godkända observationer för respektive kalendermånad inom valt årsintervall.</p><div style="position:relative;height:300px"><canvas id="seaLevelSeason"></canvas></div></div>
+    <div class="chart-card sealevel-pair"><h2>Årsvis medel-, minimi- och maximivattenstånd</h2><p class="hint">Baserat på SMHI:s godkända observationer (G). År med ofullständig täckning är inte jämförbara med hela år.</p><div style="position:relative;height:350px"><canvas id="seaLevelAnnual"></canvas></div></div>
+    <div class="chart-card sealevel-pair"><h2>Månadsvariation</h2><p class="hint">Medelvärde av godkända observationer för respektive kalendermånad inom valt årsintervall.</p><div style="position:relative;height:300px"><canvas id="seaLevelSeason"></canvas></div></div>
     <div class="chart-card full">
       <h2>Bassängsvängningar – Bottenhavet och Bottenviken</h2>
       <p class="hint">Jämför samtidiga vattenstånd längs kusten från Forsmark och norrut. Varje kurva visar skillnaden mot vald referensstation (standard Ratan), som blir 0 cm vid samtliga mättillfällen. Hypotesen om motfas mellan söder och norr behöver prövas med mätdata och tidsförskjutningar; motsatt nivå är inte ett generellt samband.</p>
@@ -425,13 +425,13 @@
       <div class="page-tools"><label>Referensstation (0 cm) <select id="basinReference"></select></label><label>Från datum <input type="date" id="basinStart"></label><label>Till datum <input type="date" id="basinEnd"></label><label>Upplösning <select id="basinInterval"><option value="daily">Dygn</option><option value="weekly">Vecka</option><option value="monthly">Månad</option></select></label></div>
       <div style="position:relative;height:360px"><canvas id="basinHistory"></canvas></div>
     </div>
-    <div class="chart-card full">
+    <div class="chart-card sealevel-pair">
       <h2>Bassängprofil – syd till nord</h2>
       <p class="hint">Profilen visar stationsvärden på en utvald dag från söder mot norr. Linjen är schematisk och är inte en interpolerad eller fysiskt uppmätt havsyta.</p>
       <div class="page-tools"><label>Vald dag <input type="date" id="basinMoment"></label><button type="button" id="basinPlay" aria-label="Spela upp bassängprofil dag för dag">▶ Play</button><button type="button" id="basinPause" disabled aria-label="Pausa uppspelning av bassängprofil">⏸ Paus</button><span class="hint">1 dag per 0,25 sekunder. Uppspelning använder dygnsupplösning.</span></div>
       <div style="position:relative;height:330px"><canvas id="basinProfile"></canvas></div>
     </div>
-    <div class="chart-card full">
+    <div class="chart-card sealevel-pair">
       <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap"><h2>Årsvisa vattenståndsextremer längs kusten</h2><span id="basinExtremeWarning" role="status" hidden style="color:#b45309;font-weight:600;font-size:0.9rem"></span></div>
       <p class="hint">Heldragna linjer visar årsmaximum och streckade årsminimum. Endast år med minst 90 procent godkända timobservationer visas. Extremer påverkas av väder, havsnivå, landhöjning och mätförhållanden. Förändringar bevisar inte fler stormar.</p>
       <div class="page-tools"><label>Station <select id="basinExtremeStation"></select></label></div>
