@@ -154,3 +154,8 @@ body.temp2-active #globalFilters #resetFilters{display:none!important}
 .warning-meta{color:var(--muted);font-size:12px}
 .warning-history-table{width:100%;border-collapse:collapse;font-size:13px}
 .warning-history-table th,.warning-history-table td{border-bottom:1px solid var(--line);padding:7px;text-align:left}
+
+/* Water level uses its own date selectors, not global climate filters. */
+body.sealevel-active #globalFilters{display:none!important}
+/* Same loading tint as the crime statistics dashboard. */
+.global-loading:not(.is-hidden){background:rgba(254,226,226,.78);border-radius:6px;padding:7px 10px;box-shadow:0 0 0 1px rgba(220,38,38,.10) inset;transition:background-color .18s ease,box-shadow .18s ease,opacity .18s ease}
