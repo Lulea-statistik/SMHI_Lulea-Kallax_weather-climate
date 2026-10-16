@@ -28,7 +28,7 @@ function intervalRows(s,frequency){
  return [...groups].sort((a,b)=>a[0].localeCompare(b[0])).map(([time,v])=>({time,mean_cm:v.sum/v.count,count:v.count}));
 }
 const valid=()=>basin.stations.filter(s=>s.annual?.length);
-function chart(id,type,labels,series,ylabel){if(graphs[id])graphs[id].destroy();graphs[id]=new Chart($(id),{type,data:{labels,datasets:series},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:true}},scales:{x:{ticks:{maxTicksLimit:11}},y:{title:{display:true,text:ylabel}}}}});}
+function chart(id,type,labels,series,ylabel,yBounds){if(graphs[id])graphs[id].destroy();graphs[id]=new Chart($(id),{type,data:{labels,datasets:series},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:true}},scales:{x:{ticks:{maxTicksLimit:11}},y:{title:{display:true,text:ylabel},...(yBounds||{})}}}});}
 function extremeTrend(rows,key){
  const n=rows.length;
  if(n<3)return {values:rows.map(()=>null),slope:null};
@@ -38,6 +38,27 @@ function extremeTrend(rows,key){
  if(!denominator)return {values:rows.map(()=>null),slope:null};
  const slope=rows.reduce((a,r)=>a+(r.year-meanX)*(r[key]-meanY),0)/denominator;
  return {values:rows.map(r=>+(meanY+slope*(r.year-meanX)).toFixed(2)),slope};
+}
+function setPeriodLimits(){
+ const station=valid().find(s=>String(s.id)===$('basinReference').value);
+ const dates=(station?.daily||[]).map(r=>r.time).filter(Boolean).sort();
+ if(!dates.length)return;
+ const first=dates[0],last=dates.at(-1),from=$('basinStart'),to=$('basinEnd');
+ for(const input of [from,to]){input.min=first;input.max=last;}
+ if(!from.value||from.value<first||from.value>last)from.value=first;
+ if(!to.value||to.value>last||to.value<first)to.value=last;
+ if(from.value>to.value)to.value=from.value;
+ const moment=$('basinMoment');
+ moment.min=first;moment.max=last;
+ if(!moment.value||moment.value<first||moment.value>last)moment.value=last;
+}
+function profileBounds(series,start,end,frequency){
+ const first=frequency==='weekly'?weekStart(start):frequency==='monthly'?start.slice(0,7):start;
+ const last=frequency==='weekly'?weekStart(end):frequency==='monthly'?end.slice(0,7):end;
+ const values=series.flatMap(s=>intervalRows(s,frequency).filter(r=>r.time>=first&&r.time<=last).map(r=>r.mean_cm)).filter(Number.isFinite);
+ if(!values.length)return null;
+ const lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(1,(hi-lo)*0.05);
+ return {min:Math.floor(lo-pad),max:Math.ceil(hi+pad)};
 }
 function renderProfile(){
  if(!basin)return;
@@ -50,7 +71,7 @@ function renderProfile(){
    return {s:station,r};
  }).filter(x=>x.r&&Number.isFinite(x.r.mean_cm)).sort((a,b)=>Number(a.s.lat)-Number(b.s.lat));
  const profileLabel=profileFrequency==='weekly'?'Veckomedel, vald vecka':profileFrequency==='monthly'?'Månadsmedel, vald månad':'Dygnsmedel, vald dag';
- chart('basinProfile','line',rows.map(x=>x.s.name),[{label:profileLabel,data:rows.map(x=>x.r.mean_cm),borderColor:'#8492a6',pointRadius:5,pointBackgroundColor:rows.map(x=>stationColor(x.s)),pointBorderColor:rows.map(x=>stationColor(x.s)),spanGaps:false,tension:0}], 'cm RH 2000');
+ chart('basinProfile','line',rows.map(x=>x.s.name),[{label:profileLabel,data:rows.map(x=>x.r.mean_cm),borderColor:'#8492a6',pointRadius:5,pointBackgroundColor:rows.map(x=>stationColor(x.s)),pointBorderColor:rows.map(x=>stationColor(x.s)),spanGaps:false,tension:0}], 'cm RH 2000',profileBounds(series,$('basinStart').value,$('basinEnd').value,frequency));
 }
 function render(){
  if(!basin)return;
@@ -99,18 +120,18 @@ async function init(){
  basin=await response.json();let stations=valid();if(!stations.length)throw Error('Inga stationsdata');
  $('basinReference').innerHTML=stations.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('');
  $('basinReference').value=String(stations.find(s=>s.id===2056)?.id||stations[0].id);
- $('basinReference').addEventListener('change',render);
+ $('basinReference').addEventListener('change',()=>{pauseProfile();setPeriodLimits();render();});
  $('basinExtremeStation').innerHTML=stations.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('');
  $('basinExtremeStation').value=String(stations.find(s=>s.id===2056)?.id||stations[0].id);
  $('basinExtremeStation').addEventListener('change',render);
  $('basinStationList').innerHTML=stations.map(s=>'<label style="display:inline-flex;gap:5px;align-items:center;margin:5px"><input type="checkbox" id="basinStation'+s.id+'" checked><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+stationColor(s)+'"></span> '+s.name+'</label>').join(' ');
  const all=stations.flatMap(s=>s.daily.map(r=>r.time)).sort(),latest=all.at(-1);
- $('basinStart').value=latest.slice(0,4)+'-01-01';$('basinEnd').value=latest;
+ $('basinStart').value=latest.slice(0,4)+'-01-01';$('basinEnd').value=latest;setPeriodLimits();
  const day=stations.find(s=>s.name==='Strömören')?.daily.at(-1)?.time||latest;
  $('basinMoment').value=day;$('basinMoment').min=all[0];$('basinMoment').max=latest;
  $('basinPlay').addEventListener('click',playProfile);$('basinPause').addEventListener('click',pauseProfile);
  $('basinMoment').addEventListener('change',pauseProfile);
- for(const id of ['basinStart','basinEnd','basinMoment','basinInterval'])$(id).addEventListener('change',render);
+ for(const id of ['basinStart','basinEnd','basinMoment','basinInterval'])$(id).addEventListener('change',()=>{if(id==='basinStart'||id==='basinEnd'){const a=$('basinStart'),b=$('basinEnd');if(a.value>b.value){if(id==='basinStart')b.value=a.value;else a.value=b.value;}}render();});
  $('basinStationList').addEventListener('change',render);render();
  }catch(e){$('basinStatus').textContent='Bassängdiagrammen väntar på data: '+e.message;}
 }
