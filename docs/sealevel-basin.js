@@ -1,10 +1,10 @@
 (() => {
 const $=id=>document.getElementById(id);
-let basin=null,graphs={},playTimer=null;
+let basin=null,graphs={},playTimer=null,lockedProfileBounds=null;
 const DAY_MS=86400000;
 function nextDay(iso){return new Date(Date.parse(iso+'T00:00:00Z')+DAY_MS).toISOString().slice(0,10);}
 function pauseProfile(){if(playTimer!==null){clearInterval(playTimer);playTimer=null;}if($('basinPlay'))$('basinPlay').disabled=false;if($('basinPause'))$('basinPause').disabled=true;}
-function playProfile(){if(playTimer!==null||!basin)return;const picker=$('basinMoment');if($('basinInterval').value!=='daily'){$('basinInterval').value='daily';render();}const max=picker.max;if(!picker.value||picker.value>=max)picker.value=picker.min||max;if(!picker.value||picker.value>=max)return; $('basinPlay').disabled=true;$('basinPause').disabled=false;playTimer=setInterval(()=>{if(!document.querySelector('#page-sealevel.active')){pauseProfile();return;}const next=nextDay(picker.value);if(next>max){pauseProfile();return;}picker.value=next;renderProfile();if(next>=max)pauseProfile();},700);}
+function playProfile(){if(playTimer!==null||!basin)return;const picker=$('basinMoment');if($('basinInterval').value!=='daily'){$('basinInterval').value='daily';render();}const max=picker.max&&picker.max<$('basinEnd').value?picker.max:$('basinEnd').value;if(!picker.value||picker.value>=max)picker.value=$('basinStart').value;if(!picker.value||picker.value>=max)return;lockedProfileBounds=profileBounds(profileStations(),picker.value,max,'daily');renderProfile(); $('basinPlay').disabled=true;$('basinPause').disabled=false;playTimer=setInterval(()=>{if(!document.querySelector('#page-sealevel.active')){pauseProfile();return;}const next=nextDay(picker.value);if(next>max){pauseProfile();return;}picker.value=next;renderProfile();if(next>=max)pauseProfile();},700);}
 // Continuous latitude scale: southernmost dark blue, northernmost pale red.
 const south=[18,48,125],north=[244,156,164];
 const validLat=()=>valid().filter(s=>Number.isFinite(+s.lat));
@@ -60,9 +60,10 @@ function profileBounds(series,start,end,frequency){
  const lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(1,(hi-lo)*0.05);
  return {min:Math.floor(lo-pad),max:Math.ceil(hi+pad)};
 }
+function profileStations(){return basin.stations.filter(s=>Number.isFinite(Number(s.lat))&&(s.daily?.length||s.weekly?.length||s.monthly?.length||s.annual?.length)).sort((a,b)=>Number(a.lat)-Number(b.lat));}
 function renderProfile(){
  if(!basin)return;
- const stations=valid().filter(s=>Number.isFinite(Number(s.lat))).sort((a,b)=>Number(a.lat)-Number(b.lat));
+ const stations=profileStations();
  const frequency=$('basinInterval').value,time=$('basinMoment').value;
  const key=frequency==='weekly'?weekStart(time):frequency==='monthly'?time.slice(0,7):time;
  const values=stations.map(s=>{
@@ -71,7 +72,7 @@ function renderProfile(){
  });
  const label=frequency==='weekly'?'Veckomedel, vald vecka':frequency==='monthly'?'Månadsmedel, vald månad':'Dygnsmedel, vald dag';
  const labels=stations.map(s=>s.name),colors=stations.map(stationColor);
- const bounds=profileBounds(stations,$('basinStart').value,$('basinEnd').value,frequency);
+ const bounds=lockedProfileBounds||profileBounds(stations,time,$('basinEnd').value,frequency);
  const existing=graphs.basinProfile;
  if(existing){
    existing.data.labels=labels;
@@ -84,7 +85,7 @@ function renderProfile(){
  }
  const ds={label,data:values,borderColor:'#8492a6',borderWidth:2.5,
    pointRadius:4,pointHoverRadius:6,pointBackgroundColor:colors,pointBorderColor:colors,
-   spanGaps:false,tension:0.32,cubicInterpolationMode:'monotone',fill:{target:'origin',above:'rgba(100,116,139,0.10)',below:'rgba(100,116,139,0.10)'}};
+   spanGaps:true,tension:0.32,cubicInterpolationMode:'monotone',fill:{target:'origin',above:'rgba(100,116,139,0.10)',below:'rgba(100,116,139,0.10)'}};
  graphs.basinProfile=new Chart($('basinProfile'),{type:'line',data:{labels,datasets:[ds]},
    options:{responsive:true,maintainAspectRatio:false,
      animation:{duration:600,easing:'easeInOutCubic'},
@@ -140,7 +141,7 @@ async function init(){
  basin=await response.json();let stations=valid();if(!stations.length)throw Error('Inga stationsdata');
  $('basinReference').innerHTML=stations.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('');
  $('basinReference').value=String(stations.find(s=>s.id===2056)?.id||stations[0].id);
- $('basinReference').addEventListener('change',()=>{pauseProfile();setPeriodLimits();render();});
+ $('basinReference').addEventListener('change',()=>{pauseProfile();lockedProfileBounds=null;setPeriodLimits();render();});
  $('basinExtremeStation').innerHTML=stations.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('');
  $('basinExtremeStation').value=String(stations.find(s=>s.id===2056)?.id||stations[0].id);
  $('basinExtremeStation').addEventListener('change',render);
@@ -150,8 +151,8 @@ async function init(){
  const day=stations.find(s=>s.name==='Strömören')?.daily.at(-1)?.time||latest;
  $('basinMoment').value=day;$('basinMoment').min=all[0];$('basinMoment').max=latest;
  $('basinPlay').addEventListener('click',playProfile);$('basinPause').addEventListener('click',pauseProfile);
- $('basinMoment').addEventListener('change',pauseProfile);
- for(const id of ['basinStart','basinEnd','basinMoment','basinInterval'])$(id).addEventListener('change',()=>{if(id==='basinStart'||id==='basinEnd'){const a=$('basinStart'),b=$('basinEnd');if(a.value>b.value){if(id==='basinStart')b.value=a.value;else a.value=b.value;}}render();});
+ $('basinMoment').addEventListener('change',()=>{pauseProfile();lockedProfileBounds=null;renderProfile();});
+ for(const id of ['basinStart','basinEnd','basinMoment','basinInterval'])$(id).addEventListener('change',()=>{lockedProfileBounds=null;if(id==='basinStart'||id==='basinEnd'){const a=$('basinStart'),b=$('basinEnd');if(a.value>b.value){if(id==='basinStart')b.value=a.value;else a.value=b.value;}}render();});
  $('basinStationList').addEventListener('change',render);render();
  }catch(e){$('basinStatus').textContent='Bassängdiagrammen väntar på data: '+e.message;}
 }
