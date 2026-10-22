@@ -4,7 +4,7 @@
   "parameter": 6,
   "reference": "RH 2000",
   "unit": "cm",
-  "retrieved_utc": "2026-10-21T10:18:14.311075+00:00",
+  "retrieved_utc": "2026-10-22T10:18:42.188195+00:00",
   "sources": {
     "latest-day": {
       "url": "https://opendata-download-ocobs.smhi.se/api/version/1.0/parameter/6/station/35183/period/latest-day/data.csv",
