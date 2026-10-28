@@ -118,7 +118,6 @@ function temp2AnnualMean(year,temperature){
   return vals.length?vals.reduce((s,v)=>s+v,0)/vals.length:null;
 }
 function setupTemp2Slider(){
-  const series=pageWeatherSeries('temperature',DATA.temperature,el('temperature2Station')?.value);
   const years=stationYears('temperature',DATA.temperature,el('temperature2Station')?.value);
   if(!years.length)return;
   const period=30;
@@ -128,7 +127,7 @@ function setupTemp2Slider(){
   temp2Start=maxStart;
   const s=el('temp2Start');
   s.min=minCenter;s.max=maxCenter;s.step=1;s.value=temp2Start+centerOffset;
-  s.addEventListener('input',e=>{temp2Start=Math.round((+e.target.value)-centerOffset);renderTemp2();});
+  s.oninput=e=>{temp2Start=Math.round((+e.target.value)-centerOffset);renderTemp2();};
   renderTemp2();
 }
 // Keep every dashboard on Kallax until the independent station inventory
@@ -180,7 +179,7 @@ function renderTemp2(){
   const years=Array.from({length:period},(_,i)=>start+i).filter(y=>allYears.includes(y));
   if(!years.length)return;
   const latestYear=years[years.length-1];
-  el('temp2PeriodLabel').textContent=start+'–'+(start+period-1);
+  el('temp2PeriodLabel').textContent=start+'–'+(start+period-1)+' · '+years.length+' år med data';
 
   const yearMeans=years.map(y=>({year:y,mean:temp2AnnualMean(y,tempSeries)})).filter(x=>x.mean!=null&&Number.isFinite(x.mean));
   const extremeYear=yearMeans.length
