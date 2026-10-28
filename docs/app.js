@@ -36,26 +36,72 @@ function metricName(m){
   if(m==='avg_daily_max')return 'Genomsnittligt dygnsmaximum';
   return 'Genomsnittlig';
 }
+// SMHI parameter 13 uses distinct manual (0–99) and automatic (100+) codes.
+// Do not treat code 100 as clear skies or use n%100: 185 is a snow shower.
 function weatherPhenomenon(code){
-  let n=Number(code); if(!Number.isFinite(n)) return 'Okänt väderfenomen';
-  if(n>=100) n=n%100;
-  if(n<=3) return n===0?'Klart eller oförändrat väder':n===1?'Moln upplöses':n===2?'Oförändrad molnighet':'Moln utvecklas';
-  if(n===4) return 'Rök'; if(n===5) return 'Dis'; if(n===6) return 'Damm'; if(n<=9) return 'Damm- eller sandfenomen';
-  if(n===10) return 'Dis'; if(n<=12) return 'Marknära dimma'; if(n===13) return 'Blixt synlig'; if(n<=16) return 'Nederbörd i närheten';
-  if(n===17) return 'Åska utan nederbörd'; if(n===18) return 'Kastvind'; if(n===19) return 'Tromb';
-  if(n===20) return 'Duggregn'; if(n===21) return 'Regn'; if(n===22) return 'Snö'; if(n===23) return 'Regn och snö';
-  if(n===24) return 'Underkyld nederbörd'; if(n===25) return 'Regnskur'; if(n===26) return 'Snöby'; if(n===27) return 'Hagelby';
-  if(n===28) return 'Dimma'; if(n===29) return 'Åska'; if(n<=35) return 'Damm- eller sandstorm'; if(n<=39) return 'Drivande eller yrande snö';
-  if(n<=49) return 'Dimma'; if(n<=59) return 'Duggregn'; if(n<=69) return 'Regn'; if(n<=79) return 'Snö eller annan fast nederbörd';
-  if(n<=89) return 'Skurar'; if(n<=99) return 'Åska';
-  return 'Väderfenomen';
+  const n=Number(code);
+  if(!Number.isInteger(n)||n<0)return 'Okänt väderfenomen';
+  if(n>=509&&n<=511)return 'Väderobservation saknas';
+  if(n===100||n===508)return 'Inget signifikant väder observerat';
+  if(n>=101&&n<=103)return n===101?'Moln minskar':n===102?'Molnighet oförändrad':'Moln ökar';
+  if(n===104||n===105||n===110)return 'Dis eller rök';
+  if(n===111||n===178)return 'Isnålar';
+  if(n===112)return 'Blixt på avstånd';
+  if(n===118)return 'Kraftiga vindbyar';
+  if(n===120||(n>=130&&n<=135))return 'Dimma';
+  if(n>=127&&n<=129)return 'Snödrev eller sandstorm';
+  if(n===126||(n>=190&&n<=199)||(n>=91&&n<=99))return 'Åska';
+  if(n===125||(n>=147&&n<=148)||(n>=164&&n<=166))return 'Underkyld nederbörd';
+  if(n===121||(n>=140&&n<=142))return 'Nederbörd';
+  if(n===122||(n>=150&&n<=159))return 'Duggregn';
+  if(n===123||(n>=143&&n<=144)||(n>=160&&n<=163))return 'Regn';
+  if(n===124||(n>=145&&n<=146)||(n>=170&&n<=173))return 'Snöfall';
+  if(n>=174&&n<=179)return 'Snö, hagel eller iskorn';
+  if(n>=167&&n<=168)return 'Regn och snö';
+  if(n>=180&&n<=184)return 'Regnskurar';
+  if(n===185)return 'Lätta snöbyar';
+  if(n===186)return 'Måttliga snöbyar';
+  if(n===187)return 'Kraftiga snöbyar';
+  if(n===189||(n>=284&&n<=291))return 'Hagel eller snöhagel';
+  if(n===192)return 'Åska med nederbörd';
+  if(n>=200)return 'SMHI väderkod '+n;
+  // Manual 0–99 categories.
+  if(n===0)return 'Molnens utveckling ej observerad';
+  if(n===1)return 'Moln minskar';
+  if(n===2)return 'Molnighet oförändrad';
+  if(n===3)return 'Moln ökar';
+  if(n===4)return 'Rök';
+  if(n>=5&&n<=10)return 'Dis eller stoft';
+  if(n>=11&&n<=12)return 'Låg dimma';
+  if(n===13)return 'Blixt synlig';
+  if(n>=14&&n<=16)return 'Nederbörd i närheten';
+  if(n===17)return 'Åska utan nederbörd';
+  if(n===18)return 'Kraftiga vindbyar';
+  if(n===19)return 'Tromb';
+  if(n===20)return 'Duggregn tidigare';
+  if(n===21)return 'Regn tidigare';
+  if(n===22)return 'Snöfall tidigare';
+  if(n===23)return 'Regn och snö tidigare';
+  if(n===24)return 'Underkyld nederbörd tidigare';
+  if(n===25)return 'Regnskurar tidigare';
+  if(n===26)return 'Snöbyar tidigare';
+  if(n===27)return 'Hagelbyar tidigare';
+  if(n===28)return 'Dimma tidigare';
+  if(n===29)return 'Åska tidigare';
+  if(n>=30&&n<=35)return 'Sandstorm';
+  if(n>=36&&n<=39)return 'Snödrev';
+  if(n>=40&&n<=49)return 'Dimma';
+  if(n>=50&&n<=59)return 'Duggregn';
+  if(n>=60&&n<=69)return 'Regn';
+  if(n>=70&&n<=79)return 'Snö eller iskorn';
+  if(n>=80&&n<=82)return 'Regnskurar';
+  if(n>=83&&n<=84)return 'Regn och snö i byar';
+  if(n>=85&&n<=86)return 'Snöbyar';
+  if(n>=87&&n<=90)return 'Hagelbyar';
+  return 'SMHI väderkod '+n;
 }
 function normalizedWeatherPhenomenon(code,year){
-  const label=weatherPhenomenon(code);
-  if(year>=1949&&year<=1981&&['Moln utvecklas','Oförändrad molnighet','Moln upplöses'].includes(label)){
-    return 'Klart eller oförändrat väder';
-  }
-  return label;
+  return weatherPhenomenon(code);
 }
 function temp2Quantile(values,q){
   const v=values.filter(x=>x!=null&&Number.isFinite(x)).slice().sort((a,b)=>a-b);
@@ -2338,6 +2384,118 @@ function alignedHourlyOptions(yTitle,max=null,tooltipLabel=null){
       y:{beginAtZero:max!=null,...(max!=null?{max}:{}),title:{display:true,text:yTitle},afterFit:s=>{s.width=72;}}
     }};
 }
+function dateNumericObservations(obs,min=-Infinity,max=Infinity){
+  return (obs||[]).map(r=>Number(r.value)).filter(v=>Number.isFinite(v)&&v>=min&&v<=max);
+}
+function dateAverage(values){
+  return values.length?values.reduce((sum,v)=>sum+v,0)/values.length:null;
+}
+function dateFormat(value,digits=1){
+  return value==null||!Number.isFinite(value)?'–':
+    value.toLocaleString('sv-SE',{maximumFractionDigits:digits});
+}
+function dateHourlyValues(obs,min=-Infinity,max=Infinity,aggregation='avg'){
+  return hours.map((_,h)=>{
+    const vals=(obs||[]).filter(r=>Number(r.time.slice(0,2))===h)
+      .map(r=>Number(r.value)).filter(v=>Number.isFinite(v)&&v>=min&&v<=max);
+    return vals.length?(aggregation==='sum'?vals.reduce((a,b)=>a+b,0):dateAverage(vals)):null;
+  });
+}
+function dateDrawObservationChart(id,series,unit,options={}){
+  destroyChart(id);
+  const valid=series.some(d=>d.data.some(Number.isFinite));
+  const status=el(id+'Status');
+  if(status)status.textContent=valid?'':'Inga tillgängliga observationer för detta datum.';
+  if(!valid)return;
+  const opts=alignedHourlyOptions(unit,options.max??null);
+  opts.plugins.legend.display=series.length>1;
+  opts.plugins.tooltip.callbacks.label=ctx=>{
+    const v=ctx.parsed.y;
+    if(v==null)return ctx.dataset.label;
+    const name=ctx.dataset.label?ctx.dataset.label+': ':'';
+    const append=options.suffix??(' '+unit);
+    let extra='';
+    if(options.windDirections&&ctx.datasetIndex===0){
+      const deg=options.windDirections[ctx.dataIndex];
+      if(Number.isFinite(deg))extra=' · från '+directionName(deg);
+    }
+    return name+dateFormat(v,1)+append+extra;
+  };
+  charts[id]=new Chart(el(id),{type:options.bar?'bar':'line',
+    data:{labels:hours,datasets:series.map(d=>({
+      borderWidth:2,pointRadius:1,spanGaps:false,tension:.12,
+      ...(options.bar?{categoryPercentage:1,barPercentage:1}:{}),...d
+    }))},
+    options:opts});
+}
+function dateMostSignificantWeather(observations){
+  const valid=(observations||[]).map(r=>Number(r.code))
+    .filter(n=>Number.isInteger(n)&&n<509);
+  // The most frequently observed significant phenomenon. Code 100 does not mean sunny.
+  const counts=new Map();
+  for(const n of valid){
+    const label=weatherPhenomenon(n);
+    if(label==='Inget signifikant väder observerat'||label.includes('oförändrad')||label.includes('minskar')||label.includes('ökar'))continue;
+    counts.set(label,(counts.get(label)||0)+1);
+  }
+  return [...counts].sort((a,b)=>b[1]-a[1])[0]?.[0]||null;
+}
+function dateRenderOverview(day,minT,maxT){
+  const cloud=dateNumericObservations(day.cloud_cover,0,100);
+  const sunSeconds=dateNumericObservations(day.sunshine_seconds,0,3600);
+  const wind=dateNumericObservations(day.wind_speed,0,100);
+  const gust=dateNumericObservations(day.wind_gust,0,100);
+  const vis=dateNumericObservations(day.visibility,0,100000);
+  const humidity=dateNumericObservations(day.humidity,0,100);
+  const pressure=dateNumericObservations(day.pressure,850,1100);
+  const windDir=dateNumericObservations(day.wind_direction,0,360);
+  const sunHours=sunSeconds.length?sunSeconds.reduce((a,b)=>a+b,0)/3600:null;
+  const cloudMean=dateAverage(cloud);
+  const maxGust=gust.length?Math.max(...gust):null;
+  const minVis=vis.length?Math.min(...vis)/1000:null;
+  const precip=day.precipitation_calendar_mm;
+  const cards=[
+    ['Temperatur',minT==null?'–':dateFormat(minT)+' till '+dateFormat(maxT)+' °C','SMHI Kallax'],
+    ['Molnighet',cloudMean==null?'–':dateFormat(cloudMean,0)+' %','Medel av '+cloud.length+' obs. · Kallax'],
+    ['Uppmätt solsken',sunHours==null?'–':dateFormat(sunHours,1)+' tim','Luleå Sol · '+sunSeconds.length+' timvärden'],
+    ['Byvind, max',maxGust==null?'–':dateFormat(maxGust)+' m/s','Kallax'],
+    ['Lägsta sikt',minVis==null?'–':dateFormat(minVis,1)+' km','Kallax'],
+    ['Nederbörd kalenderdag',precip==null?'–':dateFormat(precip)+' mm',
+      precip==null?'Ofullständig timserie':(day.precipitation_calendar_hours||0)+' timvärden']
+  ];
+  const box=el('dateWeatherOverview');
+  box.replaceChildren();
+  for(const [name,value,note] of cards){
+    const tile=document.createElement('div');tile.className='date-overview-tile';
+    const heading=document.createElement('span');heading.className='date-overview-label';heading.textContent=name;
+    const val=document.createElement('strong');val.textContent=value;
+    const detail=document.createElement('small');detail.textContent=note;
+    tile.append(heading,val,detail);box.appendChild(tile);
+  }
+  const statements=[];
+  if(minT!=null) statements.push('Temperaturen varierade mellan '+dateFormat(minT)+' och '+dateFormat(maxT)+' °C.');
+  if(cloud.length>=6){
+    const cloudWord=cloudMean>=75?'övervägande mulet':cloudMean<=25?'övervägande liten molnighet':'växlande molnighet';
+    statements.push('Den observerade molnigheten tyder på '+cloudWord+' (medel '+dateFormat(cloudMean,0)+' %).');
+  }
+  if(sunSeconds.length>=6){
+    statements.push('Vid Luleå Sol registrerades '+dateFormat(sunHours,1)+' timmars solsken'+(sunSeconds.length<20?' under '+sunSeconds.length+' tillgängliga timobservationer':'')+'.');
+  }
+  if(wind.length>=6){
+    const windAvg=dateAverage(wind);
+    statements.push('Medelvind under observationerna var '+dateFormat(windAvg,1)+' m/s'+(maxGust!=null?', högsta noterade byvind '+dateFormat(maxGust)+' m/s':'')+'.');
+  }
+  if(precip!=null){
+    statements.push('Timobservationerna ger '+dateFormat(precip,1)+' mm nederbörd för kalenderdygnet.');
+  }else if((day.precipitation_calendar_hours||0)>0){
+    statements.push('Timnederbörden är ofullständig ('+day.precipitation_calendar_hours+
+      '/'+(day.precipitation_expected_hours||24)+' timmar); ingen säker kalenderdygnssumma redovisas.');
+  }
+  const phenomenon=dateMostSignificantWeather(day.weather);
+  if(phenomenon)statements.push('Ett registrerat väderfenomen var '+phenomenon.toLowerCase()+'.');
+  if(!statements.length)statements.push('För få observationer för en tillförlitlig dygnsbeskrivning.');
+  el('dateWeatherNarrative').textContent=statements.join(' ');
+}
 async function loadDateWeather(dateStr){
   if(!dateStr)return;
   const year=dateStr.slice(0,4);
@@ -2351,66 +2509,112 @@ async function loadDateWeather(dateStr){
     const day=dateYearCache[year].days[dateStr];
     if(!day)throw new Error('Inga observationer för valt datum.');
     el('dateWeatherStatus').textContent=dateStr;
-
     const tempHourly=hourlyAverage(day.temperature||[]);
-    const tvals=(day.temperature||[]).map(r=>+r.value).filter(Number.isFinite);
-    const minT=tvals.length?Math.min(...tvals):null,maxT=tvals.length?Math.max(...tvals):null;
-    destroyChart('dateTemp');
-    charts.dateTemp=new Chart(el('dateTemp'),{type:'line',data:{labels:hours,datasets:[{data:tempHourly,borderWidth:2,pointRadius:2,tension:.15}]},options:alignedHourlyOptions('°C')});
-
+    const tvals=dateNumericObservations(day.temperature,-90,60);
+    const minT=tvals.length?Math.min(...tvals):null;
+    const maxT=tvals.length?Math.max(...tvals):null;
+    const dewHourly=dateHourlyValues(day.dew_point,-100,60);
+    dateDrawObservationChart('dateTemp',[
+      {label:'Temperatur',data:tempHourly,borderColor:'#d97706'},
+      {label:'Daggpunkt',data:dewHourly,borderColor:'#0f766e'}
+    ],'°C');
+    dateRenderOverview(day,minT,maxT);
     const sun=solarTimes(dateStr),sunFractions=sunHourFractions(sun);
     destroyChart('dateSun');
-    charts.dateSun=new Chart(el('dateSun'),{type:'bar',data:{labels:hours,datasets:[{data:sunFractions,borderWidth:1.5,borderColor:SUN_YELLOW,categoryPercentage:1,barPercentage:1,backgroundColor:'rgba(242,201,76,0.58)'}]},
+    charts.dateSun=new Chart(el('dateSun'),{type:'bar',data:{labels:hours,
+      datasets:[{data:sunFractions,borderWidth:1.5,borderColor:SUN_YELLOW,
+        categoryPercentage:1,barPercentage:1,backgroundColor:'rgba(242,201,76,0.58)'}]},
       options:alignedHourlyOptions('%',100,c=>c.parsed.y+' % av timmen')});
-
     const precipHourly=hourlySum(day.precipitation_hourly||[]);
     destroyChart('datePrecip');
-    charts.datePrecip=new Chart(el('datePrecip'),{type:'bar',data:{labels:hours,datasets:[{data:precipHourly,borderWidth:1.5,borderColor:PRECIP_DARK_BLUE,categoryPercentage:1,barPercentage:1,backgroundColor:'rgba(22,58,95,0.52)'}]},
+    charts.datePrecip=new Chart(el('datePrecip'),{type:'bar',
+      data:{labels:hours,datasets:[{data:precipHourly,borderWidth:1.5,
+        borderColor:PRECIP_DARK_BLUE,categoryPercentage:1,barPercentage:1,
+        backgroundColor:'rgba(22,58,95,0.52)'}]},
       options:alignedHourlyOptions('mm',null,c=>(c.parsed.y??0).toLocaleString('sv-SE')+' mm')});
+    const observed24=day.precipitation_24h_mm??day.precipitation_mm;
+    const calendarTotal=day.precipitation_calendar_mm;
+    const calendarCount=day.precipitation_calendar_hours??0;
+    const expectedCount=day.precipitation_expected_hours??24;
+    const summary=[
+      ['Nederbörd kalenderdygn (svensk tid)',calendarTotal==null?'– (timdata '+calendarCount+'/'+expectedCount+')':dateFormat(calendarTotal)+' mm'],
+      ['SMHI dygnsmätning, 06 UTC',observed24==null?'–':dateFormat(observed24)+' mm (föregående 24 h)'],
+      ['Snödjup',day.snow_cm==null?'–':dateFormat(day.snow_cm)+' cm'],
+      ['Temperatur min',minT==null?'–':dateFormat(minT)+' °C'],
+      ['Temperatur max',maxT==null?'–':dateFormat(maxT)+' °C'],
+      ['Soluppgång',sun.sunrise??(sun.polarDay?'Midnattssol':'–')],
+      ['Solnedgång',sun.sunset??(sun.polarDay?'Midnattssol':'–')],
+      ['Dagslängd',sun.dayLength??'–']
+    ];
+    const table=document.createElement('table'),body=document.createElement('tbody');
+    for(const [name,value] of summary){
+      const tr=document.createElement('tr'),th=document.createElement('th'),td=document.createElement('td');
+      th.textContent=name;td.textContent=value;tr.append(th,td);body.appendChild(tr);
+    }
+    table.appendChild(body);
+    el('dateSummary').replaceChildren(table);
+    const note=document.createElement('p');note.className='hint';
+    note.textContent='Soltider är beräknade för Luleå-Kallax. SMHI:s 06 UTC-mätning avser föregående 24 timmar; kalenderdygnssumman visas endast vid fullständig timtäckning (23/24/25 timmar vid tidsomställning).';
+    el('dateSummary').append(note);
 
-    el('dateSummary').innerHTML='<table><tbody>'+
-      '<tr><th>Dygnsnederbörd</th><td>'+(day.precipitation_mm==null?'–':day.precipitation_mm.toLocaleString('sv-SE')+' mm')+'</td></tr>'+
-      '<tr><th>Snödjup</th><td>'+(day.snow_cm==null?'–':day.snow_cm.toLocaleString('sv-SE')+' cm')+'</td></tr>'+
-      '<tr><th>Temperatur min</th><td>'+(minT==null?'–':minT.toLocaleString('sv-SE')+' °C')+'</td></tr>'+
-      '<tr><th>Temperatur max</th><td>'+(maxT==null?'–':maxT.toLocaleString('sv-SE')+' °C')+'</td></tr>'+
-      '<tr><th>Soluppgång</th><td>'+(sun.sunrise??(sun.polarDay?'Midnattssol':'–'))+'</td></tr>'+
-      '<tr><th>Solnedgång</th><td>'+(sun.sunset??(sun.polarDay?'Midnattssol':'–'))+'</td></tr>'+
-      '<tr><th>Dagslängd</th><td>'+(sun.dayLength??'–')+'</td></tr>'+
-      '</tbody></table><p class="hint">Soltider beräknade för Luleå-Kallax (65,5430° N, 22,1240° Ö) och visas i svensk lokal tid.</p>';
+    dateDrawObservationChart('dateCloud',[
+      {label:'Molnmängd',data:dateHourlyValues(day.cloud_cover,0,100),borderColor:'#64748b'}
+    ],'%',{max:100,suffix:' %'});
+    dateDrawObservationChart('dateSunshine',[
+      {label:'Solsken',data:dateHourlyValues(day.sunshine_seconds,0,3600,'sum').map(v=>v==null?null:v/60),backgroundColor:'#f4c542',borderColor:'#d97706'}
+    ],'min',{bar:true,max:60,suffix:' min'});
+    const dirs=dateHourlyValues(day.wind_direction,0,360);
+    dateDrawObservationChart('dateWind',[
+      {label:'Vindhastighet',data:dateHourlyValues(day.wind_speed,0,100),borderColor:'#2563eb'},
+      {label:'Byvind',data:dateHourlyValues(day.wind_gust,0,100),borderColor:'#dc2626'}
+    ],'m/s',{windDirections:dirs,suffix:' m/s'});
+    dateDrawObservationChart('dateVisibility',[
+      {label:'Sikt',data:dateHourlyValues(day.visibility,0,100000).map(v=>v==null?null:v/1000),borderColor:'#0d9488'}
+    ],'km');
+    dateDrawObservationChart('dateHumidity',[
+      {label:'Relativ luftfuktighet',data:dateHourlyValues(day.humidity,0,100),borderColor:'#0284c7'}
+    ],'%',{max:100,suffix:' %'});
+    dateDrawObservationChart('datePressure',[
+      {label:'Lufttryck',data:dateHourlyValues(day.pressure,850,1100),borderColor:'#7c3aed'}
+    ],'hPa');
+    dateDrawObservationChart('dateIrradiance',[
+      {label:'Global irradians',data:dateHourlyValues(day.solar_irradiance,0,1600),borderColor:'#ea580c'}
+    ],'W/m²');
 
     const weatherByHour=hourlyWeather(day.weather||[]);
-    const codes=[...new Set(weatherByHour.filter(Boolean))];
+    const codes=[...new Set(weatherByHour.filter(c=>c!=null))];
     destroyChart('dateWeather');
-    const datasets=codes.map(code=>({label:weatherPhenomenon(code),data:weatherByHour.map(c=>c===code?100:null),borderWidth:0,categoryPercentage:1,barPercentage:1}));
-    charts.dateWeather=new Chart(el('dateWeather'),{type:'bar',data:{labels:hours,datasets},options:{
-      ...alignedHourlyOptions('registrerat väder',100),
-      interaction:{mode:'nearest',intersect:true},
-      plugins:{
-        legend:{display:codes.length<=10},
-        tooltip:{
-          mode:'nearest',
-          intersect:true,
-          filter:item=>item.raw!=null,
-          callbacks:{
-            title:items=>{
-              const h=String(items[0]?.label??'').padStart(2,'0');
-              return 'Timme: '+h+':00-'+h+':59';
-            },
-            label:c=>c.dataset.label
-          }
-        }
-      },
-      scales:{
-        x:{stacked:true,grid:{display:false},offset:false,ticks:{autoSkip:false,maxRotation:0,minRotation:0,callback:(v,i)=>i%2===0?hours[i]:''}},
-        y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+' %'},title:{display:true,text:'registrerat väder'},afterFit:s=>{s.width=72;}}
-      }
-    }});
+    const datasets=codes.map(code=>({label:weatherPhenomenon(code),
+      data:weatherByHour.map(c=>c===code?100:null),borderWidth:0,
+      categoryPercentage:1,barPercentage:1}));
+    charts.dateWeather=new Chart(el('dateWeather'),{type:'bar',
+      data:{labels:hours,datasets},
+      options:{...alignedHourlyOptions('registrerat väder',100),
+        interaction:{mode:'nearest',intersect:true},
+        plugins:{
+          legend:{display:codes.length<=10},
+          tooltip:{mode:'nearest',intersect:true,
+            filter:item=>item.raw!=null,
+            callbacks:{
+              title:items=>{const h=String(items[0]?.label??'').padStart(2,'0');return 'Timme: '+h+':00-'+h+':59';},
+              label:c=>c.dataset.label
+            }}
+        },
+        scales:{x:{stacked:true,grid:{display:false},offset:false,
+          ticks:{autoSkip:false,maxRotation:0,minRotation:0,callback:(v,i)=>i%2===0?hours[i]:''}},
+          y:{stacked:true,min:0,max:100,ticks:{callback:v=>v+' %'},
+             title:{display:true,text:'registrerat väder'},afterFit:s=>{s.width=72;}}}
+      }});
   }catch(err){
     el('dateWeatherStatus').textContent=err.message;
-    el('dateSummary').innerHTML='<p class="hint">'+err.message+'</p>';
-    ['dateTemp','dateSun','datePrecip','dateWeather'].forEach(destroyChart);
+    el('dateSummary').textContent=err.message;
+    el('dateWeatherOverview').replaceChildren();
+    el('dateWeatherNarrative').textContent='';
+    ['dateTemp','dateSun','datePrecip','dateWeather','dateCloud','dateSunshine','dateWind',
+     'dateVisibility','dateHumidity','datePressure','dateIrradiance'].forEach(destroyChart);
   }
 }
+
 function setupDateWeather(){
   const picker=el('dateWeatherPicker');
   const cov=DATA.coverage.find(r=>r.name==='Lufttemperatur')||DATA.coverage[0];
