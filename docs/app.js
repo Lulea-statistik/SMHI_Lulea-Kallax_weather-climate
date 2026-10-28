@@ -2008,13 +2008,24 @@ function renderPressure(f){
     ' · '+station.name+(f.month?' · '+months[f.month-1]:'');
   const monthly=(station.monthly||[]).filter(r=>inYears(r,f));
   const monthMeans=aggregateMonthlyMean(monthly);
+  // Pressure differences are only a few hPa: avoid Chart.js bar default (zero baseline).
+  // Derive the visible range from the twelve means within the selected year interval.
+  const observedMeans=monthMeans.filter(v=>v!=null&&Number.isFinite(v));
+  const low=observedMeans.length?Math.min(...observedMeans):null;
+  const high=observedMeans.length?Math.max(...observedMeans):null;
+  const padding=low==null?null:Math.max(0.5,(high-low)*0.15);
+  const pressureAxis=low==null?{beginAtZero:false}:{
+    beginAtZero:false,
+    min:Math.floor((low-padding)*2)/2,
+    max:Math.ceil((high+padding)*2)/2
+  };
   destroyChart('pressureMonthly');
   charts.pressureMonthly=new Chart(el('pressureMonthly'),{
     type:'bar',
     data:{labels:months,datasets:[{data:monthMeans,backgroundColor:MONTH_GREEN,borderWidth:0}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
       tooltip:{callbacks:{label:c=>c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:2})+' hPa'}}},
-      scales:{x:{grid:{display:false}},y:{title:{display:true,text:'hPa'}}}
+      scales:{x:{grid:{display:false}},y:{...pressureAxis,title:{display:true,text:'hPa'}}}
     }
   });
 }
