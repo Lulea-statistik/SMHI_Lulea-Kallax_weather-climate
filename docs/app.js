@@ -1,4 +1,4 @@
-let DATA=null;let PRECIP_STATIONS=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;let smhiRenderedSnowDaily=null;let smhiRenderedSnowQa=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;let PRECIP_STATIONS=null;let PRESSURE_STATIONS=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;let smhiRenderedSnowDaily=null;let smhiRenderedSnowQa=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 let globalLoadingCount=0;
 function beginGlobalLoading(text='Laddar…'){
@@ -1974,6 +1974,87 @@ function renderSeaIce(f){
   }
 }
 
+function renderPressure(f){
+  if(!el('pressureAnnual')||!el('pressureMonthly'))return;
+  const sid=el('pressureStation').value||'162860';
+  const selected=PRESSURE_STATIONS?.stations?.find(s=>s.id===sid);
+  const local=DATA.pressure;
+  const station=selected || (sid==='162860'&&local?{id:'162860',name:'Luleå-Kallax Flygplats',annual:local.annual,monthly:local.monthly}:null);
+  if(!station){
+    el('pressureAnnualTrendText').textContent='Ingen verifierad lufttrycksserie för stationen.';
+    destroyChart('pressureAnnual');destroyChart('pressureMonthly');
+    return;
+  }
+  const annual=f.month?
+    (station.monthly||[]).filter(r=>r.month===f.month&&inYears(r,f)):
+    (station.annual||[]).filter(r=>inYears(r,f));
+  const years=annual.map(r=>r.year),values=annual.map(r=>r.avg);
+  destroyChart('pressureAnnual');
+  charts.pressureAnnual=new Chart(el('pressureAnnual'),{
+    type:'line',
+    data:{labels:years,datasets:[
+      {label:f.month?months[f.month-1]+' medel':'Årsmedel',data:values,borderWidth:2,pointRadius:0,tension:.15},
+      {label:'Linjär trend',data:linearTrend(years,values),borderColor:'#ff6384',
+        pointRadius:0,borderWidth:2,borderDash:[6,4]}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{
+        label:c=>c.dataset.label+': '+c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:2})+' hPa'
+      }}},
+      scales:{x:{grid:{display:false}},y:{title:{display:true,text:'hPa'}}}
+    }
+  });
+  el('pressureAnnualTrendText').textContent=trendRateText(years,values,'hPa')+
+    ' · '+station.name+(f.month?' · '+months[f.month-1]:'');
+  const monthly=(station.monthly||[]).filter(r=>inYears(r,f));
+  const monthMeans=aggregateMonthlyMean(monthly);
+  destroyChart('pressureMonthly');
+  charts.pressureMonthly=new Chart(el('pressureMonthly'),{
+    type:'bar',
+    data:{labels:months,datasets:[{data:monthMeans,backgroundColor:MONTH_GREEN,borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:2})+' hPa'}}},
+      scales:{x:{grid:{display:false}},y:{title:{display:true,text:'hPa'}}}
+    }
+  });
+}
+function setupPressureStations(data){
+  if(!data?.stations?.length)return;
+  PRESSURE_STATIONS=data;
+  const select=el('pressureStation');
+  if(!select)return;
+  const old=select.value||'162860';
+  const verified=data.stations.filter(s=>s.annual?.length&&s.monthly?.length);
+  select.innerHTML=verified.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('');
+  select.value=verified.some(s=>s.id===old)?old:'162860';
+  const tests=data.station_audit||[];
+  const verifiedOthers=verified.filter(s=>s.id!=='162860');
+  const status=el('pressureStationStatus');
+  if(status)status.textContent=verifiedOthers.length?
+    'Verifierade extra SMHI-stationer: '+verifiedOthers.map(s=>s.name).join(', ')+'.':
+    'Inga andra stationer på nederbördssidan har hittills verifierats med tillräcklig lufttryckshistorik. Kallax visas som förval.';
+  const method=el('pressureStationMethod');
+  if(method){
+    method.replaceChildren();
+    const intro=document.createElement('p');
+    intro.textContent='SMHI parameter 9, hPa. Jämförbara månadsserier kräver observationer minst 65 % av dagarna (minst 15 dagar); årsmedel kräver minst nio godkända månader. Kontrollerade nederbördsstationer:';
+    method.appendChild(intro);
+    const list=document.createElement('ul');
+    for(const item of tests){
+      const li=document.createElement('li');
+      li.textContent=item.name+': '+(item.annual_years>0?
+        item.annual_years+' godkända år, '+item.complete_months+' månader':
+        item.listed_for_pressure?'SMHI uppger tryckstation men otillräckliga användbara data':'Ingen verifierad lufttrycksserie')+'.';
+      list.appendChild(li);
+    }
+    method.appendChild(list);
+  }
+  if(document.querySelector('#tabs button.active')?.dataset.page==='pressure'){
+    applyPageYearBounds('pressure',true);
+  }
+  renderPressure(currentFilters());
+}
+
 function render(){
   const f=currentFilters(),m=temperatureMetric(),name=metricName(m);
   const ta=selectedAnnualRows(DATA.temperature.annual,DATA.temperature.monthly,f);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r[m]);
@@ -2135,6 +2216,8 @@ function render(){
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1).replace('.',',')+' %'}}},
       scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}
   });
+
+  renderPressure(f);
 
   const va=selectedAnnualRows(DATA.visibility.annual,DATA.visibility.monthly,f);
   const vaYears=va.map(r=>r.year),vaVals=va.map(r=>Math.round(r.avg));
@@ -2305,7 +2388,7 @@ function render(){
       const sources=code.split(',').map(id=>DATA.coverage.find(r=>r.name===coverageByParameter[id])).filter(r=>r&&r.rows>0);
       cell.textContent=sources.length?sources.map(r=>r.name+': '+r.min_date+'–'+r.max_date+' ('+r.rows.toLocaleString('sv-SE')+' obs.)').join('; '):'Inga observationer i aktuell datafil';
     }else{
-      const descriptions={snowgrid:'Varierar mellan rasterkällor och snösäsonger; se snötäckeskartan.',lightning:'Varierar med insamlade blixtobservationer; se blixtdiagram.',seaice:'Varierar per issäsong och dataunderlag; se havsisdiagram.',stromoren:'Se aktuell tidsperiod för Strömören på vattenståndssidan.',basin:'Varierar per station och datum; endast samtidiga observationer jämförs.',warnings:'Från första arkiverade varningsversionen; visas i varningshistoriken.'};
+      const descriptions={snowgrid:'Varierar mellan rasterkällor och snösäsonger; se snötäckeskartan.',lightning:'Varierar med insamlade blixtobservationer; se blixtdiagram.',seaice:'Varierar per issäsong och dataunderlag; se havsisdiagram.',stromoren:'Se aktuell tidsperiod för Strömören på vattenståndssidan.',basin:'Varierar per station och datum; endast samtidiga observationer jämförs.'};
       cell.textContent=descriptions[code]||'Ej fastställd';
     }
   });
@@ -2646,6 +2729,7 @@ function pageYearBounds(page){
     wind:()=>yearBoundsFromRows(DATA.wind?.speed_annual||DATA.wind?.speed_monthly),
     weather:()=>yearBoundsFromRows(DATA.weather?.codes),
     visibility:()=>yearBoundsFromRows(DATA.visibility?.annual||DATA.visibility?.monthly),
+    pressure:()=>yearBoundsFromRows((PRESSURE_STATIONS?.stations||[]).find(s=>s.id===el('pressureStation')?.value)?.annual||DATA.pressure?.annual||[]),
     humidity:()=>yearBoundsFromRows(DATA.humidity?.annual||DATA.humidity?.monthly),
     sunshine:()=>yearBoundsFromRows(DATA.sunshine?.annual||DATA.sunshine?.monthly_total),
     snow:()=>yearBoundsFromRows(DATA.snow?.annual_mean||DATA.snow?.annual_max),
@@ -2715,7 +2799,6 @@ function setupTabs(){
         if(btn.dataset.page==='algae')await initAlgaeMap();
         if(btn.dataset.page==='snowmap')await initSnowMap();
         if(btn.dataset.page==='lightning')await initLightningMap();
-        if(btn.dataset.page==='warnings'&&typeof initWarningsPage==='function')await initWarningsPage();
         setTimeout(()=>{
           Object.values(charts).forEach(c=>c.resize());
           if(seaIceLeafletMap)seaIceLeafletMap.invalidateSize();
@@ -2747,6 +2830,7 @@ el('month').addEventListener('change',()=>{
   }
 });
 el('precipStation').addEventListener('change',render);
+el('pressureStation').addEventListener('change',()=>{applyPageYearBounds('pressure',true);render();});
 el('precipTimelineMode').addEventListener('change',render);
 el('precipTimelineMin').addEventListener('change',render);
 el('tempMetric').addEventListener('change',render);
@@ -2777,6 +2861,10 @@ fetch('dashboard_data.json',{cache:'no-store'})
         +'<option value="municipal">Kommunmedel (stationsmedel)</option>';
       render();
     }).catch(err=>console.warn('Station precipitation unavailable',err));
+    fetch('pressure_stations.json',{cache:'no-store'})
+      .then(r=>r.ok?r.json():null)
+      .then(setupPressureStations)
+      .catch(err=>console.warn('Air pressure station audit unavailable:',err));
     setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupSnowMapControls();setupLightningMapControls();setupFilters();setupDateWeather();render();
   })
   .catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';})
