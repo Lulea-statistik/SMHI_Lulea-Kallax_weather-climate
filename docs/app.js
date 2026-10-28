@@ -1,4 +1,4 @@
-let DATA=null;let PRECIP_STATIONS=null;let PRESSURE_STATIONS=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;let smhiRenderedSnowDaily=null;let smhiRenderedSnowQa=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;let PRECIP_STATIONS=null;let PRESSURE_STATIONS=null;let WEATHER_STATIONS=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;let smhiRenderedSnowDaily=null;let smhiRenderedSnowQa=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 let globalLoadingCount=0;
 function beginGlobalLoading(text='Laddar…'){
@@ -111,14 +111,16 @@ function temp2Quantile(values,q){
   const base=Math.floor(pos),rest=pos-base;
   return v[base+1]!==undefined?v[base]+rest*(v[base+1]-v[base]):v[base];
 }
-function temp2AnnualMean(year){
-  const vals=DATA.temperature.monthly
+function temp2AnnualMean(year,temperature){
+  const vals=temperature.monthly
     .filter(r=>r.year===year&&r.avg!=null&&Number.isFinite(r.avg))
     .map(r=>r.avg);
   return vals.length?vals.reduce((s,v)=>s+v,0)/vals.length:null;
 }
 function setupTemp2Slider(){
-  const years=[...DATA.years].sort((a,b)=>a-b);
+  const series=pageWeatherSeries('temperature',DATA.temperature,el('temperature2Station')?.value);
+  const years=stationYears('temperature',DATA.temperature,el('temperature2Station')?.value);
+  if(!years.length)return;
   const period=30;
   const minStart=years[0],maxStart=Math.max(minStart,years[years.length-1]-(period-1));
   const centerOffset=(period-1)/2;
@@ -129,17 +131,58 @@ function setupTemp2Slider(){
   s.addEventListener('input',e=>{temp2Start=Math.round((+e.target.value)-centerOffset);renderTemp2();});
   renderTemp2();
 }
+// Keep every dashboard on Kallax until the independent station inventory
+// has verified a comparable series. Each page has its own station selection.
+function pageWeatherSeries(kind,legacy,id=null){
+  const choice=id||(kind==='temperature'?(el('temperature1Station')?.value||'162860'):(el(kind+'Station')?.value||'162860'));
+  if(choice==='162860'||!WEATHER_STATIONS)return legacy;
+  return (WEATHER_STATIONS.stations?.[kind]||[]).find(s=>s.id===choice)||legacy;
+}
+function stationYears(kind,legacy,id){
+  const source=pageWeatherSeries(kind,legacy,id);
+  const items=kind==='wind'?(source.speed_annual||[]):kind==='snow'?(source.annual_mean||[]):(source.annual||[]);
+  return [...new Set(items.map(r=>r.year))].sort((a,b)=>a-b);
+}
+function setupWeatherStationPickers(){
+  if(!WEATHER_STATIONS)return;
+  for(const [kind,ids] of Object.entries({
+    temperature:['temperature1Station','temperature2Station'],
+    wind:['windStation'],snow:['snowStation']
+  })){
+    const options=(WEATHER_STATIONS.stations?.[kind]||[]).filter(x=>x.id==='162860'||(
+      kind==='wind'?x.speed_annual?.length&&x.direction_annual?.length:
+      kind==='snow'?x.seasons?.length:x.annual?.length
+    ));
+    for(const id of ids){
+      const select=el(id);if(!select)continue;
+      const prev=select.value||'162860';
+      select.replaceChildren();
+      for(const item of options){
+        const opt=document.createElement('option');
+        opt.value=item.id;opt.textContent=item.name;select.appendChild(opt);
+      }
+      select.value=options.some(o=>o.id===prev)?prev:'162860';
+      const info=el(id.replace('Station','StationInfo'));
+      if(info)info.textContent=options.length>1?
+        'Verifierade stationer: '+options.map(o=>o.name).join(', ')+'. Observationernas år och datatäckning skiljer sig.':
+        'Endast Kallax har hittills verifierad data som uppfyller kvalitetskraven för denna sida.';
+    }
+  }
+}
+
 function renderTemp2(){
   const period=30;
-  const allYears=[...DATA.years].sort((a,b)=>a-b);
+  const tempSeries=pageWeatherSeries('temperature',DATA.temperature,el('temperature2Station')?.value);
+  const allYears=stationYears('temperature',DATA.temperature,el('temperature2Station')?.value);
+  if(!allYears.length){destroyChart('tempProfiles');return;}
   const fallbackStart=Math.max(allYears[0],allYears[allYears.length-1]-(period-1));
   const start=temp2Start??fallbackStart;
-  const years=Array.from({length:period},(_,i)=>start+i).filter(y=>DATA.years.includes(y));
+  const years=Array.from({length:period},(_,i)=>start+i).filter(y=>allYears.includes(y));
   if(!years.length)return;
   const latestYear=years[years.length-1];
   el('temp2PeriodLabel').textContent=start+'–'+(start+period-1);
 
-  const yearMeans=years.map(y=>({year:y,mean:temp2AnnualMean(y)})).filter(x=>x.mean!=null&&Number.isFinite(x.mean));
+  const yearMeans=years.map(y=>({year:y,mean:temp2AnnualMean(y,tempSeries)})).filter(x=>x.mean!=null&&Number.isFinite(x.mean));
   const extremeYear=yearMeans.length
     ? yearMeans.reduce((best,cur)=>cur.mean>best.mean?cur:best,yearMeans[0]).year
     : latestYear;
@@ -150,7 +193,7 @@ function renderTemp2(){
 
   if(selectedMonth){
     const values=years.map(y=>{
-      const r=DATA.temperature.monthly.find(x=>x.year===y&&x.month===selectedMonth);
+      const r=tempSeries.monthly.find(x=>x.year===y&&x.month===selectedMonth);
       return r?.avg??null;
     });
     const p10=temp2Quantile(values,.10),p25=temp2Quantile(values,.25),median=temp2Quantile(values,.50),p75=temp2Quantile(values,.75),p90=temp2Quantile(values,.90);
@@ -175,7 +218,7 @@ function renderTemp2(){
 
   const stats=[...Array(12)].map((_,i)=>{
     const vals=years.map(y=>{
-      const r=DATA.temperature.monthly.find(x=>x.year===y&&x.month===i+1);
+      const r=tempSeries.monthly.find(x=>x.year===y&&x.month===i+1);
       return r?.avg??null;
     }).filter(v=>v!=null&&Number.isFinite(v));
     return {
@@ -188,11 +231,11 @@ function renderTemp2(){
   });
 
   const latestSeries=[...Array(12)].map((_,i)=>{
-    const r=DATA.temperature.monthly.find(x=>x.year===latestYear&&x.month===i+1);
+    const r=tempSeries.monthly.find(x=>x.year===latestYear&&x.month===i+1);
     return r?.avg??null;
   });
   const extremeSeries=[...Array(12)].map((_,i)=>{
-    const r=DATA.temperature.monthly.find(x=>x.year===extremeYear&&x.month===i+1);
+    const r=tempSeries.monthly.find(x=>x.year===extremeYear&&x.month===i+1);
     return r?.avg??null;
   });
 
@@ -2068,11 +2111,12 @@ function setupPressureStations(data){
 
 function render(){
   const f=currentFilters(),m=temperatureMetric(),name=metricName(m);
-  const ta=selectedAnnualRows(DATA.temperature.annual,DATA.temperature.monthly,f);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r[m]);
+  const temp1Series=pageWeatherSeries('temperature',DATA.temperature,el('temperature1Station')?.value);
+  const ta=selectedAnnualRows(temp1Series.annual,temp1Series.monthly,f);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r[m]);
   lineChart('tempAnnual',taYears,[{label:name,data:taVals},{label:'Linjär trend',data:linearTrend(taYears,taVals),pointRadius:0,borderDash:[6,4]}],'°C');
   el('tempAnnualTitle').textContent=name+' lufttemperatur '+(f.month?'i '+months[f.month-1].toLowerCase()+' per år':'per år');
   el('tempAnnualTrendText').textContent=trendRateText(taYears,taVals,'°C');
-  let tm=DATA.temperature.monthly.filter(r=>inYears(r,f));
+  let tm=temp1Series.monthly.filter(r=>inYears(r,f));
   const tMonthAgg=[...Array(12)].map((_,i)=>{
     const rows=tm.filter(r=>r.month===i+1);if(!rows.length)return null;
     if(m==='min')return Math.min(...rows.map(r=>r.min));
@@ -2175,9 +2219,10 @@ function render(){
 
   let wc=DATA.weather.codes.filter(r=>inYears(r,f));if(f.month)wc=wc.filter(r=>r.month===f.month);weatherChart(wc);
 
-  const ws=(f.month?DATA.wind.speed_monthly.filter(r=>inYears(r,f)&&r.month===f.month):DATA.wind.speed_annual.filter(r=>inYears(r,f))),
-        wm=(f.month?DATA.wind.max_monthly.filter(r=>inYears(r,f)&&r.month===f.month):DATA.wind.max_annual.filter(r=>inYears(r,f))),
-        wg=(f.month?DATA.wind.gust_max_monthly.filter(r=>inYears(r,f)&&r.month===f.month):DATA.wind.gust_max_annual.filter(r=>inYears(r,f)));
+  const windSeries=pageWeatherSeries('wind',DATA.wind);
+  const ws=(f.month?windSeries.speed_monthly.filter(r=>inYears(r,f)&&r.month===f.month):windSeries.speed_annual.filter(r=>inYears(r,f))),
+        wm=(f.month?windSeries.max_monthly.filter(r=>inYears(r,f)&&r.month===f.month):windSeries.max_annual.filter(r=>inYears(r,f))),
+        wg=(f.month?windSeries.gust_max_monthly.filter(r=>inYears(r,f)&&r.month===f.month):windSeries.gust_max_annual.filter(r=>inYears(r,f)));
   const windYears=[...new Set([...ws.map(r=>r.year),...wm.map(r=>r.year),...wg.map(r=>r.year)])].sort((a,b)=>a-b);
   lineChart('windSpeed',windYears,[
     {label:'Årsmedel',data:windYears.map(y=>{const x=ws.find(a=>a.year===y);return x?x.avg:null;})},
@@ -2185,9 +2230,9 @@ function render(){
     {label:f.month?months[f.month-1]+' högsta byvind':'Årets högsta byvind',data:windYears.map(y=>{const x=wg.find(a=>a.year===y);return x?x.max:null;})}
   ],'m/s');
 
-  const wd=(f.month?DATA.wind.direction_monthly.filter(r=>inYears(r,f)&&r.month===f.month):DATA.wind.direction_annual.filter(r=>inYears(r,f)));destroyChart('windDirection');charts.windDirection=new Chart(el('windDirection'),{type:'line',data:{labels:wd.map(r=>r.year),datasets:[{data:wd.map(r=>r.avg),borderWidth:2,pointRadius:2,tension:.1}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:false},onHover:(e,pts)=>{if(pts.length){const i=pts[0].index;updateCompass(wd[i].avg,String(wd[i].year));}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y.toFixed(0)+'° ('+directionName(c.parsed.y)+')'}}},scales:{x:{grid:{display:false}},y:{min:0,max:360,title:{display:true,text:'grader'},ticks:{stepSize:45,callback:v=>v+'° '+directionName(v)}}}}});
-  const wdm=DATA.wind.direction_monthly.filter(r=>inYears(r,f));const monthly=[...Array(12)].map((_,i)=>circularFromParts(wdm.filter(r=>r.month===i+1)));destroyChart('windDirectionMonthly');charts.windDirectionMonthly=new Chart(el('windDirectionMonthly'),{type:'line',data:{labels:months,datasets:[{data:monthly,borderWidth:2,pointRadius:2,tension:.1,borderColor:MONTH_GREEN,backgroundColor:MONTH_GREEN}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:false},onHover:(e,pts)=>{if(pts.length){const i=pts[0].index;updateCompass(monthly[i],months[i]);}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y.toFixed(0)+'° ('+directionName(c.parsed.y)+')'}}},scales:{x:{grid:{display:false}},y:{min:0,max:360,title:{display:true,text:'grader'},ticks:{stepSize:45,callback:v=>v+'° '+directionName(v)}}}}});
-  let wds=DATA.wind.direction_sectors.filter(r=>inYears(r,f));if(f.month)wds=wds.filter(r=>r.month===f.month);
+  const wd=(f.month?windSeries.direction_monthly.filter(r=>inYears(r,f)&&r.month===f.month):windSeries.direction_annual.filter(r=>inYears(r,f)));destroyChart('windDirection');charts.windDirection=new Chart(el('windDirection'),{type:'line',data:{labels:wd.map(r=>r.year),datasets:[{data:wd.map(r=>r.avg),borderWidth:2,pointRadius:2,tension:.1}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:false},onHover:(e,pts)=>{if(pts.length){const i=pts[0].index;updateCompass(wd[i].avg,String(wd[i].year));}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y.toFixed(0)+'° ('+directionName(c.parsed.y)+')'}}},scales:{x:{grid:{display:false}},y:{min:0,max:360,title:{display:true,text:'grader'},ticks:{stepSize:45,callback:v=>v+'° '+directionName(v)}}}}});
+  const wdm=windSeries.direction_monthly.filter(r=>inYears(r,f));const monthly=[...Array(12)].map((_,i)=>circularFromParts(wdm.filter(r=>r.month===i+1)));destroyChart('windDirectionMonthly');charts.windDirectionMonthly=new Chart(el('windDirectionMonthly'),{type:'line',data:{labels:months,datasets:[{data:monthly,borderWidth:2,pointRadius:2,tension:.1,borderColor:MONTH_GREEN,backgroundColor:MONTH_GREEN}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:false},onHover:(e,pts)=>{if(pts.length){const i=pts[0].index;updateCompass(monthly[i],months[i]);}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y.toFixed(0)+'° ('+directionName(c.parsed.y)+')'}}},scales:{x:{grid:{display:false}},y:{min:0,max:360,title:{display:true,text:'grader'},ticks:{stepSize:45,callback:v=>v+'° '+directionName(v)}}}}});
+  let wds=windSeries.direction_sectors.filter(r=>inYears(r,f));if(f.month)wds=wds.filter(r=>r.month===f.month);
   const windShareYears=[...new Set(wds.map(r=>r.year))].sort((a,b)=>a-b);
   const windDirs=['N','NO','O','SO','S','SV','V','NV'];
   const WIND_DIR_COLORS={
@@ -2209,7 +2254,7 @@ function render(){
     plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1).replace('.',',')+' %'}}},
     scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}});
 
-  const wdsMonthly=DATA.wind.direction_sectors.filter(r=>inYears(r,f));
+  const wdsMonthly=windSeries.direction_sectors.filter(r=>inYears(r,f));
   const monthlyTotals={};
   wdsMonthly.forEach(r=>monthlyTotals[r.month]=(monthlyTotals[r.month]||0)+r.count);
   destroyChart('windDirectionSharesMonthly');
@@ -2315,8 +2360,9 @@ function render(){
   });
   barChart('irradianceEnergyMonthly',months,monthlyEnergy,'kWh/m²','rgba(230,126,34,0.55)');
 
-  const snowA=DATA.snow.annual_mean.filter(r=>r.year>=f.from&&r.year<=f.to),
-        snowMax=DATA.snow.annual_max.filter(r=>r.year>=f.from&&r.year<=f.to);
+  const snowSeries=pageWeatherSeries('snow',DATA.snow);
+  const snowA=snowSeries.annual_mean.filter(r=>r.year>=f.from&&r.year<=f.to),
+        snowMax=snowSeries.annual_max.filter(r=>r.year>=f.from&&r.year<=f.to);
   const snowMeanYears=snowA.map(r=>r.year),snowMeanVals=snowA.map(r=>r.avg),snowMeanLabels=snowA.map(r=>r.label||String(r.year));
   destroyChart('snowMeanAnnual');
   charts.snowMeanAnnual=new Chart(el('snowMeanAnnual'),{
@@ -2341,13 +2387,13 @@ function render(){
   });
   el('snowMaxTrendText').textContent=trendRateText(snowMaxYears,snowMaxVals,'cm',snowMaxLabels[0]??null,snowMaxLabels[snowMaxLabels.length-1]??null);
 
-  let snowM=DATA.snow.monthly.filter(r=>r.year>=f.from&&r.year<=f.to);
+  let snowM=snowSeries.monthly.filter(r=>r.year>=f.from&&r.year<=f.to);
   const snowMonthOrder=[8,9,10,11,12,1,2,3,4,5,6,7];
   const snowMonthlyAll=aggregateMonthlyMean(snowM);
   const snowMonthLabels=snowMonthOrder.map(m=>months[m-1]);
   const snowMonthlySeasonOrder=snowMonthOrder.map(m=>snowMonthlyAll[m-1]);
   barChart('snowMonthly',snowMonthLabels,snowMonthlySeasonOrder,'cm',MONTH_GREEN);
-  const snowSeasons=DATA.snow.seasons.filter(s=>s.start_year>=f.from&&s.start_year<=f.to);
+  const snowSeasons=snowSeries.seasons.filter(s=>s.start_year>=f.from&&s.start_year<=f.to);
   const seasonLabels=snowSeasons.map(s=>s.label),seasonVals=snowSeasons.map(s=>s.length_days);
   const seasonYears=snowSeasons.map(s=>s.start_year);
   const seasonTrend=linearTrend(seasonYears,seasonVals);
@@ -2734,16 +2780,16 @@ function yearBoundsFromRows(rows,key='year'){
 function pageYearBounds(page){
   const fallback={min:DATA.years[0],max:DATA.years[DATA.years.length-1]};
   const candidates={
-    temp1:()=>yearBoundsFromRows(DATA.temperature?.annual||DATA.temperature?.monthly),
-    temp2:()=>yearBoundsFromRows(DATA.temperature?.annual||DATA.temperature?.monthly),
+    temp1:()=>yearBoundsFromRows(pageWeatherSeries('temperature',DATA.temperature,el('temperature1Station')?.value)?.annual||[]),
+    temp2:()=>yearBoundsFromRows(pageWeatherSeries('temperature',DATA.temperature,el('temperature2Station')?.value)?.annual||[]),
     precip:()=>yearBoundsFromRows(DATA.precipitation?.annual||DATA.precipitation?.monthly_total),
-    wind:()=>yearBoundsFromRows(DATA.wind?.speed_annual||DATA.wind?.speed_monthly),
+    wind:()=>yearBoundsFromRows(pageWeatherSeries('wind',DATA.wind)?.speed_annual||[]),
     weather:()=>yearBoundsFromRows(DATA.weather?.codes),
     visibility:()=>yearBoundsFromRows(DATA.visibility?.annual||DATA.visibility?.monthly),
     pressure:()=>yearBoundsFromRows((PRESSURE_STATIONS?.stations||[]).find(s=>s.id===el('pressureStation')?.value)?.annual||DATA.pressure?.annual||[]),
     humidity:()=>yearBoundsFromRows(DATA.humidity?.annual||DATA.humidity?.monthly),
     sunshine:()=>yearBoundsFromRows(DATA.sunshine?.annual||DATA.sunshine?.monthly_total),
-    snow:()=>yearBoundsFromRows(DATA.snow?.annual_mean||DATA.snow?.annual_max),
+    snow:()=>yearBoundsFromRows(pageWeatherSeries('snow',DATA.snow)?.annual_mean||[]),
     zerocross:()=>yearBoundsFromRows(DATA.zero_crossings),
     vegetation:()=>yearBoundsFromRows(DATA.vegetation?.climate_10y,'window_end'),
     lightning:()=>yearBoundsFromRows(DATA.lightning?.annual),
@@ -2840,6 +2886,14 @@ el('month').addEventListener('change',()=>{
     showSnowMapDate(0);
   }
 });
+for(const id of ['temperature1Station','temperature2Station','windStation','snowStation']){
+  el(id).addEventListener('change',()=>{
+    if(id==='temperature2Station')setupTemp2Slider();
+    const page=id==='temperature1Station'?'temp1':id==='temperature2Station'?'temp2':id==='windStation'?'wind':'snow';
+    applyPageYearBounds(page,true);
+    render();
+  });
+}
 el('precipStation').addEventListener('change',render);
 el('pressureStation').addEventListener('change',()=>{applyPageYearBounds('pressure',true);render();});
 el('precipTimelineMode').addEventListener('change',render);
@@ -2872,6 +2926,19 @@ fetch('dashboard_data.json',{cache:'no-store'})
         +'<option value="municipal">Kommunmedel (stationsmedel)</option>';
       render();
     }).catch(err=>console.warn('Station precipitation unavailable',err));
+    fetch('weather_stations.json',{cache:'no-store'})
+      .then(r=>r.ok?r.json():null)
+      .then(data=>{
+        if(!data?.stations)return;
+        WEATHER_STATIONS=data;
+        setupWeatherStationPickers();
+        const page=document.querySelector('#tabs button.active')?.dataset.page;
+        if(['temp1','temp2','wind','snow'].includes(page)){
+          applyPageYearBounds(page,true);
+        }
+        render();
+      })
+      .catch(err=>console.warn('Other weather station data unavailable:',err));
     fetch('pressure_stations.json',{cache:'no-store'})
       .then(r=>r.ok?r.json():null)
       .then(setupPressureStations)
