@@ -85,6 +85,7 @@
   <button data-page="weather">Väder</button>
   <button data-page="wind">Vind</button>
   <button data-page="visibility">Sikt</button>
+  <button data-page="pressure">Lufttryck</button>
   <button data-page="humidity">Luftfuktighet</button>
   <button data-page="sunshine">Solskenstid</button>
   <button data-page="snow">Snödjup</button>
@@ -95,13 +96,12 @@
   <button data-page="seaice">Havsis</button>
   <button data-page="sealevel">Vattenstånd</button>
   <button data-page="dateweather">Väder efter datum</button>
-  <button data-page="warnings">Varningar</button>
   <button data-page="data">Metod &amp; Data</button>
 </nav>
 <main>
   <section class="report-intro" aria-labelledby="reportIntroTitle">
     <h2 id="reportIntroTitle">Klimat och väder i Luleå</h2>
-    <p>Rapporten sammanställer historiska och löpande väder- och klimatdata för Luleå kommun. Huvudkällan är SMHI:s observationsdata från Kallax station 162860. Rapporten innehåller analyser av temperatur, nederbörd, väderfenomen, vind, sikt, luftfuktighet, solskenstid, snö och snötäcke, nollgenomgångar, vegetationsperiod, blixt, havsis och alger.</p>
+    <p>Rapporten sammanställer historiska och löpande väder- och klimatdata för Luleå kommun. Huvudkällan är SMHI:s observationsdata från Kallax station 162860. Rapporten innehåller analyser av temperatur, nederbörd, väderfenomen, vind, sikt, lufttryck, luftfuktighet, solskenstid, snö och snötäcke, nollgenomgångar, vegetationsperiod, blixt, havsis och alger.</p>
     <p>Diagrammen är interaktiva och kan filtreras efter period och månad. Vissa kart- och snöanalyser använder kompletterande bearbetningar och andra öppna datakällor; metod och källa anges i respektive avsnitt. För klimatjämförelser bör längre tidsperioder användas eftersom enskilda år kan avvika kraftigt från den långsiktiga utvecklingen.</p>
   </section>
   <section class="filters" id="globalFilters">
@@ -151,43 +151,6 @@
     <div class="chart-card"><h2>Nederbörd månad för månad – historisk utveckling</h2><p class="hint">Varje stapel är en kalendermånad, i kronologisk ordning från första tillgängliga observationen inom valt årsintervall. Hela perioden visas kompakt i ett diagram. Använd filtret för att studera extrema månader. Luckor i datamaterialet visas som tomma månader.</p><div class="precip-timeline-controls"><label>Visa <select id="precipTimelineMode"><option value="all">Alla månader</option><option value="threshold">Minsta nederbördsmängd</option><option value="minyear">Minst per år</option><option value="maxyear">Max per år</option></select></label><label id="precipTimelineMinLabel" hidden>Minst (mm) <input id="precipTimelineMin" type="number" min="0" step="1" value="50"></label></div><div class="precip-timeline-viewport"><canvas id="precipTimeline"></canvas></div><p class="hint" style="margin-top:8px">Färgerna anger kalendermånad (blå vintertoner, gröna vårtoner och varma sommartoner); samma månad har samma färg alla år.</p></div>
   </section>
 
-  <section id="page-warnings" class="page">
-    <div class="chart-card full" style="min-height:0">
-      <h2>SMHI – varningar och meddelanden i Luleå kommun</h2>
-      <p class="hint">Geografisk matchning mot Luleå kommuns arbetsgeometri. Områden kan omfatta både land och hav. Varningar kan ändras snabbt; kontrollera alltid SMHI för aktuella beslut.</p>
-      <div class="page-tools warning-tools">
-        <label>Kategori <select id="warningCategory"><option value="all">Alla kategorier</option><option value="weather">Vädervarningar</option><option value="fire">Brandrisk</option><option value="water">Vattenbrist</option><option value="heat">Höga temperaturer</option></select></label>
-        <label>Nivå <select id="warningLevel"><option value="all">Alla nivåer</option><option value="YELLOW">Gul</option><option value="ORANGE">Orange</option><option value="RED">Röd</option><option value="MESSAGE">Meddelande</option></select></label>
-      </div>
-      <p id="warningStatus" class="hint">Väntar på första datainsamlingen.</p>
-    </div>
-    <div class="chart-card full warning-map-card">
-      <h2>Geografisk utbredning</h2>
-      <div id="warningsMap" class="warnings-map"></div>
-      <p class="hint">Visad kommungräns är en befintlig arbetsgeometri, inte verifierad officiell administrativ gräns. Källa: SMHI.</p>
-    </div>
-    <div class="chart-card full" style="min-height:0">
-      <h2>Varningar som berör Luleå</h2>
-      <div id="warningResults">Ingen insamling har ännu verifierats.</div>
-    </div>
-    <div class="chart-card full" style="min-height:0">
-      <h2>Versionshistorik – varningsgeometrier</h2>
-      <p class="hint">Välj en varning och en observerad version. Kartan visar geometrin som sparades vid den insamlingen, klippt till Luleås arbetsgeometri. Endast observerade versioner visas.</p>
-      <div class="page-tools warning-tools">
-        <label>Varning <select id="warningVersionKey"><option value="">Välj varning</option></select></label>
-        <label>Observation <select id="warningVersionIndex"><option value="">Välj version</option></select></label>
-      </div>
-      <p id="warningVersionStatus" class="hint">Väntar på versionsdata.</p>
-      <div id="warningVersionMap" class="warnings-map"></div>
-      <div id="warningVersionTimeline"></div>
-    </div>
-    <div class="chart-card full" style="min-height:0">
-      <h2>Insamlingshistorik</h2>
-      <p class="hint">Tidsstämplade kontroller från och med första lyckade körningen. Detta är inte ett komplett historiskt SMHI-arkiv; flera kontroller av samma varning är inte flera skilda händelser.</p>
-      <div id="warningHistory">Ingen historik inläst.</div>
-    </div>
-  </section>
-
   <section id="page-weather" class="page">
     <div class="page-tools">
       <label>Vädertyp<select id="weatherCode"><option value="all">Alla vädertyper</option></select></label>
@@ -216,6 +179,31 @@
   <section id="page-visibility" class="page">
     <div class="chart-card"><h2>Genomsnittlig sikt per år</h2><p id="visibilityAnnualTrendText" class="hint"></p><canvas id="visibilityAnnual"></canvas></div>
     <div class="chart-card"><h2>Genomsnittlig sikt per månad</h2><canvas id="visibilityMonthly"></canvas></div>
+  </section>
+
+  <section id="page-pressure" class="page">
+    <div class="page-tools pressure-tools">
+      <label>Väderstation
+        <select id="pressureStation">
+          <option value="162860">Luleå-Kallax Flygplats</option>
+        </select>
+      </label>
+      <span id="pressureStationStatus" class="hint">Kallax är förvald. Övriga stationer läggs till endast när SMHI har verifierade lufttrycksserier.</span>
+    </div>
+    <div class="chart-card"><h2>Genomsnittligt lufttryck per år</h2>
+      <p class="hint">SMHI parameter 9: lufttryck reducerat till havsytans nivå (hPa). Månadsväljaren visar samma kalendermånad över flera år.</p>
+      <p id="pressureAnnualTrendText" class="hint"></p>
+      <canvas id="pressureAnnual"></canvas>
+    </div>
+    <div class="chart-card"><h2>Genomsnittligt lufttryck per månad</h2>
+      <p class="hint">Medelvärde för respektive månad inom valt årsintervall.</p>
+      <canvas id="pressureMonthly"></canvas>
+    </div>
+    <div class="chart-card full" style="min-height:0">
+      <h2>Stationskontroll och metod</h2>
+      <div id="pressureStationMethod" class="hint">Läser stationsinventering…</div>
+      <p class="hint">Historiskt tryck jämförs i hPa vid havsnivå. Historiska luckor redovisas som luckor; ofullständiga månader tas inte med i flerstationers jämförbara serier. Stationer på sidan Nederbörd har inte nödvändigtvis lufttrycksmätningar.</p>
+    </div>
   </section>
 
   <section id="page-humidity" class="page">
@@ -469,6 +457,7 @@
 <tr><td><b>Nederbördstyp per år och månad</b></td><td>SMHI parameter 18 eller 17; annars parameter 13 och temperatur 1</td><td>Om direkt observerad nederbördstyp saknas härleds klassificeringen från väderkod och temperatur. Andelarna beskriver observationer, inte regnvolym.</td><td class="method-coverage" data-coverage="18,17,13,1" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
 <tr><td><b>Rådande väder och väder efter datum</b></td><td>SMHI Kallax: 1, 3, 4, 5, 6, 7, 8, 9, 12, 13, 16, 21, 39. Luleå Sol: 10, 11. Beräknad solposition.</td><td>Dygnsbeskrivning och diagram baseras på tillgängliga stationsobservationer i svensk lokaltid. Kod 100 betyder inget signifikant väder, inte klart väder; kod 185 lätta snöbyar. Okänd molnighet (113 %) exkluderas. SMHI:s parameter 5 kl. 06 UTC avser föregående 24 timmar och redovisas separat. Kalenderdygnets nederbörd summeras av timvärden endast vid full täckning (23, 24 eller 25 timmar vid tidsomställning). Daggpunkt visas tillsammans med temperatur. Soltider är beräknade, inte uppmätt solsken.</td><td class="method-coverage" data-coverage="13,7,1,16,10,11,3,4,6,9,12,21,39" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
 <tr><td><b>Vind och vindriktning</b></td><td>SMHI parameter 4 (vindhastighet), 3 (vindriktning), 21 (vindby)</td><td>Medel/max och riktningsandelar sammanställs separat. Vindriktning är cirkulär och får inte behandlas som en vanlig linjär storhet.</td><td class="method-coverage" data-coverage="4,3,21" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
+<tr><td><b>Lufttryck – historiska diagram</b></td><td>SMHI MetObs, parameter 9, lufttryck reducerat till havsytans nivå; station 162860 som förval</td><td>Års- och månadsmedel (hPa) med linjär trend. Andra stationer verifieras mot SMHI:s parameter-9 stationsinventering och kvalitetskontrolleras per månad. Årsmedel från jämförbara stationsserier beräknas som medel av minst nio godkända månadsmedel. Endast stationer med egna lufttrycksobservationer visas.</td><td class="method-coverage" data-coverage="9" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
 <tr><td><b>Sikt och luftfuktighet</b></td><td>SMHI parameter 12 och 6</td><td>Års- och månadsmedel beräknas från tillgängliga observationer. Trendlinje = linjär regression över år.</td><td class="method-coverage" data-coverage="12,6" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
 <tr><td><b>Solskenstid och solinstrålning</b></td><td>SMHI parameter 10 (solskenstid), 11 (global irradians); station Luleå Sol där angivet</td><td>Solskenstid summeras från mätt tid. Timmedel för irradians W/m² kan integreras till energi kWh/m²; detta är skilda enheter.</td><td class="method-coverage" data-coverage="10,11" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
 <tr><td><b>Snödjup och snötäcksäsong</b></td><td>SMHI parameter 8</td><td>Snödjup anges i cm; snösäsong grupperas över årsskiftet snarare än strikt kalenderår.</td><td class="method-coverage" data-coverage="8" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
@@ -501,5 +490,5 @@
 </main>
 <script src="sealevel.js?v=1"></script>
 <script src="sealevel-basin.js?v=8"></script>
-<script src="app.js?v=44"></script>
+<script src="app.js?v=45"></script>
 </body></html>
