@@ -1,0 +1,69 @@
+name: Rebuild historical weather-by-date observations
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/build_dashboard_data.py"
+      - "docs/app.js"
+      - "docs/index.html"
+      - "docs/style.css"
+      - ".github/workflows/rebuild-date-weather.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: smhi-date-weather-data-build
+  cancel-in-progress: false
+
+jobs:
+  date-weather:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check Python and JavaScript syntax
+        run: |
+          python -m py_compile scripts/build_dashboard_data.py
+          node --check docs/app.js
+      - name: Rebuild observed daily data and dashboard
+        run: python scripts/build_dashboard_data.py
+      - name: Validate new daily data
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files=sorted(Path('docs/daily').glob('*.json'))
+          assert files, 'Missing daily JSON files'
+          keys={'temperature','weather','cloud_cover','sunshine_seconds','wind_speed',
+                'wind_direction','wind_gust','visibility','humidity','pressure',
+                'dew_point','solar_irradiance','precipitation_calendar_mm'}
+          checked=0
+          for p in files:
+              obj=json.loads(p.read_text(encoding='utf-8'))
+              for day in obj.get('days',{}).values():
+                  assert keys.issubset(day), (p,keys-set(day))
+                  checked+=1
+          assert checked>1000, 'Too few daily records'
+          print('Verified',checked,'daily records in',len(files),'files')
+          PY
+      - name: Commit rebuilt JSON to main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/daily docs/dashboard_data.json
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+            exit 0
+          fi
+          git commit -m "Refresh weather-by-date observation details"
+          git pull --rebase origin main
+          git push origin HEAD:main

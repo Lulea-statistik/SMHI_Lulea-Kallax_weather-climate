@@ -61,7 +61,7 @@
 
   <link rel="icon" type="image/x-icon" href="https://lulea-statistik.github.io/BR-brottsstatistik/kommun-favicon.ico?v=2">
 
-  <link rel="stylesheet" href="style.css?v=44">
+  <link rel="stylesheet" href="style.css?v=45">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -439,10 +439,23 @@
       <label>Datum<input id="dateWeatherPicker" type="date"></label>
       <span id="dateWeatherStatus" class="hint selected-date-text"></span>
     </div>
+    <div class="chart-card date-overview">
+      <h2>Dagens väder i Luleå</h2>
+      <div id="dateWeatherOverview" class="date-overview-cards" aria-live="polite"></div>
+      <p id="dateWeatherNarrative" class="date-weather-narrative"></p>
+      <p class="hint">Dygnsbeskrivningen skapas automatiskt från tillgängliga observationer. Kallax (162860) är huvudstation. Faktisk solskenstid och solinstrålning mäts vid Luleå Sol (162015), inte på flygplatsen. Saknade timmar skattas inte.</p>
+    </div>
     <div class="chart-card date-aligned date-summary"><h2>Dygnsvärden</h2><div id="dateSummary"></div></div>
     <div class="chart-card date-aligned date-chart date-temp-chart"><h2>Temperatur under dygnet</h2><canvas id="dateTemp"></canvas></div>
     <div class="chart-card date-aligned date-chart"><h2>Sol över horisonten</h2><p class="hint">Andel av varje klocktimme som solen är över horisonten, beräknad från soluppgång och solnedgång.</p><canvas id="dateSun"></canvas></div>
     <div class="chart-card date-aligned date-chart"><h2>Nederbörd per timme</h2><p class="hint">SMHI parameter 7, nederbördsmängd under timmen. Serien finns från 2013.</p><canvas id="datePrecip"></canvas></div>
+    <div class="chart-card date-aligned date-chart"><h2>Molnighet under dygnet</h2><p class="hint">SMHI parameter 16 (Kallax). Okänd molnighet, bland annat kod 113, utelämnas.</p><p id="dateCloudStatus" class="hint"></p><canvas id="dateCloud"></canvas></div>
+    <div class="chart-card date-aligned date-chart"><h2>Faktisk solskenstid per timme</h2><p class="hint">SMHI parameter 10 (Luleå Sol), minuter av uppmätt solsken. Skiljer sig från beräknad dagslängd.</p><p id="dateSunshineStatus" class="hint"></p><canvas id="dateSunshine"></canvas></div>
+    <div class="chart-card date-aligned date-chart"><h2>Vind och byvind</h2><p class="hint">SMHI parametrar 4 och 21 (Kallax); vindriktning visas vid muspekning över vindhastighet.</p><p id="dateWindStatus" class="hint"></p><canvas id="dateWind"></canvas></div>
+    <div class="chart-card date-aligned date-chart"><h2>Sikt under dygnet</h2><p class="hint">SMHI parameter 12 (Kallax); observerad sikt i kilometer.</p><p id="dateVisibilityStatus" class="hint"></p><canvas id="dateVisibility"></canvas></div>
+    <div class="chart-card date-aligned date-chart"><h2>Luftfuktighet</h2><p class="hint">SMHI parameter 6 (Kallax), relativ luftfuktighet i procent.</p><p id="dateHumidityStatus" class="hint"></p><canvas id="dateHumidity"></canvas></div>
+    <div class="chart-card date-aligned date-chart"><h2>Lufttryck under dygnet</h2><p class="hint">SMHI parameter 9 (Kallax), reducerat till havsytans nivå (hPa).</p><p id="datePressureStatus" class="hint"></p><canvas id="datePressure"></canvas></div>
+    <div class="chart-card date-aligned date-chart"><h2>Solinstrålning under dygnet</h2><p class="hint">SMHI parameter 11 (Luleå Sol), uppmätt timmedel i W/m².</p><p id="dateIrradianceStatus" class="hint"></p><canvas id="dateIrradiance"></canvas></div>
     <div class="chart-card date-aligned date-chart"><h2>Rådande väder under dygnet</h2><p class="hint">En stapel per klocktimme. 100 % betyder det väder som registrerades den timmen.</p><canvas id="dateWeather"></canvas></div>
   </section>
 
@@ -454,7 +467,7 @@
     <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;text-align:left"><thead><tr><th style="padding:10px;border-bottom:1px solid #999">Diagram / tabell</th><th style="padding:10px;border-bottom:1px solid #999">Datakälla</th><th style="padding:10px;border-bottom:1px solid #999">Metod och avgränsning</th><th style="padding:10px;border-bottom:1px solid #999">Datatäckning</th></tr></thead><tbody><tr><td><b>Temperatur 1 och 2</b></td><td>SMHI Kallax, parameter 1</td><td>Års- och månadsaggregat; 30-årsperiod för klimatprofil. Linjära trender skattas med regression mot kalenderår.</td><td class="method-coverage" data-coverage="1" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
 <tr><td><b>Nederbörd: års-, månads- och historiska diagram</b></td><td>SMHI Luleå-Kallax Flygplats 162860, parameter 5 (dygnsmängd)</td><td>Dygnsvärden summeras per kalenderår och kalendermånad. Summor är inte korrigerade för saknade observationsdygn.</td><td class="method-coverage" data-coverage="5" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
 <tr><td><b>Nederbördstyp per år och månad</b></td><td>SMHI parameter 18 eller 17; annars parameter 13 och temperatur 1</td><td>Om direkt observerad nederbördstyp saknas härleds klassificeringen från väderkod och temperatur. Andelarna beskriver observationer, inte regnvolym.</td><td class="method-coverage" data-coverage="18,17,13,1" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
-<tr><td><b>Rådande väder och väder efter datum</b></td><td>SMHI parameter 13; temperatur 1, nederbörd 7 och beräknad solposition</td><td>Väderkodernas förekomst grupperas. Timdiagram och dygnsuppgifter är inte automatiskt samma mätstorhet som dygnsnederbörd.</td><td class="method-coverage" data-coverage="13,7,1" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
+<tr><td><b>Rådande väder och väder efter datum</b></td><td>SMHI Kallax: 1, 3, 4, 5, 6, 7, 8, 9, 12, 13, 16, 21, 39. Luleå Sol: 10, 11. Beräknad solposition.</td><td>Dygnsbeskrivning och diagram baseras på tillgängliga stationsobservationer i svensk lokaltid. Kod 100 betyder inget signifikant väder, inte klart väder; kod 185 lätta snöbyar. Okänd molnighet (113 %) exkluderas. SMHI:s parameter 5 kl. 06 UTC avser föregående 24 timmar och redovisas separat. Kalenderdygnets nederbörd summeras av timvärden endast vid full täckning (23, 24 eller 25 timmar vid tidsomställning). Daggpunkt visas tillsammans med temperatur. Soltider är beräknade, inte uppmätt solsken.</td><td class="method-coverage" data-coverage="13,7,1,16,10,11,3,4,6,9,12,21,39" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
 <tr><td><b>Vind och vindriktning</b></td><td>SMHI parameter 4 (vindhastighet), 3 (vindriktning), 21 (vindby)</td><td>Medel/max och riktningsandelar sammanställs separat. Vindriktning är cirkulär och får inte behandlas som en vanlig linjär storhet.</td><td class="method-coverage" data-coverage="4,3,21" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
 <tr><td><b>Sikt och luftfuktighet</b></td><td>SMHI parameter 12 och 6</td><td>Års- och månadsmedel beräknas från tillgängliga observationer. Trendlinje = linjär regression över år.</td><td class="method-coverage" data-coverage="12,6" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
 <tr><td><b>Solskenstid och solinstrålning</b></td><td>SMHI parameter 10 (solskenstid), 11 (global irradians); station Luleå Sol där angivet</td><td>Solskenstid summeras från mätt tid. Timmedel för irradians W/m² kan integreras till energi kWh/m²; detta är skilda enheter.</td><td class="method-coverage" data-coverage="10,11" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
@@ -488,5 +501,5 @@
 </main>
 <script src="sealevel.js?v=1"></script>
 <script src="sealevel-basin.js?v=8"></script>
-<script src="app.js?v=43"></script>
+<script src="app.js?v=44"></script>
 </body></html>
