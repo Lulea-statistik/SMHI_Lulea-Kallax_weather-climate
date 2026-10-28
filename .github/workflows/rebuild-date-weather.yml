@@ -2,10 +2,13 @@ name: Rebuild historical weather-by-date observations
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "37 6 2 * *"
   push:
     branches: [main]
     paths:
       - "scripts/build_dashboard_data.py"
+      - "scripts/build_pressure_stations.py"
       - "docs/app.js"
       - "docs/index.html"
       - "docs/style.css"
@@ -29,12 +32,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install SMHI API client
+        run: pip install requests==2.32.5
       - name: Check Python and JavaScript syntax
         run: |
-          python -m py_compile scripts/build_dashboard_data.py
+          python -m py_compile scripts/build_dashboard_data.py scripts/build_pressure_stations.py
           node --check docs/app.js
       - name: Rebuild observed daily data and dashboard
         run: python scripts/build_dashboard_data.py
+      - name: Check SMHI pressure stations and build historical pressure aggregates
+        run: python scripts/build_pressure_stations.py
       - name: Validate new daily data
         run: |
           python - <<'PY'
@@ -52,6 +59,11 @@ jobs:
                   assert keys.issubset(day), (p,keys-set(day))
                   checked+=1
           assert checked>1000, 'Too few daily records'
+          dashboard=json.loads(Path('docs/dashboard_data.json').read_text(encoding='utf-8'))
+          assert dashboard.get('pressure',{}).get('annual'), 'No historic Kallax pressure data'
+          station_data=json.loads(Path('docs/pressure_stations.json').read_text(encoding='utf-8'))
+          assert any(s['id']=='162860' and s['annual'] for s in station_data['stations'])
+          assert len(station_data['station_audit'])==8, 'Expected all known Lulea precipitation stations checked'
           print('Verified',checked,'daily records in',len(files),'files')
           PY
       - name: Commit rebuilt JSON to main
@@ -59,7 +71,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/daily docs/dashboard_data.json
+          git add docs/daily docs/dashboard_data.json docs/pressure_stations.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0
