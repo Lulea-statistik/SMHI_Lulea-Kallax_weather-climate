@@ -32,6 +32,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install SMHI API client
+        run: pip install requests==2.32.5
       - name: Check Python and JavaScript syntax
         run: |
           python -m py_compile scripts/build_dashboard_data.py scripts/build_pressure_stations.py
