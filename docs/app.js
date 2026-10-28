@@ -2449,6 +2449,10 @@ function dateRenderOverview(day,minT,maxT){
   const humidity=dateNumericObservations(day.humidity,0,100);
   const pressure=dateNumericObservations(day.pressure,850,1100);
   const windDir=dateNumericObservations(day.wind_direction,0,360);
+  const windDirX=windDir.reduce((sum,d)=>sum+Math.sin(d*Math.PI/180),0);
+  const windDirY=windDir.reduce((sum,d)=>sum+Math.cos(d*Math.PI/180),0);
+  const windMeanDir=windDir.length&&Math.hypot(windDirX,windDirY)>0.01*windDir.length?
+    (Math.atan2(windDirX,windDirY)*180/Math.PI+360)%360:null;
   const sunHours=sunSeconds.length?sunSeconds.reduce((a,b)=>a+b,0)/3600:null;
   const cloudMean=dateAverage(cloud);
   const maxGust=gust.length?Math.max(...gust):null;
@@ -2458,6 +2462,7 @@ function dateRenderOverview(day,minT,maxT){
     ['Temperatur',minT==null?'–':dateFormat(minT)+' till '+dateFormat(maxT)+' °C','SMHI Kallax'],
     ['Molnighet',cloudMean==null?'–':dateFormat(cloudMean,0)+' %','Medel av '+cloud.length+' obs. · Kallax'],
     ['Uppmätt solsken',sunHours==null?'–':dateFormat(sunHours,1)+' tim','Luleå Sol · '+sunSeconds.length+' timvärden'],
+    ['Vindriktning',windMeanDir==null?'–':directionName(windMeanDir)+' ('+dateFormat(windMeanDir,0)+'°)','Cirkulärt medel · Kallax'],
     ['Byvind, max',maxGust==null?'–':dateFormat(maxGust)+' m/s','Kallax'],
     ['Lägsta sikt',minVis==null?'–':dateFormat(minVis,1)+' km','Kallax'],
     ['Nederbörd kalenderdag',precip==null?'–':dateFormat(precip)+' mm',
