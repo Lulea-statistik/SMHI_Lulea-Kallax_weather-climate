@@ -9,6 +9,7 @@ on:
     paths:
       - "scripts/build_dashboard_data.py"
       - "scripts/build_pressure_stations.py"
+      - "scripts/build_weather_stations.py"
       - "docs/app.js"
       - "docs/index.html"
       - "docs/style.css"
@@ -36,12 +37,14 @@ jobs:
         run: pip install requests==2.32.5
       - name: Check Python and JavaScript syntax
         run: |
-          python -m py_compile scripts/build_dashboard_data.py scripts/build_pressure_stations.py
+          python -m py_compile scripts/build_dashboard_data.py scripts/build_pressure_stations.py scripts/build_weather_stations.py
           node --check docs/app.js
       - name: Rebuild observed daily data and dashboard
         run: python scripts/build_dashboard_data.py
       - name: Check SMHI pressure stations and build historical pressure aggregates
         run: python scripts/build_pressure_stations.py
+      - name: Verify other Lulea weather stations and build page series
+        run: python scripts/build_weather_stations.py
       - name: Validate new daily data
         run: |
           python - <<'PY'
@@ -64,6 +67,11 @@ jobs:
           station_data=json.loads(Path('docs/pressure_stations.json').read_text(encoding='utf-8'))
           assert any(s['id']=='162860' and s['annual'] for s in station_data['stations'])
           assert len(station_data['station_audit'])==8, 'Expected all known Lulea precipitation stations checked'
+          other=json.loads(Path('docs/weather_stations.json').read_text(encoding='utf-8'))
+          assert len(other['audit'])==8, 'Expected all known Lulea stations checked'
+          assert all(any(st['id']=='162860' for st in other['stations'][kind]) for kind in ('temperature','wind','snow'))
+          for kind,stations in other['stations'].items():
+              assert all(st['id']=='162860' or len(st.get('annual',st.get('speed_annual',st.get('seasons',[]))))>0 for st in stations)
           print('Verified',checked,'daily records in',len(files),'files')
           PY
       - name: Commit rebuilt JSON to main
@@ -71,7 +79,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/daily docs/dashboard_data.json docs/pressure_stations.json
+          git add docs/daily docs/dashboard_data.json docs/pressure_stations.json docs/weather_stations.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0
