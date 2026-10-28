@@ -1,7 +1,8 @@
 from __future__ import annotations
 import csv,json,math,re,html
 from collections import defaultdict
-from datetime import datetime,timezone
+from datetime import datetime,timezone,timedelta
+from zoneinfo import ZoneInfo
 from pathlib import Path
 from urllib.request import Request,urlopen
 ROOT=Path(__file__).resolve().parents[1];DATA=ROOT/'data';DOCS=ROOT/'docs'
@@ -412,28 +413,69 @@ def fetch_weather_labels():
                 if clean and not clean.lower().startswith('kod '):labels.setdefault(code,clean)
     except Exception as e:print(f'Warning: could not fetch SMHI weather code labels: {e}')
     return labels
-def write_daily_detail(temp,prec,prec_hourly,snow,weather):
+def write_daily_detail(temp,prec,prec_hourly,snow,weather,wind_speed,wind_dir,gust,cloud,
+                       sunshine,irradiance,visibility,humidity,pressure,dewpoint):
+    """Build calendar-day observations in Swedish time without mixing reporting periods.
+
+    The parameter-5 06 UTC value is a *preceding* 24-hour measurement; for a
+    Swedish calendar day use complete, hourly parameter-7 observations only.
+    A missing hourly observation must never silently become zero precipitation.
+    """
     outdir=DOCS/'daily';outdir.mkdir(parents=True,exist_ok=True)
-    byyear=defaultdict(lambda:defaultdict(lambda:{'temperature':[],'weather':[],'precipitation_hourly':[],'precipitation_mm':None,'snow_cm':None}))
-    for d,v in temp:
-        byyear[d.year][d.date().isoformat()]['temperature'].append({'time':d.strftime('%H:%M'),'value':r2(v)})
-    precip_daily=defaultdict(float)
-    for d,v in prec:precip_daily[d.date()]+=v
-    for day,v in precip_daily.items():byyear[day.year][day.isoformat()]['precipitation_mm']=r2(v)
+    series={'temperature':temp,'weather':weather,'precipitation_hourly':prec_hourly,
+            'wind_speed':wind_speed,'wind_direction':wind_dir,'wind_gust':gust,
+            'cloud_cover':cloud,'sunshine_seconds':sunshine,'solar_irradiance':irradiance,
+            'visibility':visibility,'humidity':humidity,'pressure':pressure,'dew_point':dewpoint}
+    def day_record():
+        return {**{name:[] for name in series},
+                'precipitation_mm':None,  # SMHI's 06 UTC previous-24h amount, kept for compatibility
+                'precipitation_24h_mm':None,
+                'precipitation_calendar_mm':None,
+                'precipitation_calendar_hours':0,
+                'precipitation_expected_hours':None,
+                'snow_cm':None}
+    byyear=defaultdict(lambda:defaultdict(day_record))
+    for name,observations in series.items():
+        for d,v in observations:
+            byyear[d.year][d.date().isoformat()][name].append(
+                {'time':d.strftime('%H:%M'),'value':r2(v)} if name!='weather'
+                else {'time':d.strftime('%H:%M'),
+                      'code':str(int(v)) if float(v).is_integer() else str(v)})
+    # SMHI's daily precipitation measure is timestamped at 06 UTC and covers
+    # the previous 24 hours; do not mislabel it as the calendar-day total.
+    for d,v in prec:
+        row=byyear[d.year][d.date().isoformat()]
+        row['precipitation_mm']=r2(v)
+        row['precipitation_24h_mm']=r2(v)
+    for d,v in snow:
+        byyear[d.year][d.date().isoformat()]['snow_cm']=r2(v*100.0)
+
+    # Hourly accumulations are end-timestamped. The interval finishing at
+    # local midnight belongs to the preceding calendar day.
+    hourly_by_day=defaultdict(dict)
     for d,v in prec_hourly:
-        byyear[d.year][d.date().isoformat()]['precipitation_hourly'].append({'time':d.strftime('%H:%M'),'value':r2(v)})
-    snow_daily={}
-    for d,v in snow:snow_daily[d.date()]=(d,v)
-    for day,(d,v) in snow_daily.items():byyear[day.year][day.isoformat()]['snow_cm']=r2(v*100.0)
-    for d,v in weather:
-        code=str(int(v)) if float(v).is_integer() else str(v)
-        byyear[d.year][d.date().isoformat()]['weather'].append({'time':d.strftime('%H:%M'),'code':code})
+        target=(d-timedelta(seconds=1)).date()
+        hourly_by_day[target][d.isoformat()]=v
+    sweden=ZoneInfo('Europe/Stockholm')
+    for date,observations in hourly_by_day.items():
+        daykey=date.isoformat()
+        row=byyear[date.year][daykey]
+        local_start=datetime(date.year,date.month,date.day,tzinfo=sweden)
+        local_end=datetime((date+timedelta(days=1)).year,
+                           (date+timedelta(days=1)).month,
+                           (date+timedelta(days=1)).day,tzinfo=sweden)
+        expected=round((local_end.astimezone(timezone.utc)-local_start.astimezone(timezone.utc)).total_seconds()/3600)
+        row['precipitation_expected_hours']=expected
+        row['precipitation_calendar_hours']=len(observations)
+        if len(observations)==expected:
+            row['precipitation_calendar_mm']=r2(sum(observations.values()))
     for year,days in byyear.items():
         for day in days.values():
-            day['temperature'].sort(key=lambda x:x['time'])
-            day['weather'].sort(key=lambda x:x['time'])
-            day['precipitation_hourly'].sort(key=lambda x:x['time'])
-        (outdir/f'{year}.json').write_text(json.dumps({'year':year,'days':dict(sorted(days.items()))},ensure_ascii=False,separators=(',',':')),encoding='utf-8')
+            for name in series:
+                day[name].sort(key=lambda x:x['time'])
+        (outdir/f'{year}.json').write_text(
+            json.dumps({'year':year,'days':dict(sorted(days.items()))},
+                       ensure_ascii=False,separators=(',',':')),encoding='utf-8')
 
 def coverage(rows,name):
     if not rows:return {'name':name,'min_date':'-','max_date':'-','rows':0}
@@ -460,9 +502,9 @@ def load_seaice_summary():
         print(f'Warning: could not read sea-ice summary: {e}')
         return {'daily':[],'seasonal':[],'source':'SMHI SE.SR Analyskarta havsis'}
 
-temp=read_param(1);wind_dir=read_param(3);wind_speed=read_param(4);prec=read_param(5);humidity=read_param(6);prec_hourly=read_param(7);snow=read_param(8);sunshine=read_param(10);irradiance=read_param(11);visibility=read_param(12);weather=read_param(13);precip_type_12=read_param_raw(17);precip_type_24=read_param_raw(18);gust=read_param(21)
+temp=read_param(1);wind_dir=read_param(3);wind_speed=read_param(4);prec=read_param(5);humidity=read_param(6);prec_hourly=read_param(7);snow=read_param(8);sunshine=read_param(10);irradiance=read_param(11);visibility=read_param(12);weather=read_param(13);cloud=read_param(16);pressure=read_param(9);dewpoint=read_param(39);precip_type_12=read_param_raw(17);precip_type_24=read_param_raw(18);gust=read_param(21)
 temp_a,temp_m=aggregate_temp(temp);wind_s_a,wind_s_m=aggregate_mean(wind_speed);wind_d_a,wind_d_m=aggregate_direction(wind_dir);prec_a,prec_m=aggregate_precip(prec);hum_a,hum_m=aggregate_mean(humidity);vis_a,vis_m=aggregate_mean(visibility);snow_cm=[(d,v*100.0) for d,v in snow];snow_season_rows=snow_seasons(snow_cm);snow_a=[{'year':s['start_year'],'label':s['label'],'avg':s['mean_depth_cm']} for s in snow_season_rows];snow_max_a=[{'year':s['start_year'],'label':s['label'],'max':s['max_depth_cm']} for s in snow_season_rows];snow_m=[{'year':s['start_year'],'month':int(m),'avg':v} for s in snow_season_rows for m,v in s['monthly_mean_cm'].items()];snow_max_m=[{'year':s['start_year'],'month':int(m),'max':v} for s in snow_season_rows for m,v in s['monthly_max_cm'].items()];gust_max_a,gust_max_m=aggregate_max(gust);wind_max_a,wind_max_m=aggregate_max(wind_speed);sun_a,sun_m=aggregate_sum_hours(sunshine);irr_a,irr_m=aggregate_irradiance_energy(irradiance)
-weather_rows=aggregate_weather(weather);used=sorted({r['code'] for r in weather_rows},key=lambda x:float(x));all_labels=fetch_weather_labels();labels={c:all_labels.get(c,f'Kod {c}') for c in used};write_daily_detail(temp,prec,prec_hourly,snow,weather)
+weather_rows=aggregate_weather(weather);used=sorted({r['code'] for r in weather_rows},key=lambda x:float(x));all_labels=fetch_weather_labels();labels={c:all_labels.get(c,f'Kod {c}') for c in used};write_daily_detail(temp,prec,prec_hourly,snow,weather,wind_speed,wind_dir,gust,cloud,sunshine,irradiance,visibility,humidity,pressure,dewpoint)
 all_years=sorted({d.year for rows in [temp,wind_dir,wind_speed,prec,humidity,snow,sunshine,irradiance,visibility,weather,gust] for d,_ in rows})
 payload={'generated_at':datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'),'station':{'id':'162860','name':'Luleå-Kallax Flygplats'},'years':all_years,
  'temperature':{'annual':temp_a,'monthly':temp_m},'precipitation':{'annual':prec_a,'monthly_total':prec_m,'types':(precipitation_types_direct(precip_type_24) or precipitation_types_direct(precip_type_12) or precipitation_types(weather,temp)),'type_source':('SMHI nederbördstyp 24 timmar' if precipitation_types_direct(precip_type_24) else ('SMHI nederbördstyp 12 timmar' if precipitation_types_direct(precip_type_12) else 'Härledd från rådande väder och temperatur'))},
