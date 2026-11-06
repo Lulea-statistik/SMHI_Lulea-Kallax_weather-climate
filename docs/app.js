@@ -142,6 +142,50 @@ function stationYears(kind,legacy,id){
   const items=kind==='wind'?(source.speed_annual||[]):kind==='snow'?(source.annual_mean||[]):(source.annual||[]);
   return [...new Set(items.map(r=>r.year))].sort((a,b)=>a-b);
 }
+// Observed years in the local dataset; these indicate data coverage, not official station operating dates.
+function observedYearRange(rows){
+  const years=(rows||[]).map(x=>Number(x.year)).filter(Number.isFinite);
+  return years.length?{first:Math.min(...years),last:Math.max(...years)}:null;
+}
+function stationPeriodLabel(name,range,latestYear){
+  if(!range)return name;
+  const period=range.last>=latestYear?range.first+'–':range.first+'–'+range.last;
+  return name+' ('+period+')';
+}
+function updateStationPeriodLabels(){
+  if(!DATA)return;
+  const latestYear=Math.max(...DATA.years);
+  const codeRange=observedYearRange(DATA.weather?.codes);
+  const weather=el('weatherStation');
+  if(weather){
+    weather.options[0].textContent=stationPeriodLabel('Luleå-Kallax Flygplats',codeRange,latestYear);
+    el('weatherStationInfo').textContent='Endast Kallax har verifierade väderkoder (SMHI parameter 13) i rapportens data. Årtalen avser första och sista observationsår, inte verifierade öppnings-/stängningsdatum.';
+  }
+  const kinds={temperature:['temperature1Station','temperature2Station'],wind:['windStation'],snow:['snowStation']};
+  for(const [kind,ids] of Object.entries(kinds)){
+    for(const id of ids){
+      const select=el(id);if(!select)continue;
+      for(const opt of select.options){
+        const station=(WEATHER_STATIONS?.stations?.[kind]||[]).find(x=>String(x.id)===opt.value);
+        const rows=kind==='temperature'?(station?.annual||DATA.temperature?.annual):
+          kind==='wind'?(station?.speed_annual||DATA.wind?.speed_annual):
+          (station?.annual_mean||DATA.snow?.annual_mean);
+        const range=observedYearRange(rows);
+        if(range)opt.textContent=stationPeriodLabel(station?.name||'Luleå-Kallax Flygplats',range,latestYear);
+      }
+    }
+  }
+  for(const [id,dataset,key] of [['precipStation',PRECIP_STATIONS,'monthly'],['pressureStation',PRESSURE_STATIONS,'annual']]){
+    const select=el(id);if(!select||!dataset)continue;
+    const stations=Array.isArray(dataset.stations)?dataset.stations:Object.values(dataset.stations||{});
+    for(const opt of select.options){
+      const item=stations.find(x=>String(x.id)===opt.value);
+      if(!item)continue;
+      const range=observedYearRange(item[key]||item.monthly||item.annual);
+      if(range)opt.textContent=stationPeriodLabel(item.name||opt.textContent.replace(/\\s*\\(\\d{4}.*$/,''),range,latestYear);
+    }
+  }
+}
 function setupWeatherStationPickers(){
   if(!WEATHER_STATIONS)return;
   for(const [kind,ids] of Object.entries({
@@ -167,6 +211,7 @@ function setupWeatherStationPickers(){
         'Endast Kallax har hittills verifierad data som uppfyller kvalitetskraven för denna sida.';
     }
   }
+  updateStationPeriodLabels();
 }
 
 function renderTemp2(){
@@ -2842,6 +2887,7 @@ function setupTabs(){
         document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
         btn.classList.add('active');
         el('page-'+btn.dataset.page).classList.add('active');
+        document.body.classList.toggle('start-active',btn.dataset.page==='start');
         document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');
         document.body.classList.toggle('sealevel-active',btn.dataset.page==='sealevel');
         document.body.classList.toggle('temp2-active',btn.dataset.page==='temp2');
@@ -2869,7 +2915,7 @@ function setupTabs(){
   }));
 }
 
-function setupFilters(){const years=DATA.years,min=years[0],max=years[years.length-1];['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=years.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));el('yearFrom').value=min;el('yearTo').value=max;['rangeFrom','rangeTo'].forEach(id=>{el(id).min=min;el(id).max=max;el(id).step=1;});el('rangeFrom').value=min;el('rangeTo').value=max;el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;updateRangeTrack();const activePage=document.querySelector('#tabs button.active')?.dataset.page||'temp1';applyPageYearBounds(activePage,true);el('yearFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
+function setupFilters(){const years=DATA.years,min=years[0],max=years[years.length-1];['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=years.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));el('yearFrom').value=min;el('yearTo').value=max;['rangeFrom','rangeTo'].forEach(id=>{el(id).min=min;el(id).max=max;el(id).step=1;});el('rangeFrom').value=min;el('rangeTo').value=max;el('rangeFromLabel').textContent=min;el('rangeToLabel').textContent=max;updateRangeTrack();const activePage=document.querySelector('#tabs button.active')?.dataset.page||'start';applyPageYearBounds(activePage,true);el('yearFrom').addEventListener('change',e=>syncYear('from',e.target.value,true));
 el('yearTo').addEventListener('change',e=>syncYear('to',e.target.value,true));
 el('rangeFrom').addEventListener('input',e=>syncYear('from',e.target.value,false));
 el('rangeTo').addEventListener('input',e=>syncYear('to',e.target.value,false));
@@ -2899,6 +2945,7 @@ el('precipTimelineMode').addEventListener('change',render);
 el('precipTimelineMin').addEventListener('change',render);
 el('tempMetric').addEventListener('change',render);
 el('weatherCode').addEventListener('change',render);
+el('weatherStation').addEventListener('change',()=>{applyPageYearBounds('weather',true);render();});
 el('resetFilters').addEventListener('click',()=>{
   const activePage=document.querySelector('#tabs button.active')?.dataset.page||'temp1';
   applyPageYearBounds(activePage,true);
@@ -2916,6 +2963,7 @@ fetch('dashboard_data.json',{cache:'no-store'})
     DATA=d;
     el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');
     el('weatherSource').href=d.weather.source_url;
+    updateStationPeriodLabels();
     fetch('precip_stations.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{
       if(!data?.stations?.length)return;
       PRECIP_STATIONS=data;
@@ -2923,6 +2971,7 @@ fetch('dashboard_data.json',{cache:'no-store'})
       chooser.innerHTML='<option value="162860">Luleå-Kallax Flygplats</option>'
         +data.stations.filter(s=>s.id!=='162860'&&s.monthly?.length).map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('')
         +'<option value="municipal">Kommunmedel (stationsmedel)</option>';
+      updateStationPeriodLabels();
       render();
     }).catch(err=>console.warn('Station precipitation unavailable',err));
     fetch('weather_stations.json',{cache:'no-store'})
@@ -2940,7 +2989,7 @@ fetch('dashboard_data.json',{cache:'no-store'})
       .catch(err=>console.warn('Other weather station data unavailable:',err));
     fetch('pressure_stations.json',{cache:'no-store'})
       .then(r=>r.ok?r.json():null)
-      .then(setupPressureStations)
+      .then(data=>{setupPressureStations(data);updateStationPeriodLabels();})
       .catch(err=>console.warn('Air pressure station audit unavailable:',err));
     setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupSnowMapControls();setupLightningMapControls();setupFilters();setupDateWeather();render();
   })
