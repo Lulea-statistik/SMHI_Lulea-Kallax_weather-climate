@@ -182,7 +182,7 @@ function updateStationPeriodLabels(){
       const item=stations.find(x=>String(x.id)===opt.value);
       if(!item)continue;
       const range=observedYearRange(item[key]||item.monthly||item.annual);
-      if(range)opt.textContent=stationPeriodLabel(item.name||opt.textContent.replace(/\\s*\\(\\d{4}.*$/,''),range,latestYear);
+      if(range)opt.textContent=stationPeriodLabel(item.name||opt.textContent,range,latestYear);
     }
   }
 }
