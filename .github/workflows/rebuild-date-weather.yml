@@ -71,7 +71,11 @@ jobs:
           assert len(other['audit'])==8, 'Expected all known Lulea stations checked'
           assert all(any(st['id']=='162860' for st in other['stations'][kind]) for kind in ('temperature','wind','snow'))
           for kind,stations in other['stations'].items():
-              assert all(st['id']=='162860' or len(st.get('annual',st.get('speed_annual',st.get('seasons',[]))))>0 for st in stations)
+              for st in stations:
+                  if st['id']=='162860':
+                      continue
+                  series={'temperature':'annual','wind':'speed_annual','snow':'seasons'}[kind]
+                  assert st.get(series), f'{st["name"]} ({kind}) lacks verified {series} data'
           print('Verified',checked,'daily records in',len(files),'files')
           PY
       - name: Commit rebuilt JSON to main
