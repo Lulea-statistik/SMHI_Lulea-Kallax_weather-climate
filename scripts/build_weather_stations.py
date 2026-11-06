@@ -244,6 +244,11 @@ def main():
             records[pid]=clean_rows(raw,pid)
             status['records'][str(pid)]=len(records[pid])
         td=temp_data(records[1]) if records[1] else None
+        # Monthly coverage alone is insufficient: the temperature charts and
+        # workflow validation require at least one qualified annual value.
+        if td is not None and not td['annual']:
+            status['errors']['temperature/coverage']='Observations exist, but no year has at least nine valid months'
+            td=None
         wd=wind_data(records) if records[3] and records[4] else None
         sd=snow_data(records[8]) if records[8] else None
         status['verified']=[]
