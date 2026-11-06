@@ -2895,6 +2895,7 @@ function setupTabs(){
         const monthFilter=el('globalMonthFilter');
         if(monthFilter)monthFilter.style.display=btn.dataset.page==='seaice'?'none':'';
         if(btn.dataset.page==='seaice'&&el('month'))el('month').value='0';
+        if(!DATA)return;
         applyPageYearBounds(btn.dataset.page,true);
         render();
         if(btn.dataset.page==='seaice')await initSeaIceMap();
@@ -2956,6 +2957,7 @@ function setupWeatherCodes(){
   el('weatherCode').innerHTML='<option value="all">Alla vädertyper</option>'+types.map(t=>'<option value="'+t+'">'+t+'</option>').join('');
   el('weatherCode').value='all';
 }
+setupTabs(); // Attach tab events even when data loading fails.
 const initialLoadingDone=beginGlobalLoading('Laddar rapport…');
 fetch('dashboard_data.json',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas');return r.json();})
@@ -2963,7 +2965,6 @@ fetch('dashboard_data.json',{cache:'no-store'})
     DATA=d;
     el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');
     el('weatherSource').href=d.weather.source_url;
-    updateStationPeriodLabels();
     fetch('precip_stations.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{
       if(!data?.stations?.length)return;
       PRECIP_STATIONS=data;
@@ -2991,7 +2992,9 @@ fetch('dashboard_data.json',{cache:'no-store'})
       .then(r=>r.ok?r.json():null)
       .then(data=>{setupPressureStations(data);updateStationPeriodLabels();})
       .catch(err=>console.warn('Air pressure station audit unavailable:',err));
-    setupWeatherCodes();setupTemp2Slider();setupTabs();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupSnowMapControls();setupLightningMapControls();setupFilters();setupDateWeather();render();
+    setupWeatherCodes();setupTemp2Slider();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupSnowMapControls();setupLightningMapControls();setupFilters();setupDateWeather();
+    try{updateStationPeriodLabels();}catch(err){console.warn('Station period labels unavailable:',err);}
+    render();
   })
   .catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';})
   .finally(()=>setTimeout(initialLoadingDone,100));
