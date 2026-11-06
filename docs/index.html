@@ -80,7 +80,8 @@
   </div>
 </header>
 <nav class="tabs" id="tabs">
-  <button data-page="temp1" class="active">Temperatur 1</button>
+  <button data-page="start" class="active">Start</button>
+  <button data-page="temp1">Temperatur 1</button>
   <button data-page="temp2">Temperatur 2</button>
   <button data-page="precip">Nederbörd</button>
   <button data-page="weather">Väder</button>
@@ -100,10 +101,16 @@
   <button data-page="data">Metod &amp; Data</button>
 </nav>
 <main>
-  <section class="report-intro" aria-labelledby="reportIntroTitle">
+  <section id="page-start" class="page active">
+    <figure class="start-hero">
+      <img src="https://www.smhi.se/images/200.710b6b821937865f1781f6/1734086229473/313432-sunset.webp" alt="Solnedgång, bild från SMHI" loading="eager">
+      <figcaption>Bild: <a href="https://www.smhi.se/images/200.710b6b821937865f1781f6/1734086229473/313432-sunset.webp" target="_blank" rel="noopener noreferrer">SMHI</a></figcaption>
+    </figure>
+    <section class="report-intro" aria-labelledby="reportIntroTitle">
     <h2 id="reportIntroTitle">Klimat och väder i Luleå</h2>
     <p>Rapporten sammanställer historiska och löpande väder- och klimatdata för Luleå kommun. Huvudkällan är SMHI:s observationsdata från Kallax station 162860. Rapporten innehåller analyser av temperatur, nederbörd, väderfenomen, vind, sikt, lufttryck, luftfuktighet, solskenstid, snö och snötäcke, nollgenomgångar, vegetationsperiod, blixt, havsis och alger.</p>
     <p>Diagrammen är interaktiva och kan filtreras efter period och månad. Vissa kart- och snöanalyser använder kompletterande bearbetningar och andra öppna datakällor; metod och källa anges i respektive avsnitt. För klimatjämförelser bör längre tidsperioder användas eftersom enskilda år kan avvika kraftigt från den långsiktiga utvecklingen.</p>
+    </section>
   </section>
   <section class="filters" id="globalFilters">
     <label class="filter-select year-filter">Från år<select id="yearFrom"></select></label>
@@ -126,7 +133,7 @@
     </div>
   </section>
 
-  <section id="page-temp1" class="page active">
+  <section id="page-temp1" class="page">
     <div class="page-tools weather-station-tools"><label>Väderstation<select id="temperature1Station"><option value="162860">Luleå-Kallax Flygplats</option></select></label><span id="temperature1StationInfo" class="hint">Kallax är förvald. Andra stationer visas efter kontroll av SMHI:s observationer.</span><label>Temperaturvärde<select id="tempMetric"><option value="avg">Medel</option><option value="avg_daily_min">Genomsnittligt dygnsminimum</option><option value="avg_daily_max">Genomsnittligt dygnsmaximum</option><option value="min">Absolut minimum</option><option value="max">Absolut maximum</option></select></label></div>
     <div class="chart-card"><h2 id="tempAnnualTitle">Genomsnittlig lufttemperatur per år</h2><p id="tempAnnualTrendText" class="hint"></p><canvas id="tempAnnual"></canvas></div>
     <div class="chart-card"><h2 id="tempMonthlyTitle">Genomsnittlig lufttemperatur per månad</h2><canvas id="tempMonthly"></canvas></div>
@@ -155,6 +162,8 @@
 
   <section id="page-weather" class="page">
     <div class="page-tools">
+      <label>Väderstation<select id="weatherStation"><option value="162860">Luleå-Kallax Flygplats</option></select></label>
+      <span id="weatherStationInfo" class="hint">Vädertyperna baseras på verifierade observationer från Kallax (SMHI parameter 13). Andra stationer läggs till när motsvarande data finns.</span>
       <label>Vädertyp<select id="weatherCode"><option value="all">Alla vädertyper</option></select></label>
       <a id="weatherSource" target="_blank" rel="noopener">SMHI:s kodtabell</a>
     </div>
@@ -494,5 +503,5 @@
 </main>
 <script src="sealevel.js?v=1"></script>
 <script src="sealevel-basin.js?v=8"></script>
-<script src="app.js?v=48"></script>
+<script src="app.js?v=49"></script>
 </body></html>
