@@ -2919,7 +2919,7 @@ function pageYearBounds(page){
 function applyPageYearBounds(page,resetToFull=true){
   if(!DATA||!el('yearFrom')||!el('yearTo')||!el('rangeFrom')||!el('rangeTo'))return;
   const b=pageYearBounds(page);
-  const allYears=DATA.years.filter(y=>y>=b.min&&y<=b.max);
+  const allYears=Array.from({length:Math.max(0,b.max-b.min+1)},(_,i)=>b.min+i);
   if(!allYears.length)return;
   ['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=allYears.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));
   ['rangeFrom','rangeTo'].forEach(id=>{el(id).min=b.min;el(id).max=b.max;el(id).step=1;});
