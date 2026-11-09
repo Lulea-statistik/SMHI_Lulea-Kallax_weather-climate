@@ -252,7 +252,9 @@ function setupWeatherStationPickers(){
     wind:['windStation'],snow:['snowStation'],
     visibility:['visibilityStation'],zerocross:['zerocrossStation'],vegetation:['vegetationStation']
   })){
-    const options=(WEATHER_STATIONS.stations?.[kind]||[]).filter(x=>x.id==='162860'||(
+    const listed=WEATHER_STATIONS.stations?.[kind]||[];
+    const candidates=listed.some(x=>x.id==='162860')?listed:[{id:'162860',name:'Luleå-Kallax Flygplats',source:'existing-dashboard'},...listed];
+    const options=candidates.filter(x=>x.id==='162860'||(
       kind==='wind'?(x.speed_annual?.length||x.speed_monthly?.length):
       kind==='snow'?x.seasons?.length:
       kind==='zerocross'?x.days?.length:
