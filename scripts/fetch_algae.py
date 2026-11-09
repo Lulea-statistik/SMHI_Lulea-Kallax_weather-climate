@@ -80,25 +80,61 @@ def candidate_dates(year: int, today: date):
     return list(date_range(start, end)) if start <= end else []
 
 
+def fetch_all_features(cql: str):
+    """Page WFS 2.0 results; fail rather than silently publish truncated data."""
+    page_size = 1000
+    features = []
+    matched = None
+    previous_page_first_id = None
+    for page in range(1000):
+        params = {
+            "service": "WFS",
+            "version": "2.0.0",
+            "request": "GetFeature",
+            "typeNames": TYPE_NAME,
+            "outputFormat": "application/json",
+            "srsName": "EPSG:4326",
+            "count": page_size,
+            "startIndex": page * page_size,
+            "CQL_FILTER": cql,
+        }
+        response = SESSION.get(WFS_URL, params=params, timeout=TIMEOUT)
+        response.raise_for_status()
+        payload = response.json()
+        batch = payload.get("features")
+        if not isinstance(batch, list):
+            raise RuntimeError("WFS response has no features array")
+        if page == 0:
+            raw_matched = payload.get("numberMatched")
+            if isinstance(raw_matched, int) and raw_matched >= 0:
+                matched = raw_matched
+        if page and batch:
+            first_id = batch[0].get("id")
+            if first_id is not None and first_id == previous_page_first_id:
+                raise RuntimeError("WFS appears to ignore startIndex; refusing duplicated pages")
+        if batch:
+            previous_page_first_id = batch[0].get("id")
+        features.extend(batch)
+        if matched is not None and len(features) >= matched:
+            if len(features) > matched:
+                raise RuntimeError("WFS returned more features than numberMatched")
+            return features
+        if len(batch) < page_size:
+            if matched is not None and len(features) != matched:
+                raise RuntimeError(
+                    f"WFS pagination incomplete: received {len(features)} of {matched}"
+                )
+            return features
+    raise RuntimeError("WFS pagination exceeded 1000 pages")
+
+
 def fetch_day(d: date, bbox):
     minx, miny, maxx, maxy = bbox
     cql = (
         f"date='{d.isoformat()}' AND "
         f"BBOX(geom,{minx:.6f},{miny:.6f},{maxx:.6f},{maxy:.6f},'EPSG:4326')"
     )
-    params = {
-        "service": "WFS",
-        "version": "2.0.0",
-        "request": "GetFeature",
-        "typeNames": TYPE_NAME,
-        "outputFormat": "application/json",
-        "srsName": "EPSG:4326",
-        "CQL_FILTER": cql,
-    }
-    r = SESSION.get(WFS_URL, params=params, timeout=TIMEOUT)
-    r.raise_for_status()
-    payload = r.json()
-    return payload.get("features", [])
+    return fetch_all_features(cql)
 
 
 def fetch_year(year: int, bbox, today: date):
@@ -112,21 +148,8 @@ def fetch_year(year: int, bbox, today: date):
         f"date>='{start.isoformat()}' AND date<='{end.isoformat()}' AND "
         f"BBOX(geom,{minx:.6f},{miny:.6f},{maxx:.6f},{maxy:.6f},'EPSG:4326')"
     )
-    params = {
-        "service": "WFS",
-        "version": "2.0.0",
-        "request": "GetFeature",
-        "typeNames": TYPE_NAME,
-        "outputFormat": "application/json",
-        "srsName": "EPSG:4326",
-        "count": 10000,
-        "CQL_FILTER": cql,
-    }
-    r = SESSION.get(WFS_URL, params=params, timeout=TIMEOUT)
-    r.raise_for_status()
-    payload = r.json()
     grouped = defaultdict(list)
-    for feat in payload.get("features", []):
+    for feat in fetch_all_features(cql):
         raw = str((feat.get("properties") or {}).get("date") or "")[:10]
         try:
             d = date.fromisoformat(raw)
