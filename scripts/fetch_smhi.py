@@ -81,7 +81,7 @@ def request_json(url: str, allow_404: bool = False) -> dict[str, Any] | None:
 def request_text(url: str, allow_404: bool = False) -> str | None:
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            response = SESSION.get(url, timeout=TIMEOUT_SECONDS)
+            response = SESSION.get(url, timeout=TIMEOUT_SECONDS, headers={'Accept':'text/csv, text/plain, */*'})
             if response.status_code == 404 and allow_404:
                 return None
             response.raise_for_status()
@@ -191,11 +191,18 @@ def fetch_period_csv(
 
     content: str | None = None
     source_url = ""
+    failures=[]
     for url in urls:
-        content = request_text(url, allow_404=True)
+        try:
+            content = request_text(url, allow_404=True)
+        except RuntimeError as exc:
+            failures.append(str(exc))
+            continue
         if content:
             source_url = url
             break
+    if not content and failures:
+        raise RuntimeError('CSV archive sources failed: '+'; '.join(failures))
 
     if not content:
         return [], {}, {}
@@ -325,7 +332,12 @@ def fetch_period(
         f"{BASE_URL}/parameter/{parameter_id}/station/{station_id}"
         f"/period/{period}/data.json"
     )
-    payload = request_json(url, allow_404=True)
+    if period == 'corrected-archive':
+        return fetch_period_csv(parameter_cfg, station_cfg, period)
+    try:
+        payload = request_json(url, allow_404=True)
+    except RuntimeError:
+        return fetch_period_csv(parameter_cfg, station_cfg, period)
     if payload is None:
         return fetch_period_csv(parameter_cfg, station_cfg, period)
 

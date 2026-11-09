@@ -295,6 +295,32 @@ def main():
              'source':'SMHI MetObs official parameter station inventories, corrected archives and latest months',
              'method':'Only actual observed data; sparse alternative station series are flagged as limited, never interpolated. Vegetation requires a 10-year temperature window and zero crossings require within-day temperature observations.',
              'stations':station_output,'audit':audit}
+    # Never replace longer, previously downloaded archive coverage with a
+    # short recent-only series when SMHI temporarily rejects the archive.
+    if OUT.exists():
+        try:
+            previous=json.loads(OUT.read_text(encoding='utf-8'))
+            old_by_kind={kind:{str(st['id']):st for st in entries}
+                         for kind,entries in previous.get('stations',{}).items()}
+            date_key={'temperature':('monthly','year'),'wind':('speed_monthly','year'),
+                      'snow':('seasons','start_year'),'visibility':('monthly','year'),
+                      'zerocross':('days','year'),'vegetation':('climate_10y','window_end')}
+            def earliest(st,kind):
+                field,year_field=date_key[kind]
+                rows=st.get(field) or []
+                return min((int(row[year_field]) for row in rows if row.get(year_field) is not None),default=9999)
+            for kind,entries in station_output.items():
+                existing={str(st['id']):st for st in entries}
+                for sid,old in old_by_kind.get(kind,{}).items():
+                    if sid=='162860' or earliest(old,kind)==9999:continue
+                    current=existing.get(sid)
+                    if current is None or earliest(old,kind)<earliest(current,kind):
+                        if current is not None:entries.remove(current)
+                        entries.append(old)
+                        print('Retained earlier historical station archive:',kind,sid,flush=True)
+            payload['stations']=station_output
+        except (ValueError,TypeError,KeyError,OSError) as exc:
+            print('Could not check historical station retention:',exc,flush=True)
     OUT.write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
     print('Saved',OUT,'stations:',{k:[s['name'] for s in v] for k,v in station_output.items()},flush=True)
 
