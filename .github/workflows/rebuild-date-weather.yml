@@ -74,8 +74,9 @@ jobs:
               for st in stations:
                   if st['id']=='162860':
                       continue
-                  series={'temperature':'annual','wind':'speed_annual','snow':'seasons'}[kind]
-                  assert st.get(series), f'{st["name"]} ({kind}) lacks verified {series} data'
+                  series={'temperature':'annual','wind':'speed_annual','snow':'seasons',
+                          'visibility':'monthly','zerocross':'days','vegetation':'climate_10y'}[kind]
+                  assert st.get(series), f'{st["name"]} ({kind}) lacks measured {series} data'
           print('Verified',checked,'daily records in',len(files),'files')
           PY
       - name: Commit rebuilt JSON to main

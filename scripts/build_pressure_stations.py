@@ -45,7 +45,7 @@ def local_kallax_rows():
             rows.extend(csv.DictReader(handle))
     return rows
 
-def aggregates(raw):
+def aggregates(raw,allow_sparse=False):
     groups = defaultdict(list)
     for dt, pressure in numeric_rows(raw):
         groups[(dt.year, dt.month)].append((dt, pressure))
@@ -56,24 +56,25 @@ def aggregates(raw):
         # Exclude months where most days were not observed, but allow historic
         # synoptic observations (e.g., only 3 per day) without weighting them
         # as if they were hourly measurements.
-        if days < max(15, math.ceil(expected * .65)):
+        limited=days < max(15, math.ceil(expected * .65))
+        if limited and not allow_sparse:
             continue
         avg = sum(p for _, p in observations) / len(observations)
         monthly.append({'year': y, 'month': m, 'avg': round(avg, 2),
                         'min': round(min(p for _, p in observations), 2),
                         'max': round(max(p for _, p in observations), 2),
                         'days': days, 'expected_days': expected,
-                        'observations': len(observations)})
+                        'observations': len(observations), 'limited':limited})
     yearly = defaultdict(list)
     for row in monthly:
         yearly[row['year']].append(row)
     annual = []
     for y, months in sorted(yearly.items()):
-        if len(months) < 9:
+        if len(months) < 9 and not allow_sparse:
             continue
         # Equal weight for each sufficiently observed month, not hourly count.
         annual.append({'year': y, 'avg': round(sum(m['avg'] for m in months) / len(months), 2),
-                       'months': len(months),
+                       'months': len(months), 'limited':len(months)<9 or any(m['limited'] for m in months),
                        'min': min(m['min'] for m in months),
                        'max': max(m['max'] for m in months)})
     return annual, monthly, len(numeric_rows(raw))
@@ -107,7 +108,7 @@ def main():
             status['probe'] = 'SMHI parameter-9 station inventory + observed values'
         else:
             status['probe'] = 'not listed for SMHI parameter 9'
-        annual, monthly, count = aggregates(rows)
+        annual, monthly, count = aggregates(rows,allow_sparse=sid!='162860')
         status['observations'] = count
         status['complete_months'] = len(monthly)
         status['annual_years'] = len(annual)
@@ -126,7 +127,7 @@ def main():
         'source': 'SMHI MetObs, parameter 9, air pressure reduced to sea level',
         'unit': 'hPa', 'default_station': '162860',
         'method': 'Monthly average of observations with at least 65% observed days (minimum 15); '
-                  'annual mean of monthly means if at least nine valid months. '
+                  'annual mean of available monthly means; sparse periods are flagged as limited. '
                   'Stations are not assumed to measure pressure merely because they measure precipitation.',
         'stations': result, 'station_audit': audit,
     }

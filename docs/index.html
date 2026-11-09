@@ -61,7 +61,7 @@
 
   <link rel="icon" type="image/x-icon" href="https://lulea-statistik.github.io/BR-brottsstatistik/kommun-favicon.ico?v=2">
 
-  <link rel="stylesheet" href="style.css?v=46">
+  <link rel="stylesheet" href="style.css?v=47">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -189,6 +189,7 @@
   </section>
 
   <section id="page-visibility" class="page">
+    <div class="page-tools weather-station-tools"><label>Väderstation<select id="visibilityStation"><option value="162860">Luleå-Kallax Flygplats</option></select></label><span id="visibilityStationInfo" class="hint">Stationsurval och observationsperiod avser tillgängliga data för denna analys.</span></div>
     <div class="chart-card"><h2>Genomsnittlig sikt per år</h2><p id="visibilityAnnualTrendText" class="hint"></p><canvas id="visibilityAnnual"></canvas></div>
     <div class="chart-card"><h2>Genomsnittlig sikt per månad</h2><canvas id="visibilityMonthly"></canvas></div>
   </section>
@@ -200,7 +201,7 @@
           <option value="162860">Luleå-Kallax Flygplats</option>
         </select>
       </label>
-      <span id="pressureStationStatus" class="hint">Kallax är förvald. Övriga stationer läggs till endast när SMHI har verifierade lufttrycksserier.</span>
+      <span id="pressureStationStatus" class="hint">Kallax är förvald. Stationer med korta observationsserier kan visas med varning om begränsad datatäckning.</span>
     </div>
     <div class="chart-card"><h2>Genomsnittligt lufttryck per år</h2>
       <p class="hint">SMHI parameter 9: lufttryck reducerat till havsytans nivå (hPa). Månadsväljaren visar samma kalendermånad över flera år.</p>
@@ -224,6 +225,7 @@
   </section>
 
   <section id="page-sunshine" class="page">
+    <div class="page-tools weather-station-tools"><label>Väderstation<select id="sunshineStation"><option value="162015">Luleå Sol</option></select></label><span id="sunshineStationInfo" class="hint">Solskenstid och global irradians redovisas från SMHI Luleå Sol (162015).</span></div>
     <div class="source-note">Källa: SMHI Luleå Sol, station 162015, samt <a href="https://www.smhi.se/kunskapsbanken/meteorologi/stralning/solstralning-i-sverige" target="_blank" rel="noopener">SMHI:s kunskapsbank om solstrålning i Sverige</a>. Globalstrålning är den inkommande solstrålningen mot en horisontell yta. SMHI beskriver att årsvariationen främst styrs av hur länge solen är över horisonten och hur högt den står. Global irradians mäts som timmedel i W/m².</div>
     <div class="chart-card"><h2>Solskenstid per år</h2><p id="sunAnnualTrendText" class="hint"></p><canvas id="sunAnnual"></canvas></div>
     <div class="chart-card"><h2>Genomsnittlig solskenstid per månad</h2><canvas id="sunMonthly"></canvas></div>
@@ -297,13 +299,15 @@
   </section>
 
   <section id="page-zerocross" class="page">
+    <div class="page-tools weather-station-tools"><label>Väderstation<select id="zerocrossStation"><option value="162860">Luleå-Kallax Flygplats</option></select></label><span id="zerocrossStationInfo" class="hint">Stationsurval och observationsperiod avser tillgängliga data för denna analys.</span></div>
     <div class="chart-card"><h2>Dygn med nollgenomgång per år</h2><p class="hint">Ett dygn räknas när temperaturserien byter sida om 0 °C minst en gång.</p><p id="zeroAnnualTrendText" class="hint"></p><canvas id="zeroAnnual"></canvas></div>
     <div class="chart-card"><h2>Genomsnittligt antal dygn med nollgenomgång per månad</h2><canvas id="zeroMonthly"></canvas></div>
     <div class="chart-card"><h2>Genomsnittligt antal genomgångar per nollgenomgångsdygn</h2><p class="hint">Visar om antalet passager över/under 0 °C under ett nollgenomgångsdygn förändras över tid.</p><p id="zeroTrendText" class="hint"></p><canvas id="zeroTrend"></canvas></div>
-    <div class="chart-card full"><h2>Vilka dygn hade nollgenomgång?</h2><p class="hint"><b>Observationer</b> = antal temperaturmätningar från Kallax under dygnet som användes för att avgöra om temperaturen passerade 0 °C. Det är alltså inte antal nollgenomgångar.</p><div id="zeroTable" class="table-scroll"></div></div>
+    <div class="chart-card full"><h2>Vilka dygn hade nollgenomgång?</h2><p class="hint"><b>Observationer</b> = antal temperaturmätningar från vald station under dygnet som användes för att avgöra om temperaturen passerade 0 °C. Det är alltså inte antal nollgenomgångar.</p><div id="zeroTable" class="table-scroll"></div></div>
   </section>
 
   <section id="page-vegetation" class="page">
+    <div class="page-tools weather-station-tools"><label>Väderstation<select id="vegetationStation"><option value="162860">Luleå-Kallax Flygplats</option></select></label><span id="vegetationStationInfo" class="hint">Stationsurval och observationsperiod avser tillgängliga data för denna analys.</span></div>
     <div class="source-note">SMHI definierar vegetationsperioden som den del av året då dygnsmedeltemperaturen överstiger +5 °C. För klimatindikatorn används ett 10-årsmedel av dygnsmedeltemperaturen för att få ett jämnare temperaturförlopp. Perioden behandlas som en sammanhängande vår–höstperiod: enstaka varma dygn utanför perioden räknas därför inte in, och korta svängningar kring +5 °C ska inte skapa nya separata vegetationsperioder.</div>
     <div class="chart-card"><h2>Vegetationsperiodens längd</h2><p id="vegetationLengthTrendText" class="hint"></p><canvas id="vegetationLength"></canvas></div>
     <div class="chart-card"><h2>Vegetationsperiodens start</h2><p class="hint">Tidigare datum innebär en tidigare vårstart.</p><p id="vegetationStartTrendText" class="hint"></p><canvas id="vegetationStart"></canvas></div>
@@ -504,5 +508,5 @@
 </main>
 <script src="sealevel.js?v=1"></script>
 <script src="sealevel-basin.js?v=8"></script>
-<script src="app.js?v=52"></script>
+<script src="app.js?v=53"></script>
 </body></html>

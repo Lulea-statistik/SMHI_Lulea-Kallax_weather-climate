@@ -18,9 +18,10 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from fetch_smhi import BASE_URL,fetch_period,request_json
 from build_precip_stations import STATIONS
+from build_dashboard_data import zero_crossings, vegetation_period
 
 OUT=ROOT/'docs'/'weather_stations.json'
-PARAMETERS={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',21:'Byvind',8:'Snödjup'}
+PARAMETERS={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',21:'Byvind',8:'Snödjup',12:'Sikt'}
 
 def mean(v):return sum(v)/len(v) if v else None
 def r2(x):return None if x is None else round(x,2)
@@ -110,12 +111,13 @@ def coverage_months(rows,min_fraction=.65):
     for (year,month),vals in bymonth.items():
         observed=len({dt.date() for dt,_ in vals})
         expected=calendar.monthrange(year,month)[1]
-        if observed>=max(15,math.ceil(expected*min_fraction)):
+        required=1 if min_fraction<=0 else max(15,math.ceil(expected*min_fraction))
+        if observed>=required:
             good[(year,month)]=vals
     return good
 
 def temp_data(rows):
-    months=coverage_months(rows)
+    months=coverage_months(rows,min_fraction=0)  # retain sparse observed months, mark quality below
     monthly=[]
     byyear=defaultdict(list)
     for (year,month),observations in sorted(months.items()):
@@ -126,22 +128,42 @@ def temp_data(rows):
            'min':r2(min(vals)),'max':r2(max(vals)),
            'avg_daily_min':r2(mean([min(v) for v in byday.values()])),
            'avg_daily_max':r2(mean([max(v) for v in byday.values()])),
-           'days':len(byday)}
+           'days':len(byday),'expected_days':calendar.monthrange(year,month)[1],
+           'limited':len(byday)<max(15,math.ceil(calendar.monthrange(year,month)[1]*.65))}
         monthly.append(r);byyear[year].append(r)
     annual=[]
-    for year,monthrows in sorted(byyear.items()):
-        if len(monthrows)<9:continue
+    for year, records_for_year in sorted(byyear.items()):
         annual.append({'year':year,
-          'avg':r2(mean([m['avg'] for m in monthrows])),
-          'min':min(m['min'] for m in monthrows),'max':max(m['max'] for m in monthrows),
-          'avg_daily_min':r2(mean([m['avg_daily_min'] for m in monthrows])),
-          'avg_daily_max':r2(mean([m['avg_daily_max'] for m in monthrows])),
-          'months':len(monthrows)})
+          'avg':r2(mean([row['avg'] for row in records_for_year])),
+          'min':min(row['min'] for row in records_for_year),
+          'max':max(row['max'] for row in records_for_year),
+          'avg_daily_min':r2(mean([row['avg_daily_min'] for row in records_for_year])),
+          'avg_daily_max':r2(mean([row['avg_daily_max'] for row in records_for_year])),
+          'months':len(records_for_year),
+          'limited':len(records_for_year)<9 or any(row['limited'] for row in records_for_year)})
+    return {'annual':annual,'monthly':monthly}
+
+def visibility_data(rows):
+    if not rows:return None
+    months=defaultdict(list)
+    for dt,v in rows:months[(dt.year,dt.month)].append((dt,v))
+    monthly=[]
+    yearly=defaultdict(list)
+    for (y,m),vals in sorted(months.items()):
+        days=len({dt.date() for dt,_ in vals})
+        expected=calendar.monthrange(y,m)[1]
+        avg=r2(mean([v for _,v in vals]))
+        monthly.append({'year':y,'month':m,'avg':avg,'days':days,
+                        'expected_days':expected,'limited':days<max(15,math.ceil(.65*expected))})
+        yearly[y].append(monthly[-1])
+    annual=[{'year':y,'avg':r2(mean([r['avg'] for r in rr])),'months':len(rr),
+             'limited':len(rr)<9 or any(r['limited'] for r in rr)}
+            for y,rr in sorted(yearly.items())]
     return {'annual':annual,'monthly':monthly}
 
 def wind_data(raw):
     speed,direction,gust=raw[4],raw[3],raw[21]
-    sm,dm,gm=coverage_months(speed),coverage_months(direction),coverage_months(gust)
+    sm,dm,gm=(coverage_months(series,min_fraction=0) for series in (speed,direction,gust))
     good=set(sm)&set(dm)
     if not good:return None
     sectors=['N','NO','O','SO','S','SV','V','NV']
@@ -168,13 +190,17 @@ def wind_data(raw):
         for (y,m),vals in sorted(which.items()):
             values=[v for _,v in vals]
             if not values:continue
-            monthly.append({'year':y,'month':m,'avg':r2(mean(values)),'max':r2(max(values))})
+            days=len({dt.date() for dt,_ in vals})
+            expected=calendar.monthrange(y,m)[1]
+            monthly.append({'year':y,'month':m,'avg':r2(mean(values)),'max':r2(max(values)),
+                            'days':days,'expected_days':expected,'limited':days<max(15,math.ceil(expected*.65))})
             yearly[y].extend(vals)
         annual=[]
         for year,vals in sorted(yearly.items()):
-            if sum(1 for x in which if x[0]==year)<9:continue
             values=[v for _,v in vals]
-            annual.append({'year':year,'avg':r2(mean(values)),'max':r2(max(values))})
+            year_months=[row for row in monthly if row['year']==year]
+            annual.append({'year':year,'avg':r2(mean(values)),'max':r2(max(values)),
+                           'months':len(year_months),'limited':len(year_months)<9 or any(row['limited'] for row in year_months)})
         return annual,monthly
     speed_a,speed_m=group(sr);gust_a,gust_m=group(gr)
     direction_a=[];direction_m=[]
@@ -184,7 +210,6 @@ def wind_data(raw):
     byyear=defaultdict(list)
     for (y,m),vals in dr.items():byyear[y].extend(vals)
     for y,vals in sorted(byyear.items()):
-        if sum(1 for x in dr if x[0]==y)<9:continue
         d=direction_mean(vals)
         if d:direction_a.append({'year':y,**d})
     sectors_data=[{'year':y,'month':m,'direction':label,'count':n}
@@ -217,7 +242,7 @@ def main():
         if not items:raise RuntimeError(f'No SMHI station inventory for parameter {pid}')
         inventory[pid]={str(i.get('key') or i.get('id') or '') for i in items}
         print('Parameter',pid,'listed stations',len(inventory[pid]),flush=True)
-    station_output={'temperature':[],'wind':[],'snow':[]}
+    station_output={'temperature':[],'wind':[],'snow':[],'visibility':[],'zerocross':[],'vegetation':[]}
     audit=[]
     for st in STATIONS:
         sid,name=st['id'],st['name']
@@ -227,7 +252,9 @@ def main():
             station_output['temperature'].append({'id':sid,'name':name,'source':'existing-dashboard'})
             station_output['wind'].append({'id':sid,'name':name,'source':'existing-dashboard'})
             station_output['snow'].append({'id':sid,'name':name,'source':'existing-dashboard'})
-            status['verified']=['temperature','wind','snow']
+            for kind in ('visibility','zerocross','vegetation'):
+                station_output[kind].append({'id':sid,'name':name,'source':'existing-dashboard'})
+            status['verified']=['temperature','wind','snow','visibility','zerocross','vegetation']
             audit.append(status)
             continue
         records={}
@@ -244,15 +271,18 @@ def main():
             records[pid]=clean_rows(raw,pid)
             status['records'][str(pid)]=len(records[pid])
         td=temp_data(records[1]) if records[1] else None
-        # Monthly coverage alone is insufficient: the temperature charts and
-        # workflow validation require at least one qualified annual value.
-        if td is not None and not td['annual']:
-            status['errors']['temperature/coverage']='Observations exist, but no year has at least nine valid months'
-            td=None
+        # Keep observed short series, and flag them instead of silently dropping them.
+        if td and any(a.get('limited') for a in td['annual']):
+            status['errors']['temperature/coverage']='Limited annual or monthly observation coverage'
         wd=wind_data(records) if records[3] and records[4] else None
         sd=snow_data(records[8]) if records[8] else None
+        vd=visibility_data(records[12]) if records[12] else None
+        zero=zero_crossings(records[1]) if records[1] else []
+        veg=vegetation_period(records[1]) if records[1] else None
         status['verified']=[]
-        for kind,aggregates in [('temperature',td),('wind',wd),('snow',sd)]:
+        for kind,aggregates in [('temperature',td),('wind',wd),('snow',sd),('visibility',vd),
+                                ('zerocross',{'days':zero,'source':'observed temperature'} if zero else None),
+                                ('vegetation',veg if veg and veg.get('climate_10y') else None)]:
             if aggregates is None:continue
             station_output[kind].append({'id':sid,'name':name,**aggregates})
             status['verified'].append(kind)
@@ -263,7 +293,7 @@ def main():
     payload={'generated_at':datetime.now(timezone.utc).isoformat(),
              'default_station':'162860',
              'source':'SMHI MetObs official parameter station inventories, corrected archives and latest months',
-             'method':'Only proven observations; temperature/wind require at least 65% observed days per month and nine valid months per year; snow uses the Kallax seven-observation season rule. Missing stations are never interpolated.',
+             'method':'Only actual observed data; sparse alternative station series are flagged as limited, never interpolated. Vegetation requires a 10-year temperature window and zero crossings require within-day temperature observations.',
              'stations':station_output,'audit':audit}
     OUT.write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
     print('Saved',OUT,'stations:',{k:[s['name'] for s in v] for k,v in station_output.items()},flush=True)
