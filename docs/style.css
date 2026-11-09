@@ -188,4 +188,11 @@ body:has(#page-start.active) #globalFilters{display:none}
 .start-hero{margin:0 auto 20px;max-width:640px;text-align:center}
 .start-hero img{display:block;width:auto;max-width:100%;height:auto;margin:0 auto;border-radius:12px}
 .start-hero figcaption{text-align:right;font-size:12px;color:#64748b;margin-top:5px}
-#page-start .report-intro{margin:0 auto;max-width:900px}
+#page-start .report-intro{margin:0 auto;max-width:1120px;width:100%;padding:28px 34px}
+#page-start .report-intro h2{font-size:28px;line-height:1.25;margin:0 0 14px}
+#page-start .report-intro p{font-size:18px;line-height:1.65;max-width:none;margin:0}
+@media(max-width:700px){
+  #page-start .report-intro{padding:20px}
+  #page-start .report-intro h2{font-size:24px}
+  #page-start .report-intro p{font-size:16px}
+}
