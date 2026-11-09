@@ -2222,6 +2222,8 @@ function setupPressureStations(data){
 
 function render(){
   const f=currentFilters(),m=temperatureMetric(),name=metricName(m);
+  const activePage=document.querySelector('#tabs button.active')?.dataset.page||'start';
+  if(activePage==='temp1'){
   const temp1Series=pageWeatherSeries('temperature',DATA.temperature,el('temperature1Station')?.value);
   const ta=selectedAnnualRows(temp1Series.annual,temp1Series.monthly,f);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r[m]);
   lineChart('tempAnnual',taYears,[{label:name,data:taVals},{label:'Linjär trend',data:linearTrend(taYears,taVals),pointRadius:0,borderDash:[6,4]}],'°C');
@@ -2235,12 +2237,27 @@ function render(){
     const vals=rows.map(r=>r[m]).filter(v=>v!=null);
     return vals.length?vals.reduce((s,v)=>s+v,0)/vals.length:null;
   });lineChart('tempMonthly',months,[{label:'°C',data:tMonthAgg,borderColor:MONTH_GREEN,backgroundColor:MONTH_GREEN}],'°C');el('tempMonthlyTitle').textContent=name+' lufttemperatur per månad';
+
+  }
+  if(activePage==='temp2'){
   renderTemp2();
+
+  }
+  if(activePage==='vegetation'){
   renderVegetation(f);
 
+
+  }
+  if(activePage==='lightning'){
   renderLightning(f);
+
+  }
+  if(activePage==='seaice'){
   renderSeaIce(f);
 
+
+  }
+  if(activePage==='precip'){
   const selectedPrecipStation=el('precipStation')?.value||'162860';
   const precipSeries=selectedPrecipStation==='162860'
     ?DATA.precipitation.monthly_total
@@ -2328,8 +2345,14 @@ function render(){
   const ptmByMonth=months.map((_,i)=>ptm.find(r=>+r.key===i+1)||{key:i+1,rain:0,mixed:0,snow:0});
   renderPrecipTypeChart('precipTypeMonthly',months,ptmByMonth);
 
+
+  }
+  if(activePage==='weather'){
   let wc=DATA.weather.codes.filter(r=>inYears(r,f));if(f.month)wc=wc.filter(r=>r.month===f.month);weatherChart(wc);
 
+
+  }
+  if(activePage==='wind'){
   const windSeries=pageWeatherSeries('wind',DATA.wind);
   const ws=(f.month?windSeries.speed_monthly.filter(r=>inYears(r,f)&&r.month===f.month):windSeries.speed_annual.filter(r=>inYears(r,f))),
         wm=(f.month?windSeries.max_monthly.filter(r=>inYears(r,f)&&r.month===f.month):windSeries.max_annual.filter(r=>inYears(r,f))),
@@ -2384,8 +2407,14 @@ function render(){
       scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}
   });
 
+
+  }
+  if(activePage==='pressure'){
   renderPressure(f);
 
+
+  }
+  if(activePage==='visibility'){
   const visibility=selectedStationData('visibility');
   const va=selectedAnnualRows(visibility.annual||[],visibility.monthly||[],f);
   const vaYears=va.map(r=>r.year),vaVals=va.map(r=>Math.round(r.avg));
@@ -2407,11 +2436,17 @@ function render(){
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>Math.round(c.parsed.y)+' meter'}}},
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'meter'},ticks:{precision:0,callback:v=>Math.round(v)}}}}});
 
+
+  }
+  if(activePage==='humidity'){
   const ha=selectedAnnualRows(DATA.humidity.annual,DATA.humidity.monthly,f);const haYears=ha.map(r=>r.year),haVals=ha.map(r=>r.avg);
   lineChart('humidityAnnual',haYears,[{label:f.month?months[f.month-1]+' medel':'Årsmedel',data:haVals},{label:'Linjär trend',data:linearTrend(haYears,haVals),pointRadius:0,borderDash:[6,4]}],'%');
   el('humidityAnnualTrendText').textContent=trendRateText(haYears,haVals,'procentenheter');
   let hm=DATA.humidity.monthly.filter(r=>inYears(r,f));barChart('humidityMonthly',months,aggregateMonthlyMean(hm),'%',MONTH_GREEN);
 
+
+  }
+  if(activePage==='sunshine'){
   const sunA=selectedAnnualRows(DATA.sunshine.annual,DATA.sunshine.monthly_total,f);const sunYears=sunA.map(r=>r.year),sunVals=sunA.map(r=>r.hours);
   destroyChart('sunAnnual');
   charts.sunAnnual=new Chart(el('sunAnnual'),{
@@ -2472,6 +2507,9 @@ function render(){
   });
   barChart('irradianceEnergyMonthly',months,monthlyEnergy,'kWh/m²','rgba(230,126,34,0.55)');
 
+
+  }
+  if(activePage==='snow'){
   const snowSeries=pageWeatherSeries('snow',DATA.snow);
   const snowA=snowSeries.annual_mean.filter(r=>r.year>=f.from&&r.year<=f.to),
         snowMax=snowSeries.annual_max.filter(r=>r.year>=f.from&&r.year<=f.to);
@@ -2521,6 +2559,9 @@ function render(){
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'dygn'}}}}
   });
 
+
+  }
+  if(activePage==='zerocross'){
   const zeroSeries=selectedStationData('zerocross');
   let z=(zeroSeries.days||[]).filter(r=>inYears(r,f));if(f.month)z=z.filter(r=>r.month===f.month);
   const zy={};z.forEach(r=>zy[r.year]=(zy[r.year]||0)+1);
@@ -2552,6 +2593,9 @@ function render(){
   el('zeroTrendText').textContent=trendRateText(trendYears,trendVals,'genomgångar/dygn');
   el('zeroTable').innerHTML='<table><thead><tr><th>Datum</th><th>Min °C</th><th>Max °C</th><th>Antal genomgångar</th><th>Riktning</th><th>Observationer</th></tr></thead><tbody>'+z.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(r=>'<tr><td>'+r.date+'</td><td>'+r.min+'</td><td>'+r.max+'</td><td>'+r.crossings+'</td><td>'+r.directions.join(', ')+'</td><td>'+r.observations+'</td></tr>').join('')+'</tbody></table>';
 
+
+  }
+  if(activePage==='data'){
   el('coverage').innerHTML='<table><thead><tr><th>Parameter</th><th>Från</th><th>Till</th><th>Observationer</th></tr></thead><tbody>'+DATA.coverage.map(r=>'<tr><td>'+r.name+'</td><td>'+r.min_date+'</td><td>'+r.max_date+'</td><td>'+r.rows.toLocaleString('sv-SE')+'</td></tr>').join('')+'</tbody></table>';
   // Data coverage in the method table is computed from the same dataset as the charts.
   const coverageByParameter={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',5:'Nederbörd 1 dygn',6:'Relativ luftfuktighet',7:'Nederbörd 1 timme',8:'Snödjup',10:'Solskenstid',11:'Global irradians',12:'Sikt',13:'Rådande väder',17:'Nederbördstyp 12 timmar',18:'Nederbördstyp 24 timmar',21:'Byvind'};
@@ -2566,6 +2610,7 @@ function render(){
     }
   });
 
+  }
 }
 function solarTimes(dateStr,lat=65.543,lon=22.124){
   const [y,m,d]=dateStr.split('-').map(Number);
