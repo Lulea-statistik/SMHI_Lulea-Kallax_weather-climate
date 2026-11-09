@@ -12,7 +12,7 @@ parameter_id,configured_name,parameter_name,parameter_summary,unit,status,period
 12,Sikt,Sikt,"momentanvärde, 1 gång/tim",meter,ok,latest-months,
 13,Rådande väder,Rådande väder,"momentanvärde, 1 gång/tim resp 8 gånger/dygn",kod,ok,latest-months,
 16,Total molnmängd,Total molnmängd,"momentanvärde, 1 gång/tim",procent,ok,latest-months,
-17,Nederbördstyp 12 timmar,,,,error,,Failed to fetch https://opendata-download.smhi.se/stream?type=metobs&parameterIds=17&stationId=162860&period=latest-months: 406 Client Error: Not Acceptable for url: https://opendata-download.smhi.se/stream?type=metobs&parameterIds=17&stationId=162860&period=latest-months
-18,Nederbördstyp 24 timmar,,,,error,,Failed to fetch https://opendata-download.smhi.se/stream?type=metobs&parameterIds=18&stationId=162860&period=latest-months: 406 Client Error: Not Acceptable for url: https://opendata-download.smhi.se/stream?type=metobs&parameterIds=18&stationId=162860&period=latest-months
+17,Nederbördstyp 12 timmar,,,,error,,CSV archive sources failed: Failed to fetch https://opendata-download.smhi.se/stream?type=metobs&parameterIds=17&stationId=162860&period=latest-months: 500 Server Error: Internal Server Error for url: https://opendata-download.smhi.se/stream?type=metobs&parameterIds=17&stationId=162860&period=latest-months
+18,Nederbördstyp 24 timmar,,,,error,,CSV archive sources failed: Failed to fetch https://opendata-download.smhi.se/stream?type=metobs&parameterIds=18&stationId=162860&period=latest-months: 500 Server Error: Internal Server Error for url: https://opendata-download.smhi.se/stream?type=metobs&parameterIds=18&stationId=162860&period=latest-months
 21,Byvind,Byvind,"max, 1 gång/tim",meter per sekund,ok,latest-months,
 39,Daggpunktstemperatur,Daggpunktstemperatur,"momentanvärde, 1 gång/tim",celsius,ok,latest-months,
