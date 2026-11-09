@@ -132,13 +132,15 @@ def temp_data(rows):
            'limited':len(byday)<max(15,math.ceil(calendar.monthrange(year,month)[1]*.65))}
         monthly.append(r);byyear[year].append(r)
     annual=[]
-    for year,monthrows in sorted(byyear.items()):
+    for year, records_for_year in sorted(byyear.items()):
         annual.append({'year':year,
-          'avg':r2(mean([m['avg'] for m in monthrows])),
-          'min':min(m['min'] for m in monthrows),'max':max(m['max'] for m in monthrows),
-          'avg_daily_min':r2(mean([m['avg_daily_min'] for m in monthrows])),
-          'avg_daily_max':r2(mean([m['avg_daily_max'] for m in monthrows])),
-          'months':len(monthrows),'limited':len(monthrows)<9 or any(m['limited'] for m in monthrows)})
+          'avg':r2(mean([row['avg'] for row in records_for_year])),
+          'min':min(row['min'] for row in records_for_year),
+          'max':max(row['max'] for row in records_for_year),
+          'avg_daily_min':r2(mean([row['avg_daily_min'] for row in records_for_year])),
+          'avg_daily_max':r2(mean([row['avg_daily_max'] for row in records_for_year])),
+          'months':len(records_for_year),
+          'limited':len(records_for_year)<9 or any(row['limited'] for row in records_for_year)})
     return {'annual':annual,'monthly':monthly}
 
 def visibility_data(rows):
