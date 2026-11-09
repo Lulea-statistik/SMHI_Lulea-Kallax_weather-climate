@@ -82,6 +82,35 @@ for day in ("2026-06-19", "2026-06-25"):
     except (ValueError, TypeError) as exc:
         errors.append(f"{day}: {exc}")
 
+# Save comparable WMS maps and legends for the two named layers.
+# OGC WMS 1.1.1 uses lon/lat order for EPSG:4326 BBOX.
+# Per-layer errors are reported but do not prevent diagnostic artifacts.
+layers = ("SR.SeaSurfaceArea", "SR.SeaSurfaceArea.Algae")
+summary["wms_layer_comparison"] = {}
+for layer in layers:
+    clean = layer.replace(".", "_")
+    info = {"layer": layer, "legends": [], "maps": []}
+    summary["wms_layer_comparison"][layer] = info
+    legend = get(f"legend-{clean}.png", "/wms", {
+        "SERVICE": "WMS", "VERSION": "1.1.1", "REQUEST": "GetLegendGraphic",
+        "LAYER": layer, "FORMAT": "image/png", "WIDTH": 28, "HEIGHT": 28
+    })
+    if legend is not None:
+        info["legend_content_type"] = legend.headers.get("Content-Type")
+        info["legends"].append(f"legend-{clean}.png")
+    for day in ("2026-06-19", "2026-06-25"):
+        filename = f"map-{clean}-{day}.png"
+        image = get(filename, "/wms", {
+            "SERVICE": "WMS", "VERSION": "1.1.1", "REQUEST": "GetMap",
+            "LAYERS": layer, "STYLES": "", "FORMAT": "image/png",
+            "TRANSPARENT": "TRUE", "SRS": "EPSG:4326",
+            "BBOX": "21.0,65.1,23.6,66.1", "WIDTH": 1040, "HEIGHT": 600,
+            "CQL_FILTER": f"date='{day}'"
+        })
+        if image is not None:
+            info["maps"].append(filename)
+            info[f"map_{day}_content_type"] = image.headers.get("Content-Type")
+
 (OUT / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 print(json.dumps(summary, ensure_ascii=False, indent=2))
 if errors:
