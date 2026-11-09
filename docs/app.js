@@ -989,7 +989,7 @@ function algaeClassLabel(name){
   };
   if(labels[name])return labels[name];
   const m=String(name||'').match(/^class_(.+)$/);
-  return m?'SMHI klass '+m[1]:(name||'Övrigt');
+  return m?'SMHI klass '+m[1]+' (betydelse ej verifierad)':(name||'Övrigt');
 }
 
 function algaeClassRows(manifest){
@@ -1122,7 +1122,7 @@ async function loadAlgaeSeasonManifest(year=null,force=false){
     const legacy=algaeSeasonManifest.legacy_classification||Number(year)<=2009;
     if(status)status.textContent=legacy
       ? 'Äldre SMHI-klassning (2002–2009). Råa klasser visas där säker översättning saknas.'
-      : 'Välj datum med reglaget. Endast vald dags polygoner laddas.';
+      : 'Välj datum med reglaget. SMHI:s råklasser visas utan tolkning där kodnyckel saknas; 0 % är då inte ett mått på algförekomst.';
     return algaeSeasonManifest;
   }catch(err){
     if(status)status.textContent=err.message;
@@ -1186,11 +1186,14 @@ async function showAlgaeSeasonDate(index){
     }).addTo(algaeLeafletMap);
 
     const ms=Math.round(performance.now()-started);
+    const rawClasses=Object.keys(item.classes_pct_sea||{}).filter(k=>/^class_/.test(k));
+    const hasUnmapped=rawClasses.some(k=>Number(item.classes_pct_sea[k])>0);
     const bits=[
       formatSeaIceMapDate(item.date)+': '+(geo.features||[]).length+' polygoner',
-      item.surface_pct_sea!=null?'ytansamling '+Number(item.surface_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
-      item.risk_pct_sea!=null?'risk '+Number(item.risk_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
-      item.cloud_pct_sea!=null?'moln '+Number(item.cloud_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
+      hasUnmapped?'Otolkade SMHI-klasser: '+rawClasses.map(k=>k.replace('class_','')).join(', ')+' (andel algförekomst kan inte fastställas)':null,
+      !hasUnmapped&&item.surface_pct_sea!=null?'ytansamling '+Number(item.surface_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
+      !hasUnmapped&&item.risk_pct_sea!=null?'risk '+Number(item.risk_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
+      !hasUnmapped&&item.cloud_pct_sea!=null?'moln '+Number(item.cloud_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
       kb!=null?kb+' kB':null,
       ms+' ms'
     ].filter(Boolean);
