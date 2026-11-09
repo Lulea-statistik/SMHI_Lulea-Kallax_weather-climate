@@ -61,7 +61,7 @@
 
   <link rel="icon" type="image/x-icon" href="https://lulea-statistik.github.io/BR-brottsstatistik/kommun-favicon.ico?v=2">
 
-  <link rel="stylesheet" href="style.css?v=47">
+  <link rel="stylesheet" href="style.css?v=48">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -75,30 +75,38 @@
     <div class="brandText"><h1>Klimat och väder i Luleå Kommun</h1><p>Historik och löpande uppdateringar</p></div>
   </div>
   <div class="topbar-status">
-    <div id="globalLoading" class="global-loading" aria-live="polite"><span class="loading-spinner" aria-hidden="true"></span><span id="globalLoadingText">Laddar rapport…</span></div>
+    <div id="globalLoading" class="global-loading is-hidden" aria-live="polite"><span class="loading-spinner" aria-hidden="true"></span><span id="globalLoadingText">Laddar rapport…</span></div>
     <div id="updated" class="updated"></div>
   </div>
 </header>
-<nav class="tabs" id="tabs">
-  <button data-page="start" class="active">Start</button>
-  <button data-page="temp1">Temperatur 1</button>
-  <button data-page="temp2">Temperatur 2</button>
-  <button data-page="precip">Nederbörd</button>
-  <button data-page="weather">Väder</button>
-  <button data-page="wind">Vind</button>
-  <button data-page="visibility">Sikt</button>
-  <button data-page="pressure">Lufttryck</button>
-  <button data-page="humidity">Luftfuktighet</button>
-  <button data-page="sunshine">Solskenstid</button>
-  <button data-page="snow">Snödjup</button>
-  <button data-page="snowmap">Snötäckeskarta</button>
-  <button data-page="zerocross">Nollgenomgångar</button>
-  <button data-page="vegetation">Vegetationsperiod</button>
-  <button data-page="lightning">Blixt</button>
-  <button data-page="seaice">Havsis</button>
-  <button data-page="sealevel">Vattenstånd</button>
-  <button data-page="dateweather">Väder efter datum</button>
-  <button data-page="data">Metod &amp; Data</button>
+<nav class="tabs" id="tabs" aria-label="Rapportens sidor">
+  <div class="nav-group"><span class="nav-group-label">Översikt</span>
+    <button data-page="start" class="active" aria-current="page">Start</button>
+  </div>
+  <div class="nav-group"><span class="nav-group-label">Väderobservationer</span>
+    <button data-page="temp1">Temperatur – utveckling</button>
+    <button data-page="temp2">Temperatur – klimatprofil</button>
+    <button data-page="precip">Nederbörd</button>
+    <button data-page="weather">Vädertyper</button>
+    <button data-page="wind">Vind</button>
+    <button data-page="visibility">Sikt</button>
+    <button data-page="pressure">Lufttryck</button>
+    <button data-page="humidity">Luftfuktighet</button>
+    <button data-page="sunshine">Sol och solskenstid</button>
+  </div>
+  <div class="nav-group"><span class="nav-group-label">Klimatindikatorer</span>
+    <button data-page="snow">Snödjup</button>
+    <button data-page="zerocross">Nollgenomgångar</button>
+    <button data-page="vegetation">Vegetationsperiod</button>
+    <button data-page="lightning">Blixt</button>
+    <button data-page="seaice">Havsis</button>
+  </div>
+  <div class="nav-group"><span class="nav-group-label">Kartor och fördjupning</span>
+    <button data-page="snowmap">Snötäckeskarta</button>
+    <button data-page="sealevel">Vattenstånd</button>
+    <button data-page="dateweather">Väder efter datum</button>
+    <button data-page="data">Metod och datakällor</button>
+  </div>
 </nav>
 <main>
   <section id="page-start" class="page active">
@@ -110,6 +118,20 @@
     <h2 id="reportIntroTitle">Klimat och väder i Luleå</h2>
     <p>Rapporten sammanställer historiska och löpande väder- och klimatdata för Luleå kommun. Huvudkällan är SMHI:s observationsdata från Kallax station 162860. Rapporten innehåller analyser av temperatur, nederbörd, väderfenomen, vind, sikt, lufttryck, luftfuktighet, solskenstid, snö och snötäcke, nollgenomgångar, vegetationsperiod, blixt, havsis och alger.</p>
 
+    </section>
+    <section class="start-shortcuts" aria-labelledby="startExploreTitle">
+      <div class="start-shortcuts-heading"><h2 id="startExploreTitle">Utforska väder och klimat</h2><p>Välj ett ämne för att öppna diagrammen. Data hämtas först när de behövs.</p></div>
+      <div class="start-shortcuts-grid">
+        <button type="button" data-go-page="temp1"><span class="shortcut-icon" aria-hidden="true">🌡️</span><strong>Temperatur</strong><span>Historisk utveckling och trender</span></button>
+        <button type="button" data-go-page="precip"><span class="shortcut-icon" aria-hidden="true">🌧️</span><strong>Nederbörd</strong><span>Mängder och årstidsvariation</span></button>
+        <button type="button" data-go-page="wind"><span class="shortcut-icon" aria-hidden="true">💨</span><strong>Vind</strong><span>Vindstyrka och riktningar</span></button>
+        <button type="button" data-go-page="sunshine"><span class="shortcut-icon" aria-hidden="true">☀️</span><strong>Sol och solsken</strong><span>Solskenstid och solinstrålning</span></button>
+        <button type="button" data-go-page="snow"><span class="shortcut-icon" aria-hidden="true">❄️</span><strong>Snö</strong><span>Snödjup och snösäsonger</span></button>
+        <button type="button" data-go-page="vegetation"><span class="shortcut-icon" aria-hidden="true">🌱</span><strong>Vegetationsperiod</strong><span>Växtsäsongens start och längd</span></button>
+        <button type="button" data-go-page="seaice"><span class="shortcut-icon" aria-hidden="true">🧊</span><strong>Havsis</strong><span>Isutbredning och issäsong</span></button>
+        <button type="button" data-go-page="dateweather"><span class="shortcut-icon" aria-hidden="true">📅</span><strong>Väder efter datum</strong><span>Undersök en specifik dag</span></button>
+      </div>
+      <p class="start-extra-links">Fler analyser finns i ämnesmenyn ovan, bland annat sikt, lufttryck, vattenstånd och metodbeskrivningar.</p>
     </section>
   </section>
   <section class="filters" id="globalFilters">
@@ -508,5 +530,5 @@
 </main>
 <script src="sealevel.js?v=1"></script>
 <script src="sealevel-basin.js?v=8"></script>
-<script src="app.js?v=53"></script>
+<script src="app.js?v=54"></script>
 </body></html>
