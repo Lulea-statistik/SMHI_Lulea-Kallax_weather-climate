@@ -127,7 +127,7 @@ def main():
         'source': 'SMHI MetObs, parameter 9, air pressure reduced to sea level',
         'unit': 'hPa', 'default_station': '162860',
         'method': 'Monthly average of observations with at least 65% observed days (minimum 15); '
-                  'annual mean of monthly means if at least nine valid months. '
+                  'annual mean of available monthly means; sparse periods are flagged as limited. '
                   'Stations are not assumed to measure pressure merely because they measure precipitation.',
         'stations': result, 'station_audit': audit,
     }
