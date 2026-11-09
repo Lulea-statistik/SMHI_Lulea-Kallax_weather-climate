@@ -2222,6 +2222,8 @@ function setupPressureStations(data){
 
 function render(){
   const f=currentFilters(),m=temperatureMetric(),name=metricName(m);
+  const activePage=document.querySelector('#tabs button.active')?.dataset.page||'start';
+  if(activePage==='temp1'){
   const temp1Series=pageWeatherSeries('temperature',DATA.temperature,el('temperature1Station')?.value);
   const ta=selectedAnnualRows(temp1Series.annual,temp1Series.monthly,f);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r[m]);
   lineChart('tempAnnual',taYears,[{label:name,data:taVals},{label:'Linjär trend',data:linearTrend(taYears,taVals),pointRadius:0,borderDash:[6,4]}],'°C');
@@ -2235,12 +2237,27 @@ function render(){
     const vals=rows.map(r=>r[m]).filter(v=>v!=null);
     return vals.length?vals.reduce((s,v)=>s+v,0)/vals.length:null;
   });lineChart('tempMonthly',months,[{label:'°C',data:tMonthAgg,borderColor:MONTH_GREEN,backgroundColor:MONTH_GREEN}],'°C');el('tempMonthlyTitle').textContent=name+' lufttemperatur per månad';
+
+  }
+  if(activePage==='temp2'){
   renderTemp2();
+
+  }
+  if(activePage==='vegetation'){
   renderVegetation(f);
 
+
+  }
+  if(activePage==='lightning'){
   renderLightning(f);
+
+  }
+  if(activePage==='seaice'){
   renderSeaIce(f);
 
+
+  }
+  if(activePage==='precip'){
   const selectedPrecipStation=el('precipStation')?.value||'162860';
   const precipSeries=selectedPrecipStation==='162860'
     ?DATA.precipitation.monthly_total
@@ -2328,8 +2345,14 @@ function render(){
   const ptmByMonth=months.map((_,i)=>ptm.find(r=>+r.key===i+1)||{key:i+1,rain:0,mixed:0,snow:0});
   renderPrecipTypeChart('precipTypeMonthly',months,ptmByMonth);
 
+
+  }
+  if(activePage==='weather'){
   let wc=DATA.weather.codes.filter(r=>inYears(r,f));if(f.month)wc=wc.filter(r=>r.month===f.month);weatherChart(wc);
 
+
+  }
+  if(activePage==='wind'){
   const windSeries=pageWeatherSeries('wind',DATA.wind);
   const ws=(f.month?windSeries.speed_monthly.filter(r=>inYears(r,f)&&r.month===f.month):windSeries.speed_annual.filter(r=>inYears(r,f))),
         wm=(f.month?windSeries.max_monthly.filter(r=>inYears(r,f)&&r.month===f.month):windSeries.max_annual.filter(r=>inYears(r,f))),
@@ -2384,8 +2407,14 @@ function render(){
       scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,min:0,max:100,title:{display:true,text:'andel (%)'},ticks:{callback:v=>v+' %'}}}}
   });
 
+
+  }
+  if(activePage==='pressure'){
   renderPressure(f);
 
+
+  }
+  if(activePage==='visibility'){
   const visibility=selectedStationData('visibility');
   const va=selectedAnnualRows(visibility.annual||[],visibility.monthly||[],f);
   const vaYears=va.map(r=>r.year),vaVals=va.map(r=>Math.round(r.avg));
@@ -2407,11 +2436,17 @@ function render(){
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>Math.round(c.parsed.y)+' meter'}}},
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'meter'},ticks:{precision:0,callback:v=>Math.round(v)}}}}});
 
+
+  }
+  if(activePage==='humidity'){
   const ha=selectedAnnualRows(DATA.humidity.annual,DATA.humidity.monthly,f);const haYears=ha.map(r=>r.year),haVals=ha.map(r=>r.avg);
   lineChart('humidityAnnual',haYears,[{label:f.month?months[f.month-1]+' medel':'Årsmedel',data:haVals},{label:'Linjär trend',data:linearTrend(haYears,haVals),pointRadius:0,borderDash:[6,4]}],'%');
   el('humidityAnnualTrendText').textContent=trendRateText(haYears,haVals,'procentenheter');
   let hm=DATA.humidity.monthly.filter(r=>inYears(r,f));barChart('humidityMonthly',months,aggregateMonthlyMean(hm),'%',MONTH_GREEN);
 
+
+  }
+  if(activePage==='sunshine'){
   const sunA=selectedAnnualRows(DATA.sunshine.annual,DATA.sunshine.monthly_total,f);const sunYears=sunA.map(r=>r.year),sunVals=sunA.map(r=>r.hours);
   destroyChart('sunAnnual');
   charts.sunAnnual=new Chart(el('sunAnnual'),{
@@ -2472,6 +2507,9 @@ function render(){
   });
   barChart('irradianceEnergyMonthly',months,monthlyEnergy,'kWh/m²','rgba(230,126,34,0.55)');
 
+
+  }
+  if(activePage==='snow'){
   const snowSeries=pageWeatherSeries('snow',DATA.snow);
   const snowA=snowSeries.annual_mean.filter(r=>r.year>=f.from&&r.year<=f.to),
         snowMax=snowSeries.annual_max.filter(r=>r.year>=f.from&&r.year<=f.to);
@@ -2521,6 +2559,9 @@ function render(){
       scales:{x:{grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'dygn'}}}}
   });
 
+
+  }
+  if(activePage==='zerocross'){
   const zeroSeries=selectedStationData('zerocross');
   let z=(zeroSeries.days||[]).filter(r=>inYears(r,f));if(f.month)z=z.filter(r=>r.month===f.month);
   const zy={};z.forEach(r=>zy[r.year]=(zy[r.year]||0)+1);
@@ -2552,6 +2593,9 @@ function render(){
   el('zeroTrendText').textContent=trendRateText(trendYears,trendVals,'genomgångar/dygn');
   el('zeroTable').innerHTML='<table><thead><tr><th>Datum</th><th>Min °C</th><th>Max °C</th><th>Antal genomgångar</th><th>Riktning</th><th>Observationer</th></tr></thead><tbody>'+z.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(r=>'<tr><td>'+r.date+'</td><td>'+r.min+'</td><td>'+r.max+'</td><td>'+r.crossings+'</td><td>'+r.directions.join(', ')+'</td><td>'+r.observations+'</td></tr>').join('')+'</tbody></table>';
 
+
+  }
+  if(activePage==='data'){
   el('coverage').innerHTML='<table><thead><tr><th>Parameter</th><th>Från</th><th>Till</th><th>Observationer</th></tr></thead><tbody>'+DATA.coverage.map(r=>'<tr><td>'+r.name+'</td><td>'+r.min_date+'</td><td>'+r.max_date+'</td><td>'+r.rows.toLocaleString('sv-SE')+'</td></tr>').join('')+'</tbody></table>';
   // Data coverage in the method table is computed from the same dataset as the charts.
   const coverageByParameter={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',5:'Nederbörd 1 dygn',6:'Relativ luftfuktighet',7:'Nederbörd 1 timme',8:'Snödjup',10:'Solskenstid',11:'Global irradians',12:'Sikt',13:'Rådande väder',17:'Nederbördstyp 12 timmar',18:'Nederbördstyp 24 timmar',21:'Byvind'};
@@ -2566,6 +2610,7 @@ function render(){
     }
   });
 
+  }
 }
 function solarTimes(dateStr,lat=65.543,lon=22.124){
   const [y,m,d]=dateStr.split('-').map(Number);
@@ -2965,6 +3010,7 @@ function setupTabs(){
         document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));
         document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
         btn.classList.add('active');
+        document.querySelectorAll('#tabs button').forEach(x=>x.setAttribute('aria-current',x===btn?'page':'false'));
         el('page-'+btn.dataset.page).classList.add('active');
         document.body.classList.toggle('start-active',btn.dataset.page==='start');
         document.body.classList.toggle('dateweather-active',btn.dataset.page==='dateweather');
@@ -2974,9 +3020,16 @@ function setupTabs(){
         const monthFilter=el('globalMonthFilter');
         if(monthFilter)monthFilter.style.display=btn.dataset.page==='seaice'?'none':'';
         if(btn.dataset.page==='seaice'&&el('month'))el('month').value='0';
-        if(!DATA)return;
+        if(btn.dataset.page==='start')return;
+        await ensureDashboard();
         applyPageYearBounds(btn.dataset.page,true);
         render();
+        // Supplement files are fetched only for pages that actually need them.
+        loadSupportingData(btn.dataset.page);
+        if(btn.dataset.page==='dateweather'&&!dateWeatherInitialized){
+          dateWeatherInitialized=true;
+          setupDateWeather();
+        }
         if(btn.dataset.page==='seaice')await initSeaIceMap();
         if(btn.dataset.page==='algae')await initAlgaeMap();
         if(btn.dataset.page==='snowmap')await initSnowMap();
@@ -2988,6 +3041,14 @@ function setupTabs(){
           if(snowMapLeaflet)snowMapLeaflet.invalidateSize();
           if(lightningMapLeaflet)lightningMapLeaflet.invalidateSize();
         },80);
+      }catch(err){
+        console.error('Could not load selected page:',err);
+        const area=el('page-'+btn.dataset.page);
+        if(area){
+          let warning=area.querySelector('.page-load-error');
+          if(!warning){warning=document.createElement('p');warning.className='page-load-error';area.prepend(warning);}
+          warning.textContent='Data kunde inte laddas. Kontrollera anslutningen och välj sidan igen.';
+        }
       }finally{
         setTimeout(done,100);
       }
@@ -3040,53 +3101,77 @@ function setupWeatherCodes(){
   el('weatherCode').innerHTML='<option value="all">Alla vädertyper</option>'+types.map(t=>'<option value="'+t+'">'+t+'</option>').join('');
   el('weatherCode').value='all';
 }
-setupTabs(); // Attach tab events even when data loading fails.
-const initialLoadingDone=beginGlobalLoading('Laddar rapport…');
-fetch('dashboard_data.json',{cache:'no-store'})
-  .then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas');return r.json();})
-  .then(d=>{
-    DATA=d;
-    el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');
-    el('weatherSource').href=d.weather.source_url;
-    fetch('precip_stations.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{
-      if(!data?.stations?.length)return;
-      PRECIP_STATIONS=data;
-      const chooser=el('precipStation');
-      const previous=chooser.value;
-      const stations=data.stations.filter(st=>st.id!=='162860'&&st.monthly?.length);
-      chooser.replaceChildren();
-      const addStation=(id,name)=>{
-        const option=document.createElement('option');
-        option.value=id;option.textContent=name;chooser.appendChild(option);
-      };
-      if(DATA.precipitation?.monthly_total?.length)addStation('162860','Luleå-Kallax Flygplats');
-      for(const station of stations)addStation(station.id,station.name);
-      if(data.municipal?.length)addStation('municipal','Kommunmedel (stationsmedel)');
-      if([...chooser.options].some(option=>option.value===previous))chooser.value=previous;
-      updateStationPeriodLabels();
-      if(document.querySelector('#tabs button.active')?.dataset.page==='precip')applyPageYearBounds('precip',true);
-      render();
-    }).catch(err=>console.warn('Station precipitation unavailable',err));
-    fetch('weather_stations.json',{cache:'no-store'})
-      .then(r=>r.ok?r.json():null)
-      .then(data=>{
-        if(!data?.stations)return;
-        WEATHER_STATIONS=data;
-        setupWeatherStationPickers();
-        const page=document.querySelector('#tabs button.active')?.dataset.page;
-        if(['temp1','temp2','wind','snow','visibility','zerocross','vegetation'].includes(page)){
-          applyPageYearBounds(page,true);
-        }
-        render();
-      })
-      .catch(err=>console.warn('Other weather station data unavailable:',err));
-    fetch('pressure_stations.json',{cache:'no-store'})
-      .then(r=>r.ok?r.json():null)
-      .then(data=>{setupPressureStations(data);updateStationPeriodLabels();})
-      .catch(err=>console.warn('Air pressure station audit unavailable:',err));
-    setupWeatherCodes();setupTemp2Slider();setupSeaIceSeasonControls();setupAlgaeSeasonControls();setupSnowMapControls();setupLightningMapControls();setupFilters();setupDateWeather();
-    try{updateStationPeriodLabels();}catch(err){console.warn('Station period labels unavailable:',err);}
-    render();
-  })
-  .catch(err=>{document.querySelector('main').innerHTML='<div class="chart-card"><h2>Rapportdata saknas</h2><p>'+err.message+'</p></div>';})
-  .finally(()=>setTimeout(initialLoadingDone,100));
+// Load the shared dashboard only when the visitor opens a data page.
+// The static Start page must not download or parse the large dataset.
+let dashboardPromise=null;
+let dateWeatherInitialized=false;
+const supplementPromises=new Map();
+function loadSupplement(name,handler){
+  if(supplementPromises.has(name))return supplementPromises.get(name);
+  const promise=fetch(name,{cache:'default'})
+    .then(r=>{if(!r.ok)throw new Error(name+' HTTP '+r.status);return r.json();})
+    .then(data=>{
+      handler(data);
+      const active=document.querySelector('#tabs button.active')?.dataset.page;
+      if(DATA&&active&&active!=='start')render();
+    })
+    .catch(err=>{console.warn('Optional station file unavailable:',name,err);});
+  supplementPromises.set(name,promise);
+  return promise;
+}
+function loadSupportingData(page){
+  if(page==='precip')return loadSupplement('precip_stations.json',data=>{
+    if(!data?.stations?.length)return;
+    PRECIP_STATIONS=data;
+    const chooser=el('precipStation'),previous=chooser.value;
+    chooser.replaceChildren();
+    const add=(id,name)=>{const opt=document.createElement('option');opt.value=id;opt.textContent=name;chooser.appendChild(opt);};
+    if(DATA.precipitation?.monthly_total?.length)add('162860','Luleå-Kallax Flygplats');
+    for(const station of data.stations.filter(st=>st.id!=='162860'&&st.monthly?.length))add(station.id,station.name);
+    if(data.municipal?.length)add('municipal','Kommunmedel (stationsmedel)');
+    if([...chooser.options].some(opt=>opt.value===previous))chooser.value=previous;
+    updateStationPeriodLabels();
+    if(document.querySelector('#tabs button.active')?.dataset.page==='precip')applyPageYearBounds('precip',true);
+  });
+  if(['temp1','temp2','wind','snow','visibility','zerocross','vegetation'].includes(page)){
+    return loadSupplement('weather_stations.json',data=>{
+      if(!data?.stations)return;
+      WEATHER_STATIONS=data;
+      setupWeatherStationPickers();
+      const active=document.querySelector('#tabs button.active')?.dataset.page;
+      if(['temp1','temp2','wind','snow','visibility','zerocross','vegetation'].includes(active))applyPageYearBounds(active,true);
+    });
+  }
+  if(page==='pressure')return loadSupplement('pressure_stations.json',data=>{
+    setupPressureStations(data);
+    updateStationPeriodLabels();
+  });
+  return Promise.resolve();
+}
+function ensureDashboard(){
+  if(DATA)return Promise.resolve(DATA);
+  if(dashboardPromise)return dashboardPromise;
+  dashboardPromise=fetch('dashboard_data.json',{cache:'default'})
+    .then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas (HTTP '+r.status+')');return r.json();})
+    .then(d=>{
+      DATA=d;
+      el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');
+      if(d.weather?.source_url)el('weatherSource').href=d.weather.source_url;
+      setupWeatherCodes();setupTemp2Slider();setupSeaIceSeasonControls();setupAlgaeSeasonControls();
+      setupSnowMapControls();setupLightningMapControls();setupFilters();
+      try{updateStationPeriodLabels();}catch(err){console.warn('Station periods:',err);}
+      return d;
+    })
+    .catch(err=>{
+      dashboardPromise=null;
+      throw err;
+    });
+  return dashboardPromise;
+}
+setupTabs();
+document.querySelectorAll('[data-go-page]').forEach(button=>button.addEventListener('click',()=>{
+  const target=document.querySelector('#tabs button[data-page="'+button.dataset.goPage+'"]');
+  if(target)target.click();
+}));
+document.body.classList.add('start-active');
+el('globalLoading')?.classList.add('is-hidden');
