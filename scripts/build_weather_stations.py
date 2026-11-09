@@ -273,7 +273,7 @@ def main():
         td=temp_data(records[1]) if records[1] else None
         # Keep observed short series, and flag them instead of silently dropping them.
         if td and any(a.get('limited') for a in td['annual']):
-            status['errors']['temperature/coverage']='Limited annual coverage: fewer than nine qualified months'
+            status['errors']['temperature/coverage']='Limited annual or monthly observation coverage'
         wd=wind_data(records) if records[3] and records[4] else None
         sd=snow_data(records[8]) if records[8] else None
         vd=visibility_data(records[12]) if records[12] else None
