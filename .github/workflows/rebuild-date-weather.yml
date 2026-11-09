@@ -37,7 +37,7 @@ jobs:
         run: pip install requests==2.32.5
       - name: Check Python and JavaScript syntax
         run: |
-          python -m py_compile scripts/build_dashboard_data.py scripts/build_pressure_stations.py scripts/build_weather_stations.py
+          python -m py_compile scripts/fetch_smhi.py scripts/build_dashboard_data.py scripts/build_pressure_stations.py scripts/build_weather_stations.py
           node --check docs/app.js
       - name: Rebuild observed daily data and dashboard
         run: python scripts/build_dashboard_data.py
