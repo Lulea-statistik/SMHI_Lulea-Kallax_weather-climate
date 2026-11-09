@@ -196,3 +196,6 @@ body:has(#page-start.active) #globalFilters{display:none}
   #page-start .report-intro h2{font-size:24px}
   #page-start .report-intro p{font-size:16px}
 }
+
+/* Station selectors wrap cleanly when charts are displayed on small screens. */
+#page-visibility .page-tools,#page-zerocross .page-tools,#page-vegetation .page-tools,#page-sunshine .page-tools{flex-wrap:wrap;align-items:center}
