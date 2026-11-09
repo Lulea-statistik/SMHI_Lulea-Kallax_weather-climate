@@ -234,12 +234,16 @@ function updateStationQuality(kind){
   const id=el(kind+'Station')?.value||'162860';
   const rows=stationCoverageRows(kind,id);
   const range=kind==='vegetation'?yearBoundsFromRows(rows,'window_end'):yearBoundsFromRows(rows);
-  const limited=rows.some(r=>r.limited)||rows.length<12;
+  const yearsWithData=new Set(rows.map(r=>kind==='vegetation'?r.window_end:r.year).filter(Number.isFinite));
+  const hasGaps=range&&yearsWithData.size<range.max-range.min+1;
+  const limited=rows.some(r=>r.limited)||rows.length<12||hasGaps;
+  const limitedMonths=rows.filter(r=>r.limited).length;
   const years=range?range.min+'–'+range.max:'ingen beräknad serie';
   const note=kind==='vegetation'?'Årtalen avser slutåret för de 10-åriga beräkningsfönstren.':
     kind==='zerocross'?'Enbart dygn där en nollgenomgång observerats redovisas.':'Årtalen avser faktisk tillgänglig serie för sidan.';
   node.textContent='Datatäckning: '+years+'. '+note+
-    (limited?' Begränsat underlag eller luckor kan påverka jämförbarheten; kontrollera antal observationer.':'');
+    (limited?' Begränsat underlag eller luckor kan påverka jämförbarheten.':'')+
+    (limitedMonths?' '+limitedMonths+' delperioder har låg observationstäckning.':'');
 }
 function setupWeatherStationPickers(){
   if(!WEATHER_STATIONS)return;
@@ -2196,7 +2200,7 @@ function setupPressureStations(data){
   if(method){
     method.replaceChildren();
     const intro=document.createElement('p');
-    intro.textContent='SMHI parameter 9, hPa. Jämförbara månadsserier kräver observationer minst 65 % av dagarna (minst 15 dagar); årsmedel kräver minst nio godkända månader. Kontrollerade nederbördsstationer:';
+    intro.textContent='SMHI parameter 9, hPa. Som riktmärke krävs minst 65 % av dagarna (minst 15) för god månadstäckning och minst nio sådana månader för en jämförbar årsserie. Kortare observerade serier visas med kvalitetsvarning, inte som fullständiga år. Kontrollerade stationer:';
     method.appendChild(intro);
     const list=document.createElement('ul');
     for(const item of tests){
