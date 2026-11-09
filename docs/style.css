@@ -199,3 +199,34 @@ body:has(#page-start.active) #globalFilters{display:none}
 
 /* Station selectors wrap cleanly when charts are displayed on small screens. */
 #page-visibility .page-tools,#page-zerocross .page-tools,#page-vegetation .page-tools,#page-sunshine .page-tools{flex-wrap:wrap;align-items:center}
+
+/* Navigation: clear topic clusters, readable buttons and keyboard focus. */
+#tabs.tabs{gap:18px;align-items:stretch;padding:12px 22px;scrollbar-width:thin;overscroll-behavior-x:contain}
+#tabs .nav-group{display:flex;gap:5px;align-items:center;flex:0 0 auto;padding-right:16px;border-right:1px solid var(--line)}
+#tabs .nav-group:last-child{border-right:0}
+#tabs .nav-group-label{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;margin-right:5px}
+#tabs button{border:1px solid transparent;padding:10px 13px;font-size:13px;min-height:42px;transition:background-color .15s,border-color .15s}
+#tabs button:hover:not(.active){background:#eaf2f8;border-color:#bcd4e7;color:#174f74}
+#tabs button.active{background:#1f5f8b;color:#fff;box-shadow:inset 0 -2px 0 rgba(0,0,0,.15)}
+#tabs button:focus-visible,.start-shortcuts button:focus-visible{outline:3px solid #f59e0b;outline-offset:3px}
+.start-shortcuts{max-width:1120px;margin:24px auto 14px;width:100%}
+.start-shortcuts-heading h2{font-size:23px;margin:0 0 6px}
+.start-shortcuts-heading p{margin:0 0 16px;color:var(--muted)}
+.start-shortcuts-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.start-shortcuts-grid button{display:flex;flex-direction:column;text-align:left;align-items:flex-start;gap:7px;min-height:150px;padding:18px;border:1px solid #d7e2ec;border-radius:12px;background:#fff;color:#24364a;cursor:pointer;box-shadow:0 2px 6px rgba(30,60,90,.04);transition:transform .12s,box-shadow .12s,border-color .12s}
+.start-shortcuts-grid button:hover{border-color:#83b1d0;box-shadow:0 6px 18px rgba(30,60,90,.12);transform:translateY(-2px)}
+.start-shortcuts-grid button strong{font-size:17px;line-height:1.25}
+.start-shortcuts-grid button span:last-child{font-size:13px;line-height:1.5;color:#64748b}
+.start-shortcuts-grid .shortcut-icon{font-size:25px;line-height:1.2}
+.start-extra-links{color:#64748b;font-size:13px;margin:14px 0 0}
+.page-load-error{grid-column:1/-1;background:#fff5f5;border:1px solid #f5bbbb;padding:12px 15px;border-radius:8px;color:#9b1c1c}
+@media(max-width:1200px){.start-shortcuts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:780px){
+  #tabs.tabs{padding:9px 12px;gap:12px}
+  #tabs .nav-group{padding-right:12px}
+  #tabs .nav-group-label{font-size:10px}
+  #tabs button{min-height:44px;padding:9px 11px}
+  .start-shortcuts-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .start-shortcuts-grid button{min-height:125px;padding:12px}
+}
+@media(max-width:430px){.start-shortcuts-grid{grid-template-columns:1fr}.start-shortcuts-grid button{min-height:105px}}
