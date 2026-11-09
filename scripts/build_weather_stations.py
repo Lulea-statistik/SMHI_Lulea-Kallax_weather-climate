@@ -111,7 +111,8 @@ def coverage_months(rows,min_fraction=.65):
     for (year,month),vals in bymonth.items():
         observed=len({dt.date() for dt,_ in vals})
         expected=calendar.monthrange(year,month)[1]
-        if observed>=max(15,math.ceil(expected*min_fraction)):
+        required=1 if min_fraction<=0 else max(15,math.ceil(expected*min_fraction))
+        if observed>=required:
             good[(year,month)]=vals
     return good
 
