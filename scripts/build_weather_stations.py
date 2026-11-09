@@ -116,7 +116,7 @@ def coverage_months(rows,min_fraction=.65):
     return good
 
 def temp_data(rows):
-    months=coverage_months(rows)
+    months=coverage_months(rows,min_fraction=0)  # retain sparse observed months, mark quality below
     monthly=[]
     byyear=defaultdict(list)
     for (year,month),observations in sorted(months.items()):
@@ -127,25 +127,17 @@ def temp_data(rows):
            'min':r2(min(vals)),'max':r2(max(vals)),
            'avg_daily_min':r2(mean([min(v) for v in byday.values()])),
            'avg_daily_max':r2(mean([max(v) for v in byday.values()])),
-           'days':len(byday)}
+           'days':len(byday),'expected_days':calendar.monthrange(year,month)[1],
+           'limited':len(byday)<max(15,math.ceil(calendar.monthrange(year,month)[1]*.65))}
         monthly.append(r);byyear[year].append(r)
     annual=[]
     for year,monthrows in sorted(byyear.items()):
-        if len(monthrows)<9:continue
         annual.append({'year':year,
           'avg':r2(mean([m['avg'] for m in monthrows])),
           'min':min(m['min'] for m in monthrows),'max':max(m['max'] for m in monthrows),
           'avg_daily_min':r2(mean([m['avg_daily_min'] for m in monthrows])),
           'avg_daily_max':r2(mean([m['avg_daily_max'] for m in monthrows])),
-          'months':len(monthrows)})
-    # Keep short monthly-only series visible without asserting that a full year was measured.
-    if not annual and monthly:
-        for year,monthrows in sorted(byyear.items()):
-            annual.append({'year':year,'avg':r2(mean([m['avg'] for m in monthrows])),
-                'min':min(m['min'] for m in monthrows),'max':max(m['max'] for m in monthrows),
-                'avg_daily_min':r2(mean([m['avg_daily_min'] for m in monthrows])),
-                'avg_daily_max':r2(mean([m['avg_daily_max'] for m in monthrows])),
-                'months':len(monthrows),'limited':True})
+          'months':len(monthrows),'limited':len(monthrows)<9 or any(m['limited'] for m in monthrows)})
     return {'annual':annual,'monthly':monthly}
 
 def visibility_data(rows):
@@ -168,7 +160,7 @@ def visibility_data(rows):
 
 def wind_data(raw):
     speed,direction,gust=raw[4],raw[3],raw[21]
-    sm,dm,gm=coverage_months(speed),coverage_months(direction),coverage_months(gust)
+    sm,dm,gm=(coverage_months(series,min_fraction=0) for series in (speed,direction,gust))
     good=set(sm)&set(dm)
     if not good:return None
     sectors=['N','NO','O','SO','S','SV','V','NV']
@@ -195,13 +187,17 @@ def wind_data(raw):
         for (y,m),vals in sorted(which.items()):
             values=[v for _,v in vals]
             if not values:continue
-            monthly.append({'year':y,'month':m,'avg':r2(mean(values)),'max':r2(max(values))})
+            days=len({dt.date() for dt,_ in vals})
+            expected=calendar.monthrange(y,m)[1]
+            monthly.append({'year':y,'month':m,'avg':r2(mean(values)),'max':r2(max(values)),
+                            'days':days,'expected_days':expected,'limited':days<max(15,math.ceil(expected*.65))})
             yearly[y].extend(vals)
         annual=[]
         for year,vals in sorted(yearly.items()):
-            if sum(1 for x in which if x[0]==year)<9:continue
             values=[v for _,v in vals]
-            annual.append({'year':year,'avg':r2(mean(values)),'max':r2(max(values))})
+            year_months=[row for row in monthly if row['year']==year]
+            annual.append({'year':year,'avg':r2(mean(values)),'max':r2(max(values)),
+                           'months':len(year_months),'limited':len(year_months)<9 or any(row['limited'] for row in year_months)})
         return annual,monthly
     speed_a,speed_m=group(sr);gust_a,gust_m=group(gr)
     direction_a=[];direction_m=[]
@@ -211,7 +207,6 @@ def wind_data(raw):
     byyear=defaultdict(list)
     for (y,m),vals in dr.items():byyear[y].extend(vals)
     for y,vals in sorted(byyear.items()):
-        if sum(1 for x in dr if x[0]==y)<9:continue
         d=direction_mean(vals)
         if d:direction_a.append({'year':y,**d})
     sectors_data=[{'year':y,'month':m,'direction':label,'count':n}
