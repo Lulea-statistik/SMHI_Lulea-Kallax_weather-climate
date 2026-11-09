@@ -18,9 +18,10 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from fetch_smhi import BASE_URL,fetch_period,request_json
 from build_precip_stations import STATIONS
+from build_dashboard_data import zero_crossings, vegetation_period
 
 OUT=ROOT/'docs'/'weather_stations.json'
-PARAMETERS={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',21:'Byvind',8:'Snödjup'}
+PARAMETERS={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',21:'Byvind',8:'Snödjup',12:'Sikt'}
 
 def mean(v):return sum(v)/len(v) if v else None
 def r2(x):return None if x is None else round(x,2)
@@ -137,6 +138,32 @@ def temp_data(rows):
           'avg_daily_min':r2(mean([m['avg_daily_min'] for m in monthrows])),
           'avg_daily_max':r2(mean([m['avg_daily_max'] for m in monthrows])),
           'months':len(monthrows)})
+    # Keep short monthly-only series visible without asserting that a full year was measured.
+    if not annual and monthly:
+        for year,monthrows in sorted(byyear.items()):
+            annual.append({'year':year,'avg':r2(mean([m['avg'] for m in monthrows])),
+                'min':min(m['min'] for m in monthrows),'max':max(m['max'] for m in monthrows),
+                'avg_daily_min':r2(mean([m['avg_daily_min'] for m in monthrows])),
+                'avg_daily_max':r2(mean([m['avg_daily_max'] for m in monthrows])),
+                'months':len(monthrows),'limited':True})
+    return {'annual':annual,'monthly':monthly}
+
+def visibility_data(rows):
+    if not rows:return None
+    months=defaultdict(list)
+    for dt,v in rows:months[(dt.year,dt.month)].append((dt,v))
+    monthly=[]
+    yearly=defaultdict(list)
+    for (y,m),vals in sorted(months.items()):
+        days=len({dt.date() for dt,_ in vals})
+        expected=calendar.monthrange(y,m)[1]
+        avg=r2(mean([v for _,v in vals]))
+        monthly.append({'year':y,'month':m,'avg':avg,'days':days,
+                        'expected_days':expected,'limited':days<max(15,math.ceil(.65*expected))})
+        yearly[y].append(monthly[-1])
+    annual=[{'year':y,'avg':r2(mean([r['avg'] for r in rr])),'months':len(rr),
+             'limited':len(rr)<9 or any(r['limited'] for r in rr)}
+            for y,rr in sorted(yearly.items())]
     return {'annual':annual,'monthly':monthly}
 
 def wind_data(raw):
@@ -217,7 +244,7 @@ def main():
         if not items:raise RuntimeError(f'No SMHI station inventory for parameter {pid}')
         inventory[pid]={str(i.get('key') or i.get('id') or '') for i in items}
         print('Parameter',pid,'listed stations',len(inventory[pid]),flush=True)
-    station_output={'temperature':[],'wind':[],'snow':[]}
+    station_output={'temperature':[],'wind':[],'snow':[],'visibility':[],'zerocross':[],'vegetation':[]}
     audit=[]
     for st in STATIONS:
         sid,name=st['id'],st['name']
@@ -227,7 +254,9 @@ def main():
             station_output['temperature'].append({'id':sid,'name':name,'source':'existing-dashboard'})
             station_output['wind'].append({'id':sid,'name':name,'source':'existing-dashboard'})
             station_output['snow'].append({'id':sid,'name':name,'source':'existing-dashboard'})
-            status['verified']=['temperature','wind','snow']
+            for kind in ('visibility','zerocross','vegetation'):
+                station_output[kind].append({'id':sid,'name':name,'source':'existing-dashboard'})
+            status['verified']=['temperature','wind','snow','visibility','zerocross','vegetation']
             audit.append(status)
             continue
         records={}
@@ -244,15 +273,18 @@ def main():
             records[pid]=clean_rows(raw,pid)
             status['records'][str(pid)]=len(records[pid])
         td=temp_data(records[1]) if records[1] else None
-        # Monthly coverage alone is insufficient: the temperature charts and
-        # workflow validation require at least one qualified annual value.
-        if td is not None and not td['annual']:
-            status['errors']['temperature/coverage']='Observations exist, but no year has at least nine valid months'
-            td=None
+        # Keep observed short series, and flag them instead of silently dropping them.
+        if td and any(a.get('limited') for a in td['annual']):
+            status['errors']['temperature/coverage']='Limited annual coverage: fewer than nine qualified months'
         wd=wind_data(records) if records[3] and records[4] else None
         sd=snow_data(records[8]) if records[8] else None
+        vd=visibility_data(records[12]) if records[12] else None
+        zero=zero_crossings(records[1]) if records[1] else []
+        veg=vegetation_period(records[1]) if records[1] else None
         status['verified']=[]
-        for kind,aggregates in [('temperature',td),('wind',wd),('snow',sd)]:
+        for kind,aggregates in [('temperature',td),('wind',wd),('snow',sd),('visibility',vd),
+                                ('zerocross',{'days':zero,'source':'observed temperature'} if zero else None),
+                                ('vegetation',veg if veg and veg.get('climate_10y') else None)]:
             if aggregates is None:continue
             station_output[kind].append({'id':sid,'name':name,**aggregates})
             status['verified'].append(kind)
@@ -263,7 +295,7 @@ def main():
     payload={'generated_at':datetime.now(timezone.utc).isoformat(),
              'default_station':'162860',
              'source':'SMHI MetObs official parameter station inventories, corrected archives and latest months',
-             'method':'Only proven observations; temperature/wind require at least 65% observed days per month and nine valid months per year; snow uses the Kallax seven-observation season rule. Missing stations are never interpolated.',
+             'method':'Only actual observed data; sparse alternative station series are flagged as limited, never interpolated. Vegetation requires a 10-year temperature window and zero crossings require within-day temperature observations.',
              'stations':station_output,'audit':audit}
     OUT.write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
     print('Saved',OUT,'stations:',{k:[s['name'] for s in v] for k,v in station_output.items()},flush=True)
