@@ -147,6 +147,24 @@ for layer in layers:
                     info[f"map_{day}_nontransparent_bbox"] = extent
                     if extent is None:
                         warnings.append(f"{filename}: all pixels are transparent; no visual evidence")
+                    # Raw PNG pixel frequencies are a diagnostic, NOT area estimates.
+                    # Exclude fully transparent pixels and preserve RGB + alpha.
+                    from collections import Counter
+                    colors = Counter(
+                        (r, g, b, a) for r, g, b, a in rendered.convert("RGBA").getdata()
+                        if a > 0
+                    )
+                    info[f"map_{day}_visible_pixels"] = sum(colors.values())
+                    info[f"map_{day}_unique_rgba_colors"] = len(colors)
+                    info[f"map_{day}_top_rgba_colors"] = [
+                        {"rgba": list(color), "pixels": count}
+                        for color, count in colors.most_common(20)
+                    ]
+                    info[f"map_{day}_pixel_note"] = (
+                        "Image pixels are not geodetic areas. "
+                        "Anti-aliasing, transparency, map projection and scale affect frequencies; "
+                        "colors are not mapped to WFS class codes."
+                    )
             except (OSError, ValueError) as exc:
                 warnings.append(f"{filename}: image validation failed: {exc}")
 
