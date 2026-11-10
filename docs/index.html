@@ -100,7 +100,7 @@
     <button data-page="vegetation">Vegetationsperiod</button>
     <button data-page="lightning">Blixt</button>
     <button data-page="seaice">Havsis</button>
-    <button data-page="algae">Alger</button>
+    <button data-page="algae">Cyanobakterier</button>
   </div>
   <div class="nav-group"><span class="nav-group-label">Kartor och fördjupning</span>
     <button data-page="snowmap">Snötäckeskarta</button>
@@ -390,11 +390,11 @@
 
 
   <section id="page-algae" class="page">
-    <div class="page-tools"><label>Algsäsong<select id="algaeYear"></select></label></div>
-    <div class="source-note"><b>Alger:</b> SMHI:s <i>SE.SR Ytansamling av alger</i> visar dagliga satellitbaserade analyser av cyanobakterier i Östersjön. Kartan nedan klipper SMHI:s geometrier mot Luleå kommuns havsyta, på samma sätt som havsiskartan. <b>Ytansamling</b> betyder att blomningen koncentrerats vid ytan, medan <b>risk för ytansamling</b> används när blomningen är otydligare eller ligger under ytan. Moln och saknade satellitdata redovisas separat eftersom de begränsar vad satelliten kan se. Historiken hämtas så långt tillbaka som SMHI:s serie medger. <b>2002–2009 har äldre klassbeteckningar</b> och visas därför med de råa SMHI-klasserna där betydelsen inte kan översättas säkert.</div>
+    <div class="page-tools"><label>Säsong<select id="algaeYear"></select></label></div>
+    <div class="source-note"><b>Cyanobakterier – satellitobserverade ytansamlingar:</b> SMHI:s <i>SE.SR Ytansamling av alger</i> avser satellitbaserade observationer av ytansamlingar och risk för sådana. <b>Historisk WFS-kontroll 2002–2026:</b> inga objekt med klass 2 eller 3 returnerades inom Luleås NMD-baserade havsområde under juni–september något av de 25 åren (50 av 50 års-/klassfrågor lyckades). Detta betyder <b>inga registrerade ytansamlingar i den granskade WFS-produkten</b>, inte att all algblomning saknas. Moln, saknade satellitdata och dagar utan publicerat underlag begränsar slutsatsen. Klassernas betydelser bygger på WFS/WMS-jämförelser och är preliminära; äldre data 2002–2009 kan ha annan klassning. <a href="https://github.com/Lulea-statistik/SMHI_Lulea-Kallax_weather-climate/actions/runs/42800800236" target="_blank" rel="noopener noreferrer">Granskningsresultat 2002–2026</a>.</div>
     <div class="chart-card full seaice-map-card">
-      <h2>Cyanobakterier i Luleås havsområde</h2>
-      <p class="hint">Testversion för senaste sommarsäsongen. Reglaget fungerar som på havsissidan: endast vald dags geometrier laddas. Den röda linjen visar Luleås kommunala havsyta.</p>
+      <h2>SMHI:s satellitklasser i Luleås havsområde</h2>
+      <p class="hint">Välj år och datum för att granska tillgängliga SMHI-polygoner. Den röda linjen visar havsavgränsningen. Grått betecknar moln och svart saknade data – ingetdera ska räknas som algfri havsyta. Endast datum med sparade kartpolygoner kan väljas.</p>
       <div id="algaeMap" class="seaice-map" aria-label="Interaktiv karta över SMHI:s alganalys i Luleås havsområde"></div>
       <div class="seaice-season-controls">
         <div class="seaice-season-control-row">
@@ -411,13 +411,13 @@
       <p id="algaeSeasonStatus" class="hint"></p>
     </div>
     <div class="chart-card full">
-      <h2>Andel havsyta per algklass och datum</h2>
-      <p class="hint">Stackade staplar visar hur stor andel av Luleås kommunala havsyta som täcks av varje klass i SMHI:s analys för respektive kartdatum. Moln och saknad satellitdata redovisas som egna klasser och ska inte tolkas som frånvaro av alger. Råa SMHI-klasser som ännu saknar verifierad betydelse visas neutralt med klassnumret.</p>
+      <h2>Andel havsyta per satellitklass och datum</h2>
+      <p class="hint">Andelar beräknas mot den NMD-baserade havsmasken. Klass 1 (moln) och klass 4 (data saknas) är inte algfria ytor; klass 2 (risk) och klass 3 (ytansamling) har inte registrerats i Luleå i den historiska WFS-kontrollen. Klassnyckeln är preliminär, särskilt för äldre år. Kartdagar med okänd observationsstatus kan inte användas som bevis för frånvaro.</p>
       <canvas id="algaeDailyClasses"></canvas>
     </div>
     <div class="chart-card full">
-      <h2>Observationsdagar med respektive algklass</h2>
-      <p class="hint">Antal kartdatum under den aktuella algsäsongen då respektive klass förekommer inom Luleås havsyta. Samma dag kan innehålla flera klasser och kan därför räknas i flera staplar.</p>
+      <h2>Kartdatum med respektive satellitklass</h2>
+      <p class="hint">Antal sparade kartdatum per klass för valt år. Detta är inte antalet molnfria observationsdagar. Samma datum kan innehålla flera klasser. Att klass 2 eller 3 inte förekommer i en stapel innebär endast att ingen sådan klass finns i det lokala kartmaterialet.</p>
       <canvas id="algaeClassDays"></canvas>
     </div>
   </section>
