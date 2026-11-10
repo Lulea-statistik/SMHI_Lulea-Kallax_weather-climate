@@ -100,11 +100,21 @@ for day in ("2026-06-19", "2026-06-25"):
     except (ValueError, TypeError) as exc:
         errors.append(f"{day}: {exc}")
 
-# Save comparable WMS maps and legends for the two named layers.
+# Only use actual WMS Layer/Name values, not nested Layer/Title strings.
 # OGC WMS 1.1.1 uses lon/lat order for EPSG:4326 BBOX.
-# Per-layer errors are reported but do not prevent diagnostic artifacts.
-layers = ("SR.SeaSurfaceArea", "SR.SeaSurfaceArea.Algae")
+# Per-layer failures are diagnostic warnings, not mandatory WFS failures.
+layers = sorted({
+    layer["name"]
+    for layer in summary.get("wms", {}).get("named_layers", [])
+    if layer.get("name")
+})
 summary["wms_layer_comparison"] = {}
+summary["wms_audit_note"] = (
+    "Only advertised Layer/Name values are queried; "
+    "SR.SeaSurfaceArea.Algae was a title, not an addressable WMS layer."
+)
+if not layers:
+    warnings.append("No addressable WMS layers found in GetCapabilities")
 for layer in layers:
     clean = layer.replace(".", "_")
     info = {"layer": layer, "legends": [], "maps": []}
