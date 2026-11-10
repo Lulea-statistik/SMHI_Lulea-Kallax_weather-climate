@@ -973,23 +973,24 @@ async function showSeaIceSeasonDate(index){
 }
 
 function algaeClassColor(name){
-  if(name==='surface')return '#16a34a';
-  if(name==='risk')return '#facc15';
-  if(name==='cloud')return '#9ca3af';
-  if(name==='no_data')return '#111827';
-  return '#60a5fa';
+  const colors={
+    surface:'#ff9900',risk:'#ffff00',cloud:'#7a7a7a',no_data:'#111827',
+    class_1:'#7a7a7a',class_2:'#ffff00',class_3:'#ff9900',class_4:'#111827'
+  };
+  return colors[name]||'#60a5fa';
 }
 
 function algaeClassLabel(name){
   const labels={
-    surface:'Ytansamling',
-    risk:'Risk för ytansamling',
-    cloud:'Moln',
-    no_data:'Data saknas'
+    surface:'Ytansamling',risk:'Risk för ytansamling',cloud:'Moln',no_data:'Data saknas',
+    class_1:'Klass 1 – moln (preliminär)',
+    class_2:'Klass 2 – risk för ytansamling (preliminär)',
+    class_3:'Klass 3 – ytansamling (preliminär)',
+    class_4:'Klass 4 – data saknas (preliminär)'
   };
   if(labels[name])return labels[name];
   const m=String(name||'').match(/^class_(.+)$/);
-  return m?'SMHI klass '+m[1]+' (betydelse ej verifierad)':(name||'Övrigt');
+  return m?'SMHI klass '+m[1]+' (betydelse okänd)':(name||'Övrigt');
 }
 
 function algaeClassRows(manifest){
@@ -1005,7 +1006,7 @@ function algaeClassRows(manifest){
       if((r.no_data_pct_sea||0)>0)keys.add('no_data');
     }
   });
-  const order=['surface','risk','cloud','no_data'];
+  const order=['class_3','surface','class_2','risk','class_1','cloud','class_4','no_data'];
   return [...keys].sort((a,b)=>{
     const ai=order.indexOf(a),bi=order.indexOf(b);
     if(ai>=0||bi>=0)return (ai<0?999:ai)-(bi<0?999:bi);
@@ -1121,8 +1122,8 @@ async function loadAlgaeSeasonManifest(year=null,force=false){
 
     const legacy=algaeSeasonManifest.legacy_classification||Number(year)<=2009;
     if(status)status.textContent=legacy
-      ? 'Äldre SMHI-klassning (2002–2009). Råa klasser visas där säker översättning saknas.'
-      : 'Välj datum med reglaget. SMHI:s råklasser visas utan tolkning där kodnyckel saknas; 0 % är då inte ett mått på algförekomst.';
+      ? 'Äldre SMHI-klassning (2002–2009). Klassnamnen är preliminära och kan inte säkert jämföras över metodskiftet. Moln och dataluckor är inte algfria observationer.'
+      : 'Välj datum. Klass 1 ≈ moln, klass 4 ≈ data saknas. Ingen klass 2/3 registrerades i Luleås WFS 2002–2026; detta visar inte att all algblomning saknas.';
     return algaeSeasonManifest;
   }catch(err){
     if(status)status.textContent=err.message;
@@ -1186,14 +1187,18 @@ async function showAlgaeSeasonDate(index){
     }).addTo(algaeLeafletMap);
 
     const ms=Math.round(performance.now()-started);
-    const rawClasses=Object.keys(item.classes_pct_sea||{}).filter(k=>/^class_/.test(k));
-    const hasUnmapped=rawClasses.some(k=>Number(item.classes_pct_sea[k])>0);
+    const rawClasses=Object.keys(item.classes_pct_sea||{}).filter(k=>/^class_/.test(k)&&Number(item.classes_pct_sea[k])>0);
+    const unknown=rawClasses.filter(k=>!['class_1','class_2','class_3','class_4'].includes(k));
+    const pct=k=>Number(item.classes_pct_sea?.[k]||0).toLocaleString('sv-SE',{maximumFractionDigits:2});
     const bits=[
       formatSeaIceMapDate(item.date)+': '+(geo.features||[]).length+' polygoner',
-      hasUnmapped?'Otolkade SMHI-klasser: '+rawClasses.map(k=>k.replace('class_','')).join(', ')+' (andel algförekomst kan inte fastställas)':null,
-      !hasUnmapped&&item.surface_pct_sea!=null?'ytansamling '+Number(item.surface_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
-      !hasUnmapped&&item.risk_pct_sea!=null?'risk '+Number(item.risk_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
-      !hasUnmapped&&item.cloud_pct_sea!=null?'moln '+Number(item.cloud_pct_sea).toLocaleString('sv-SE',{maximumFractionDigits:2})+' %':null,
+      Number(manifest.year)<=2009?'äldre klassning; tolkning osäker':null,
+      item.classes_pct_sea?.class_1!=null?'moln (klass 1) '+pct('class_1')+' %':null,
+      item.classes_pct_sea?.class_4!=null?'data saknas (klass 4) '+pct('class_4')+' %':null,
+      item.classes_pct_sea?.class_2!=null?'riskklass 2 '+pct('class_2')+' %':null,
+      item.classes_pct_sea?.class_3!=null?'ytansamlingsklass 3 '+pct('class_3')+' %':null,
+      unknown.length?'Okända klasser: '+unknown.map(k=>k.replace('class_','')).join(', '):null,
+      'Inga registrerade klass 2/3 i historisk WFS-kontroll; algfrihet kan inte fastställas',
       kb!=null?kb+' kB':null,
       ms+' ms'
     ].filter(Boolean);
@@ -1255,16 +1260,16 @@ async function initAlgaeMap(){
     legend.onAdd=()=>{
       const div=L.DomUtil.create('div','seaice-map-legend');
       div.innerHTML=
-        '<div><i style="background:#16a34a"></i>Ytansamling</div>'+
-        '<div><i style="background:#facc15"></i>Risk för ytansamling</div>'+
-        '<div><i style="background:#9ca3af"></i>Moln</div>'+
-        '<div><i style="background:#111827"></i>Data saknas</div>'+
+        '<div><i style="background:#ff9900"></i>Klass 3 – ytansamling*</div>'+
+        '<div><i style="background:#ffff00"></i>Klass 2 – risk*</div>'+
+        '<div><i style="background:#7a7a7a"></i>Klass 1 – moln*</div>'+
+        '<div><i style="background:#111827"></i>Klass 4 – data saknas*</div>'+
         '<div><i style="background:transparent;border:2px solid #dc2626"></i>Kommunal havsyta</div>';
       return div;
     };
     legend.addTo(algaeLeafletMap);
 
-    if(status)status.textContent='SMHI:s alganalys klipps mot Luleås kommunala havsyta. Bakgrundskarta: OpenStreetMap.';
+    if(status)status.textContent='SMHI:s klasser klipps mot den NMD-baserade Luleåhavsmasken. *Klassnyckeln är preliminär. Bakgrundskarta: OpenStreetMap.';
     await loadAlgaeSeasonManifest();
     await showAlgaeSeasonDate(el('algaeSeasonSlider')?.value||0);
   }catch(err){
