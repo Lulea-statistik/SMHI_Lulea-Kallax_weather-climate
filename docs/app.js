@@ -280,6 +280,27 @@ function setupWeatherStationPickers(){
   for(const kind of ['visibility','zerocross','vegetation'])updateStationQuality(kind);
 }
 
+// Give the climate-profile legend the same line/point colors and symbols as the plot.
+// Chart.js defaults to filled rectangles; those misrepresent single-point series.
+function temp2LegendLabels(chart){
+  const hidden=new Set(['P10','P25','10–90 percentil','25–75 percentil']);
+  return Chart.defaults.plugins.legend.labels.generateLabels(chart)
+    .filter(item=>!hidden.has(item.text))
+    .map(item=>{
+      const dataset=chart.data.datasets[item.datasetIndex]||{};
+      const singlePoint=dataset.showLine===false;
+      const stroke=singlePoint?(dataset.pointBackgroundColor||dataset.borderColor):dataset.borderColor;
+      return {
+        ...item,
+        pointStyle:singlePoint?'circle':'line',
+        fillStyle:stroke,
+        strokeStyle:stroke,
+        lineWidth:singlePoint?1:(dataset.borderWidth||2),
+        lineDash:singlePoint?[]:(dataset.borderDash||[]),
+      };
+    });
+}
+
 function renderTemp2(){
   const period=30;
   const tempSeries=pageWeatherSeries('temperature',DATA.temperature,el('temperature2Station')?.value);
@@ -315,11 +336,11 @@ function renderTemp2(){
         {label:'Median',data:years.map(()=>median),borderColor:'#6b7280',pointRadius:0,borderWidth:2},
         {label:'10–90 percentil',data:years.map(()=>p90),borderColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0,fill:{target:{value:p10},above:'rgba(209,213,219,.28)'}},
         {label:'25–75 percentil',data:years.map(()=>p75),borderColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0,fill:{target:{value:p25},above:'rgba(156,163,175,.28)'}},
-        {label:String(latestYear),data:years.map((_,i)=>i===latestIndex?values[i]:null),showLine:false,pointRadius:6,pointBackgroundColor:'#2563eb',pointBorderColor:'#2563eb'},
-        {label:extremeYear+' (varmaste år)',data:years.map((_,i)=>i===extremeIndex?values[i]:null),showLine:false,pointRadius:6,pointBackgroundColor:'#2e8b57',pointBorderColor:'#2e8b57'}
+        {label:String(latestYear),data:years.map((_,i)=>i===latestIndex?values[i]:null),showLine:false,pointRadius:6,borderColor:'#2563eb',backgroundColor:'#2563eb',pointBackgroundColor:'#2563eb',pointBorderColor:'#2563eb'},
+        {label:extremeYear+' (varmaste år)',data:years.map((_,i)=>i===extremeIndex?values[i]:null),showLine:false,pointRadius:6,borderColor:'#2e8b57',backgroundColor:'#2e8b57',pointBackgroundColor:'#2e8b57',pointBorderColor:'#2e8b57'}
       ]},
       options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-        plugins:{legend:{display:true,labels:{filter:item=>!['10–90 percentil','25–75 percentil'].includes(item.text)}},
+        plugins:{legend:{display:true,labels:{usePointStyle:true,pointStyleWidth:28,generateLabels:temp2LegendLabels}},
           tooltip:{callbacks:{label:c=>c.parsed.y==null?c.dataset.label:c.dataset.label+': '+c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:2})+' °C'}}},
         scales:{x:{grid:{display:false}},y:{title:{display:true,text:'°C'}}}}
     });
@@ -362,7 +383,7 @@ function renderTemp2(){
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{
-        legend:{display:true,labels:{filter:item=>!['P10','P25'].includes(item.text)}},
+        legend:{display:true,labels:{usePointStyle:true,pointStyleWidth:28,generateLabels:temp2LegendLabels}},
         tooltip:{callbacks:{label:c=>{
           if(c.parsed.y==null)return c.dataset.label;
           return c.dataset.label+': '+c.parsed.y.toLocaleString('sv-SE',{maximumFractionDigits:2})+' °C';
