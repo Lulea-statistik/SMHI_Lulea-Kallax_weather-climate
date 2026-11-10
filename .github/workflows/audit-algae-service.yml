@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install requests
-        run: python -m pip install requests
+        run: python -m pip install requests Pillow
       - name: Inspect WFS/WMS schemas and two dates
         run: python scripts/audit_algae_service.py
       - name: Upload diagnostic evidence

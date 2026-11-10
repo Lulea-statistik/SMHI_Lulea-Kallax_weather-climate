@@ -6,6 +6,7 @@ from collections import Counter
 from pathlib import Path
 import xml.etree.ElementTree as ET
 import requests
+from PIL import Image
 
 BASE = "https://opendata-view.smhi.se/algae"
 TYPE = "algae:SR.SeaSurfaceArea"
@@ -109,6 +110,7 @@ layers = sorted({
     if layer.get("name")
 })
 summary["wms_layer_comparison"] = {}
+summary["wms_time_method"] = "WMS TIME=YYYY-MM-DD, STYLES=SR.SeaSurfaceArea.Algae (advertised style)"
 summary["wms_audit_note"] = (
     "Only advertised Layer/Name values are queried; "
     "SR.SeaSurfaceArea.Algae was a title, not an addressable WMS layer."
@@ -130,14 +132,23 @@ for layer in layers:
         filename = f"map-{clean}-{day}.png"
         image = get(filename, "/wms", {
             "SERVICE": "WMS", "VERSION": "1.1.1", "REQUEST": "GetMap",
-            "LAYERS": layer, "STYLES": "", "FORMAT": "image/png",
+            "LAYERS": layer, "STYLES": "SR.SeaSurfaceArea.Algae", "FORMAT": "image/png",
             "TRANSPARENT": "TRUE", "SRS": "EPSG:4326",
             "BBOX": "21.0,65.1,23.6,66.1", "WIDTH": 1040, "HEIGHT": 600,
-            "CQL_FILTER": f"date='{day}'"
+            "TIME": day
         }, required=False)
         if image is not None:
             info["maps"].append(filename)
             info[f"map_{day}_content_type"] = image.headers.get("Content-Type")
+            try:
+                with Image.open(OUT / filename) as rendered:
+                    alpha = rendered.convert("RGBA").getchannel("A")
+                    extent = alpha.getbbox()
+                    info[f"map_{day}_nontransparent_bbox"] = extent
+                    if extent is None:
+                        warnings.append(f"{filename}: all pixels are transparent; no visual evidence")
+            except (OSError, ValueError) as exc:
+                warnings.append(f"{filename}: image validation failed: {exc}")
 
 (OUT / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 print(json.dumps(summary, ensure_ascii=False, indent=2))
