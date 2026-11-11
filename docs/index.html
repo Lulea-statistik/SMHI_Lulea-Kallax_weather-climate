@@ -243,6 +243,8 @@
   </section>
 
   <section id="page-humidity" class="page">
+    <div class="page-tools weather-station-tools"><label>Väderstation<select id="humidityStation"><option value="162860">Luleå-Kallax Flygplats</option></select></label><span id="humidityStationInfo" class="hint">Kallax är förvald. Andra stationer visas när SMHI:s parameter 6 innehåller verifierade observationer inom Luleå kommun.</span></div>
+    <div class="source-note">Källa: SMHI MetObs, parameter 6 (relativ luftfuktighet, %). Stationslistan omfattar enbart stationer inom kommunens geografiska gräns med användbara mätvärden. Årsmedel för tillagda stationer kräver data för årets alla tolv månader; saknade värden behandlas inte som 0 %.</div>
     <div class="chart-card"><h2>Genomsnittlig relativ luftfuktighet per år</h2><p id="humidityAnnualTrendText" class="hint"></p><canvas id="humidityAnnual"></canvas></div>
     <div class="chart-card"><h2>Genomsnittlig relativ luftfuktighet per månad</h2><canvas id="humidityMonthly"></canvas></div>
   </section>

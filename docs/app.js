@@ -1,4 +1,4 @@
-let DATA=null;let PRECIP_STATIONS=null;let PRESSURE_STATIONS=null;let WEATHER_STATIONS=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;let smhiRenderedSnowDaily=null;let smhiRenderedSnowQa=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
+let DATA=null;let PRECIP_STATIONS=null;let PRESSURE_STATIONS=null;let WEATHER_STATIONS=null;let HUMIDITY_STATIONS=null;const charts={};let seaIceLeafletMap=null;let seaIceSeasonLayer=null;let seaIceSeasonManifest=null;const seaIceSeasonCache=new Map();let seaIceSeasonTimer=null;let algaeLeafletMap=null;let algaeSeasonLayer=null;let algaeSeasonManifest=null;let algaeHistoryIndex=null;const algaeSeasonCache=new Map();let snowMapLeaflet=null;let snowMapLayer=null;let snowMapBoundaryLayer=null;let snowMapIndex=null;let snowMapSeasonData=null;let snowGridIndex=null;let snowGridData=null;let snowGridGeometry=null;let snowGridSeries=null;let copernicusSnowDuration=null;let smhiRenderedSnowDaily=null;let smhiRenderedSnowQa=null;const snowMapSeasonCache=new Map();const snowGridCache=new Map();let lightningMapLeaflet=null;let lightningMapLayer=null;let lightningMapBoundary=null;let lightningMapIndex=null;let lightningMapData=null;const lightningMapCache=new Map();let algaeSeasonTimer=null;const months=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];const hours=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));const MONTH_GREEN='#4f9d69';const SUN_YELLOW='#f2c94c';const PRECIP_DARK_BLUE='#163a5f';let temp2Start=null;const dateYearCache={};
 const el=id=>document.getElementById(id);
 let globalLoadingCount=0;
 function beginGlobalLoading(text='Laddar…'){
@@ -201,6 +201,15 @@ function updateStationPeriodLabels(){
       if(range)opt.textContent=stationPeriodLabel(item?.name||'Luleå-Kallax Flygplats',range,latestYear);
     }
   }
+  const humiditySelect=el('humidityStation');
+  if(humiditySelect){
+    for(const opt of humiditySelect.options){
+      const item=HUMIDITY_STATIONS?.stations?.find(x=>String(x.id)===opt.value);
+      const rows=opt.value==='162860'?DATA.humidity?.monthly:item?.monthly;
+      const range=observedYearRange(rows);
+      if(range)opt.textContent=stationPeriodLabel(item?.name||'Luleå-Kallax Flygplats',range,latestYear);
+    }
+  }
   const sunshine=el('sunshineStation');
   if(sunshine&&DATA.sunshine){
     const range=observedYearRange(DATA.sunshine.monthly_total||DATA.sunshine.annual||[]);
@@ -211,6 +220,7 @@ function updateStationPeriodLabels(){
 function selectedStationData(kind){
   const id=el(kind+'Station')?.value||'162860';
   if(kind==='sunshine')return DATA.sunshine;
+  if(kind==='humidity')return id==='162860'?DATA.humidity:(HUMIDITY_STATIONS?.stations||[]).find(x=>String(x.id)===id)||{annual:[],monthly:[]};
   const fallback={visibility:DATA.visibility,zerocross:{days:DATA.zero_crossings},
     vegetation:DATA.vegetation,temperature:DATA.temperature,wind:DATA.wind,snow:DATA.snow}[kind];
   if(id==='162860')return fallback;
@@ -2468,10 +2478,11 @@ function render(){
 
   }
   if(activePage==='humidity'){
-  const ha=selectedAnnualRows(DATA.humidity.annual,DATA.humidity.monthly,f);const haYears=ha.map(r=>r.year),haVals=ha.map(r=>r.avg);
+  const humiditySeries=selectedStationData('humidity');
+  const ha=selectedAnnualRows(humiditySeries.annual||[],humiditySeries.monthly||[],f);const haYears=ha.map(r=>r.year),haVals=ha.map(r=>r.avg);
   lineChart('humidityAnnual',haYears,[{label:f.month?months[f.month-1]+' medel':'Årsmedel',data:haVals},{label:'Linjär trend',data:linearTrend(haYears,haVals),pointRadius:0,borderDash:[6,4]}],'%');
   el('humidityAnnualTrendText').textContent=trendRateText(haYears,haVals,'procentenheter');
-  let hm=DATA.humidity.monthly.filter(r=>inYears(r,f));barChart('humidityMonthly',months,aggregateMonthlyMean(hm),'%',MONTH_GREEN);
+  let hm=(humiditySeries.monthly||[]).filter(r=>inYears(r,f));barChart('humidityMonthly',months,aggregateMonthlyMean(hm),'%',MONTH_GREEN);
 
 
   }
@@ -2984,7 +2995,7 @@ function pageYearBounds(page){
     visibility:()=>yearBoundsFromRows(selectedStationData('visibility').monthly||[]),
     pressure:()=>yearBoundsFromRows((PRESSURE_STATIONS?.stations||[]).find(s=>s.id===el('pressureStation')?.value)?.monthly||
       DATA.pressure?.monthly||[]),
-    humidity:()=>yearBoundsFromRows(DATA.humidity?.annual||DATA.humidity?.monthly),
+    humidity:()=>yearBoundsFromRows(selectedStationData('humidity').annual?.length?selectedStationData('humidity').annual:selectedStationData('humidity').monthly||[]),
     sunshine:()=>yearBoundsFromRows(DATA.sunshine?.monthly_total||DATA.sunshine?.annual),
     snow:()=>yearBoundsFromRows(pageWeatherSeries('snow',DATA.snow)?.annual_mean||[]),
     zerocross:()=>yearBoundsFromRows(selectedStationData('zerocross').days||[]),
@@ -3102,12 +3113,12 @@ el('month').addEventListener('change',()=>{
   }
 });
 for(const id of ['temperature1Station','temperature2Station','windStation','snowStation',
-  'visibilityStation','zerocrossStation','vegetationStation','sunshineStation']){
+  'visibilityStation','zerocrossStation','vegetationStation','sunshineStation','humidityStation']){
   el(id).addEventListener('change',()=>{
     if(id==='temperature2Station')setupTemp2Slider();
     const page=({temperature1Station:'temp1',temperature2Station:'temp2',windStation:'wind',
       snowStation:'snow',visibilityStation:'visibility',zerocrossStation:'zerocross',
-      vegetationStation:'vegetation',sunshineStation:'sunshine'})[id];
+      vegetationStation:'vegetation',sunshineStation:'sunshine',humidityStation:'humidity'})[id];
     applyPageYearBounds(page,true);
     updateStationQuality(page==='temp1'||page==='temp2'?'temperature':page);
     render();
@@ -3171,6 +3182,24 @@ function loadSupportingData(page){
       if(['temp1','temp2','wind','snow','visibility','zerocross','vegetation'].includes(active))applyPageYearBounds(active,true);
     });
   }
+  if(page==='humidity')return loadSupplement('humidity_stations.json',data=>{
+    if(!Array.isArray(data?.stations))return;
+    HUMIDITY_STATIONS=data;
+    const select=el('humidityStation');if(!select)return;
+    const previous=select.value||'162860';
+    select.replaceChildren();
+    const options=[{id:'162860',name:'Luleå-Kallax Flygplats'},...data.stations.filter(x=>String(x.id)!=='162860'&&x.monthly?.length)];
+    for(const station of options){
+      const option=document.createElement('option');option.value=String(station.id);option.textContent=station.name;select.appendChild(option);
+    }
+    select.value=options.some(x=>String(x.id)===previous)?previous:'162860';
+    const info=el('humidityStationInfo');
+    if(info)info.textContent=options.length>1
+      ?'SMHI parameter 6: '+(options.length-1)+' ytterligare station(er) i kommunen med verifierade observationer. Kortare serier kan vara ofullständiga.'
+      :'SMHI parameter 6: inga ytterligare kommunstationer med användbar serie identifierades i senaste kontrollen.';
+    updateStationPeriodLabels();
+    if(document.querySelector('#tabs button.active')?.dataset.page==='humidity')applyPageYearBounds('humidity',true);
+  });
   if(page==='pressure')return loadSupplement('pressure_stations.json',data=>{
     setupPressureStations(data);
     updateStationPeriodLabels();
