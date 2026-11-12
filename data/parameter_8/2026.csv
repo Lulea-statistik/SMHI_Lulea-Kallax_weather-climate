@@ -171,3 +171,4 @@ station_id,station_name,parameter_id,parameter_name,parameter_summary,unit,datet
 162860,Luleå-Kallax Flygplats,8,Snödjup,"momentanvärde, 1 gång/dygn, kl 06",meter,2026-11-09T06:00:00Z,2026-11-09T07:00:00+01:00,1794204000000,,0.00,0.00,G,,latest-months
 162860,Luleå-Kallax Flygplats,8,Snödjup,"momentanvärde, 1 gång/dygn, kl 06",meter,2026-11-10T06:00:00Z,2026-11-10T07:00:00+01:00,1794290400000,,0.00,0.00,G,,latest-months
 162860,Luleå-Kallax Flygplats,8,Snödjup,"momentanvärde, 1 gång/dygn, kl 06",meter,2026-11-11T06:00:00Z,2026-11-11T07:00:00+01:00,1794376800000,,0.00,0.00,G,,latest-months
+162860,Luleå-Kallax Flygplats,8,Snödjup,"momentanvärde, 1 gång/dygn, kl 06",meter,2026-11-12T06:00:00Z,2026-11-12T07:00:00+01:00,1794463200000,,0.00,0.00,G,,latest-months
