@@ -115,6 +115,15 @@ def parse_station_csv(text):
     return rows
 
 
+def merge_period_observations(period_rows):
+    """Deduplicate by date; latest-months replaces an archive value on overlap."""
+    merged = {}
+    for period in PERIODS:
+        for d, depth in period_rows.get(period, []):
+            merged[d] = depth
+    return sorted(merged.items())
+
+
 def season_name(d):
     start = d.year if d.month >= 8 else d.year - 1
     return f"{start}-{str(start + 1)[-2:]}"
@@ -170,7 +179,7 @@ def main():
     successful_periods = defaultdict(int)
     last_observation_date = None
     for i, s in enumerate(stations, 1):
-        merged = {}
+        period_rows = {}
         for period in PERIODS:
             url = STATION_DATA.format(station=s["id"], period=period)
             try:
@@ -179,11 +188,10 @@ def main():
                 observations = parse_station_csv(r.text)
                 successful_periods[period] += 1
                 print(f"Snow station {i}/{len(stations)} {s['name']} {period}: {len(observations)} observations")
-                for d, depth in observations:
-                    merged[d] = depth
+                period_rows[period] = observations
             except Exception as exc:
                 print(f"Snow station {s['id']} {s['name']} {period}: {exc}")
-        for d, depth in sorted(merged.items()):
+        for d, depth in merge_period_observations(period_rows):
             if last_observation_date is None or d > last_observation_date:
                 last_observation_date = d
             by_season[season_name(d)].append({
