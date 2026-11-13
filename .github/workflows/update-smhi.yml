@@ -71,6 +71,9 @@ jobs:
           RUN_MODE: ${{ github.event.inputs.mode || 'auto' }}
         run: python scripts/fetch_algae.py
 
+      - name: Test snow archive and latest-months merge
+        run: python -m unittest discover -s scripts -p 'test_snowmap_recent.py'
+
       - name: Update SMHI snow-depth map
         run: python scripts/fetch_snowmap.py
 

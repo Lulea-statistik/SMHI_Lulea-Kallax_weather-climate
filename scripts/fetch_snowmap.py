@@ -21,7 +21,8 @@ NMD_GEO_PATH = ROOT / "data" / "lightning" / "geography_nmd.geojson"
 OUT_ROOT = ROOT / "docs" / "snowmap"
 BOUNDARY_PATH = ROOT / "docs" / "snowmap_boundary.geojson"
 API = "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/8.json"
-STATION_DATA = "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/8/station/{station}/period/corrected-archive/data.csv"
+STATION_DATA = "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/8/station/{station}/period/{period}/data.csv"
+PERIODS = ("corrected-archive", "latest-months")
 TIMEOUT = 90
 BUFFER_KM = 60
 
@@ -114,6 +115,15 @@ def parse_station_csv(text):
     return rows
 
 
+def merge_period_observations(period_rows):
+    """Deduplicate by date; latest-months replaces an archive value on overlap."""
+    merged = {}
+    for period in PERIODS:
+        for d, depth in period_rows.get(period, []):
+            merged[d] = depth
+    return sorted(merged.items())
+
+
 def season_name(d):
     start = d.year if d.month >= 8 else d.year - 1
     return f"{start}-{str(start + 1)[-2:]}"
@@ -163,17 +173,27 @@ def main():
     by_season = defaultdict(list)
     station_meta = {s["id"]: s for s in stations}
 
+    # Archive data normally ends several months before today. Merge it with
+    # the rolling latest-months period, preferring more recent revisions for
+    # overlapping dates. Failure of one period must not delete the other.
+    successful_periods = defaultdict(int)
+    last_observation_date = None
     for i, s in enumerate(stations, 1):
-        url = STATION_DATA.format(station=s["id"])
-        try:
-            r = SESSION.get(url, timeout=TIMEOUT)
-            r.raise_for_status()
-            observations = parse_station_csv(r.text)
-        except Exception as exc:
-            print(f"Snow station {s['id']} {s['name']}: {exc}")
-            continue
-        print(f"Snow station {i}/{len(stations)} {s['name']}: {len(observations)} observations")
-        for d, depth in observations:
+        period_rows = {}
+        for period in PERIODS:
+            url = STATION_DATA.format(station=s["id"], period=period)
+            try:
+                r = SESSION.get(url, timeout=TIMEOUT)
+                r.raise_for_status()
+                observations = parse_station_csv(r.text)
+                successful_periods[period] += 1
+                print(f"Snow station {i}/{len(stations)} {s['name']} {period}: {len(observations)} observations")
+                period_rows[period] = observations
+            except Exception as exc:
+                print(f"Snow station {s['id']} {s['name']} {period}: {exc}")
+        for d, depth in merge_period_observations(period_rows):
+            if last_observation_date is None or d > last_observation_date:
+                last_observation_date = d
             by_season[season_name(d)].append({
                 "date": d.isoformat(),
                 "station_id": s["id"],
@@ -185,6 +205,9 @@ def main():
         "source_url": "https://www.smhi.se/data/sok-oppna-data-i-utforskaren/se-acmf-meteorologiska-observationer-snodjup-dygnsvarde",
         "map_reference_url": "https://www.smhi.se/vader/observationer/snodjup",
         "buffer_km": BUFFER_KM,
+        "observation_periods": list(PERIODS),
+        "period_fetch_successful_stations": dict(successful_periods),
+        "latest_observation_date": last_observation_date.isoformat() if last_observation_date else None,
         "stations": stations,
         "seasons": [],
     }
@@ -231,7 +254,7 @@ def main():
 
     index["seasons"].sort(key=lambda x: x["season"])
     (OUT_ROOT / "index.json").write_text(json.dumps(index, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Snow map: {len(index['seasons'])} seasons written")
+    print(f"Snow map: {len(index['seasons'])} seasons written; latest observation: {index['latest_observation_date']}")
 
 
 if __name__ == "__main__":
