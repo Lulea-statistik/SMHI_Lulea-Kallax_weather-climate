@@ -107,22 +107,30 @@ def main():
             audit.append({'id':sid,'name':name,'status':'retained previous longer series',
                           'months':len(item['monthly']),'warnings':errors})
         elif monthly:
-            audit.append({'id':sid,'name':name,'status':'observed','records':len(observations),
-                          'months':len(monthly),'complete_years':len(annual),'warnings':errors})
+            audit.append({'id':sid,'name':name,'status':'observed_partial' if errors else 'observed',
+                          'records':len(observations),'months':len(monthly),
+                          'complete_years':len(annual),'warnings':errors})
+        elif errors and not observations and not previous:
+            # A failed fetch is NOT evidence that the station lacks observations.
+            # Do not list it in the dropdown; preserve the unresolved audit status.
+            audit.append({'id':sid,'name':name,'status':'unverified_fetch_error',
+                          'records':0,'warnings':errors})
+            failures.append(name+': '+'; '.join(errors))
         else:
             audit.append({'id':sid,'name':name,'status':'no usable humidity observations',
                           'records':len(observations),'warnings':errors})
         if item.get('monthly'):found.append(item)
-        if errors and not observations and not previous:
-            failures.append(name+': '+'; '.join(errors))
         print(name,sid,'monthly=',len(monthly),'annual=',len(annual),'warnings=',len(errors),flush=True)
-    if failures:
-        # Do not publish a misleading inventory while a station could not be inspected.
-        raise RuntimeError('Incomplete humidity station audit: '+'; '.join(failures))
     output={'generated_at':datetime.now(timezone.utc).isoformat(),'source':BASE_URL+'/parameter/6.json',
             'parameter_id':6,'municipality':'Luleå','geography_crs':'EPSG:4326',
-            'method':'SMHI parameter 6 official station list, WGS84 polygon test, corrected archive and latest months; monthly >=65% observed days and >=15 days; yearly all 12 months',
+            'audit_complete':not failures,'unverified_station_count':len(failures),
+            'unverified_station_errors':failures,
+            'method':'SMHI parameter 6 official station list, WGS84 polygon test, corrected archive and latest months; monthly >=65% observed days and >=15 days; yearly all 12 months. Source failures leave stations unverified, not absent.',
             'stations':found,'audit':audit}
     OUT.write_text(json.dumps(output,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
+    if failures:
+        print('WARNING: Partial station audit: '+str(len(failures))+
+              ' station(s) unverified after SMHI request failures. '+
+              'Verified historical station data are still published.',flush=True)
     print('Verified extra humidity stations:',[(x['id'],x['name'],len(x['monthly'])) for x in found],flush=True)
 if __name__=='__main__':main()
