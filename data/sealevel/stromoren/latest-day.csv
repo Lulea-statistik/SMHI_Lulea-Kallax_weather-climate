@@ -5,14 +5,14 @@ Parameternamn;Enhet
 Havsvattenstånd;cm
 
 Datum Tid (UTC);Havsvattenstånd;Kvalitet;Mätdjup (m);;Tidsutsnitt
-2026-11-20 12:00:00;17.2;G;0;;Tidsperiod (fr.o.m.) = 2016-09-15 06:00:00 (UTC)
-2026-11-20 13:00:00;18.7;G;0;;Tidsperiod (t.o.m.) = 2026-11-21 12:00:00 (UTC)
-2026-11-20 18:00:00;22.1;G;0;;
-2026-11-20 19:00:00;22.0;G;0;;Höjdsystem: RH2000
-2026-11-20 20:00:00;21.0;G;0;;
-2026-11-21 09:00:00;-6.5;G;0;;Kvalitetskontroll:
-2026-11-21 10:00:00;-7.9;G;0;;Data före 2019-07-01 är ej kvalitetskontrollerad och felaktiga värden kan förekomma.
-2026-11-21 11:00:00;-9.2;G;0;;Efter detta datum har data genomgått en automatisk kvalitetskontroll.
+2026-11-21 12:00:00;-10.4;G;0;;Tidsperiod (fr.o.m.) = 2016-09-15 06:00:00 (UTC)
+2026-11-21 13:00:00;-11.1;G;0;;Tidsperiod (t.o.m.) = 2026-11-22 11:00:00 (UTC)
+;;;;;
+;;;;;Höjdsystem: RH2000
+;;;;;
+;;;;;Kvalitetskontroll:
+;;;;;Data före 2019-07-01 är ej kvalitetskontrollerad och felaktiga värden kan förekomma.
+;;;;;Efter detta datum har data genomgått en automatisk kvalitetskontroll.
 ;;;;;
 ;;;;;Kvalitetskoderna:
 ;;;;;Grön (G) = Kontrollerade och godkända värden.
