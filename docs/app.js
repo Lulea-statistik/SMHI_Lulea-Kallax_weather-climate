@@ -3194,9 +3194,13 @@ function loadSupportingData(page){
     }
     select.value=options.some(x=>String(x.id)===previous)?previous:'162860';
     const info=el('humidityStationInfo');
-    if(info)info.textContent=options.length>1
-      ?'SMHI parameter 6: '+(options.length-1)+' ytterligare station(er) i kommunen med verifierade observationer. Kortare serier kan vara ofullständiga.'
-      :'SMHI parameter 6: inga ytterligare kommunstationer med användbar serie identifierades i senaste kontrollen.';
+    if(info){
+      const base=options.length>1
+        ?'SMHI parameter 6: '+(options.length-1)+' ytterligare station(er) i kommunen med verifierade observationer. Kortare serier kan vara ofullständiga.'
+        :'SMHI parameter 6: inga ytterligare kommunstationer med användbar serie identifierades i senaste kontrollen.';
+      info.textContent=base+(data.audit_complete===false
+        ?' Stationsinventeringen är delvis ofullständig: '+Number(data.unverified_station_count||0)+' station(er) kunde inte kontrolleras på grund av fel hos datakällan.':'');
+    }
     updateStationPeriodLabels();
     if(document.querySelector('#tabs button.active')?.dataset.page==='humidity')applyPageYearBounds('humidity',true);
   });
