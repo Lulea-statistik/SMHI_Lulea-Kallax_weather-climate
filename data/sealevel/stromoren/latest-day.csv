@@ -5,19 +5,19 @@ Parameternamn;Enhet
 Havsvattenstånd;cm
 
 Datum Tid (UTC);Havsvattenstånd;Kvalitet;Mätdjup (m);;Tidsutsnitt
-2026-11-23 14:00:00;-58.3;G;0;;Tidsperiod (fr.o.m.) = 2016-09-15 06:00:00 (UTC)
-2026-11-23 15:00:00;-56.4;G;0;;Tidsperiod (t.o.m.) = 2026-11-24 06:00:00 (UTC)
-2026-11-23 16:00:00;-54.5;G;0;;
-2026-11-23 17:00:00;-52.6;G;0;;Höjdsystem: RH2000
-2026-11-23 18:00:00;-50.5;G;0;;
-2026-11-23 19:00:00;-49.5;G;0;;Kvalitetskontroll:
-2026-11-23 20:00:00;-48.1;G;0;;Data före 2019-07-01 är ej kvalitetskontrollerad och felaktiga värden kan förekomma.
-2026-11-23 21:00:00;-46.5;G;0;;Efter detta datum har data genomgått en automatisk kvalitetskontroll.
-2026-11-23 22:00:00;-46.1;G;0;;
-2026-11-23 23:00:00;-45.9;G;0;;Kvalitetskoderna:
-2026-11-24 00:00:00;-44.6;G;0;;Grön (G) = Kontrollerade och godkända värden.
-2026-11-24 01:00:00;-43.8;G;0;;Gul (Y) = Misstänkta eller aggregerade värden. Grovt kontrollerade arkivdata och okontrollerade realtidsdata (senaste 2 tim).
-2026-11-24 02:00:00;-42.9;G;0;;Orange (O) = Okontrollerade värden.
+2026-11-24 17:00:00;-19.0;G;0;;Tidsperiod (fr.o.m.) = 2016-09-15 06:00:00 (UTC)
+2026-11-24 18:00:00;-16.2;G;0;;Tidsperiod (t.o.m.) = 2026-11-25 15:00:00 (UTC)
+2026-11-24 19:00:00;-14.4;G;0;;
+2026-11-24 20:00:00;-13.1;G;0;;Höjdsystem: RH2000
+2026-11-24 21:00:00;-10.8;G;0;;
+2026-11-24 22:00:00;-9.1;G;0;;Kvalitetskontroll:
+2026-11-24 23:00:00;-7.2;G;0;;Data före 2019-07-01 är ej kvalitetskontrollerad och felaktiga värden kan förekomma.
+2026-11-25 00:00:00;-4.9;G;0;;Efter detta datum har data genomgått en automatisk kvalitetskontroll.
+2026-11-25 12:00:00;4.7;G;0;;
+2026-11-25 13:00:00;6.4;G;0;;Kvalitetskoderna:
+2026-11-25 14:00:00;5.9;G;0;;Grön (G) = Kontrollerade och godkända värden.
+;;;;;Gul (Y) = Misstänkta eller aggregerade värden. Grovt kontrollerade arkivdata och okontrollerade realtidsdata (senaste 2 tim).
+;;;;;Orange (O) = Okontrollerade värden.
 ;;;;;
 ;;;;;Orsaker till saknade data:
 ;;;;;  stationen eller givaren har varit ur funktion.
