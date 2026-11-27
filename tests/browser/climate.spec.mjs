@@ -85,3 +85,13 @@ test('start has one shortcut per non-start page in matching navigation order',as
   await page.locator('#page-start button[data-go-page="temp2"]').click();
   await expect(page.locator('#page-temp2')).toBeVisible({timeout:60000});
 });
+
+test('sea ice map selects published season and latest available date',async({page})=>{
+  await open(page,'seaice');
+  const select=page.locator('#seaIceSeasonSelect');
+  await expect(select).toBeEnabled({timeout:60000});
+  await expect(page.locator('#seaIceSeasonSlider')).toBeEnabled({timeout:60000});
+  const slider=page.locator('#seaIceSeasonSlider');
+  expect(await slider.inputValue()).toBe(await slider.getAttribute('max'));
+  await expect(page.locator('#seaIceSeasonDateLabel')).not.toHaveText('Laddar datum…');
+});
