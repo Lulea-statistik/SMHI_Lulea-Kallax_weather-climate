@@ -3062,11 +3062,13 @@ const climateStations={temp1:'temperature1Station',temp2:'temperature2Station',p
 let pendingClimateLink=null,climateNavId=0;
 function climatePage(){return document.querySelector('#tabs button.active')?.dataset.page||'start';}
 function parseClimateLink(hash){const [page,query='']=hash.slice(1).split('?');return {page,params:new URLSearchParams(query)};}
+const climateExtraFilters={temp1:['tempMetric'],temp2:['month','temp2Start'],precip:['precipTimelineMode','precipTimelineMin'],weather:['weatherCode'],snowmap:['snowMapSource','snowCoverageDenominator'],lightning:['lightningMapMode','lightningMapSurface']};
 function writeClimateLink(push=false){
  const page=climatePage(),p=new URLSearchParams();
  if(DATA&&page!=='start'){
   if(!['dateweather','sealevel','algae','temp2','data'].includes(page)){p.set('from',el('yearFrom').value);p.set('to',el('yearTo').value);if(page!=='seaice')p.set('month',el('month').value);}
   const station=el(climateStations[page]);if(station?.value)p.set('station',station.value);
+  for(const id of climateExtraFilters[page]||[]){const e=el(id);if(e&&e.value!=='')p.set(id,e.value);}
  }
  const hash='#'+page+(p.toString()?'?'+p.toString():'');
  if(location.hash!==hash)history[push?'pushState':'replaceState'](null,'',hash);
@@ -3079,6 +3081,7 @@ function restoreClimateLink(link,page){
  const from=p.get('from'),to=p.get('to');
  if(valid('yearFrom',from)&&valid('yearTo',to)&&Number(from)<=Number(to)){syncYear('from',from,false);syncYear('to',to,false);}
  if(page!=='seaice'&&valid('month',p.get('month')))el('month').value=p.get('month');
+ for(const id of climateExtraFilters[page]||[]){const e=el(id),v=p.get(id);if(!e||v===null||id==='month')continue;if(e.tagName==='SELECT'){if([...e.options].some(o=>o.value===v))e.value=v;}else if(['range','number'].includes(e.type)&&v.trim()!==''&&Number.isFinite(Number(v))){const n=Number(v),min=e.min===''?-Infinity:Number(e.min),max=e.max===''?Infinity:Number(e.max);if(n>=min&&n<=max){e.value=v;if(id==='temp2Start')temp2Start=Math.round(Number(e.value)-14.5);}}}
 }
 function setupClimateNavigation(){
  const nav=el('tabs'),groups=[...nav.querySelectorAll('.nav-group')],bar=document.createElement('div');bar.className='topic-menu';bar.setAttribute('aria-label','Ämnesgrupper');
@@ -3088,7 +3091,7 @@ function setupClimateNavigation(){
  new MutationObserver(update).observe(nav,{subtree:true,attributes:true,attributeFilter:['class']});update();
  function openLink(){const link=parseClimateLink(location.hash);const target=[...nav.querySelectorAll('button[data-page]')].find(b=>b.dataset.page===link.page)||nav.querySelector('[data-page="start"]');pendingClimateLink=link;target.click();}
  window.addEventListener('hashchange',openLink);
- document.addEventListener('change',e=>{if(['yearFrom','yearTo','rangeFrom','rangeTo','month',...Object.values(climateStations)].includes(e.target.id))writeClimateLink();});
+ document.addEventListener('change',e=>{if(['yearFrom','yearTo','rangeFrom','rangeTo','month',...Object.values(climateStations),...Object.values(climateExtraFilters).flat()].includes(e.target.id))writeClimateLink();});
  el('resetFilters').addEventListener('click',()=>writeClimateLink());
  if(location.hash)openLink();
 }
@@ -3202,19 +3205,21 @@ function setupWeatherCodes(){
 let dashboardPromise=null;
 let dateWeatherInitialized=false;
 const supplementPromises=new Map();
+const supplementErrors=new Set();
+function updateSupplementStatus(){const note=el('supplementStatus');if(!note)return;note.hidden=!supplementErrors.size;note.textContent=supplementErrors.size?'Kompletterande stationsdata kunde inte läsas: '+[...supplementErrors].join(', ')+'. Försök öppna berört ämne igen.':'';}
 function loadSupplement(name,handler){
   if(supplementPromises.has(name))return supplementPromises.get(name);
   const promise=fetch(name,{cache:'default'})
     .then(r=>{if(!r.ok)throw new Error(name+' HTTP '+r.status);return r.json();})
     .then(data=>{
       handler(data);
+      supplementErrors.delete(name);updateSupplementStatus();
       const active=document.querySelector('#tabs button.active')?.dataset.page;
       if(DATA&&active&&active!=='start')render();
     })
     .catch(err=>{console.warn('Optional station file unavailable:',name,err);
       supplementPromises.delete(name);
-      const note=document.getElementById('supplementStatus');
-      if(note){note.hidden=false;note.textContent='Kompletterande stationsdata kunde inte läsas ('+name+'). Försök öppna ämnet igen.';}
+      supplementErrors.add(name);updateSupplementStatus();
     });
   supplementPromises.set(name,promise);
   return promise;
