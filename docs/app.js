@@ -326,7 +326,8 @@ function renderTemp2(){
   const yearMeans=years.map(y=>({year:y,mean:temp2AnnualMean(y,tempSeries)})).filter(x=>x.mean!=null&&Number.isFinite(x.mean));
   const extremeYear=yearMeans.length
     ? yearMeans.reduce((best,cur)=>cur.mean>best.mean?cur:best,yearMeans[0]).year
-    : latestYear;
+    : null;
+  el('temp2PeriodLabel').textContent+=' · '+yearMeans.length+' år med 12 månadsmedel';
 
   const selectedMonth=+(el('month')?.value||0);
 
@@ -347,7 +348,7 @@ function renderTemp2(){
         {label:'10–90 percentil',data:years.map(()=>p90),borderColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0,fill:{target:{value:p10},above:'rgba(209,213,219,.28)'}},
         {label:'25–75 percentil',data:years.map(()=>p75),borderColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0,fill:{target:{value:p25},above:'rgba(156,163,175,.28)'}},
         {label:latestYear+' (senaste år)',data:years.map((_,i)=>i===latestIndex?values[i]:null),showLine:false,pointRadius:6,borderColor:'#2563eb',backgroundColor:'#2563eb',pointBackgroundColor:'#2563eb',pointBorderColor:'#2563eb'},
-        {label:extremeYear+' (varmaste år)',data:years.map((_,i)=>i===extremeIndex?values[i]:null),showLine:false,pointRadius:6,borderColor:'#2e8b57',backgroundColor:'#2e8b57',pointBackgroundColor:'#2e8b57',pointBorderColor:'#2e8b57'}
+        {label:extremeYear===null?'Inget komplett år':extremeYear+' (varmaste år)',data:years.map((_,i)=>i===extremeIndex?values[i]:null),showLine:false,pointRadius:6,borderColor:'#2e8b57',backgroundColor:'#2e8b57',pointBackgroundColor:'#2e8b57',pointBorderColor:'#2e8b57'}
       ]},
       options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
         plugins:{legend:{display:true,labels:{usePointStyle:true,pointStyleWidth:28,generateLabels:temp2LegendLabels}},
@@ -388,7 +389,7 @@ function renderTemp2(){
       {label:'P25',data:stats.map(d=>d.p25),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(0,0,0,0)',pointRadius:0,borderWidth:0},
       {label:'25–75 percentil',data:stats.map(d=>d.p75),borderColor:'rgba(0,0,0,0)',backgroundColor:'rgba(156,163,175,.42)',pointRadius:0,borderWidth:0,fill:'-1'},
       {label:start+'–'+(start+period-1)+' median',data:stats.map(d=>d.median),borderColor:'#737373',backgroundColor:'#737373',pointRadius:0,borderWidth:2,tension:.2},
-      {label:extremeYear+' (varmaste år)',data:extremeSeries,borderColor:'#2e8b57',backgroundColor:'#2e8b57',pointRadius:0,borderWidth:2,borderDash:[5,4],tension:.2},
+      {label:extremeYear===null?'Inget komplett år':extremeYear+' (varmaste år)',data:extremeSeries,borderColor:'#2e8b57',backgroundColor:'#2e8b57',pointRadius:0,borderWidth:2,borderDash:[5,4],tension:.2},
       {label:latestYear+' (senaste år)',data:latestSeries,borderColor:'#2563eb',backgroundColor:'#2563eb',pointRadius:0,borderWidth:2.5,tension:.2}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
@@ -460,6 +461,23 @@ function trendRateText(xs,ys,unit,startLabel=null,endLabel=null){
   const value=(per10>=0?'+':'')+per10.toLocaleString('sv-SE',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
   const from=startLabel??valid[0].label,to=endLabel??valid[valid.length-1].label;
   return 'Från '+from+' till '+to+': '+value+' '+unit+' per 10 år (historisk linjär trend; '+valid.length+' observationer).'+(valid.length<30?' Kort serie – tolka försiktigt.':'');
+}
+// Retain calendar gaps; only years with twelve finite, distinct monthly values enter annual trends.
+function annualQualityRows(annual,monthly,f,metric){
+ const selected=f.month?monthly.filter(r=>r.month===f.month):annual;
+ const byYear=new Map(selected.map(r=>[r.year,r]));
+ const counts=new Map();
+ for(const r of monthly){if(Number.isFinite(r[metric])&&Number.isInteger(r.month)&&r.month>=1&&r.month<=12){if(!counts.has(r.year))counts.set(r.year,new Set());counts.get(r.year).add(r.month);}}
+ const rows=Array.from({length:Math.max(0,f.to-f.from+1)},(_,i)=>{
+  const year=f.from+i,r=byYear.get(year),value=Number.isFinite(r?.[metric])?r[metric]:null;
+  const complete=f.month?value!==null:counts.get(year)?.size===12;
+  return {year,value,complete,trend:complete?value:null,partial:!complete?value:null};
+ });
+ return rows;
+}
+function snowClassShare(v,snowShare,onlySnow){
+ if(!Number.isFinite(v)||!Number.isFinite(snowShare)||snowShare<0||snowShare>100)return null;
+ return onlySnow?(snowShare>0?Math.max(0,100*v/snowShare):null):Math.max(0,v);
 }
 function selectedAnnualRows(annualRows,monthlyRows,f){
   if(!f.month)return annualRows.filter(r=>inYears(r,f));
@@ -1637,7 +1655,9 @@ async function renderSnowMapCharts(){
       const gridclimSeasons=(selectedSeries.seasons||[])
         .filter(s=>s.source_type!=='observations_interpolated')
         .filter(s=>s.seasonal_threshold_cover_pct && Object.keys(s.seasonal_threshold_cover_pct).length);
+      const onlySnow=el('snowCoverageDenominator')?.value==='snow';
       const coverageDefs=[
+        ...(!onlySnow?[{label:'Barmark (<1 cm)',color:'#c9b89c',value:s=>100-Number(s.seasonal_threshold_cover_pct?.ge_1)}]:[]),
         {label:'1–4 cm',color:'#b7d1c6',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_1)-Number(s.seasonal_threshold_cover_pct?.ge_5)},
         {label:'5–9 cm',color:'#FFFFFF',border:'#cbd5e1',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_5)-Number(s.seasonal_threshold_cover_pct?.ge_10)},
         {label:'10–24 cm',color:'#DEEBF7',value:s=>Number(s.seasonal_threshold_cover_pct?.ge_10)-Number(s.seasonal_threshold_cover_pct?.ge_25)},
@@ -1654,9 +1674,7 @@ async function renderSnowMapCharts(){
         data:gridclimSeasons.map(s=>{
           const snowShare=Number(s.seasonal_threshold_cover_pct?.ge_1);
           const v=def.value(s);
-          return Number.isFinite(v)&&Number.isFinite(snowShare)&&snowShare>0
-            ?Math.max(0,100*v/snowShare)
-            :null;
+          return snowClassShare(v,snowShare,onlySnow);
         }),
         backgroundColor:def.color,
         borderColor:def.border||def.color,
@@ -1684,7 +1702,7 @@ async function renderSnowMapCharts(){
           },
           scales:{
             x:{stacked:true,grid:{display:false},title:{display:true,text:'snösäsong'},ticks:{autoSkip:true,maxTicksLimit:18,maxRotation:45}},
-            y:{stacked:true,min:0,max:100,title:{display:true,text:'genomsnittlig andel fastlandsyta (%)'},ticks:{callback:v=>v+' %'}}
+            y:{stacked:true,min:0,max:100,title:{display:true,text:onlySnow?'andel snötäckt fastlandsyta (%)':'andel hela fastlandsytan (%)'},ticks:{callback:v=>v+' %'}}
           }
         }
       });
@@ -2158,7 +2176,7 @@ function renderSeaIce(f){
   if(note){
     note.textContent=latest
       ? 'Varje issäsong visas från 15 oktober till 6 juni. Senaste kompletta/partiella säsong i datat: '+latest.season+
-        '. Maximal isutbredning '+Number(latest.max_ice_share_pct||0).toFixed(1).replace('.',',')+
+        '. Maximal isutbredning '+(latest.max_ice_share_pct==null?'saknas':Number(latest.max_ice_share_pct).toFixed(1).replace('.',','))+
         ' % den '+(latest.max_ice_date||'–')+'.'
       : '';
   }
@@ -2261,8 +2279,8 @@ function render(){
   const activePage=document.querySelector('#tabs button.active')?.dataset.page||'start';
   if(activePage==='temp1'){
   const temp1Series=pageWeatherSeries('temperature',DATA.temperature,el('temperature1Station')?.value);
-  const ta=selectedAnnualRows(temp1Series.annual,temp1Series.monthly,f);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r[m]);
-  lineChart('tempAnnual',taYears,[{label:name,data:taVals},{label:'Linjär trend',data:linearTrend(taYears,taVals),pointRadius:0,borderDash:[6,4]}],'°C');
+  const ta=annualQualityRows(temp1Series.annual,temp1Series.monthly,f,m);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r.trend);
+  lineChart('tempAnnual',taYears,[{label:name,data:taVals},{label:'Ofullständigt år',data:ta.map(r=>r.partial),showLine:false,pointRadius:5,borderColor:'#b45309',backgroundColor:'#b45309'},{label:'Linjär trend',data:linearTrend(taYears,taVals),pointRadius:0,borderDash:[6,4]}],'°C');
   el('tempAnnualTitle').textContent=name+' lufttemperatur '+(f.month?'i '+months[f.month-1].toLowerCase()+' per år':'per år');
   el('tempAnnualTrendText').textContent=trendRateText(taYears,taVals,'°C');
   let tm=temp1Series.monthly.filter(r=>inYears(r,f));
@@ -2310,11 +2328,11 @@ function render(){
       ?'Oviktat medel av tillgängliga stationer per månad (antal stationer: '+(counts.length?Math.min(...counts)+'–'+Math.max(...counts):'saknas')+'). Endast kompletta månader ingår. Detta är ett stationsmedel, inte ett arealvägt kommunmedel. Nederbördstyp baseras fortsatt på Kallax.'
       :'SMHI:s dygnsnederbörd (parameter 5) summerad till månader. Årstotaler visas för år med 12 kompletta månader. Nederbördstyp baseras fortsatt på Kallax.';
   }
-  const pa=selectedAnnualRows(selectedPrecipStation==='162860'?DATA.precipitation.annual:precipAnnual,precipSeries,f);const paYears=pa.map(r=>r.year),paVals=pa.map(r=>r.sum);
+  const pa=annualQualityRows(selectedPrecipStation==='162860'?DATA.precipitation.annual:precipAnnual,precipSeries,f,'sum');const paYears=pa.map(r=>r.year),paVals=pa.map(r=>r.trend);
   destroyChart('precipAnnual');
   charts.precipAnnual=new Chart(el('precipAnnual'),{
     data:{labels:paYears,datasets:[
-      {type:'bar',label:f.month?months[f.month-1]+' nederbörd':'Årsnederbörd',data:paVals,borderWidth:0},
+      {type:'bar',label:f.month?months[f.month-1]+' nederbörd':'Årsnederbörd',data:paVals,borderWidth:0},{type:'bar',label:'Ofullständigt år',data:pa.map(r=>r.partial),backgroundColor:'#b45309',borderWidth:0},
       {type:'line',label:'Linjär trend',data:linearTrend(paYears,paVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
@@ -2400,8 +2418,8 @@ function render(){
     {label:f.month?months[f.month-1]+' högsta byvind':'Årets högsta byvind',data:windYears.map(y=>{const x=wg.find(a=>a.year===y);return x?x.max:null;})}
   ],'m/s');
 
-  const wd=(f.month?windSeries.direction_monthly.filter(r=>inYears(r,f)&&r.month===f.month):windSeries.direction_annual.filter(r=>inYears(r,f)));destroyChart('windDirection');charts.windDirection=new Chart(el('windDirection'),{type:'line',data:{labels:wd.map(r=>r.year),datasets:[{data:wd.map(r=>r.avg),borderWidth:2,pointRadius:2,tension:.1}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:false},onHover:(e,pts)=>{if(pts.length){const i=pts[0].index;updateCompass(wd[i].avg,String(wd[i].year));}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y.toFixed(0)+'° ('+directionName(c.parsed.y)+')'}}},scales:{x:{grid:{display:false}},y:{min:0,max:360,title:{display:true,text:'grader'},ticks:{stepSize:45,callback:v=>v+'° '+directionName(v)}}}}});
-  const wdm=windSeries.direction_monthly.filter(r=>inYears(r,f));const monthly=[...Array(12)].map((_,i)=>circularFromParts(wdm.filter(r=>r.month===i+1)));destroyChart('windDirectionMonthly');charts.windDirectionMonthly=new Chart(el('windDirectionMonthly'),{type:'line',data:{labels:months,datasets:[{data:monthly,borderWidth:2,pointRadius:2,tension:.1,borderColor:MONTH_GREEN,backgroundColor:MONTH_GREEN}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:false},onHover:(e,pts)=>{if(pts.length){const i=pts[0].index;updateCompass(monthly[i],months[i]);}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y.toFixed(0)+'° ('+directionName(c.parsed.y)+')'}}},scales:{x:{grid:{display:false}},y:{min:0,max:360,title:{display:true,text:'grader'},ticks:{stepSize:45,callback:v=>v+'° '+directionName(v)}}}}});
+  const wd=(f.month?windSeries.direction_monthly.filter(r=>inYears(r,f)&&r.month===f.month):windSeries.direction_annual.filter(r=>inYears(r,f)));destroyChart('windDirection');charts.windDirection=new Chart(el('windDirection'),{type:'line',data:{labels:wd.map(r=>r.year),datasets:[{data:wd.map(r=>r.avg),showLine:false,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:false},onHover:(e,pts)=>{if(pts.length){const i=pts[0].index;updateCompass(wd[i].avg,String(wd[i].year));}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y.toFixed(0)+'° ('+directionName(c.parsed.y)+')'}}},scales:{x:{grid:{display:false}},y:{min:0,max:360,title:{display:true,text:'grader'},ticks:{stepSize:45,callback:v=>v+'° '+directionName(v)}}}}});
+  const wdm=windSeries.direction_monthly.filter(r=>inYears(r,f));const monthly=[...Array(12)].map((_,i)=>circularFromParts(wdm.filter(r=>r.month===i+1)));destroyChart('windDirectionMonthly');charts.windDirectionMonthly=new Chart(el('windDirectionMonthly'),{type:'line',data:{labels:months,datasets:[{data:monthly,showLine:false,pointRadius:3,borderColor:MONTH_GREEN,backgroundColor:MONTH_GREEN}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:false},onHover:(e,pts)=>{if(pts.length){const i=pts[0].index;updateCompass(monthly[i],months[i]);}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y.toFixed(0)+'° ('+directionName(c.parsed.y)+')'}}},scales:{x:{grid:{display:false}},y:{min:0,max:360,title:{display:true,text:'grader'},ticks:{stepSize:45,callback:v=>v+'° '+directionName(v)}}}}});
   let wds=windSeries.direction_sectors.filter(r=>inYears(r,f));if(f.month)wds=wds.filter(r=>r.month===f.month);
   const windShareYears=[...new Set(wds.map(r=>r.year))].sort((a,b)=>a-b);
   const windDirs=['N','NO','O','SO','S','SV','V','NV'];
@@ -3163,6 +3181,7 @@ for(const id of ['temperature1Station','temperature2Station','windStation','snow
 }
 el('precipStation').addEventListener('change',()=>{applyPageYearBounds('precip',true);render();});
 el('pressureStation').addEventListener('change',()=>{applyPageYearBounds('pressure',true);updateStationQuality('pressure');render();});
+el('snowCoverageDenominator')?.addEventListener('change',()=>renderSnowMapCharts());
 el('precipTimelineMode').addEventListener('change',render);
 el('precipTimelineMin').addEventListener('change',render);
 el('tempMetric').addEventListener('change',render);
