@@ -176,7 +176,7 @@
 
   <section id="page-precip" class="page">
     <div class="chart-card full" style="min-height:0"><div class="page-tools"><label>Nederbördsstation <select id="precipStation"><option value="162860">Luleå-Kallax Flygplats (befintlig)</option></select></label></div><p id="precipStationInfo" class="hint">Dygnsnederbörd (SMHI parameter 5), summerad per månad. Andel nederbördstyp bygger fortfarande på Kallax observationer och påverkas inte av stationsvalet.</p></div>
-    <div class="chart-card"><h2>Total nederbörd per år</h2><p id="precipAnnualTrendText" class="hint"></p><p class="hint">Ofullständiga kalenderår visas separat. Luckor i tidsserien visas som tomma år. Tolv månadsaggregat garanterar inte full dygnstäckning.</p><canvas id="precipAnnual"></canvas></div>
+    <div class="chart-card"><h2>Total nederbörd per år</h2><p id="precipAnnualTrendText" class="hint"></p><p class="hint">Ofullständiga kalenderår visas separat. Luckor i tidsserien visas som tomma år. Tolv månadsaggregat garanterar inte full dygnstäckning.</p><p class="hint"><strong>Verifierad datalucka för Kallax:</strong> SMHI:s korrigerade arkiv (parameter 5) saknade numeriska observationer för 2003–2011 vid kontroll den 27 november 2026. Luckan ska inte tolkas som noll nederbörd och gäller inte nödvändigtvis andra stationer.</p><canvas id="precipAnnual"></canvas></div>
     <div class="chart-card"><h2>Genomsnittlig månadsnederbörd</h2><canvas id="precipMonthly"></canvas></div>
     <div class="chart-card"><h2>Andel nederbördstyp per år</h2><p class="hint">Andel regn, snöblandat regn och snö. Rapporten använder i första hand SMHI:s direkta nederbördstyp (12-/24-timmarsvärde) när sådan finns för Kallax; annars används den tidigare klassningen från rådande väder och temperatur.</p><p id="precipTypeSourceText" class="hint"></p><canvas id="precipTypeAnnual"></canvas></div>
     <div class="chart-card"><h2>Andel nederbördstyp per månad</h2><p class="hint">Genomsnittlig fördelning inom valt årsintervall.</p><canvas id="precipTypeMonthly"></canvas></div>
@@ -199,7 +199,7 @@
 
   <section id="page-wind" class="page wind-grid">
     <div class="page-tools weather-station-tools"><label>Väderstation<select id="windStation"><option value="162860">Luleå-Kallax Flygplats</option></select></label><span id="windStationInfo" class="hint">Kallax är förvald. Andra stationer visas efter kontroll av SMHI:s observationer.</span></div>
-    <div class="chart-card"><h2>Vindhastighet per år</h2><p class="hint">Årsmedel, årets högsta dygnsmaximum av 10-minuters medelvind samt årets högsta byvind.</p><canvas id="windSpeed"></canvas></div>
+    <div class="chart-card"><h2>Vindhastighet per år</h2><p class="hint">Årsmedel, årets högsta dygnsmaximum av 10-minuters medelvind samt årets högsta byvind.</p><p class="hint"><strong>Verifierad datalucka för Kallax:</strong> SMHI:s korrigerade arkiv för byvind (parameter 21) saknade numeriska observationer för 2014–2015 vid kontroll den 27 november 2026. Detta gäller byvind, inte all vindstatistik.</p><canvas id="windSpeed"></canvas></div>
     <div class="chart-card"><h2>Genomsnittlig vindriktning per år</h2><p class="hint">Cirkulärt medelvärde.</p><canvas id="windDirection"></canvas></div>
     <div class="chart-card"><h2>Genomsnittlig vindriktning per månad</h2><p class="hint">Cirkulärt medel för varje månad inom valt årsintervall.</p><canvas id="windDirectionMonthly"></canvas></div>
     <div class="chart-card"><h2>Andel vindriktning per år</h2><p class="hint">Åtta sektorer à 45°. N omfattar 337,5°–360° och 0°–22,5°. Observationer med vindriktning 0 (lugnt/stiltje) exkluderas.</p><canvas id="windDirectionShares"></canvas></div>
@@ -499,6 +499,24 @@
   <div class="chart-card full"><h2>Metod och data</h2>
     <p>Diagrammen är interaktiva och kan filtreras efter period och månad. Vissa kart- och snöanalyser använder kompletterande bearbetningar och andra öppna datakällor; metod och källa anges i respektive avsnitt. För klimatjämförelser bör längre tidsperioder användas eftersom enskilda år kan avvika kraftigt från den långsiktiga utvecklingen.</p>
     <p>Här redovisas datakällor, beräkningsprinciper och viktiga begränsningar för rapportens diagram och tabeller. SMHI Kallax (162860) är huvudstation för väderdata; havsis, snötäcke, blixt och vattenstånd kan komma från andra observations- och analyskällor. En linjär trend är en statistisk skattning och behöver inte ha en klimatrelaterad orsak.</p>
+  </div>
+  <div class="chart-card full" id="quality-verification" style="min-height:0">
+    <h2>Kvalitetssäkring och verifiering mot SMHI</h2>
+    <p>Kontroller genomförda den 27 november 2026. Rapporten har genomgått elva utvecklings- och kvalitetssäkringsetapper. Automatiserade webbläsartester omfattade samtliga 20 rapportsidor i Chromium med dator-, mobil- och surfplattelayout: 66 av 66 testfall godkändes. <a href="https://github.com/Lulea-statistik/SMHI_Lulea-Kallax_weather-climate/actions/runs/45993470445">Se webbläsartesternas resultat.</a></p>
+    <p>En separat inläsning av SMHI:s korrigerade observationsarkiv för Luleå-Kallax Flygplats (162860) jämfördes med lokala rådata och rapportens statistikunderlag. Alla tolv månadsstickprov överensstämde i både statistikvärde och antal observationer.</p>
+    <div class="table-scroll"><table style="width:100%;border-collapse:collapse;text-align:left">
+      <caption>Verifierade månadsstickprov vid Kallax</caption>
+      <thead><tr><th scope="col">Månad</th><th scope="col">Medeltemperatur (°C)</th><th scope="col">Nederbörd (mm)</th><th scope="col">Maximal byvind (m/s)</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Januari 2020</th><td>−2,90</td><td>68,0</td><td>19</td></tr>
+        <tr><th scope="row">Juli 2023</th><td>15,82</td><td>98,3</td><td>14</td></tr>
+        <tr><th scope="row">Februari 2024</th><td>−8,32</td><td>29,8</td><td>27</td></tr>
+        <tr><th scope="row">Oktober 2025</th><td>6,16</td><td>88,0</td><td>15</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Verifierade historiska dataluckor</h3>
+    <p>Dygnsnederbörd (parameter 5) saknar numeriska observationer i det korrigerade arkivet för 2003–2011; byvind (parameter 21) för 2014–2015. Samma luckor finns i lokala rådata. Detta ger inget stöd för att luckorna orsakats av rapportens import, men visar inte varför observationerna saknas eller om mätningar utfördes. Saknade värden är inte nollvärden.</p>
+    <p><a href="https://github.com/Lulea-statistik/SMHI_Lulea-Kallax_weather-climate/actions/runs/45994707247">Se SMHI-verifieringens resultat och avvikelserapport.</a> Kontrollen avser parametrarna 1, 5 och 21 vid Kallax; den är inte en fullständig validering av alla observationer, stationer, kartor eller beräkningsmetoder. Stickproven följer rapportens befintliga kalendergruppering och kvalitetsurval, inklusive numeriska värden med kvalitetskod Y. Full dygns- och timtäckning, meteorologiska dygnsgränser, geografisk korrekthet och formell tillgänglighet behöver bedömas separat. Resultaten är daterade kontroller, inte en garanti för framtida uppdateringar.</p>
   </div>
   <div class="chart-card full"><h2>Datakälla och metod per diagramgrupp</h2>
     <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;text-align:left"><thead><tr><th style="padding:10px;border-bottom:1px solid #999">Diagram / tabell</th><th style="padding:10px;border-bottom:1px solid #999">Datakälla</th><th style="padding:10px;border-bottom:1px solid #999">Metod och avgränsning</th><th style="padding:10px;border-bottom:1px solid #999">Datatäckning</th></tr></thead><tbody><tr><td><b>Temperatur 1 och 2</b></td><td>SMHI parameter 1, Kallax förvald; andra verifierade Luleåstationer möjliga</td><td>Års- och månadsaggregat; 30-årsperiod för klimatprofil. Linjära trender skattas med regression mot kalenderår.</td><td class="method-coverage" data-coverage="1" style="padding:8px;min-width:160px">Läser datatäckning…</td></tr>
