@@ -116,8 +116,8 @@ function render(){
    chart('basinExtremes','line',keys,[
      {label:'Årsminimum',data:annual.map(r=>r.min_cm),borderColor:color,borderDash:[5,4],pointRadius:3,spanGaps:false},
      {label:'Årsmaximum',data:annual.map(r=>r.max_cm),borderColor:color,pointRadius:3,spanGaps:false},
-     {label:'Linjär trend – minimum',data:minTrend.values,borderColor:'#dc2626',borderWidth:2,pointRadius:0,borderDash:[6,4],spanGaps:false},
-     {label:'Linjär trend – maximum',data:maxTrend.values,borderColor:'#dc2626',borderWidth:2,pointRadius:0,spanGaps:false}
+     {label:'Linjär trend – minimum',data:minTrend.values,borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4],spanGaps:false},
+     {label:'Linjär trend – maximum',data:maxTrend.values,borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,spanGaps:false}
    ],'cm RH 2000');
    const first=annual[0]?.year,last=annual.at(-1)?.year;
    const trendText=t=>{
