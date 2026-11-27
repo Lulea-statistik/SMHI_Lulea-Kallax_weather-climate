@@ -113,3 +113,13 @@ test('sea ice sparse observations visible and table headers sortable',async({pag
     await expect(card.locator('thead th').nth(1)).toHaveAttribute('aria-sort','descending');
   }
 });
+
+test('sea ice filter labels show issäsonger and reset on other pages',async({page})=>{
+  await open(page,'seaice','?from=2026&to=2026');
+  await expect(page.locator('#yearFromCaption')).toHaveText('Från issäsong');
+  await expect(page.locator('#yearToCaption')).toHaveText('Till issäsong');
+  await expect(page.locator('#yearFrom option:checked')).toHaveText('2026/27');
+  await expect(page.locator('#rangeToLabel')).toHaveText('2026/27');
+  await open(page,'temp1');
+  await expect(page.locator('#yearFromCaption')).toHaveText('Från år');
+});
