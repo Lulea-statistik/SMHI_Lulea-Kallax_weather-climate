@@ -112,10 +112,10 @@ function temp2Quantile(values,q){
   return v[base+1]!==undefined?v[base]+rest*(v[base+1]-v[base]):v[base];
 }
 function temp2AnnualMean(year,temperature){
-  const vals=temperature.monthly
-    .filter(r=>r.year===year&&r.avg!=null&&Number.isFinite(r.avg))
-    .map(r=>r.avg);
-  return vals.length?vals.reduce((s,v)=>s+v,0)/vals.length:null;
+  const rows=temperature.monthly.filter(r=>r.year===year&&Number.isFinite(r.avg));
+  if(rows.length!==12||new Set(rows.map(r=>r.month)).size!==12||rows.some(r=>!Number.isInteger(r.month)||r.month<1||r.month>12))return null;
+  const days=r=>new Date(Date.UTC(year,r.month,0)).getUTCDate();
+  return rows.reduce((sum,r)=>sum+r.avg*days(r),0)/rows.reduce((sum,r)=>sum+days(r),0);
 }
 function setupTemp2Slider(){
   const years=stationYears('temperature',DATA.temperature,el('temperature2Station')?.value);
@@ -439,7 +439,7 @@ function weatherChart(rows){
 function aggregateMonthlyMean(rows,key='avg'){return [...Array(12)].map((_,i)=>{const a=rows.filter(r=>r.month===i+1).map(r=>r[key]).filter(v=>v!=null);return a.length?a.reduce((s,v)=>s+v,0)/a.length:null;});}
 function linearRegression(xs,ys){
   const pts=xs.map((x,i)=>[+x,ys[i]]).filter(p=>Number.isFinite(p[0])&&p[1]!=null&&Number.isFinite(p[1]));
-  if(pts.length<2)return null;
+  if(pts.length<10||Math.max(...pts.map(p=>p[0]))-Math.min(...pts.map(p=>p[0]))<9)return null;
   const xm=pts.reduce((s,p)=>s+p[0],0)/pts.length,ym=pts.reduce((s,p)=>s+p[1],0)/pts.length;
   const den=pts.reduce((s,p)=>s+(p[0]-xm)*(p[0]-xm),0);
   if(!den)return null;
@@ -453,13 +453,13 @@ function linearTrend(xs,ys){
 function trendRateText(xs,ys,unit,startLabel=null,endLabel=null){
   const reg=linearRegression(xs,ys);
   const valid=xs.map((x,i)=>({x:+x,y:ys[i],label:String(x)})).filter(p=>Number.isFinite(p.x)&&p.y!=null&&Number.isFinite(p.y));
-  if(!reg||valid.length<2)return 'För få datapunkter för linjär trend.';
+  if(!reg)return 'Linjär trend visas först vid minst 10 observationer över minst 10 kalenderår.';
   const per10=reg.slope*10;
   const n=Math.abs(per10);
   const decimals=n>=100?0:n>=10?1:2;
   const value=(per10>=0?'+':'')+per10.toLocaleString('sv-SE',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
   const from=startLabel??valid[0].label,to=endLabel??valid[valid.length-1].label;
-  return 'Från '+from+' till '+to+': '+value+' '+unit+' per 10 år (historisk linjär trend).';
+  return 'Från '+from+' till '+to+': '+value+' '+unit+' per 10 år (historisk linjär trend; '+valid.length+' observationer).'+(valid.length<30?' Kort serie – tolka försiktigt.':'');
 }
 function selectedAnnualRows(annualRows,monthlyRows,f){
   if(!f.month)return annualRows.filter(r=>inYears(r,f));
@@ -1616,8 +1616,10 @@ async function renderSnowMapCharts(){
       charts.snowMapMean=new Chart(el('snowMapMean'),{
         type:'line',
         data:{labels:t.labels,datasets:[
-          {label:'Medelsnödjup',data:meanAll,borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,tension:.12,spanGaps:false},
-          {label:'Maxsnödjup',data:maxAll,borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,tension:.08,spanGaps:false}
+          {label:'Medel – GridClim',data:t.meanGrid,borderColor:'#67b7e1',borderWidth:2,pointRadius:2,spanGaps:false},
+          {label:'Max – GridClim',data:t.maxGrid,borderColor:'#1f5f8b',borderWidth:2,pointRadius:2,spanGaps:false},
+          {label:'Medel – IDW',data:t.meanRecent,borderColor:'#d97706',borderDash:[5,3],borderWidth:2,pointRadius:2,spanGaps:false},
+          {label:'Max – IDW',data:t.maxRecent,borderColor:'#92400e',borderDash:[5,3],borderWidth:2,pointRadius:2,spanGaps:false}
         ]},
         options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
           plugins:{legend:{display:true},tooltip:{callbacks:{
@@ -2132,20 +2134,15 @@ function renderSeaIce(f){
   if(!has)return;
 
   if(timeline.rows.length){
-    const iceTail=buildSeaIceMissingTail(timeline,'ice_share_pct');
-    const meanTail=buildSeaIceMissingTail(timeline,'mean_ice_thickness_cm');
-    const maxTail=buildSeaIceMissingTail(timeline,'max_ice_thickness_cm');
+    
 
     lineChart('seaIceDaily',timeline.labels,[
       {label:'Isutbredning',data:timeline.rows.map(r=>r?r.ice_share_pct:null),borderColor:'#111827',backgroundColor:'#111827',borderWidth:2,pointRadius:0,spanGaps:false},
-      {label:'Data saknas – sista kända värde',data:iceTail,borderColor:'#dc2626',backgroundColor:'#dc2626',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false}
     ],'%');
 
     lineChart('seaIceThickness',timeline.labels,[
       {label:'Medeltjocklek',data:timeline.rows.map(r=>r?r.mean_ice_thickness_cm:null),borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,spanGaps:false},
       {label:'Maximal tjocklek',data:timeline.rows.map(r=>r?r.max_ice_thickness_cm:null),borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,spanGaps:false},
-      {label:'Saknad data – medel',data:meanTail,borderColor:'#ef4444',backgroundColor:'#ef4444',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false},
-      {label:'Saknad data – max',data:maxTail,borderColor:'#b91c1c',backgroundColor:'#b91c1c',borderDash:[3,4],borderWidth:2,pointRadius:0,tension:0,spanGaps:false}
     ],'cm');
   }else{
     destroyChart('seaIceDaily');
