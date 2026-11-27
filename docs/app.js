@@ -2635,7 +2635,7 @@ function render(){
   if(activePage==='data'){
   el('coverage').innerHTML='<table><thead><tr><th>Parameter</th><th>Från</th><th>Till</th><th>Observationer</th></tr></thead><tbody>'+DATA.coverage.map(r=>'<tr><td>'+r.name+'</td><td>'+r.min_date+'</td><td>'+r.max_date+'</td><td>'+r.rows.toLocaleString('sv-SE')+'</td></tr>').join('')+'</tbody></table>';
   // Data coverage in the method table is computed from the same dataset as the charts.
-  const coverageByParameter={1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',5:'Nederbörd 1 dygn',6:'Relativ luftfuktighet',7:'Nederbörd 1 timme',8:'Snödjup',10:'Solskenstid',11:'Global irradians',12:'Sikt',13:'Rådande väder',17:'Nederbördstyp 12 timmar',18:'Nederbördstyp 24 timmar',21:'Byvind'};
+  const coverageByParameter={9:'Lufttryck',16:'Molnmängd',39:'Daggpunkt',1:'Lufttemperatur',3:'Vindriktning',4:'Vindhastighet',5:'Nederbörd 1 dygn',6:'Relativ luftfuktighet',7:'Nederbörd 1 timme',8:'Snödjup',10:'Solskenstid',11:'Global irradians',12:'Sikt',13:'Rådande väder',17:'Nederbördstyp 12 timmar',18:'Nederbördstyp 24 timmar',21:'Byvind'};
   document.querySelectorAll('.method-coverage').forEach(cell=>{
     const code=cell.dataset.coverage;
     if(/^\d+(,\d+)*$/.test(code)){
@@ -3192,7 +3192,11 @@ function loadSupplement(name,handler){
       const active=document.querySelector('#tabs button.active')?.dataset.page;
       if(DATA&&active&&active!=='start')render();
     })
-    .catch(err=>{console.warn('Optional station file unavailable:',name,err);});
+    .catch(err=>{console.warn('Optional station file unavailable:',name,err);
+      supplementPromises.delete(name);
+      const note=document.getElementById('supplementStatus');
+      if(note){note.hidden=false;note.textContent='Kompletterande stationsdata kunde inte läsas ('+name+'). Försök öppna ämnet igen.';}
+    });
   supplementPromises.set(name,promise);
   return promise;
 }
@@ -3250,7 +3254,16 @@ function ensureDashboard(){
     .then(r=>{if(!r.ok)throw new Error('dashboard_data.json saknas (HTTP '+r.status+')');return r.json();})
     .then(d=>{
       DATA=d;
-      el('updated').textContent='Data uppdaterad: '+(d.generated_at||'okänt');
+      el('updated').textContent='Rapport genererad: '+(d.generated_at||'okänt');
+      const status=document.getElementById('dataStatus');
+      if(status){
+        status.replaceChildren();
+        for(const row of d.coverage||[]){
+          const li=document.createElement('li');
+          li.textContent=row.name+': senaste observation '+(row.max_date||'okänd')+' · '+Number(row.rows||0).toLocaleString('sv-SE')+' observationer';
+          status.appendChild(li);
+        }
+      }
       if(d.weather?.source_url)el('weatherSource').href=d.weather.source_url;
       setupWeatherCodes();setupTemp2Slider();setupSeaIceSeasonControls();setupAlgaeSeasonControls();
       setupSnowMapControls();setupLightningMapControls();setupFilters();
