@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 const pages = ['start','temp1','temp2','precip','weather','wind','visibility','pressure','humidity','sunshine','snow','zerocross','vegetation','snowmap','lightning','seaice','algae','sealevel','dateweather','data'];
 const maps = {snowmap:'snowMap',lightning:'lightningMap',seaice:'seaIceMap',algae:'algaeMap'};
-const charts = {temp1:'tempAnnual',temp2:'tempProfiles',precip:'precipAnnual',weather:'weatherCodes',wind:'windSpeed',visibility:'visibilityAnnual',pressure:'pressureAnnual',humidity:'humidityAnnual',sunshine:'sunAnnual',snow:'snowMean',zerocross:'zeroAnnual',vegetation:'vegetationLength',snowmap:'snowMapMean',lightning:'lightningAnnual',seaice:'seaIceDaily',algae:'algaeDailyClasses',sealevel:'seaLevelHistory',dateweather:'dateTemp'};
+const charts = {temp1:'tempAnnual',temp2:'tempProfiles',precip:'precipAnnual',weather:'weatherCodes',wind:'windSpeed',visibility:'visibilityAnnual',pressure:'pressureAnnual',humidity:'humidityAnnual',sunshine:'sunAnnual',snow:'snowMeanAnnual',zerocross:'zeroAnnual',vegetation:'vegetationLength',snowmap:'snowMapMean',lightning:'lightningAnnual',seaice:'seaIceDaily',algae:'algaeDailyClasses',sealevel:'seaLevelHistory',dateweather:'dateTemp'};
 async function open(page,id,query=''){
   await page.goto('/index.html#'+id+query,{waitUntil:'domcontentloaded'});
   await expect(page.locator('#page-'+id)).toBeVisible({timeout:60000});
