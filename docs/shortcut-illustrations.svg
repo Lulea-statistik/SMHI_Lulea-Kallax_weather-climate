@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+<!-- Lucide Icons and Contributors; ISC; calendar derived from Feather (MIT). See LICENSE-lucide.txt. -->
+<symbol id="thermometer" viewBox="0 0 24 24"><g fill="none" stroke="#c44942" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" />
+</g></symbol>
+<symbol id="cloud-rain" viewBox="0 0 24 24"><g fill="none" stroke="#3479b4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+  <path d="M16 14v6" />
+  <path d="M8 14v6" />
+  <path d="M12 16v6" />
+</g></symbol>
+<symbol id="wind" viewBox="0 0 24 24"><g fill="none" stroke="#527f8c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12.8 19.6A2 2 0 1 0 14 16H2" />
+  <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2" />
+  <path d="M9.8 4.4A2 2 0 1 1 11 8H2" />
+</g></symbol>
+<symbol id="sun" viewBox="0 0 24 24"><g fill="none" stroke="#c88b14" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</g></symbol>
+<symbol id="snowflake" viewBox="0 0 24 24"><g fill="none" stroke="#3084b6" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m10 20-1.25-2.5L6 18" />
+  <path d="M10 4 8.75 6.5 6 6" />
+  <path d="m14 20 1.25-2.5L18 18" />
+  <path d="m14 4 1.25 2.5L18 6" />
+  <path d="m17 21-3-6h-4" />
+  <path d="m17 3-3 6 1.5 3" />
+  <path d="M2 12h6.5L10 9" />
+  <path d="m20 10-1.5 2 1.5 2" />
+  <path d="M22 12h-6.5L14 15" />
+  <path d="m4 10 1.5 2L4 14" />
+  <path d="m7 21 3-6-1.5-3" />
+  <path d="m7 3 3 6h4" />
+</g></symbol>
+<symbol id="sprout" viewBox="0 0 24 24"><g fill="none" stroke="#43834d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M14 9.536V7a4 4 0 0 1 4-4h1.5a.5.5 0 0 1 .5.5V5a4 4 0 0 1-4 4 4 4 0 0 0-4 4c0 2 1 3 1 5a5 5 0 0 1-1 3" />
+  <path d="M4 9a5 5 0 0 1 8 4 5 5 0 0 1-8-4" />
+  <path d="M5 21h14" />
+</g></symbol>
+<symbol id="box" viewBox="0 0 24 24"><g fill="none" stroke="#397b9d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+  <path d="m3.3 7 8.7 5 8.7-5" />
+  <path d="M12 22V12" />
+</g></symbol>
+<symbol id="calendar" viewBox="0 0 24 24"><g fill="none" stroke="#635a9d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M8 2v3" />
+  <path d="M16 2v3" />
+  <rect x="3" y="3" width="18" height="18" rx="2" />
+  <path d="M3 9h18" />
+</g></symbol>
+</svg>
