@@ -267,3 +267,10 @@ body{font-family:var(--font-body);line-height:1.5}
 .chart-data-content thead th{position:sticky;top:0;background:#fff}
 @media(max-width:600px){.topbar{padding:12px}.brandText{overflow-wrap:anywhere}.topbar h1{font-size:21px}.topic-menu{padding:10px 12px 0}main{padding:10px}.page-tools>*{max-width:100%}.page-tools select{max-width:100%}.filters select{max-width:100%}.chart-card{padding:12px}.source-note{overflow-wrap:anywhere}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Weather selectors must fit tablet widths without document overflow. */
+#page-weather .page-tools{flex-wrap:wrap;min-width:0}
+#page-weather .page-tools>*{min-width:0;max-width:100%}
+#page-weather .page-tools select{max-width:100%}
+#page-weather .page-tools .hint{flex:1 1 220px;overflow-wrap:anywhere}
+#page-weather.active{grid-template-columns:minmax(0,1fr)}
