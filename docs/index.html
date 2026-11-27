@@ -477,10 +477,9 @@
     </div>
     <div class="chart-card date-aligned date-summary"><h2>Dygnsvärden</h2><div id="dateSummary"></div></div>
     <div class="chart-card date-aligned date-chart date-temp-chart"><h2>Temperatur under dygnet</h2><canvas id="dateTemp"></canvas></div>
-    <div class="chart-card date-aligned date-chart"><h2>Sol över horisonten</h2><p class="hint">Andel av varje klocktimme som solen är över horisonten, beräknad från soluppgång och solnedgång.</p><canvas id="dateSun"></canvas></div>
+    <div class="chart-card date-aligned date-chart"><h2>Sol över horisonten och faktisk solskenstid</h2><p class="hint">Ljusgul stapel: beräknad tid med solen över horisonten vid Kallax. Gul stapel: uppmätt solskenstid vid Luleå Sol (SMHI parameter 10). Båda i minuter per klocktimme. Saknad mätning är inte noll. Vid höstens tidsomställning visas medel för den upprepade klocktimmen. Skillnader i läge, horisont och tidsgruppering kan påverka jämförelsen.</p><p id="dateSunStatus" class="hint"></p><canvas id="dateSun"></canvas></div>
     <div class="chart-card date-aligned date-chart"><h2>Nederbörd per timme</h2><p class="hint">SMHI parameter 7, nederbördsmängd under timmen. Serien finns från 2013.</p><canvas id="datePrecip"></canvas></div>
     <div class="chart-card date-aligned date-chart"><h2>Molnighet under dygnet</h2><p class="hint">SMHI parameter 16 (Kallax). Okänd molnighet, bland annat kod 113, utelämnas.</p><p id="dateCloudStatus" class="hint"></p><canvas id="dateCloud"></canvas></div>
-    <div class="chart-card date-aligned date-chart"><h2>Faktisk solskenstid per timme</h2><p class="hint">SMHI parameter 10 (Luleå Sol), minuter av uppmätt solsken. Skiljer sig från beräknad dagslängd.</p><p id="dateSunshineStatus" class="hint"></p><canvas id="dateSunshine"></canvas></div>
     <div class="chart-card date-aligned date-chart"><h2>Vind och byvind</h2><p class="hint">SMHI parametrar 4 och 21 (Kallax); vindriktning visas vid muspekning över vindhastighet.</p><p id="dateWindStatus" class="hint"></p><canvas id="dateWind"></canvas></div>
     <div class="chart-card date-aligned date-chart"><h2>Sikt under dygnet</h2><p class="hint">SMHI parameter 12 (Kallax); observerad sikt i kilometer.</p><p id="dateVisibilityStatus" class="hint"></p><canvas id="dateVisibility"></canvas></div>
     <div class="chart-card date-aligned date-chart"><h2>Luftfuktighet</h2><p class="hint">SMHI parameter 6 (Kallax), relativ luftfuktighet i procent.</p><p id="dateHumidityStatus" class="hint"></p><canvas id="dateHumidity"></canvas></div>
@@ -557,7 +556,7 @@
 </main>
 <script src="chart-accessibility.js?v=2"></script>
 <script src="sealevel.js?v=1"></script>
-<script src="sealevel-basin.js?v=8"></script>
+<script src="sealevel-basin.js?v=9"></script>
 <script src="chart-focus.js?v=1"></script>
-<script src="app.js?v=61"></script>
+<script src="app.js?v=62"></script>
 </body></html>

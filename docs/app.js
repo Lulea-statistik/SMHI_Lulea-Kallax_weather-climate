@@ -523,7 +523,7 @@ function renderVegetation(f){
   charts.vegetationLength=new Chart(el('vegetationLength'),{
     data:{labels,datasets:[
       {type:'bar',label:'Längd',data:lengthVals,borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(labels,lengthVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(labels,lengthVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label+': '+Math.round(c.parsed.y)+' dygn'}}},
@@ -540,7 +540,7 @@ function renderVegetation(f){
   charts.vegetationStart=new Chart(el('vegetationStart'),{
     data:{labels,datasets:[
       {type:'bar',label:'Start',data:startVals,backgroundColor:'rgba(230,126,34,0.42)',borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(labels,startVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(labels,startVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label==='Start'?'Start: '+dayOfYearLabel(c.parsed.y):'Trend: '+dayOfYearLabel(c.parsed.y)}}},
@@ -556,7 +556,7 @@ function renderVegetation(f){
   charts.vegetationEnd=new Chart(el('vegetationEnd'),{
     data:{labels,datasets:[
       {type:'bar',label:'Slut',data:endVals,backgroundColor:'rgba(46,139,87,0.40)',borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(labels,endVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(labels,endVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'10-årsperiod t.o.m. '+items[0].label,label:c=>c.dataset.label==='Slut'?'Slut: '+dayOfYearLabel(c.parsed.y):'Trend: '+dayOfYearLabel(c.parsed.y)}}},
@@ -569,7 +569,7 @@ function renderVegetation(f){
   charts.vegetationFrost=new Chart(el('vegetationFrost'),{
     data:{labels:frost.map(r=>r.window_end),datasets:[
       {type:'bar',label:'Frostnätter',data:frost.map(r=>r.frost_days),backgroundColor:'#6b8fb3',borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(frost.map(r=>r.window_end),frost.map(r=>r.frost_days)),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(frost.map(r=>r.window_end),frost.map(r=>r.frost_days)),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{title:items=>'År '+items[0].label,label:c=>c.dataset.label+': '+Math.round(c.parsed.y)+' dygn'}}},
@@ -841,7 +841,7 @@ function renderLightning(f){
   charts.lightningDays=new Chart(el('lightningDays'),{
     data:{labels:years,datasets:[
       {type:'bar',label:'Blixtdygn',data:dayVals,backgroundColor:'rgba(99,102,241,0.58)',borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(years,dayVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(years,dayVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Number(c.parsed.y).toLocaleString('sv-SE',{maximumFractionDigits:1})+' dygn'}}},
@@ -2202,8 +2202,8 @@ function renderPressure(f){
     type:'line',
     data:{labels:years,datasets:[
       {label:f.month?months[f.month-1]+' medel':'Årsmedel',data:values,borderWidth:2,pointRadius:0,tension:.15},
-      {label:'Linjär trend',data:linearTrend(years,values),borderColor:'#ff6384',
-        pointRadius:0,borderWidth:2,borderDash:[6,4]}
+      {label:'Linjär trend',data:linearTrend(years,values),
+        pointRadius:0,borderWidth:2,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{
@@ -2280,7 +2280,7 @@ function render(){
   if(activePage==='temp1'){
   const temp1Series=pageWeatherSeries('temperature',DATA.temperature,el('temperature1Station')?.value);
   const ta=annualQualityRows(temp1Series.annual,temp1Series.monthly,f,m);const taYears=ta.map(r=>r.year),taVals=ta.map(r=>r.trend);
-  lineChart('tempAnnual',taYears,[{label:name,data:taVals},{label:'Ofullständigt år',data:ta.map(r=>r.partial),showLine:false,pointRadius:5,borderColor:'#b45309',backgroundColor:'#b45309'},{label:'Linjär trend',data:linearTrend(taYears,taVals),pointRadius:0,borderDash:[6,4]}],'°C');
+  lineChart('tempAnnual',taYears,[{label:name,data:taVals},{label:'Ofullständigt år',data:ta.map(r=>r.partial),showLine:false,pointRadius:5,borderColor:'#b45309',backgroundColor:'#b45309'},{label:'Linjär trend',data:linearTrend(taYears,taVals),pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}],'°C');
   el('tempAnnualTitle').textContent=name+' lufttemperatur '+(f.month?'i '+months[f.month-1].toLowerCase()+' per år':'per år');
   el('tempAnnualTrendText').textContent=trendRateText(taYears,taVals,'°C');
   let tm=temp1Series.monthly.filter(r=>inYears(r,f));
@@ -2333,7 +2333,7 @@ function render(){
   charts.precipAnnual=new Chart(el('precipAnnual'),{
     data:{labels:paYears,datasets:[
       {type:'bar',label:f.month?months[f.month-1]+' nederbörd':'Årsnederbörd',data:paVals,borderWidth:0},{type:'bar',label:'Ofullständigt år',data:pa.map(r=>r.partial),backgroundColor:'#b45309',borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(paYears,paVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(paYears,paVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Math.round(c.parsed.y)+' mm'}}},
@@ -2476,7 +2476,7 @@ function render(){
   charts.visibilityAnnual=new Chart(el('visibilityAnnual'),{
     data:{labels:vaYears,datasets:[
       {type:'line',label:f.month?months[f.month-1]+' medel':'Årsmedel',data:vaVals,borderWidth:2,pointRadius:0,tension:.15},
-      {type:'line',label:'Linjär trend',data:linearTrend(vaYears,vaVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(vaYears,vaVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Math.round(c.parsed.y)+' meter'}}},
@@ -2495,7 +2495,7 @@ function render(){
   if(activePage==='humidity'){
   const humiditySeries=selectedStationData('humidity');
   const ha=selectedAnnualRows(humiditySeries.annual||[],humiditySeries.monthly||[],f);const haYears=ha.map(r=>r.year),haVals=ha.map(r=>r.avg);
-  lineChart('humidityAnnual',haYears,[{label:f.month?months[f.month-1]+' medel':'Årsmedel',data:haVals},{label:'Linjär trend',data:linearTrend(haYears,haVals),pointRadius:0,borderDash:[6,4]}],'%');
+  lineChart('humidityAnnual',haYears,[{label:f.month?months[f.month-1]+' medel':'Årsmedel',data:haVals},{label:'Linjär trend',data:linearTrend(haYears,haVals),pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}],'%');
   el('humidityAnnualTrendText').textContent=trendRateText(haYears,haVals,'procentenheter');
   let hm=(humiditySeries.monthly||[]).filter(r=>inYears(r,f));barChart('humidityMonthly',months,aggregateMonthlyMean(hm),'%',MONTH_GREEN);
 
@@ -2507,7 +2507,7 @@ function render(){
   charts.sunAnnual=new Chart(el('sunAnnual'),{
     data:{labels:sunYears,datasets:[
       {type:'bar',label:f.month?months[f.month-1]+' solskenstid':'Solskenstid per år',data:sunVals,borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(sunYears,sunVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(sunYears,sunVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true}},
@@ -2529,7 +2529,7 @@ function render(){
   charts.irradianceAnnual=new Chart(el('irradianceAnnual'),{
     data:{labels:irrYears,datasets:[
       {type:'bar',label:f.month?months[f.month-1]+' solinstrålning':'Årlig solinstrålning',data:irrVals,borderWidth:0,backgroundColor:'rgba(230,126,34,0.55)'},
-      {type:'line',label:'Linjär trend',data:linearTrend(irrYears,irrVals),borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)',borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(irrYears,irrVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.parsed.y==null?c.dataset.label+': –':c.dataset.label+': '+Math.round(c.parsed.y)+' kWh/m²'}}},
@@ -2574,7 +2574,7 @@ function render(){
     type:'line',
     data:{labels:snowMeanLabels,datasets:[
       {label:'Medelsnödjup',data:snowMeanVals,borderWidth:2,pointRadius:1,tension:.15},
-      {label:'Linjär trend',data:linearTrend(snowMeanYears,snowMeanVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {label:'Linjär trend',data:linearTrend(snowMeanYears,snowMeanVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:true}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'cm'}}}}
   });
@@ -2586,7 +2586,7 @@ function render(){
     type:'line',
     data:{labels:snowMaxLabels,datasets:[
       {label:'Största snödjup',data:snowMaxVals,borderWidth:2,pointRadius:1,tension:.15},
-      {label:'Linjär trend',data:linearTrend(snowMaxYears,snowMaxVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {label:'Linjär trend',data:linearTrend(snowMaxYears,snowMaxVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:true}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:'cm'}}}}
   });
@@ -2607,7 +2607,7 @@ function render(){
   charts.snowSeason=new Chart(el('snowSeason'),{
     data:{labels:seasonLabels,datasets:[
       {type:'bar',label:'Säsongslängd',data:seasonVals,borderWidth:0},
-      {type:'line',label:'Linjär trend',data:seasonTrend,borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:seasonTrend,borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>c.dataset.label+': '+(c.parsed.y==null?'–':c.parsed.y.toFixed(1))+' dygn'}}},
@@ -2625,7 +2625,7 @@ function render(){
   charts.zeroAnnual=new Chart(el('zeroAnnual'),{
     data:{labels:zYears,datasets:[
       {type:'bar',label:'Dygn med nollgenomgång',data:zVals,borderWidth:0},
-      {type:'line',label:'Linjär trend',data:linearTrend(zYears,zVals),borderWidth:2,pointRadius:0,borderDash:[6,4]}
+      {type:'line',label:'Linjär trend',data:linearTrend(zYears,zVals),borderWidth:2,pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true}},
@@ -2644,7 +2644,7 @@ function render(){
   barChart('zeroMonthly',months,zm,'dygn per år',MONTH_GREEN);
   const crossByYear={};z.forEach(r=>{if(!crossByYear[r.year])crossByYear[r.year]={sum:0,n:0};crossByYear[r.year].sum+=r.crossings;crossByYear[r.year].n++;});
   const trendYears=Object.keys(crossByYear).map(Number).sort((a,b)=>a-b),trendVals=trendYears.map(y=>crossByYear[y].sum/crossByYear[y].n);
-  lineChart('zeroTrend',trendYears,[{label:'Genomsnitt',data:trendVals,pointRadius:2},{label:'Linjär trend',data:linearTrend(trendYears,trendVals),pointRadius:0,borderDash:[6,4]}],'genomgångar per dygn');
+  lineChart('zeroTrend',trendYears,[{label:'Genomsnitt',data:trendVals,pointRadius:2},{label:'Linjär trend',data:linearTrend(trendYears,trendVals),pointRadius:0,borderDash:[6,4],borderColor:'#ff6384',backgroundColor:'rgba(255,99,132,0.35)'}],'genomgångar per dygn');
   el('zeroTrendText').textContent=trendRateText(trendYears,trendVals,'genomgångar/dygn');
   el('zeroTable').innerHTML='<table><thead><tr><th>Datum</th><th>Min °C</th><th>Max °C</th><th>Antal genomgångar</th><th>Riktning</th><th>Observationer</th></tr></thead><tbody>'+z.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(r=>'<tr><td>'+r.date+'</td><td>'+r.min+'</td><td>'+r.max+'</td><td>'+r.crossings+'</td><td>'+r.directions.join(', ')+'</td><td>'+r.observations+'</td></tr>').join('')+'</tbody></table>';
 
@@ -2881,11 +2881,20 @@ async function loadDateWeather(dateStr){
     ],'°C');
     dateRenderOverview(day,minT,maxT);
     const sun=solarTimes(dateStr),sunFractions=sunHourFractions(sun);
+    const possibleSun=sunFractions.map(v=>v==null?null:v*0.6);
+    // Average repeated clock hours at the autumn DST transition so the unit
+    // remains minutes per hour, not minutes across two physical hours.
+    const observedSun=dateHourlyValues((day.sunshine_seconds||[]).filter(r=>r.value!=null&&String(r.value).trim()!==''),0,3600).map(v=>v==null?null:v/60);
     destroyChart('dateSun');
-    charts.dateSun=new Chart(el('dateSun'),{type:'bar',data:{labels:hours,
-      datasets:[{data:sunFractions,borderWidth:1.5,borderColor:SUN_YELLOW,
-        categoryPercentage:1,barPercentage:1,backgroundColor:'rgba(242,201,76,0.58)'}]},
-      options:alignedHourlyOptions('%',100,c=>c.parsed.y+' % av timmen')});
+    const sunOptions=alignedHourlyOptions('minuter per timme',60);
+    sunOptions.plugins.legend.display=true;
+    sunOptions.plugins.tooltip.callbacks.label=c=>c.dataset.label+': '+dateFormat(c.parsed.y,1)+' min';
+    sunOptions.plugins.tooltip.callbacks.afterBody=items=>items.length&&observedSun[items[0].dataIndex]==null?'Uppmätt solskenstid saknas för timmen.':'';
+    charts.dateSun=new Chart(el('dateSun'),{type:'bar',data:{labels:hours,datasets:[
+      {label:'Sol över horisonten (beräknad)',data:possibleSun,order:2,grouped:false,categoryPercentage:1,barPercentage:1,borderWidth:1,borderColor:'#d4ac35',backgroundColor:'rgba(242,201,76,0.22)'},
+      {label:'Faktisk solskenstid (uppmätt)',data:observedSun,order:1,grouped:false,categoryPercentage:1,barPercentage:.65,borderWidth:1,borderColor:'#d97706',backgroundColor:'#f4c542'}
+    ]},options:sunOptions});
+    el('dateSunStatus').textContent=observedSun.some(Number.isFinite)?'':'Uppmätt solskenstid saknas för detta datum. Endast beräknad dagslängd visas.';
     const precipHourly=hourlySum(day.precipitation_hourly||[]);
     destroyChart('datePrecip');
     charts.datePrecip=new Chart(el('datePrecip'),{type:'bar',
@@ -2921,9 +2930,6 @@ async function loadDateWeather(dateStr){
     dateDrawObservationChart('dateCloud',[
       {label:'Molnmängd',data:dateHourlyValues(day.cloud_cover,0,100),borderColor:'#64748b'}
     ],'%',{max:100,suffix:' %'});
-    dateDrawObservationChart('dateSunshine',[
-      {label:'Solsken',data:dateHourlyValues(day.sunshine_seconds,0,3600,'sum').map(v=>v==null?null:v/60),backgroundColor:'#f4c542',borderColor:'#d97706'}
-    ],'min',{bar:true,max:60,suffix:' min'});
     const dirs=dateHourlyValues(day.wind_direction,0,360);
     dateDrawObservationChart('dateWind',[
       {label:'Vindhastighet',data:dateHourlyValues(day.wind_speed,0,100),borderColor:'#2563eb'},
@@ -2971,7 +2977,7 @@ async function loadDateWeather(dateStr){
     el('dateSummary').textContent=err.message;
     el('dateWeatherOverview').replaceChildren();
     el('dateWeatherNarrative').textContent='';
-    ['dateTemp','dateSun','datePrecip','dateWeather','dateCloud','dateSunshine','dateWind',
+    ['dateTemp','dateSun','datePrecip','dateWeather','dateCloud','dateWind',
      'dateVisibility','dateHumidity','datePressure','dateIrradiance'].forEach(destroyChart);
   }
 }
