@@ -61,7 +61,7 @@
 
   <link rel="icon" type="image/x-icon" href="https://lulea-statistik.github.io/BR-brottsstatistik/kommun-favicon.ico?v=2">
 
-  <link rel="stylesheet" href="style.css?v=50">
+  <link rel="stylesheet" href="style.css?v=51">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -69,6 +69,7 @@
 
 </head>
 <body>
+<a class="skip-link" href="#main-content" onclick="event.preventDefault();document.getElementById('main-content').focus();document.getElementById('main-content').scrollIntoView()">Hoppa till innehållet</a>
 <header class="topbar">
   <div class="brand">
     <img class="brandLogo" src="https://lulea-statistik.github.io/BR-brottsstatistik/lulea-kommun-mark.png?v=3" alt="Luleå Statistik">
@@ -109,7 +110,7 @@
     <button data-page="data">Metod och datakällor</button>
   </div>
 </nav>
-<main>
+<main id="main-content" tabindex="-1">
   <section id="page-start" class="page active">
     <figure class="start-hero">
       <img src="https://www.smhi.se/images/200.710b6b821937865f1781f6/1734086229473/313432-sunset.webp" alt="Solnedgång, bild från SMHI" loading="eager">
@@ -531,6 +532,7 @@
   <div class="chart-card full"><h2>Datatäckning</h2><div id="coverage"></div></div>
 </section>
 </main>
+<script src="chart-accessibility.js?v=1"></script>
 <script src="sealevel.js?v=1"></script>
 <script src="sealevel-basin.js?v=8"></script>
 <script src="chart-focus.js?v=1"></script>
