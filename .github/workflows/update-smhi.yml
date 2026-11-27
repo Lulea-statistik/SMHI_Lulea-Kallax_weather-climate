@@ -83,6 +83,9 @@ jobs:
       - name: Build precipitation station comparisons
         run: python scripts/build_precip_stations.py
 
+      - name: Validate generated data before publication
+        run: python scripts/validate_run.py
+
       - name: Commit updated data and report
         shell: bash
         run: |
