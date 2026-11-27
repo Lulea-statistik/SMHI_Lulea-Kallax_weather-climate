@@ -21,16 +21,29 @@ class Page(HTMLParser):
         self.ids = []
         self.links = []
         self.pages = []
+        self.stack = []
+        self.structural = {'html','head','body','main','section','div','nav','header','footer'}
+        self.main_count = 0
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
+        if tag == 'main': self.main_count += 1
+        if tag in self.structural: self.stack.append(tag)
         if a.get("id"): self.ids.append(a["id"])
         if a.get("data-page"): self.pages.append(a["data-page"])
         if tag in ("script", "link", "img", "a"):
             url = a.get("src") or a.get("href")
             if url: self.links.append(url)
 
+    def handle_endtag(self, tag):
+        if tag not in self.structural: return
+        if not self.stack or self.stack[-1] != tag:
+            errors.append('Unexpected structural end tag: ' + tag)
+        else: self.stack.pop()
+
 page = Page()
 page.feed((DOCS / "index.html").read_text(encoding="utf-8"))
+check(page.main_count == 1, 'Expected exactly one main element')
+check(not page.stack, 'Unclosed structural HTML elements: ' + str(page.stack))
 check(len(page.ids) == len(set(page.ids)), "Duplicate HTML IDs")
 for p in page.pages:
     check("page-" + p in page.ids, "Missing page: " + p)
