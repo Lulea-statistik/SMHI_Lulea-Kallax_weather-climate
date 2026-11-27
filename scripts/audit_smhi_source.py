@@ -37,21 +37,23 @@ def download(pid):
                     break
             else: raise ValueError('station metadata absent')
             for i,row in enumerate(rows):
-                q=next((j for j,x in enumerate(row) if 'kvalitet' in x.lower()),None)
-                if q is not None and q>=2 and row[0].lower().startswith('datum'):
-                    interval='från' in row[0].lower() or 'fran' in row[0].lower()
+                q=next((j for j,x in enumerate(row) if 'kvalitet' in x.lower().strip()),None)
+                if q is not None and q>=1 and ('datum' in row[0].strip().lower() or 'från' in row[0].strip().lower() or 'fran' in row[0].strip().lower()):
+                    interval='från' in row[0].lower() or 'fran' in row[0].lower() or (q>=3 and ('till' in row[1].lower() or 'slut' in row[1].lower()))
+                    date_only=q==1 or (q==2 and not interval and 'tid' not in row[1].lower())
+                    print(f'Parameter {pid}: parsed header {row!r}',flush=True)
                     result={}
                     for cells in rows[i+1:]:
                         if len(cells)<=q:continue
                         try:
-                            dt=date(cells[0] if interval else cells[0]+' '+cells[1])
+                            dt=date(cells[0] if interval or date_only else cells[0]+' '+cells[1])
                             end=date(cells[1]).isoformat() if interval else ''
                             v=float(cells[q-1].replace(',','.'))
                             if math.isfinite(v):result[(dt.isoformat(),end)]=(dt.astimezone(TZ),v,cells[q])
                         except (ValueError,IndexError):continue
                     if not result:raise ValueError('no parsed observations')
                     return url,result
-            raise ValueError('data header not found')
+            raise ValueError('data header not found; candidate headers: '+repr([r for r in rows[:40] if any('kvalitet' in x.lower() for x in r)]))
         except Exception as e: failures.append(str(e))
     raise RuntimeError('; '.join(failures))
 def local(pid):
