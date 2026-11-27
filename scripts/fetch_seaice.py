@@ -509,6 +509,68 @@ def build_season_map_files(rows, sea_geom):
     print(f"Sea ice season map: {len(manifest_dates)} lazy-loadable dates written for {SEASON_MAP_LABEL}.")
 
 
+def build_current_season_maps(rows, sea_geom, today):
+    """Publish available dates only; coverage and ice share refer to the same chart."""
+    root = ROOT / "docs" / "seaice"
+    label = season_label(today)
+    folder = root / label.replace("/", "-")
+    folder.mkdir(parents=True, exist_ok=True)
+    to_wgs = Transformer.from_crs(TARGET_CRS, "EPSG:4326", always_xy=True).transform
+    dates = []
+    for key, row in sorted(rows.items()):
+        if row["season"] != label or not is_ice_season_date(date.fromisoformat(key)):
+            continue
+        path = folder / (key + ".geojson")
+        try:
+            # Refresh recent dates to capture revisions; keep existing verified files
+            # if a temporary source error occurs.
+            if not path.exists() or date.fromisoformat(key) >= today - timedelta(days=RECENT_DAYS):
+                package = daily_package_url(date.fromisoformat(key))
+                response = get(package) if package else None
+                if response is not None:
+                    verified, coverage = aggregate_day(date.fromisoformat(key), response.content, sea_geom)
+                    if verified["date"] != key or coverage is None or coverage.is_empty:
+                        raise ValueError("Analysis date or coverage mismatch")
+                    features = [{"type":"Feature","properties":{"kind":"smhi_analysis","source_date":key},
+                                 "geometry":mapping(transform(to_wgs, coverage))}]
+                    for geom, props, _ in read_shapefile_zip(response.content):
+                        ice_type = as_int(props.get("type"))
+                        if ice_type is None or ice_type < 2:
+                            continue
+                        clipped = geom.intersection(sea_geom)
+                        if clipped.is_empty or clipped.area <= 0:
+                            continue
+                        features.append({"type":"Feature","properties":{"kind":"ice","source_date":key,
+                            "ice_type":ice_type,"ice_type_name":ICE_TYPES.get(ice_type, str(ice_type)),
+                            "iceact":normalize_iceact(props.get("iceact")),
+                            "mean_thickness_cm":as_number(props.get("icetck")),
+                            "max_thickness_cm":as_number(props.get("icemax"))},
+                            "geometry":mapping(transform(to_wgs, clipped))})
+                    fc = {"type":"FeatureCollection","properties":{"source_date":key,"season":label,
+                          "source_crs":verified["source_crs"],"area_crs":"EPSG:3006","geometry_crs":"EPSG:4326",
+                          "ice_share_pct":verified["ice_share_pct"],"analysis_coverage_pct":verified["analysis_coverage_pct"],
+                          "mean_ice_thickness_cm":verified["mean_ice_thickness_cm"],"max_ice_thickness_cm":verified["max_ice_thickness_cm"]},
+                          "features":features}
+                    path.write_text(json.dumps(fc, ensure_ascii=False, separators=(",",":")),encoding="utf-8")
+                    rows[key] = verified
+        except Exception as exc:
+            print(f"Sea ice map {key}: {exc}", file=sys.stderr)
+        if path.exists():
+            fc = json.loads(path.read_text(encoding="utf-8"))
+            p = fc.get("properties", {})
+            if p.get("source_date") == key and any(f.get("properties",{}).get("kind")=="smhi_analysis" for f in fc.get("features",[])):
+                dates.append({"date":key,"file":path.name,**{k:p.get(k) for k in ("ice_share_pct","analysis_coverage_pct","mean_ice_thickness_cm","max_ice_thickness_cm")}})
+    if dates:
+        (folder/"manifest.json").write_text(json.dumps({"season":label,"dates":dates},ensure_ascii=False,separators=(",",":")),encoding="utf-8")
+    seasons=[]
+    for manifest in sorted(root.glob("*/manifest.json"), reverse=True):
+        data=json.loads(manifest.read_text(encoding="utf-8"))
+        if data.get("dates"):
+            seasons.append({"season":data["season"],"folder":manifest.parent.name,"latest_date":data["dates"][-1]["date"]})
+    (root/"index.json").write_text(json.dumps({"seasons":seasons},ensure_ascii=False,separators=(",",":")),encoding="utf-8")
+    print(f"Sea ice map index: {len(seasons)} seasons; {len(dates)} current-season dates")
+
+
 def load_daily():
     rows = {}
     if not DAILY_PATH.exists():
@@ -714,6 +776,7 @@ def main():
                 save_test_ice_geojson(r.content, sea_geom, TEST_ICE_DATE.isoformat())
     if not SEASON_MAP_MANIFEST.exists():
         build_season_map_files(rows, sea_geom)
+    build_current_season_maps(rows, sea_geom, today)
     save_daily(rows)
     build_summary(rows)
     print(f"Sea ice: {len(rows):,} daily Lulea summaries stored; {updated} maps processed this run.")
