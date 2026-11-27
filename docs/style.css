@@ -290,3 +290,12 @@ body{font-family:var(--font-body);line-height:1.5}
 .shortcut-group-weather .shortcut-icon{background:#e9f1f9}
 .shortcut-group-climate .shortcut-icon{background:#e9f3eb}
 .shortcut-group-maps .shortcut-icon{background:#ede8f7}
+
+/* Match the top-level navigation to the start-page group cards.
+   aria-controls is assigned by setupClimateNavigation in menu order. */
+.topic-menu button[aria-controls="topic-group-1"]{--topic-bg:#f5f9fd;--topic-border:#d5e3ef;--topic-active:#dceaf6;--topic-accent:#527f9e}
+.topic-menu button[aria-controls="topic-group-2"]{--topic-bg:#f5faf6;--topic-border:#d5e5d8;--topic-active:#dfede1;--topic-accent:#43834d}
+.topic-menu button[aria-controls="topic-group-3"]{--topic-bg:#f8f6fc;--topic-border:#e1dcef;--topic-active:#eae2f5;--topic-accent:#635a9d}
+.topic-menu button:not([aria-controls="topic-group-0"]){background:var(--topic-bg);border-color:var(--topic-border);color:var(--text)}
+.topic-menu button:not([aria-controls="topic-group-0"]):hover{border-color:var(--topic-accent)}
+.topic-menu button:not([aria-controls="topic-group-0"])[aria-expanded="true"]{background:var(--topic-active);border-color:var(--topic-accent);color:var(--text);box-shadow:inset 0 -3px 0 var(--topic-accent)}
