@@ -61,7 +61,7 @@
 
   <link rel="icon" type="image/x-icon" href="https://lulea-statistik.github.io/BR-brottsstatistik/kommun-favicon.ico?v=2">
 
-  <link rel="stylesheet" href="style.css?v=52">
+  <link rel="stylesheet" href="style.css?v=53">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -123,14 +123,14 @@
     <section class="start-shortcuts" aria-labelledby="startExploreTitle">
       <div class="start-shortcuts-heading"><h2 id="startExploreTitle">Utforska väder och klimat</h2><p>Välj ett ämne för att öppna diagrammen. Data hämtas först när de behövs.</p></div>
       <div class="start-shortcuts-grid">
-        <button type="button" data-go-page="temp1"><span class="shortcut-icon" aria-hidden="true">🌡️</span><strong>Temperatur</strong><span>Historisk utveckling och trender</span></button>
-        <button type="button" data-go-page="precip"><span class="shortcut-icon" aria-hidden="true">🌧️</span><strong>Nederbörd</strong><span>Mängder och årstidsvariation</span></button>
-        <button type="button" data-go-page="wind"><span class="shortcut-icon" aria-hidden="true">💨</span><strong>Vind</strong><span>Vindstyrka och riktningar</span></button>
-        <button type="button" data-go-page="sunshine"><span class="shortcut-icon" aria-hidden="true">☀️</span><strong>Sol och solsken</strong><span>Solskenstid och solinstrålning</span></button>
-        <button type="button" data-go-page="snow"><span class="shortcut-icon" aria-hidden="true">❄️</span><strong>Snö</strong><span>Snödjup och snösäsonger</span></button>
-        <button type="button" data-go-page="vegetation"><span class="shortcut-icon" aria-hidden="true">🌱</span><strong>Vegetationsperiod</strong><span>Växtsäsongens start och längd</span></button>
-        <button type="button" data-go-page="seaice"><span class="shortcut-icon" aria-hidden="true">🧊</span><strong>Havsis</strong><span>Isutbredning och issäsong</span></button>
-        <button type="button" data-go-page="dateweather"><span class="shortcut-icon" aria-hidden="true">📅</span><strong>Väder efter datum</strong><span>Undersök en specifik dag</span></button>
+        <button type="button" data-go-page="temp1"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="shortcut-illustrations.svg#thermometer"></use></svg></span><strong>Temperatur</strong><span>Historisk utveckling och trender</span></button>
+        <button type="button" data-go-page="precip"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="shortcut-illustrations.svg#cloud-rain"></use></svg></span><strong>Nederbörd</strong><span>Mängder och årstidsvariation</span></button>
+        <button type="button" data-go-page="wind"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="shortcut-illustrations.svg#wind"></use></svg></span><strong>Vind</strong><span>Vindstyrka och riktningar</span></button>
+        <button type="button" data-go-page="sunshine"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="shortcut-illustrations.svg#sun"></use></svg></span><strong>Sol och solsken</strong><span>Solskenstid och solinstrålning</span></button>
+        <button type="button" data-go-page="snow"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="shortcut-illustrations.svg#snowflake"></use></svg></span><strong>Snö</strong><span>Snödjup och snösäsonger</span></button>
+        <button type="button" data-go-page="vegetation"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="shortcut-illustrations.svg#sprout"></use></svg></span><strong>Vegetationsperiod</strong><span>Växtsäsongens start och längd</span></button>
+        <button type="button" data-go-page="seaice"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="shortcut-illustrations.svg#box"></use></svg></span><strong>Havsis</strong><span>Isutbredning och issäsong</span></button>
+        <button type="button" data-go-page="dateweather"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="shortcut-illustrations.svg#calendar"></use></svg></span><strong>Väder efter datum</strong><span>Undersök en specifik dag</span></button>
       </div>
       <p class="start-extra-links">Fler analyser finns i ämnesmenyn ovan, bland annat sikt, lufttryck, vattenstånd och metodbeskrivningar.</p>
     </section>
@@ -493,6 +493,7 @@
   <div class="chart-card full" style="min-height:0"><h2>Källor, licenser och ansvar</h2>
     <p>Källa: SMHI:s öppna data. Diagram, geografiska analyser och statistiska sammanställningar är bearbetningar inom detta projekt, inte SMHI:s egna officiella diagram. SMHI:s öppna data omfattas av <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>; se <a href="https://www.smhi.se/data/om-smhis-data/villkor-for-anvandning">SMHI:s användningsvillkor</a>. Kompletterande datakällor och geografiska underlag anges vid respektive analys och omfattas av sina egna villkor.</p>
     <p>Rapporten är avsedd för historisk och statistisk analys. Den ersätter inte SMHI:s prognoser, varningar eller lokala säkerhetsbedömningar. Stationsobservationer är inte nödvändigtvis representativa för hela kommunen.</p>
+    <p>Startsidan använder färganpassade SVG-illustrationer från <a href="https://lucide.dev/">Lucide</a> (ISC; kalenderikonen bygger på Feather, MIT). Se <a href="LICENSE-lucide.txt">fullständig licens och upphovsinformation</a>.</p>
     <p>Synpunkter på beräkningar och tekniska fel kan lämnas via <a href="https://github.com/Lulea-statistik/SMHI_Lulea-Kallax_weather-climate/issues">projektets ärendesida på GitHub</a>. Undvik att lämna personuppgifter där.</p>
   </div>
   <div class="chart-card full"><h2>Metod och data</h2>
