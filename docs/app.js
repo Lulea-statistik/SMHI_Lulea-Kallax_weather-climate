@@ -3247,7 +3247,8 @@ function loadSupportingData(page){
       if(['temp1','temp2','wind','snow','visibility','zerocross','vegetation'].includes(active))applyPageYearBounds(active,true);
     });
   }
-  if(page==='humidity')return loadSupplement('humidity_stations.json',data=>{
+  if(page==='humidity'&&!HUMIDITY_STATIONS)return loadSupplement('humidity_stations.json',data=>{
+    if(data?.status==='not_generated'){const info=el('humidityStationInfo');if(info)info.textContent='Kallax visas. Inventeringen av ytterligare stationer är ännu inte publicerad; deras datatillgång är inte verifierad.';return;}
     if(!Array.isArray(data?.stations))return;
     HUMIDITY_STATIONS=data;
     const select=el('humidityStation');if(!select)return;

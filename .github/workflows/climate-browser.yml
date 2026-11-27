@@ -1,0 +1,39 @@
+name: Climate browser quality checks
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'tests/browser/**'
+      - 'playwright.config.mjs'
+      - '.github/workflows/climate-browser.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '30 8 * * 1'
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright
+        run: npm install --no-save --package-lock=false @playwright/test@1.56.1
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser tests
+        run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: climate-browser-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
