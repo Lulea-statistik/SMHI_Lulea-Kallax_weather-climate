@@ -2195,7 +2195,7 @@ function renderSeaIce(f){
   const note=el('seaIceLatest');
   if(note){
     note.textContent=latest
-      ? 'Årsfiltret avser issäsongens startår. Senaste analys: '+(latestDaily?.date||'–')+'. Senaste säsong: '+latest.season+
+      ? 'Senaste analys i valda issäsonger: '+(latestDaily?.date||'–')+'. Senaste issäsong: '+latest.season+
         '. Maximal isutbredning '+(latest.max_ice_share_pct==null?'saknas':Number(latest.max_ice_share_pct).toFixed(1).replace('.',','))+
         ' % den '+(latest.max_ice_date||'–')+'.'
       : '';
@@ -3042,25 +3042,32 @@ function pageYearBounds(page){
     zerocross:()=>yearBoundsFromRows(selectedStationData('zerocross').days||[]),
     vegetation:()=>yearBoundsFromRows(selectedStationData('vegetation').climate_10y||[],'window_end'),
     lightning:()=>yearBoundsFromRows(DATA.lightning?.annual),
-    seaice:()=>({min:2017,max:Math.max(2017,...(DATA.sea_ice?.seasonal||[]).map(r=>Number(r.start_year)||2017))}),
+    seaice:()=>{const ys=(DATA.sea_ice?.seasonal||[]).map(r=>Number(r.start_year)).filter(Number.isFinite);return ys.length?{min:Math.min(...ys),max:Math.max(...ys)}:{min:2017,max:2017};},
     snowmap:()=>({min:1990,max:2025}),
     dateweather:()=>yearBoundsFromRows(DATA.temperature?.annual||DATA.temperature?.monthly)
   };
   try{return candidates[page]?.()||fallback;}catch{return fallback;}
 }
+function iceSeasonLabel(y){return y+'/'+String(Number(y)+1).slice(-2);}
+function filterPeriodLabel(y,page=climatePage()){return page==='seaice'?iceSeasonLabel(y):String(y);}
 function applyPageYearBounds(page,resetToFull=true){
   if(!DATA||!el('yearFrom')||!el('yearTo')||!el('rangeFrom')||!el('rangeTo'))return;
   const b=pageYearBounds(page);
+  const season=page==='seaice';
+  for(const [suffix,word] of [['From','Från'],['To','Till']]){
+    el('year'+suffix+'Caption').textContent=word+(season?' issäsong':' år');
+    el('range'+suffix).setAttribute('aria-label',word+(season?' issäsong':' år'));
+  }
   const allYears=Array.from({length:Math.max(0,b.max-b.min+1)},(_,i)=>b.min+i);
   if(!allYears.length)return;
-  ['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=allYears.map(y=>'<option value="'+y+'">'+y+'</option>').join(''));
+  ['yearFrom','yearTo'].forEach(id=>el(id).innerHTML=allYears.map(y=>'<option value="'+y+'">'+filterPeriodLabel(y,page)+'</option>').join(''));
   ['rangeFrom','rangeTo'].forEach(id=>{el(id).min=b.min;el(id).max=b.max;el(id).step=1;});
   let from=resetToFull?b.min:Math.max(b.min,Math.min(b.max,Number(el('yearFrom').value)||b.min));
   let to=resetToFull?b.max:Math.max(b.min,Math.min(b.max,Number(el('yearTo').value)||b.max));
   if(from>to){from=b.min;to=b.max;}
   el('yearFrom').value=String(from);el('yearTo').value=String(to);
   el('rangeFrom').value=String(from);el('rangeTo').value=String(to);
-  el('rangeFromLabel').textContent=from;el('rangeToLabel').textContent=to;
+  el('rangeFromLabel').textContent=filterPeriodLabel(from,page);el('rangeToLabel').textContent=filterPeriodLabel(to,page);
   updateRangeTrack();
 }
 
@@ -3070,7 +3077,7 @@ function syncYear(source,value,renderNow=true){
   if(a>b){if(source==='from')b=a;else a=b;}
   el('yearFrom').value=a;el('yearTo').value=b;
   el('rangeFrom').value=a;el('rangeTo').value=b;
-  el('rangeFromLabel').textContent=a;el('rangeToLabel').textContent=b;
+  el('rangeFromLabel').textContent=filterPeriodLabel(a);el('rangeToLabel').textContent=filterPeriodLabel(b);
   updateRangeTrack();
   if(renderNow){
     render();
