@@ -159,8 +159,8 @@
     </section>
   </section>
   <section class="filters" id="globalFilters">
-    <label class="filter-select year-filter">Från år<select id="yearFrom"></select></label>
-    <label class="filter-select year-filter">Till år<select id="yearTo"></select></label>
+    <label class="filter-select year-filter"><span id="yearFromCaption">Från år</span><select id="yearFrom"></select></label>
+    <label class="filter-select year-filter"><span id="yearToCaption">Till år</span><select id="yearTo"></select></label>
     <label class="filter-select" id="globalMonthFilter">Månad<select id="month">
       <option value="0">Alla månader</option><option value="1">Januari</option><option value="2">Februari</option>
       <option value="3">Mars</option><option value="4">April</option><option value="5">Maj</option><option value="6">Juni</option>
@@ -407,8 +407,8 @@
       <p id="seaIceMapStatus" class="hint"></p>
       <p id="seaIceSeasonStatus" class="hint"></p>
     </div>
-    <div class="chart-card"><h2>Isutbredning inom analyserad Luleå-havsyta</h2><p class="hint">Andel av den del av kommunens havsyta som täcks av dagens SMHI-analys och som klassas som havsis. Årsfiltret avser issäsongens startår (2026 = 2026/27). Historiska säsonger visas 15 oktober–6 juni; pågående säsong visas till dagens datum. Punkter visar analyser, luckor innebär saknade observationer.</p><p id="seaIceLatest" class="hint"></p><canvas id="seaIceDaily"></canvas></div>
-    <div class="chart-card"><h2>Istjocklek</h2><p class="hint">Areaviktad medeltjocklek och högsta rapporterade tjocklek i de ispolygoner som överlappar Luleås havsyta. Årsfiltret avser issäsongens startår. Historiska säsonger visas 15 oktober–6 juni; pågående säsong visas till dagens datum. Punkter visar analyser, luckor innebär saknade observationer.</p><canvas id="seaIceThickness"></canvas></div>
+    <div class="chart-card"><h2>Isutbredning inom analyserad Luleå-havsyta</h2><p class="hint">Andel av den del av kommunens havsyta som täcks av dagens SMHI-analys och som klassas som havsis. Valda issäsonger styr diagrammen. Historiska issäsonger visas 15 oktober–6 juni; pågående issäsong visas till dagens datum. Punkter visar analyser, luckor innebär saknade observationer.</p><p id="seaIceLatest" class="hint"></p><canvas id="seaIceDaily"></canvas></div>
+    <div class="chart-card"><h2>Istjocklek</h2><p class="hint">Areaviktad medeltjocklek och högsta rapporterade tjocklek i de ispolygoner som överlappar Luleås havsyta. Valda issäsonger styr diagrammen. Historiska issäsonger visas 15 oktober–6 juni; pågående issäsong visas till dagens datum. Punkter visar analyser, luckor innebär saknade observationer.</p><canvas id="seaIceThickness"></canvas></div>
     <div class="chart-card"><h2>Maximal andel fast is per issäsong</h2><p class="hint">Fast is motsvarar istyp 8 i SMHI:s analyskarta.</p><canvas id="seaIceFast"></canvas></div>
     <div class="chart-card"><h2>Issäsongens längd</h2><p class="hint">Antal kalenderdygn mellan första och sista kartdatum med is inom Luleås havsyta. Måttet påverkas av datatäckningen i arkivet.</p><canvas id="seaIceLength"></canvas></div>
   </section>
@@ -582,5 +582,5 @@
 <script src="sealevel.js?v=1"></script>
 <script src="sealevel-basin.js?v=9"></script>
 <script src="chart-focus.js?v=1"></script>
-<script src="app.js?v=64"></script>
+<script src="app.js?v=65"></script>
 </body></html>
