@@ -19,7 +19,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: smhi-date-weather-data-build
+  group: smhi-kallax-data-update
   cancel-in-progress: false
 
 jobs:
