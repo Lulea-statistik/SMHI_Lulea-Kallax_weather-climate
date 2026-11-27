@@ -1,0 +1,26 @@
+name: SMHI independent source audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/audit_smhi_source.py'
+      - '.github/workflows/smhi-source-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify archive and dashboard
+        run: python scripts/audit_smhi_source.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smhi-source-audit
+          path: audit-output/
+          retention-days: 30
