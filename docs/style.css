@@ -274,3 +274,7 @@ body{font-family:var(--font-body);line-height:1.5}
 #page-weather .page-tools select{max-width:100%}
 #page-weather .page-tools .hint{flex:1 1 220px;overflow-wrap:anywhere}
 #page-weather.active{grid-template-columns:minmax(0,1fr)}
+
+/* Locally hosted, color-adapted Lucide illustrations. */
+.start-shortcuts-grid .shortcut-icon{display:flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:12px;background:#f2f6fa;flex:none;margin-bottom:3px}
+.start-shortcuts-grid .shortcut-icon svg{display:block;width:38px;height:38px}
