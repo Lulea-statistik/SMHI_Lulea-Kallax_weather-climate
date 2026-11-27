@@ -299,3 +299,5 @@ body{font-family:var(--font-body);line-height:1.5}
 .topic-menu button:not([aria-controls="topic-group-0"]){background:var(--topic-bg);border-color:var(--topic-border);color:var(--text)}
 .topic-menu button:not([aria-controls="topic-group-0"]):hover{border-color:var(--topic-accent)}
 .topic-menu button:not([aria-controls="topic-group-0"])[aria-expanded="true"]{background:var(--topic-active);border-color:var(--topic-accent);color:var(--text);box-shadow:inset 0 -3px 0 var(--topic-accent)}
+
+.chart-sort-button{font:inherit;color:inherit;background:transparent;border:0;padding:4px 0;text-align:left;cursor:pointer;width:100%}.chart-sort-button:hover{text-decoration:underline}.chart-sort-button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}

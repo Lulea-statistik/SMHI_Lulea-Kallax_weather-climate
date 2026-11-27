@@ -11,13 +11,38 @@
     if(!labels.length||!sets.length){target.textContent='Inga tabellvärden i aktuellt urval.';return;}
     const table=document.createElement('table'),caption=document.createElement('caption');
     caption.textContent=chart.canvas.getAttribute('aria-label')||'Diagramvärden';table.append(caption);
-    const head=table.createTHead().insertRow();addCell(head,'th','Period / kategori').scope='col';
-    sets.forEach((d,i)=>{const scale=chart.scales?.[d.yAxisID||'y']||chart.scales?.r;const axis=scale?.options?.title;const unit=axis?.display?axis.text:'';addCell(head,'th',(d.label||'Serie '+(i+1))+(unit?' · '+unit:'' )).scope='col';});
+    const head=table.createTHead().insertRow();
+    const headers=['Period / kategori',...sets.map((d,i)=>{const scale=chart.scales?.[d.yAxisID||'y']||chart.scales?.r;const axis=scale?.options?.title;const unit=axis?.display?axis.text:'';return (d.label||'Serie '+(i+1))+(unit?' · '+unit:'');})];
+    const raw=v=>v&&typeof v==='object'&&!Array.isArray(v)?(v.y??v.r??null):v;
+    const rows=labels.map((label,i)=>[label,...sets.map(d=>raw(d.data?.[i]))]).filter(r=>r[0]!=='');
     const body=table.createTBody();
-    labels.forEach((label,i)=>{
-      const row=body.insertRow();addCell(row,'th',format(label)).scope='row';
-      sets.forEach(d=>{const v=d.data?.[i];addCell(row,'td',format(v&&typeof v==='object'&&!Array.isArray(v)?(v.y??v.r??null):Array.isArray(v)?v.map(format).join(' – '):v));});
+    const state=details._chartSort||{column:0,direction:chart.canvas.id==='seaIceDaily'||chart.canvas.id==='seaIceThickness'?-1:1};
+    const ths=[];
+    const missing=v=>v==null||(typeof v==='number'&&!Number.isFinite(v));
+    const compare=(a,b)=>typeof a==='number'&&typeof b==='number'?a-b:String(a).localeCompare(String(b),'sv',{numeric:true});
+    function render(){
+      body.replaceChildren();
+      const sorted=rows.slice().sort((a,b)=>{
+        const x=a[state.column],y=b[state.column];
+        if(missing(x)||missing(y))return Number(missing(x))-Number(missing(y));
+        return state.direction*compare(x,y);
+      });
+      for(const values of sorted){
+        const row=body.insertRow();
+        values.forEach((v,i)=>{const cell=addCell(row,i===0?'th':'td',Array.isArray(v)?v.map(format).join(' – '):format(v));if(i===0)cell.scope='row';});
+      }
+      ths.forEach((th,i)=>{
+        th.setAttribute('aria-sort',i===state.column?(state.direction===1?'ascending':'descending'):'none');
+        th.firstChild.textContent=headers[i]+(i===state.column?(state.direction===1?' ↑':' ↓'):' ↕');
+      });
+    }
+    headers.forEach((label,i)=>{
+      const th=addCell(head,'th','');th.scope='col';ths.push(th);
+      const button=document.createElement('button');button.type='button';button.className='chart-sort-button';
+      button.addEventListener('click',()=>{state.direction=state.column===i?-state.direction:(i===0?1:-1);state.column=i;details._chartSort=state;render();});
+      th.append(button);
     });
+    render();
     target.append(table);
   }
   Chart.register({id:'accessibleDataTable',afterDestroy(chart,args,options){const canvas=chart.canvas;if(canvas){const details=panels.get(canvas);details?.remove();panels.delete(canvas);}},beforeDestroy(chart){const canvas=chart.canvas;const details=panels.get(canvas);details?.remove();panels.delete(canvas);},afterUpdate(chart){

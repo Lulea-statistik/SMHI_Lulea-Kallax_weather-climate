@@ -2108,8 +2108,9 @@ function seaIceSeasonDateRange(startYear){
 function buildSeaIceSeasonTimeline(dailyRows,seasonalRows){
   const byDate=new Map(dailyRows.map(r=>[r.date,r]));
   const labels=[],rows=[],seasonKeys=[];
+  const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Stockholm'});
   seasonalRows.forEach((s,idx)=>{
-    seaIceSeasonDateRange(s.start_year).forEach(date=>{
+    seaIceSeasonDateRange(s.start_year).filter(date=>date<=today).forEach(date=>{
       labels.push(date);
       rows.push(byDate.get(date)||null);
       seasonKeys.push(s.season);
@@ -2173,12 +2174,12 @@ function renderSeaIce(f){
     
 
     lineChart('seaIceDaily',timeline.labels,[
-      {label:'Isutbredning',data:timeline.rows.map(r=>r?r.ice_share_pct:null),borderColor:'#111827',backgroundColor:'#111827',borderWidth:2,pointRadius:0,spanGaps:false},
+      {label:'Isutbredning',data:timeline.rows.map(r=>r?r.ice_share_pct:null),borderColor:'#111827',backgroundColor:'#111827',borderWidth:2,pointRadius:ctx=>ctx.raw==null?0:2,pointHoverRadius:5,spanGaps:false},
     ],'%');
 
     lineChart('seaIceThickness',timeline.labels,[
-      {label:'Medeltjocklek',data:timeline.rows.map(r=>r?r.mean_ice_thickness_cm:null),borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:0,spanGaps:false},
-      {label:'Maximal tjocklek',data:timeline.rows.map(r=>r?r.max_ice_thickness_cm:null),borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:0,spanGaps:false},
+      {label:'Medeltjocklek',data:timeline.rows.map(r=>r?r.mean_ice_thickness_cm:null),borderColor:'#67b7e1',backgroundColor:'#67b7e1',borderWidth:2,pointRadius:ctx=>ctx.raw==null?0:2,pointHoverRadius:5,spanGaps:false},
+      {label:'Maximal tjocklek',data:timeline.rows.map(r=>r?r.max_ice_thickness_cm:null),borderColor:'#1f5f8b',backgroundColor:'#1f5f8b',borderWidth:2,pointRadius:ctx=>ctx.raw==null?0:2,pointHoverRadius:5,spanGaps:false},
     ],'cm');
   }else{
     destroyChart('seaIceDaily');
@@ -2190,10 +2191,11 @@ function renderSeaIce(f){
   barChart('seaIceLength',labels,seasonal.map(r=>r.season_length_days),'dygn');
 
   const latest=seasonal.length?seasonal[seasonal.length-1]:null;
+  const latestDaily=daily.at(-1);
   const note=el('seaIceLatest');
   if(note){
     note.textContent=latest
-      ? 'Varje issäsong visas från 15 oktober till 6 juni. Senaste kompletta/partiella säsong i datat: '+latest.season+
+      ? 'Årsfiltret avser issäsongens startår. Senaste analys: '+(latestDaily?.date||'–')+'. Senaste säsong: '+latest.season+
         '. Maximal isutbredning '+(latest.max_ice_share_pct==null?'saknas':Number(latest.max_ice_share_pct).toFixed(1).replace('.',','))+
         ' % den '+(latest.max_ice_date||'–')+'.'
       : '';

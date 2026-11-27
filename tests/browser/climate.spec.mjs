@@ -95,3 +95,21 @@ test('sea ice map selects published season and latest available date',async({pag
   expect(await slider.inputValue()).toBe(await slider.getAttribute('max'));
   await expect(page.locator('#seaIceSeasonDateLabel')).not.toHaveText('Laddar datum…');
 });
+
+test('sea ice sparse observations visible and table headers sortable',async({page})=>{
+  await open(page,'seaice','?from=2026&to=2026');
+  await expect.poll(()=>page.evaluate(()=>window.Chart?.getChart('seaIceDaily')?.data.datasets[0].data.some(v=>v>0)),{timeout:60000}).toBe(true);
+  for(const id of ['seaIceDaily','seaIceThickness']){
+    const card=page.locator('#'+id).locator('xpath=ancestor::div[contains(@class,"chart-card")][1]');
+    await card.locator('summary').click();
+    const result=await page.evaluate(id=>{const c=window.Chart.getChart(id);return {last:c.data.labels.at(-1),latest:c.data.labels.filter((_,i)=>c.data.datasets[0].data[i]!=null).at(-1),radius:c.data.datasets[0].pointRadius({raw:4})};},id);
+    expect(result.last<=new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Stockholm'})).toBe(true);
+    expect(result.radius).toBeGreaterThan(0);
+    const header=card.locator('thead th').first();
+    await expect(header).toHaveAttribute('aria-sort','descending');
+    await header.locator('button').click();
+    await expect(header).toHaveAttribute('aria-sort','ascending');
+    await card.locator('thead th').nth(1).locator('button').click();
+    await expect(card.locator('thead th').nth(1)).toHaveAttribute('aria-sort','descending');
+  }
+});
