@@ -249,3 +249,6 @@ body{font-family:var(--font-body);line-height:1.5}
 .chart-focus-dialog .chart-card{min-height:0}
 .chart-focus-close{display:block;margin:0 0 8px auto;padding:8px 12px;cursor:pointer}
 @media(max-width:760px){.year-sliders{min-width:0;width:100%;margin-left:0}.page-tools{flex-wrap:wrap}.topbar{flex-wrap:wrap;gap:12px}}
+
+/* Ämnesmeny i två nivåer */
+.topic-menu{display:flex;flex-wrap:wrap;gap:8px;padding:12px 22px 0;background:white}.topic-menu button{font:inherit;font-weight:650;padding:10px 14px;border:1px solid var(--line);border-radius:7px;background:white;color:var(--text);cursor:pointer}.topic-menu button[aria-expanded=true]{background:var(--accent);color:white}.topic-menu button:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}#tabs .nav-group[hidden]{display:none!important}#tabs.tabs{flex-wrap:wrap;overflow:visible}#tabs .nav-group{flex-wrap:wrap;flex:1 1 100%;border:0;padding-right:0}#tabs .nav-group-label{display:none}#tabs button{white-space:normal;text-align:left}

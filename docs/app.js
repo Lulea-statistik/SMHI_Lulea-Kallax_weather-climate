@@ -3039,8 +3039,45 @@ function syncYear(source,value,renderNow=true){
     }
   }
 }
+// URL state for page and supported global filters.
+const climateStations={temp1:'temperature1Station',temp2:'temperature2Station',precip:'precipStation',weather:'weatherStation',wind:'windStation',visibility:'visibilityStation',pressure:'pressureStation',humidity:'humidityStation',sunshine:'sunshineStation',snow:'snowStation',zerocross:'zerocrossStation',vegetation:'vegetationStation'};
+let pendingClimateLink=null,climateNavId=0;
+function climatePage(){return document.querySelector('#tabs button.active')?.dataset.page||'start';}
+function parseClimateLink(hash){const [page,query='']=hash.slice(1).split('?');return {page,params:new URLSearchParams(query)};}
+function writeClimateLink(push=false){
+ const page=climatePage(),p=new URLSearchParams();
+ if(DATA&&page!=='start'){
+  if(!['dateweather','sealevel','algae','temp2','data'].includes(page)){p.set('from',el('yearFrom').value);p.set('to',el('yearTo').value);if(page!=='seaice')p.set('month',el('month').value);}
+  const station=el(climateStations[page]);if(station?.value)p.set('station',station.value);
+ }
+ const hash='#'+page+(p.toString()?'?'+p.toString():'');
+ if(location.hash!==hash)history[push?'pushState':'replaceState'](null,'',hash);
+}
+function restoreClimateLink(link,page){
+ if(!link||link.page!==page)return;
+ const p=link.params,station=el(climateStations[page]);
+ if(station&&Array.from(station.options).some(o=>o.value===p.get('station'))){station.value=p.get('station');if(page==='temp2')setupTemp2Slider();applyPageYearBounds(page,true);}
+ const valid=(id,v)=>v!==null&&Array.from(el(id).options).some(o=>o.value===v);
+ const from=p.get('from'),to=p.get('to');
+ if(valid('yearFrom',from)&&valid('yearTo',to)&&Number(from)<=Number(to)){syncYear('from',from,false);syncYear('to',to,false);}
+ if(page!=='seaice'&&valid('month',p.get('month')))el('month').value=p.get('month');
+}
+function setupClimateNavigation(){
+ const nav=el('tabs'),groups=[...nav.querySelectorAll('.nav-group')],bar=document.createElement('div');bar.className='topic-menu';bar.setAttribute('aria-label','Ämnesgrupper');
+ const buttons=groups.map((g,i)=>{const b=document.createElement('button');b.type='button';b.textContent=g.querySelector('.nav-group-label').textContent;g.id='topic-group-'+i;b.setAttribute('aria-controls',g.id);b.addEventListener('click',()=>{if(!g.contains(nav.querySelector('button.active')))g.querySelector('button[data-page]')?.click();});bar.append(b);return b;});
+ nav.before(bar);
+ function update(){const active=nav.querySelector('button.active');groups.forEach((g,i)=>{const current=g.contains(active);g.hidden=!current;buttons[i].setAttribute('aria-expanded',String(current));});}
+ new MutationObserver(update).observe(nav,{subtree:true,attributes:true,attributeFilter:['class']});update();
+ function openLink(){const link=parseClimateLink(location.hash);const target=[...nav.querySelectorAll('button[data-page]')].find(b=>b.dataset.page===link.page)||nav.querySelector('[data-page="start"]');pendingClimateLink=link;target.click();}
+ window.addEventListener('hashchange',openLink);
+ document.addEventListener('change',e=>{if(['yearFrom','yearTo','rangeFrom','rangeTo','month',...Object.values(climateStations)].includes(e.target.id))writeClimateLink();});
+ el('resetFilters').addEventListener('click',()=>writeClimateLink());
+ if(location.hash)openLink();
+}
+
 function setupTabs(){
   document.querySelectorAll('#tabs button').forEach(btn=>btn.addEventListener('click',()=>{
+    const navId=++climateNavId,link=pendingClimateLink;pendingClimateLink=null;
     const done=beginGlobalLoading('Laddar '+btn.textContent.trim()+'…');
     setTimeout(async()=>{
       try{
@@ -3057,12 +3094,15 @@ function setupTabs(){
         const monthFilter=el('globalMonthFilter');
         if(monthFilter)monthFilter.style.display=btn.dataset.page==='seaice'?'none':'';
         if(btn.dataset.page==='seaice'&&el('month'))el('month').value='0';
-        if(btn.dataset.page==='start')return;
+        if(btn.dataset.page==='start'){writeClimateLink(!link);return;}
         await ensureDashboard();
+        if(navId!==climateNavId)return;
         applyPageYearBounds(btn.dataset.page,true);
         render();
-        // Supplement files are fetched only for pages that actually need them.
-        loadSupportingData(btn.dataset.page);
+        await loadSupportingData(btn.dataset.page);
+        if(navId!==climateNavId)return;
+        restoreClimateLink(link,btn.dataset.page);
+        render();writeClimateLink(!link);
         if(btn.dataset.page==='dateweather'&&!dateWeatherInitialized){
           dateWeatherInitialized=true;
           setupDateWeather();
@@ -3224,6 +3264,7 @@ function ensureDashboard(){
   return dashboardPromise;
 }
 setupTabs();
+setupClimateNavigation();
 document.querySelectorAll('[data-go-page]').forEach(button=>button.addEventListener('click',()=>{
   const target=document.querySelector('#tabs button[data-page="'+button.dataset.goPage+'"]');
   if(target)target.click();
