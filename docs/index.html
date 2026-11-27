@@ -2,18 +2,18 @@
 <html lang="sv">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Klimat och väder i Luleå Kommun</title>
+  <title>Klimat och väder i Luleå kommun</title>
   <meta name="description" content="Interaktiv klimat- och väderrapport för Luleå kommun med SMHI-data från Kallax station 162860 samt kompletterande analyser av temperatur, nederbörd, vind, snö, sikt, luftfuktighet, solsken, nollgenomgångar, vegetation, blixt, havsis och alger.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <link rel="canonical" href="https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="sv_SE">
-  <meta property="og:title" content="Klimat och väder i Luleå Kommun">
+  <meta property="og:title" content="Klimat och väder i Luleå kommun">
   <meta property="og:description" content="Interaktiv klimat- och väderrapport för Luleå kommun med SMHI-data från Kallax station 162860 samt kompletterande analyser av temperatur, nederbörd, vind, snö, sikt, luftfuktighet, solsken, nollgenomgångar, vegetation, blixt, havsis och alger.">
   <meta property="og:url" content="https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/">
-  <meta property="og:image" content="https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/favicon.png">
+  <meta property="og:image" content="https://lulea-statistik.github.io/BR-brottsstatistik/lulea-kommun-mark.png?v=3">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Klimat och väder i Luleå Kommun">
+  <meta name="twitter:title" content="Klimat och väder i Luleå kommun">
   <meta name="twitter:description" content="Interaktiv klimat- och väderrapport för Luleå kommun med SMHI-data från Kallax station 162860 samt kompletterande analyser av temperatur, nederbörd, vind, snö, sikt, luftfuktighet, solsken, nollgenomgångar, vegetation, blixt, havsis och alger.">
   <script type="application/ld+json">
   {
@@ -23,14 +23,14 @@
         "@type":"WebSite",
         "@id":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/#website",
         "url":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/",
-        "name":"Klimat och väder i Luleå Kommun",
+        "name":"Klimat och väder i Luleå kommun",
         "inLanguage":"sv-SE"
       },
       {
         "@type":"WebPage",
         "@id":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/#webpage",
         "url":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/",
-        "name":"Klimat och väder i Luleå Kommun",
+        "name":"Klimat och väder i Luleå kommun",
         "description":"Interaktiv klimat- och väderrapport för Luleå kommun med SMHI-data från Kallax station 162860 samt kompletterande analyser av temperatur, nederbörd, vind, snö, sikt, luftfuktighet, solsken, nollgenomgångar, vegetation, blixt, havsis och alger.",
         "isPartOf":{"@id":"https://lulea-statistik.github.io/SMHI_Lulea-Kallax_weather-climate/#website"},
         "inLanguage":"sv-SE",
@@ -61,7 +61,7 @@
 
   <link rel="icon" type="image/x-icon" href="https://lulea-statistik.github.io/BR-brottsstatistik/kommun-favicon.ico?v=2">
 
-  <link rel="stylesheet" href="style.css?v=48">
+  <link rel="stylesheet" href="style.css?v=51">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -69,10 +69,11 @@
 
 </head>
 <body>
+<a class="skip-link" href="#main-content" onclick="event.preventDefault();document.getElementById('main-content').focus();document.getElementById('main-content').scrollIntoView()">Hoppa till innehållet</a>
 <header class="topbar">
   <div class="brand">
-    <img class="brandLogo" src="https://lulea-statistik.github.io/BR-brottsstatistik/lulea-kommun-mark.png?v=3" alt="Luleå Statistik">
-    <div class="brandText"><h1>Klimat och väder i Luleå Kommun</h1><p>Historik och löpande uppdateringar</p></div>
+    <img class="brandLogo" src="https://lulea-statistik.github.io/BR-brottsstatistik/lulea-kommun-mark.png?v=3" alt="Luleå kommun">
+    <div class="brandText"><h1>Klimat och väder i Luleå kommun</h1><p>Historiska observationer och löpande uppdateringar</p></div>
   </div>
   <div class="topbar-status">
     <div id="globalLoading" class="global-loading is-hidden" aria-live="polite"><span class="loading-spinner" aria-hidden="true"></span><span id="globalLoadingText">Laddar rapport…</span></div>
@@ -111,14 +112,13 @@
 </nav>
 <main>
 <p id="supplementStatus" class="source-note" role="status" hidden></p>
+<main id="main-content" tabindex="-1">
   <section id="page-start" class="page active">
-    <figure class="start-hero">
-      <img src="https://www.smhi.se/images/200.710b6b821937865f1781f6/1734086229473/313432-sunset.webp" alt="Solnedgång, bild från SMHI" loading="eager">
-      <figcaption>Bild: <a href="https://www.smhi.se/images/200.710b6b821937865f1781f6/1734086229473/313432-sunset.webp" target="_blank" rel="noopener noreferrer">SMHI</a></figcaption>
-    </figure>
+    
     <section class="report-intro" aria-labelledby="reportIntroTitle">
     <h2 id="reportIntroTitle">Klimat och väder i Luleå</h2>
-    <p>Rapporten sammanställer historiska och löpande väder- och klimatdata för Luleå kommun. Huvudkällan är SMHI:s observationsdata från Kallax station 162860. Rapporten innehåller analyser av temperatur, nederbörd, väderfenomen, vind, sikt, lufttryck, luftfuktighet, solskenstid, snö och snötäcke, nollgenomgångar, vegetationsperiod, blixt, havsis och alger.</p>
+    <p>Rapporten sammanställer historiska och löpande väder- och klimatdata för Luleå kommun. Huvudkällan är SMHI:s observationsdata från Kallax station 162860. Rapporten innehåller analyser av temperatur, nederbörd, väderfenomen, vind, sikt, lufttryck, luftfuktighet, solskenstid, snö och snötäcke, nollgenomgångar, vegetationsperiod, blixt, havsis, cyanobakterier och vattenstånd.</p>
+    <p class="hint"><strong>Om rapporten:</strong> Statistisk sammanställning och egna bearbetningar av observationsdata, inte en prognos- eller varningstjänst. För aktuella prognoser och varningar, se <a href="https://www.smhi.se/">SMHI:s webbplats</a>.</p>
 
     </section>
     <section class="start-shortcuts" aria-labelledby="startExploreTitle">
@@ -343,7 +343,7 @@
 
   <section id="page-lightning" class="page">
     <div class="source-note"><b>Blixtdata:</b> SMHI:s historiska arkiv över registrerade urladdningar används från 2012 och framåt. Observationer klassas som fastland, ö, hav eller inlandsvatten. Observationer vars position ligger så nära en yt- eller kommungräns att klassningen är osäker redovisas som <b>Osäkert område</b>. SMHI anger att medianfelet vid normal drift ska vara mindre än cirka 500 meter, men enskilda avvikelser kan vara större. Det finns dessutom ett metodbrott i blixtlokaliseringssystemet under 2014, vilket gör äldre och nyare nivåer mindre direkt jämförbara.</div>
-    <div id="lightningNoData" class="chart-card full" style="display:none"><h2>Blixtdata väntar på första hämtningen</h2><p class="hint">Kör workflowet med refresh-all för att hämta historiken och bygga klassningen.</p></div>
+    <div id="lightningNoData" class="chart-card full" style="display:none"><h2>Blixtdata väntar på första hämtningen</h2><p class="hint">Historiska blixtdata är för närvarande inte tillgängliga i rapporten.</p></div>
     <div class="lightning-layout">
       <div class="chart-card seaice-map-card lightning-map-card">
         <h2>Blixtnedslag i Luleå kommun</h2>
@@ -366,7 +366,7 @@
 
   <section id="page-seaice" class="page">
     <div class="source-note"><b>Havsis:</b> SMHI:s SE.SR Analyskarta havsis klipps mot Luleå kommuns havsyta. Källans koordinatsystem läses från shapefilens PRJ-fil och geometrierna transformeras till EPSG:3006 innan arealer beräknas. Fastland och inlandsvatten ingår inte i beräkningsytan. Andelar beräknas mot den del av Luleås havsyta som faktiskt täcks av dagens SMHI-analys; kommunens totala havsyta och täckningsgrad sparas separat för kvalitetskontroll. Isanalysen bygger på satellitdata och observationer och är en tolkad lägesbild, inte en exakt lokal isbeskrivning.</div>
-    <div id="seaIceNoData" class="chart-card full" style="display:none"><h2>Havsisdata väntar på första hämtningen</h2><p class="hint">Kör workflowet i bootstrap- eller refresh-all-läge för att bygga den historiska serien.</p></div>
+    <div id="seaIceNoData" class="chart-card full" style="display:none"><h2>Havsisdata väntar på första hämtningen</h2><p class="hint">Historiska havsisdata är för närvarande inte tillgängliga i rapporten.</p></div>
     <div class="chart-card full seaice-map-card">
       <h2>Vad betyder 100 % isutbredning?</h2>
       <p class="hint">Den interaktiva kartan visar den faktiska geometri som används i havsisstatistiken. Den blå polygonen är SMHI:s analyserade havsyta inom Luleå; när hela den ytan är klassad som havsis visas 100 %. Den röda linjen visar Luleås kommunala havsyta.</p>
@@ -429,7 +429,7 @@
     <div class="source-note"><b>Vattenstånd i Luleå:</b> Mätstation Strömören (35183), Sjöfartsverket. Observationer av havsvattenstånd i höjdsystemet <b>RH 2000</b>. Källa: SMHI:s oceanografiska observationsdata. Detta är en separat station från Luleå-Kallax.</div>
     <div class="chart-card full">
       <h2>Vattenstånd – historiska observationer</h2>
-      <p class="hint" id="seaLevelStatus">Väntar på bearbetade SMHI-data. Starta bootstrap för att skapa diagramunderlaget.</p>
+      <p class="hint" id="seaLevelStatus">Väntar på bearbetade SMHI-data. Diagrammet visas när underlaget är tillgängligt.</p>
       <div class="page-tools"><label>Från år <select id="seaLevelFrom"></select></label><label>Till år <select id="seaLevelTo"></select></label><label>Upplösning <select id="seaLevelResolution"><option value="daily">Dygnsmedel</option><option value="monthly">Månadsmedel</option></select></label></div>
       <div class="sea-level-stats" id="seaLevelStats"></div>
       <div style="position:relative;height:360px"><canvas id="seaLevelHistory"></canvas></div>
@@ -493,6 +493,12 @@
   <section id="page-data" class="page">
 <div class="chart-card full"><h2>Senaste observation per parameter</h2><p>Rapportens genereringsdatum är inte samma sak som senaste observation. Perioder varierar mellan parametrar.</p><ul id="dataStatus"></ul></div>
   <div class="chart-card full"><h2>Metod &amp; Data</h2>
+  <div class="chart-card full" style="min-height:0"><h2>Källor, licenser och ansvar</h2>
+    <p>Källa: SMHI:s öppna data. Diagram, geografiska analyser och statistiska sammanställningar är bearbetningar inom detta projekt, inte SMHI:s egna officiella diagram. SMHI:s öppna data omfattas av <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>; se <a href="https://www.smhi.se/data/om-smhis-data/villkor-for-anvandning">SMHI:s användningsvillkor</a>. Kompletterande datakällor och geografiska underlag anges vid respektive analys och omfattas av sina egna villkor.</p>
+    <p>Rapporten är avsedd för historisk och statistisk analys. Den ersätter inte SMHI:s prognoser, varningar eller lokala säkerhetsbedömningar. Stationsobservationer är inte nödvändigtvis representativa för hela kommunen.</p>
+    <p>Synpunkter på beräkningar och tekniska fel kan lämnas via <a href="https://github.com/Lulea-statistik/SMHI_Lulea-Kallax_weather-climate/issues">projektets ärendesida på GitHub</a>. Undvik att lämna personuppgifter där.</p>
+  </div>
+  <div class="chart-card full"><h2>Metod och data</h2>
     <p>Diagrammen är interaktiva och kan filtreras efter period och månad. Vissa kart- och snöanalyser använder kompletterande bearbetningar och andra öppna datakällor; metod och källa anges i respektive avsnitt. För klimatjämförelser bör längre tidsperioder användas eftersom enskilda år kan avvika kraftigt från den långsiktiga utvecklingen.</p>
     <p>Här redovisas datakällor, beräkningsprinciper och viktiga begränsningar för rapportens diagram och tabeller. SMHI Kallax (162860) är huvudstation för väderdata; havsis, snötäcke, blixt och vattenstånd kan komma från andra observations- och analyskällor. En linjär trend är en statistisk skattning och behöver inte ha en klimatrelaterad orsak.</p>
   </div>
@@ -524,7 +530,7 @@
     <p class="hint">Källa: <a href="https://opendata.smhi.se/apidocs/metobs/" target="_blank" rel="noopener noreferrer">SMHI:s meteorologiska öppna data</a>. Lokalt arkiv: <a href="https://github.com/Lulea-statistik/SMHI_Lulea-Kallax_weather-climate/tree/main/data/parameter_5" target="_blank" rel="noopener noreferrer">data/parameter_5</a>. Uppgifterna ovan avser den kontrollerade repositoryversionen, inte en automatisk realtidsverifiering av SMHI.</p>
   </div>
   <div class="chart-card full"><h2>Så tolkas avancerade beräkningar</h2>
-    <p><b>Trendlinje:</b> Räta linjens lutning skattas med minsta kvadratmetoden mot verkliga årtal. Förändring per tio år är lutningen multiplicerad med tio, även om serien är kortare än tio år. Luckor, stationsflyttar och metodbyten påverkar jämförbarheten.</p>
+    <p><b>Trendlinje:</b> Räta linjens lutning skattas med minsta kvadratmetoden mot verkliga årtal. Förändring per tio år är lutningen multiplicerad med tio, Trenden i huvuddashboardens diagram visas först när minst tio observationer över minst tio kalenderår finns. Luckor, stationsflyttar och metodbyten påverkar jämförbarheten.</p>
     <p><b>Vindriktning:</b> 359° och 1° representerar närliggande riktningar. Vinklar kräver cirkulär behandling, inte vanligt aritmetiskt medel.</p>
     <p><b>Bassängreferens:</b> Skillnad mellan station och Ratan vid samma tidpunkt betyder inte att Ratan är en fysisk nollpunkt för havsytan. Alla jämförelser görs i RH 2000. Skillnader från stationsvis klimatologisk medelnivå är ett annat mått.</p>
     <p><b>Snö- och israster:</b> Fördelningar gäller angiven analysyta och dess geografiska mask, inte alla vatten- och landytor i kommunen. Datakällebyten kan skapa skenbara brott i långa tidsserier.</p>
@@ -533,7 +539,9 @@
   <div class="chart-card full"><h2>Datatäckning</h2><div id="coverage"></div></div>
 </section>
 </main>
+<script src="chart-accessibility.js?v=1"></script>
 <script src="sealevel.js?v=1"></script>
 <script src="sealevel-basin.js?v=8"></script>
-<script src="app.js?v=56"></script>
+<script src="chart-focus.js?v=1"></script>
+<script src="app.js?v=57"></script>
 </body></html>
