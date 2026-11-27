@@ -509,10 +509,10 @@ def build_season_map_files(rows, sea_geom):
     print(f"Sea ice season map: {len(manifest_dates)} lazy-loadable dates written for {SEASON_MAP_LABEL}.")
 
 
-def build_current_season_maps(rows, sea_geom, today):
+def build_current_season_maps(rows, sea_geom, today, label=None):
     """Publish available dates only; coverage and ice share refer to the same chart."""
     root = ROOT / "docs" / "seaice"
-    label = season_label(today)
+    label = label or season_label(today)
     folder = root / label.replace("/", "-")
     folder.mkdir(parents=True, exist_ok=True)
     to_wgs = Transformer.from_crs(TARGET_CRS, "EPSG:4326", always_xy=True).transform
@@ -524,7 +524,9 @@ def build_current_season_maps(rows, sea_geom, today):
         try:
             # Refresh recent dates to capture revisions; keep existing verified files
             # if a temporary source error occurs.
-            if not path.exists() or date.fromisoformat(key) >= today - timedelta(days=RECENT_DAYS):
+            existing = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
+            has_coverage = any(f.get('properties', {}).get('kind') == 'smhi_analysis' for f in existing.get('features', []))
+            if not has_coverage or date.fromisoformat(key) >= today - timedelta(days=RECENT_DAYS):
                 package = daily_package_url(date.fromisoformat(key))
                 response = get(package) if package else None
                 if response is not None:
@@ -784,4 +786,14 @@ def main():
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    backfill = os.environ.get("SEAICE_MAP_BACKFILL", "").strip()
+    if backfill:
+        rows = load_daily()
+        label = backfill.replace("-", "/")
+        if not re.fullmatch(r"\d{4}/\d{2}", label) or label not in {r["season"] for r in rows.values()}:
+            raise SystemExit("Unknown issäsong: " + label)
+        build_current_season_maps(rows, load_lulea_sea_3006(), datetime.now(timezone.utc).date(), label)
+        # Historical maps use independently verified statistics in each map file.
+        # Do not overwrite historical observation CSV during the map-only backfill.
+    else:
+        raise SystemExit(main())
