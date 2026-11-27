@@ -391,11 +391,11 @@
     <div id="seaIceNoData" class="chart-card full" style="display:none"><h2>Havsisdata väntar på första hämtningen</h2><p class="hint">Historiska havsisdata är för närvarande inte tillgängliga i rapporten.</p></div>
     <div class="chart-card full seaice-map-card">
       <h2>Vad betyder 100 % isutbredning?</h2>
-      <p class="hint">Den interaktiva kartan visar den faktiska geometri som används i havsisstatistiken. Den blå polygonen är SMHI:s analyserade havsyta inom Luleå; när hela den ytan är klassad som havsis visas 100 %. Den röda linjen visar Luleås kommunala havsyta.</p>
+      <p class="hint">Den interaktiva kartan visar den faktiska geometri som används i havsisstatistiken. När datumsspecifik analysgeometri finns visar den blå polygonen SMHI:s analyserade havsyta inom Luleå; när hela den ytan är klassad som havsis visas 100 %. Den röda linjen visar Luleås kommunala havsyta.</p>
       <div id="seaIceMap" class="seaice-map" aria-label="Interaktiv karta över SMHI:s analyserade havsyta i Luleå"></div>
       <div class="seaice-season-controls">
         <div class="seaice-season-control-row">
-          <label for="seaIceSeasonSlider"><b>Issäsong 2023/24</b></label>
+          <label>Issäsong <select id="seaIceSeasonSelect" disabled></select></label><label for="seaIceSeasonSlider">Kartdatum</label>
           <span id="seaIceSeasonDateLabel">Laddar datum…</span>
         </div>
         <input id="seaIceSeasonSlider" type="range" min="0" max="0" value="0" step="1" disabled>
@@ -582,5 +582,5 @@
 <script src="sealevel.js?v=1"></script>
 <script src="sealevel-basin.js?v=9"></script>
 <script src="chart-focus.js?v=1"></script>
-<script src="app.js?v=62"></script>
+<script src="app.js?v=63"></script>
 </body></html>
