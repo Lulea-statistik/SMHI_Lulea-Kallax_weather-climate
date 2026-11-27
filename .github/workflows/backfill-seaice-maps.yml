@@ -1,0 +1,58 @@
+name: Backfill historical sea ice maps
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: "Issäsong, exempel 2025/26"
+        required: true
+        default: "2025/26"
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: smhi-kallax-data-update
+  cancel-in-progress: false
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Generate one historical ice season
+        env:
+          SEAICE_MAP_BACKFILL: ${{ inputs.season }}
+        run: python scripts/fetch_seaice.py
+      - name: Validate map manifest and same-date geometries
+        env:
+          SEAICE_MAP_BACKFILL: ${{ inputs.season }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          folder=Path("docs/seaice")/os.environ["SEAICE_MAP_BACKFILL"].replace("/","-")
+          m=json.loads((folder/"manifest.json").read_text())
+          assert m["dates"], "No map dates"
+          for row in m["dates"]:
+              fc=json.loads((folder/row["file"]).read_text())
+              assert fc["properties"]["source_date"]==row["date"]
+              assert fc["properties"]["geometry_crs"]=="EPSG:4326"
+              assert all(f["properties"]["source_date"]==row["date"] for f in fc["features"])
+              assert any(f["properties"]["kind"]=="smhi_analysis" for f in fc["features"])
+          print("Verified",len(m["dates"]),"map dates")
+          PY
+      - name: Publish maps
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/seaice
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Backfill historical sea ice maps"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
