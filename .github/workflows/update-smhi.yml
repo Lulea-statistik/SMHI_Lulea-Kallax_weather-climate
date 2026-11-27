@@ -33,6 +33,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -104,7 +105,31 @@ jobs:
             git add docs/seaice
           fi
           git commit -m "Update SMHI Kallax observations"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
+          # Rebuild derived dashboard files from reconciled inputs.
+          git fetch origin "${GITHUB_REF_NAME}"
+          if ! git rebase "origin/${GITHUB_REF_NAME}"; then
+            conflicts=$(git diff --name-only --diff-filter=U)
+            if [ -z "$conflicts" ]; then
+              git rebase --abort
+              exit 1
+            fi
+            while IFS= read -r path; do
+              case "$path" in
+                docs/dashboard_data.json|docs/daily/*.json) ;;
+                *) echo "Unexpected conflict: $path"; git rebase --abort; exit 1 ;;
+              esac
+            done <<< "$conflicts"
+            while IFS= read -r path; do
+              git checkout --ours -- "$path"
+              git add -- "$path"
+            done <<< "$conflicts"
+            GIT_EDITOR=true git rebase --continue
+          fi
+          python scripts/build_dashboard_data.py
+          git add docs/dashboard_data.json docs/daily
+          if ! git diff --cached --quiet; then
+            git commit -m "Rebuild dashboard from reconciled observation inputs"
+          fi
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Validate data coverage
