@@ -74,3 +74,14 @@ test('combined solar chart has comparable units and preserves missing data',asyn
   for(const values of data.series){expect(values).toHaveLength(24);expect(values.every(v=>v===null||(Number.isFinite(v)&&v>=0&&v<=60))).toBe(true);}
   await expect(page.locator('#dateSunshine')).toHaveCount(0);
 });
+
+test('start has one shortcut per non-start page in matching navigation order',async({page})=>{
+  await open(page,'start');
+  const expected=await page.locator('#tabs button[data-page]').evaluateAll(nodes=>nodes.map(n=>n.dataset.page).filter(p=>p!=='start'));
+  const cards=await page.locator('#page-start button[data-go-page]').evaluateAll(nodes=>nodes.map(n=>n.dataset.goPage));
+  expect(cards).toEqual(expected);
+  await expect(page.locator('.shortcut-group-maps button')).toHaveCount(7);
+  await expect(page.locator('#page-start .shortcut-icon svg use')).toHaveCount(19);
+  await page.locator('#page-start button[data-go-page="temp2"]').click();
+  await expect(page.locator('#page-temp2')).toBeVisible({timeout:60000});
+});

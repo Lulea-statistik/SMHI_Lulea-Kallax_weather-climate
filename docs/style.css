@@ -278,3 +278,15 @@ body{font-family:var(--font-body);line-height:1.5}
 /* Locally hosted, color-adapted Lucide illustrations. */
 .start-shortcuts-grid .shortcut-icon{display:flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:12px;background:#f2f6fa;flex:none;margin-bottom:3px}
 .start-shortcuts-grid .shortcut-icon svg{display:block;width:38px;height:38px}
+
+/* Start: mirror navigation groups with understated tint. */
+#page-start .report-intro p.report-intro-note{font-size:20px}
+@media(max-width:760px){#page-start .report-intro p.report-intro-note{font-size:18px}}
+.shortcut-group{margin:18px 0 24px}
+.shortcut-group h3{font-size:17px;margin:0 0 10px;color:#24364a}
+.shortcut-group-weather .start-shortcuts-grid button{background:#f5f9fd;border-color:#d5e3ef}
+.shortcut-group-climate .start-shortcuts-grid button{background:#f5faf6;border-color:#d5e5d8}
+.shortcut-group-maps .start-shortcuts-grid button{background:#f8f6fc;border-color:#e1dcef}
+.shortcut-group-weather .shortcut-icon{background:#e9f1f9}
+.shortcut-group-climate .shortcut-icon{background:#e9f3eb}
+.shortcut-group-maps .shortcut-icon{background:#ede8f7}

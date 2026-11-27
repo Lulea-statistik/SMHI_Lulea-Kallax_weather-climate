@@ -55,4 +55,47 @@
   <rect x="3" y="3" width="18" height="18" rx="2" />
   <path d="M3 9h18" />
 </g></symbol>
+<symbol id="chart-line" viewBox="0 0 24 24"><g fill="none" stroke="#527f8c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M3 3v16a2 2 0 0 0 2 2h16" />
+  <path d="m19 9-5 5-4-4-3 3" />
+</g></symbol>
+<symbol id="cloud-sun" viewBox="0 0 24 24"><g fill="none" stroke="#527f8c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12 2v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="M20 12h2" />
+  <path d="m19.07 4.93-1.41 1.41" />
+  <path d="M15.947 12.65a4 4 0 0 0-5.925-4.128" />
+  <path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z" />
+</g></symbol>
+<symbol id="eye" viewBox="0 0 24 24"><g fill="none" stroke="#527f8c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+  <circle cx="12" cy="12" r="3" />
+</g></symbol>
+<symbol id="gauge" viewBox="0 0 24 24"><g fill="none" stroke="#527f8c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m12 14 4-4" />
+  <path d="M3.34 19a10 10 0 1 1 17.32 0" />
+</g></symbol>
+<symbol id="droplets" viewBox="0 0 24 24"><g fill="none" stroke="#527f8c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z" />
+  <path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97" />
+</g></symbol>
+<symbol id="map" viewBox="0 0 24 24"><g fill="none" stroke="#527f8c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z" />
+  <path d="M15 5.764v15" />
+  <path d="M9 3.236v15" />
+</g></symbol>
+<symbol id="zap" viewBox="0 0 24 24"><g fill="none" stroke="#527f8c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" />
+</g></symbol>
+<symbol id="ruler" viewBox="0 0 24 24"><g fill="none" stroke="#527f8c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z" />
+  <path d="m14.5 12.5 2-2" />
+  <path d="m11.5 9.5 2-2" />
+  <path d="m8.5 6.5 2-2" />
+  <path d="m17.5 15.5 2-2" />
+</g></symbol>
+<symbol id="book-open" viewBox="0 0 24 24"><g fill="none" stroke="#527f8c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12 5v16" />
+  <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
+</g></symbol>
 </svg>
